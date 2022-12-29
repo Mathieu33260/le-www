@@ -1,0 +1,12 @@
+<div class="cta-fixed" id="submitblock">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-6 col-sm-offset-3 col-md-offset-6">
+                <input autocomplete="off" type="hidden" name="step" value="{{ currentStep }}" />
+                <input autocomplete="off" type="hidden" name="update" value="{% if option is defined and option.send is not null and error == false %}1{% else %}0{% endif %}" />
+                <input autocomplete="off" type="hidden" name="option[send]" value="{% if option.send is defined and option.send.cardType is defined %}{% if option.send.cardType == 'freeCard' %}2{% elseif option.send.cardType == 'sendSelf' %}1{% elseif option.send.cardType == 'sendDirectly' %}0{% endif %}{% endif %}" />
+                <button type="submit" class="btn btn-green btn-block center-block">CONTINUER</button>
+            </div>
+        </div>
+    </div>
+</div>

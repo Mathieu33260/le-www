@@ -1,0 +1,44 @@
+@import "../modules/bootstrap/Base";
+@import "../mixins";
+@import (reference) "../variables";
+
+a, a:focus, a:active, a:hover, object, embed { outline: none}
+
+/**********************************************************************************************************************/
+/******************************************************* HEADER *******************************************************/
+/**********************************************************************************************************************/
+#header {
+    .logo {
+        @media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+            margin-top: 12px
+        }
+        @media (min-width: @min-width-md) {
+            height: 40px;margin-top: 18px
+        }
+        @media (min-width: @min-width-lg){
+            margin-top: 27px;
+        }
+    }
+    .only-logo {
+        .logo {
+            @media (min-width: @min-width-sm) {
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 129px;
+            }
+        }
+    }
+}
+
+
+#headerRightSide {
+    @media (max-width: 992px) and (min-width: 768px) {
+        margin-top: 1.2em;
+    }
+    @media (min-width: 993px) and (max-width: 1199px) {
+        margin-top: 1.4em;
+    }
+    @media (min-width: @min-width-lg) {
+        margin-top: 29px;
+    }
+}

@@ -1,0 +1,1102 @@
+@import "styles/Style";
+@import (reference) "variables";
+@import "mixins";
+@import "vue-transitions";
+
+/* Global */
+@import "typos/icomoon";
+
+@import "modules/user/Profil";
+/** Bootstrap edit **/
+@import "modules/Jquerybubblepopup";
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {.background-bleu;border-color: @blue}
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {color: @black_light}
+.dropdown-menu {.no-radius}
+/** END Bootstrap edit **/
+
+/* ADD-ON */
+:-moz-any-link:focus { outline: none}
+input::-moz-focus-inner { border: 0}
+.jquerybubblepopup {z-index: 9999999 !important}
+.moreAuctionsLoader {margin-bottom: 20px}
+.inline {display: inline}
+
+.more-action {cursor: pointer}
+.more-hide {
+    overflow: hidden;
+    height: 3em;
+}
+.more-show {height: auto}
+
+.container_bg1{
+    padding-left: 10em;
+    padding-right: 10em;
+}
+.badge.alert-danger {
+    background: red;color: @white;
+}
+table + .more p.background-bleu, table + .less p.background-gris2, table + .more p.background-bleu span, table + .less p.background-gris2 span {color: @white}
+table + .more, table + .less {cursor: pointer}
+table + .more p, table + .less p {
+    width: auto;padding:0.8em 2em;
+    display: inline-block;
+    -webkit-border-bottom-right-radius: 1em;
+    -webkit-border-bottom-left-radius: 1em;
+    -moz-border-radius-bottomright: 1em;
+    -moz-border-radius-bottomleft: 1em;
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+table + .more p i, table + .less p i {
+    font-size: 1.3em;
+}
+.circle {-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+/*----HEADER------*/
+#topDIV {
+    border-bottom: 1px solid @beige;background-color:@white;margin-bottom: 0;padding-bottom: 8px;
+    & > .container .col-lg-8 {
+        &.col-user {margin-top: 0}
+    }
+}
+.navbar-navigation{border: none;margin-bottom: 0;background-color: @white}
+
+@import "modules/Fullpage.less";
+
+#headerParrainage .search-submit {color: @white}
+
+//@import "modules/ChooseDate.less";
+
+#modalUserNav:active, #modalUserNav:focus, #modalUserNav:hover, #modalUserNav:visited {
+    border: none; outline: none;
+}
+#modalUserNav {
+    color: @dark_blue;text-align: right;border: none;background: none;font-size: 2em;display: block;
+    i {vertical-align: inherit}
+    span {font-size: 0.5em;vertical-align: baseline}
+}
+
+@import "user/Anonymous.less";
+
+@media (max-width: @max-width-xs) {
+    #navbar .navbar-nav {
+        display: block;
+    }
+}
+
+/*----END HEADER------*/
+
+.module.push-auction.auction .texte {height: 112px}
+#userSuggestions .auctions .price-row .time {font-size: 22px}
+.carousel-caption .moduleTexte .texte {border: none;height: auto;margin-bottom: 4px}
+.carousel-caption .moduleTexte .texte a {font-size: 1.4em}
+
+/** BOUTON **/
+.btn-gift-card{
+    text-align: center;
+}
+
+.btn-comfirmer{
+    margin:0px 10px;
+    font-size: 21px;
+    color:@white;
+    background:@orange;
+}
+
+.fb-share-button.center {display: block}
+
+.offer > .button > .btn {
+    width: 100%;
+}
+
+@import "user/Logged.less";
+
+.btn-line{
+    border: 2px solid @white;
+}
+.btn.btn-register {border-color: @blue;color: @blue;background: transparent}
+.refreshAuctions {
+    display: none;
+    position: fixed;
+    bottom: 1em;
+    left: 50%;
+    z-index: 1000;
+    margin-left: -121px
+}
+.btn-green {
+    color: @white;
+    background-color: @green_valid2;
+    border-color: @green_valid2;
+}
+
+
+.btn-add {
+    background: @grey_fonce;color: @white;font-weight: bold;
+    -webkit-border-bottom-right-radius: 1em;
+    -webkit-border-bottom-left-radius: 1em;
+    -moz-border-radius-bottomright: 1em;
+    -moz-border-radius-bottomleft: 1em;
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+.less .btn-add {
+    background: @grey;
+}
+/** END BUTTON **/
+
+.time {
+    font-size: 20px;
+    line-height: 1.1em;
+    color: @blue;
+    font-weight: bold;
+}
+
+b, strong {
+    .price {font-weight: normal}
+}
+
+.module {
+    margin-bottom: 20px
+}
+
+.icon-num-text{
+  font-size: 2.57em;
+  font-weight: 400;
+  fill: rgb(255,255,255);
+}
+.icon-close {cursor: pointer}
+
+.navbar-navigation a:hover {
+    background: @dark_blue;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: @white;
+}
+
+.navbar-inverse .navbar-collapse {
+    border: none
+}
+
+@import "modules/Glide.less";
+
+#userAuctions{
+    /* Glide carousel controls */
+    div[data-glide-el=controls]{
+        position: absolute;
+        top: 30%;
+        left: 0;
+        right: 0;
+    }
+
+    .glide-controls--auctions__controls{
+        position: absolute;
+        background: transparent;
+        border: 0px;
+        border-radius: 100%;
+        img{
+            height: 40px;
+        }
+        &--left{
+            left: 0;
+        }
+        &--right{
+            right: 0;
+        }
+    }
+}
+#actualAuctions {
+    li {
+        &:first-child .auction {padding-left: 0}
+        &:last-child .auction {padding-right: 0}
+    }
+    .auction {
+        padding-right: 5px;padding-left: 5px;
+    }
+}
+/*----END Slider------*/
+
+
+/* Carousel */
+.carousel-caption .moduleTexte p {
+    font-size:1.14em;
+    color:@grey_fonce;
+}
+.carousel-caption .moduleTexte p {
+    color:@grey_fonce;
+}
+.carousel-caption .moduleTexte{
+    background: @white;
+    text-shadow: none;
+    text-align: center;
+}
+.carousel-caption .moduleTexte{
+    background-color: rgba(255,255,255,0.9);
+}
+.carousel-caption .enchere{
+    border:0px
+}
+
+.header_custom_voucher {
+    background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/v1447947229/fond_bon_cadeau_eeuitp.jpg');
+    height:250px;
+    text-align: center;
+}
+
+#message input,
+#message textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px 10px 0px 10px;
+    margin:5px 0px 5px 0px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+#message input[type=text],
+#message textarea {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+#message textarea {
+    height: 150px;
+    resize: none;
+}
+
+.step{
+    font-size: 1.5em;}
+
+/*--Finsprites---*/
+
+.carousel-control {
+    background: none;
+    border: 0px;
+    border-radius: 0px;
+    display: inline-block;
+    font-size: 34px;
+    font-weight: 200;
+    line-height: 18px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    padding: 4px 10px 0px;
+    width: 15px;
+}
+
+/* Overwrite bootstrap */
+.border-grey {
+    border: 1px solid @beige;
+}
+
+.equipe_profil {
+    padding: 10px 0 5px;
+}
+
+.btinscription {
+    background: @orange;
+}
+
+.btinscription{
+    font-weight: 700;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.btinscription a{
+    color:@white;
+    text-decoration: none;
+}
+
+/*--Partie-Menu-Navigation--*/
+.btinscription {
+    padding-right: 3px;
+    padding-left: 3px;
+    width:100%;
+    color:@white;
+}
+
+
+
+.navbar {
+    min-height: auto;
+    margin-bottom: 0;
+    border: 0;
+    border-radius: 0;
+    z-index: 999;
+    &.navbar-default {
+        background: @white;
+    }
+}
+
+.information {
+    background: url(/assets/gfx/img/9.jpg) no-repeat;
+    min-height: 200px;
+}
+
+.menu {
+    background: @white;
+}
+
+/** MODAL **/
+.modal .collapseAction {.text-grey-fonce;font-size: 12px}
+.modal .collapseContent .well {border: none;padding: 11px;color: @blue;font-size: 12px}
+
+
+#vouchercustommodal {
+    legend {border-bottom: 0;font-size: 1.1em}
+    label {color: @black_light}
+}
+
+#addGiftcard {
+    .input-group-addon {padding: 0;border: none}
+}
+/** MODAL OFF **/
+
+
+/*----All-product------*/
+.dropdown-menu {
+    z-index: 2000;
+}
+
+.tsProduits h1 {
+    font-size: 18px;
+    color: @blue;
+    margin-top: 0;
+}
+
+.carousel-inner {
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.carousel-indicators {
+    bottom: 3%;
+    .active {background-color: @orange;border-color: @orange}
+    li {background-color: @grey_light;border: 1px solid @grey_light}
+}
+
+@media only screen and (max-width: @max-width-xs) {
+    .carousel-inner {
+        margin-bottom: 0;
+    }
+
+    .moduleTexte {margin-bottom: 20px;display: block}
+
+    .carousel-day-auction {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+    }
+
+    .carousel-day-auction .moduleTexte {
+        padding-top: 10px;
+    }
+
+    .carousel-caption .carousel-control .icon-next, .carousel-caption .carousel-control .icon-prev {
+        display: inline-block;
+        position: absolute;
+        bottom: 20%;
+        z-index: 5;
+    }
+}
+
+@media only screen and (min-width: @min-width-sm) {
+    .carousel-control {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}
+
+.carousel-control.left, .carousel-control.right {
+    background: none !important;
+}
+
+/*----medias------*/
+@media (max-width: @max-width-xs) {
+    .border {
+        height: 80px;
+    }
+}
+
+/*----pageDetailProduit------*/
+
+.nav-tabs > li > a{
+    border-bottom: none;background: @beige;border-color: @beige_fonce;margin: 0;-webkit-border-radius: 0px;-moz-border-radius: 0px;border-radius: 0px;
+    color: @grey_light;font-size: 1.5em;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .nav > li > a:focus, .nav > li > a:hover {
+    border-bottom: none;background-color: @blue;color:@white;
+}
+
+@import "pages/AuctionsList";
+@import "modules/Calendars";
+
+table th.background-bleu, table td.background-bleu {
+    color: @white;
+}
+
+.avis {
+    padding-left: 0;
+}
+
+.avis h4 {
+    padding-left: 0;
+}
+
+.bt input {
+    padding-left: 0;
+}
+
+.panel-default > .panel-heading {
+    color: @white;
+    background: @blue;
+}
+
+#accordion, #wing {padding-right: 0;padding-left: 0}
+
+#accordion {margin-top: 20px}
+
+.panel-default > .panel-heading {
+    background: @beige_fonce;
+}
+
+.toggle .date {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+}
+
+#accordion, #wing{
+    .pictos {margin-top: 10px;margin-bottom: 10px}
+}
+
+.trigger p {
+    color: @white;
+    font-size: 17px;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+/***************** USER *********************/
+#emailsList {list-style-type: none;padding: 0;margin-bottom: 2em}
+#emailsList li {border-bottom: 1px solid @beige_fonce;height: 2.5em;line-height: 2.5em;width: 100%;display: inline-block;font-size: 1em}
+#emailsList li span {
+    color:@white;font-size: 0.85em;font-weight: bold;margin: 0 1em;
+    -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;padding: 2px 5px;
+}
+#emailsList li span.email {
+    .text-grey-fonce;
+}
+#emailsList li .primary {background-color: @blue}
+#emailsList li .unconfirmed {background-color: @grey;color:@white}
+#emailsList li a {float: right}
+
+#parrainage {
+    h1 {margin-bottom: 1em}
+    .intro {
+        font-size:1.28em;
+    }
+    .input-group-addon {
+        background: transparent;border: none;
+        i {font-size: 1.5em;color: @blue}
+    }
+    th, td {vertical-align: middle}
+}
+/* Profile : auctions win */
+
+.field-errors > ul, .field-errors ul > li{
+    list-style: none;
+    color: red;
+    font-style: italic;
+    display: inline;
+}
+
+.content.page.movie{
+    text-align:center;
+    margin: auto;
+    padding:0px;
+}
+.avis-verifier{
+    text-align:center;
+    padding:0px;
+    margin-top: 10px;
+}
+.avis-verifier > div {
+    float: left;
+}
+
+.offer{
+    margin-bottom: 20px;
+}
+
+.image100 {
+    width: 100%;
+    height: auto;
+}
+
+/** Offset because of the fixed navbar **/
+a.anchor {
+    display: block;
+    position: relative;
+    visibility: hidden;
+}
+
+div .line {
+    height: 1em;
+}
+
+.error{
+    text-align: center;
+    clear: both;
+    background-color: indianred;
+    border: 1px dashed indianred;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    border-radius: 4px 4px 4px 4px;
+    color: @white;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+}
+
+.blue-bg {
+    background-color:@blue;
+    color: @white;
+    padding:5px;
+}
+
+.row.main .title h1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+}
+.landing_page_banner2{
+    background: url("/assets/gfx/landing_page_bonjour.jpg") no-repeat center;
+    height:300px;
+    padding: 15px;
+}
+.landing_page_banner_titre{
+    color:@white;
+    font-size: 30px;
+}
+.landing_page_promocode{
+    background: url("/assets/gfx/scratch.png") no-repeat center;
+    width: 249px;
+    height: 154px;
+    position: absolute;
+    right: 20px;
+    top: 100px;
+}
+.button_howto_landingpage{
+    padding-right:10px;
+}
+.howto_landingpage{
+    background-color:@blue;
+    font-size:16px;
+    padding:10px;
+    color:@white;
+    margin-top:10px;
+}
+
+.price-row{
+    margin-bottom: 8px;
+    border-top: 1px solid @beige_fonce;
+}
+
+.item-presse {
+    margin-bottom: 5px
+}
+
+.note {
+    background-color : @blue;
+    padding : 30px;
+    border-radius: 50px;
+}
+.regionLinks{
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.regionLinks:hover{
+    color: @white;
+    text-decoration: none;
+    background-color: @dark_blue;
+}
+
+.regionLinks.active, #abroadBtn.active{
+    color: @white;
+    background-color: @dark_blue;
+}
+
+#francemap > svg > g > path{
+    cursor: pointer;
+}
+
+.landing_page_promocode_value {
+    font-size: 20px;
+    color: @white;
+    position: absolute;
+    right: 63px;
+    top: 35px;
+    font-weight: 600;
+}
+
+.landing_page_promocode_code {
+    font-size: 34px;
+    color: @black_light;
+    position: absolute;
+    right: 85px;
+    top: 52px;
+    font-weight: 600;
+}
+
+#cgu h5{
+    font-size: 15px;
+    .text-grey-fonce;
+    font-weight: normal;
+}
+
+/*----- register ------*/
+@media (min-width: 320px){
+    /*
+    * Clément - 19/06/2019 - Commentaire du overflow pour permettre au position sticky de fontionner
+    * #hero-container {overflow-x: hidden}
+    */
+    #newsletter-bar {padding-top: 1em;padding-bottom: 1em}
+}
+
+.movie {
+    margin: 2em 0;
+}
+
+#contact {
+    .btn-block {min-height: 70px;line-height: 70px;margin-bottom: 1em}
+}
+
+.promocode-status {
+    width: 100%;
+}
+
+/*----medias------*/
+@media (min-width: 320px){
+    #parrainage h2.option {color:@white;font-size: 1.28em}
+    #parrainage h2.option > span {vertical-align:middle;float: none;position: relative;display: inline-block}
+    #parrainage h2.option > .col-xs-3 {position: relative;z-index: 2}
+    #parrainage h2.option > .col-xs-9 {padding-left: 2em !important;left: -2em;padding-top: 0.5em;padding-bottom: 0.5em}
+    .carousel-caption .moduleTexte {padding: 0}
+    .carousel-caption .moduleTexte {padding-top: 1.2em;padding-bottom: 1em}
+    .carousel-caption .time-countdown {display: block;text-align: left}
+    .carousel-caption .time, .carousel-caption .price {margin-top: 10px}
+    .carousel-caption .time {text-align: left}
+    .carousel-caption .price {text-align: right}
+    .carousel-caption .time {line-height: normal}
+    #noauction {
+        color: @grey_light;min-height: 240px;
+        i {font-size: 4em}
+        p {font-weight: bold}
+        a {color: @blue;text-decoration: underline;font-weight: bold}
+    }
+    #actualAuctions {
+        .price {text-align: right}
+        .time {padding-bottom: 1px}
+        .text-success, .text-danger {margin-top: 10px}
+    }
+    .auctions {
+        .price-row {
+            border: none;margin-bottom: 0;
+        }
+    }
+}
+@media (min-width: 320px){
+    #userAuctions .badge {margin-top: -5px}
+    #userAuctions h2
+    {
+        margin-top: 25px;background-position: right center;background-repeat: no-repeat;color: @white;
+        background-image: url('/assets/img/form-legend-bg.jpg?v=20180328');background-size: auto 99%;padding-right: 3em;
+    }
+}
+@media (min-width: 320px) and (max-width: @max-width-xs){
+    #userGiftcard h2 {width: 100%}
+    #userGiftcard .bon a, #userGiftcard .cagnotte a {
+        height: 3em;line-height: 3em;
+    }
+    #userGiftcard .giftcard .col-lg-10 {padding-bottom: 1em}
+    #userGiftcard .bon {margin-bottom: 1em}
+}
+@media (min-width: 412px){
+    #hero-container .carousel-inner .item img {
+        width: 100%;
+    }
+}
+@media (min-width: 600px) and (max-width: @max-width-xs){
+    #parrainage h2.option > .col-xs-9 {
+        left: -2em;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 749px){
+    .head_carte{
+        width:50%;
+    }
+}
+@media (max-width: 480px){
+    .head_carte{
+        width:70%;
+    }
+}
+@media (min-width: @min-width-sm) {
+    .auctions .auctionThumbTitle {
+        span {line-height: 1.1}
+    }
+}
+@media (min-width: @max-width-xs) and (max-width: @max-width-md) {
+    .parrainage {
+        padding: 0;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .couleur {
+        padding: 5px;
+        width: 100%;
+    }
+
+    .movie {
+        height:200px;
+    }
+}
+@media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+    .auctions[data-auctiontype="favorites"]
+    {overflow-y: hidden;height: 360px}
+    .auctions[data-auctiontype="favorites"] {height: 337px}
+}
+@media (min-width: @min-width-md) and (max-width: @max-width-md) {
+    .auctions[data-auctiontype="favorites"] {
+        overflow: hidden;height: 308px;
+        picture {overflow: hidden}
+    }
+}
+@media (min-width: @min-width-sm) and (max-width: 1024px) {
+    .parrainage {
+        padding: 0 15px 0 15px;
+    }
+}
+
+@media (min-width: @min-width-sm) {
+    .carousel-day-auction {
+        left: auto;
+        right: 10%;
+        width: 240px;
+        float:right;
+    }
+    .carousel-day-auction, .carousel-caption .moduleTexte {width: 460px}
+    .carousel-day-auction {right: 0;top: 53%;height: auto;padding: 0;bottom: inherit}
+    .auctions:not([data-auctiontype="favorites"]):not([data-auctiontype="list"]):not([data-list="useractualauctions"]):not([data-auctiontype="next"]):not([data-auctiontype="new"]) {
+        .auction picture {min-height: 184px}
+    }
+    .auctions[data-list="useractualauctions"] {
+        .auction picture {min-height: 160px}
+    }
+    a.anchor {
+        top: -150px;
+    }
+    #hero-container {
+        .carousel-inner .item img {
+            max-height: 334px;
+            width: 100%;
+        }
+    }
+    .fullpage{
+        #hero-container {
+            .carousel-inner .item img {max-height: none}
+        }
+        #headerRightSide {
+            .help i {color: @white}
+        }
+    }
+    #parrainage h2.option > .background-bleu, #userGiftcard h2, #userAuctions h2
+    {
+        margin-top: -7px;background-position: right center;background-repeat: no-repeat;color: @white;
+        background-image: url('/assets/img/form-legend-bg.jpg?v=20180328');background-size: auto 99%;padding-right: 3em;
+    }
+
+    #userGiftcard h2, #userAuctions h2 {margin-top: 25px}
+    #userGiftcard .giftcard .col-lg-10 {
+        -webkit-box-shadow: 0px 1px 18px -5px rgba(0,0,0,0.8);
+        -moz-box-shadow: 0px 1px 18px -5px rgba(0,0,0,0.8);
+        box-shadow: 0px 1px 18px -5px rgba(0,0,0,0.8);
+    }
+    #userGiftcard .bon, #userGiftcard .cagnotte {padding: 0}
+    nav[canvas] {z-index: 999}
+}
+@media (max-width: @max-width-xs) {
+    a.anchor {
+        top: -110px;
+    }
+    #emailsList + .login-form #mail_email {
+        margin-bottom: 1em;
+    }
+    #emailsList li {
+        margin-bottom: 1em;
+        line-height: normal;
+        height: auto;
+        padding-bottom: 0.5em;
+    }
+    #emailsList li:last-child {
+        margin-bottom: 0;
+    }
+    #emailsList li a {
+        display: inline-block;
+        width: 100%;
+        line-height: normal;
+    }
+    #emailsList li span {
+        display: inline-block;
+    }
+    #emailsList li .email {
+        float: left;
+    }
+    #emailsList li span.email + .unconfirmed {
+        float: left;
+        line-height: normal;
+    }
+    #emailsList li .primary {
+        margin-right: 0;
+        display: inline;
+    }
+}
+@media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+    .nopadding-only-sm {
+        padding: 0 !important;
+    }
+    .carousel-caption .enchere .moduleTexte {
+        margin-top : 0px;
+    }
+}
+@media (max-width: @max-width-xs) {
+    .button_howto_landingpage{
+        margin-top:10px;
+        width:55px;
+    }
+    #loginModal .modal-dialog, .modal-dialog {
+        margin: 10px auto;
+    }
+}
+
+@media (min-width: @min-width-sm) {
+    .button_howto_landingpage{
+        width:60px;
+        margin-bottom:10px;
+    }
+    #userGiftcard .nogiftedcard .accroche {margin-top: 3em}
+    #userGiftcard .bon a, #userGiftcard .cagnotte a {
+        height: 127px;line-height: 127px;
+    }
+    #userGiftcard .giftcard .col-lg-10 {
+        height: 127px;
+    }
+    #auctionsPending {
+        p {margin-bottom: 0}
+        p.hidden-xs {background: @blue;color: #fff;padding: 3px 1em;font-weight: bold}
+        .more-action {margin-bottom: 17px}
+        .more-hide {
+            height: 40px;
+            &.more-show {height: auto}
+            ul {margin-top: 19px}
+        }
+        .date {display: block}
+    }
+}
+@media (max-width: @min-width-md) {
+    .partCreer-texte > h3 {
+        font-size: 23px;
+    }
+}
+@media (max-width: 600px) {
+    #loginModal .modal-dialog
+    {
+        width: 93%;
+        margin-top: 0;
+        padding-top: 2em;
+    }
+}
+
+@media (max-width: 720px) {
+    #newsletter-bar .background-jaune {
+        height: auto;padding-bottom: 1em;
+    }
+}
+@media (max-width: 480px) {
+    #emailsList li span.email + .primary {
+        margin-left: 0;
+    }
+    #emailsList li span.email + .unconfirme {
+        margin-top: 8px;
+        margin-left: 0;
+    }
+    #emailsList li a {
+        width: 45%;
+    }
+    #loginModal .link p {font-size: 1em}
+}
+@media only screen and (min-width: @min-width-sm) {
+    .carousel-control .icon-next, .carousel-control .icon-prev {top: 45%;position: absolute}
+}
+@media (min-width: 1024px){
+    #userGiftcard .bon a, #userGiftcard .cagnotte a {
+        height: 117px;line-height: 117px;
+    }
+    #userGiftcard .giftcard .col-lg-10 {
+        height: 117px;
+    }
+    #userGiftcard .giftcard ul {padding-top: 13px}
+    #giftcard .header .background {
+        background-size: 100% auto;
+    }
+    #userGiftcard .introduction p {margin-top: 1em}
+}
+@media (min-width: @min-width-lg){
+    #parrainage h2.option > .col-md-5 {left: -6em}
+    .nav>li>a {padding: 10px 15px}
+    .nav-tabs > li > a {font-size: 1.5em}
+    #navbar {
+        height: 35px;
+        .navbar-nav > li > a {padding-left: 0;padding-right: 0}
+    }
+    #parrainage h2.option > .col-xs-9 {left: -3em}
+    #userGiftcard .bon a, #userGiftcard .cagnotte a {
+        height: 142px;line-height: 142px;
+    }
+    #userGiftcard .giftcard .col-lg-10 {
+        height: 142px;
+    }
+    #userGiftcard .bon a, #userGiftcard .cagnotte a {
+        height: 142px;line-height: 142px;
+    }
+    #auctionsPending .more-hide {height: 63px}
+    .auctions{
+        &[data-auctiontype="favorites"] picture {min-height: 161px}
+    }
+    .visuel .social-link {text-align: right}
+}
+@media (min-width: @min-width-md){
+    #parrainage h2.option > .col-md-5 {
+        left: -4em;
+    }
+    .nav-tabs > li > a {font-size: 1.4em}
+    .auction {
+        .time {font-size: 19px}
+    }
+}
+
+@media (min-width: @min-width-sm) and (max-width: @max-width-sm){
+    .nopadding-only-sm {
+        padding: 0 !important;
+    }
+}
+@media (min-width: @min-width-md) and (max-width: @max-width-md){
+    .nopadding-only-md {
+        padding: 0 !important;
+    }
+
+    .nopadding-right-only-md {
+        padding-right: 0 !important;
+    }
+}
+@media (min-width: @min-width-lg){
+    .nopadding-right-only-lg {
+        padding-right: 0 !important;
+    }
+
+    .nopadding-left-only-lg {
+        padding-left: 0 !important;
+    }
+}
+
+@media (min-width: 1199px){
+    #hero-container {z-index: 1;z-index: 1}
+}
+
+#sortBtn {
+    color: @black_light;
+}
+
+@import "_mediaqueries-mobile.less";
+@import "_mediaqueries-tablette.less";
+
+/*---------------------------------------
+  Slidebars - Mustafa 17/03/15
+  ---------------------------------------*/
+
+#le-wrap,
+#header {
+    transition: transform 0.5s ease;
+}
+
+#le-wrap {position: relative;z-index: 0!important}
+
+#header {
+    &.fixed {
+        display: none;
+    }
+}
+
+.reservation__identity {
+    .prefixed(border-radius, 4px);
+    background: rgb(32, 185, 228,0.2);
+    padding: 20px;
+    font-size: 14px;
+    color: @white;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+// Flow
+.address__zipcode {
+    -moz-appearance:textfield;
+    -webkit-appearance: none;
+    margin: 0;
+}

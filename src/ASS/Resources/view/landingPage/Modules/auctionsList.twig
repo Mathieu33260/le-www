@@ -1,0 +1,50 @@
+{% set colClass = 'col-xs-12 col-s-6 col-md-3' %}
+{% if section.nbAuctions == 2 %}
+    {% set colClass = 'col-xs-12 col-s-6' %}
+{% elseif section.nbAuctions == 3 %}
+    {% set colClass = 'col-xs-12 col-s-6 col-sm-4' %}
+{% endif %}
+
+{% set tagsName = [] %}
+{% for tag in section.tags %}
+    {% set tagsName = tagsName|merge([tag.name]) %}
+{% endfor %}
+
+<div class="moduleEnchere">
+    <auction-list
+            url="/auction/activeauctions"
+            v-bind:nb-auctions-default="{{ section.nbAuctions }}"
+            class-css="{{ colClass }}"
+            list-name="{{ contents.name|e('html_attr') }} - {{ section.id }}"
+            request-uri="{{ app.request.requesturi }}"
+            v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+            auction-type="list"
+            v-bind:tab-index="{{ loop.index }}"
+            list-id="auctionList-{{ section.id }}"
+            tag="{{ tagsName|join(',')|e('html_attr') }}"
+            v-bind:use-no-auction-found-mess="false"
+            v-bind:use-placeholder="true"
+            v-bind:use-more-auctions-btn="false"
+            template-page-type="nosidebar"
+            :block-click="true"
+    ></auction-list>
+    <div class="row auctions_placeholder">
+        {% for auctions in 1..section.nbAuctions %}
+            {% if section.nbAuctions == 3 and loop.last %}
+                {% set colClass = 'col-xs-12 col-s-6 col-s-offset-3 col-sm-offset-0 col-sm-4' %}
+            {% endif %}
+            {% include './module/auction-placeholder.twig' with {'colClass': colClass, } %}
+        {% endfor %}
+    </div>
+</div>
+{% if section.button is defined %}
+<div class="text-center">
+    {% if isApp(app.request) %}
+        {# TODO For future use #}
+        {# {% set link = 'comloisirsencheres://category/' ~ section['tags'][0]['mobileCatId'] %} #}
+    {% else %}
+        {% set link = section.button.href %}
+    {% endif %}
+    <a class="btn {{ section.button.class }}" href="{{ link }}"{% if 'http://' in link or 'https://' in link %} target="_blank"{% endif %}>{{ section.button.text|raw }}</a>
+</div>
+{% endif %}

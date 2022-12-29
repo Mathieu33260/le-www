@@ -1,0 +1,16 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block title %}Paiement Direct{% endblock %}
+
+{% block main_content %}
+    <a name="payment"></a>
+    <h3 class="blue-bg">{{ transaction.title }}</h3>
+
+            <div id="i1">
+                <h2>{{ transaction.text }}</h2>
+            </div>
+            <a href="comloisirsencheres://home" class="btn btn-primary">Revenir dans l'application</a>
+            <br/>
+            <br/>
+            <a href="{{ path('homepage') }}" class="btn btn-primary">Revenir sur le site</a>
+{% endblock %}

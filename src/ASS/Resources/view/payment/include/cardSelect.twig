@@ -1,0 +1,87 @@
+<div class="paiementmode">
+    {% if payment.amount == 0 %}
+        {% if direct %}
+            <div class="paiementleft" style="text-align:right">
+                <form method="post" action="{{ path('payment.direct.transaction',{'token': verifToken}) }}">
+                    <input type="hidden" name="state" value="success" />
+                    <input type="hidden" name="freepaymentid" value="{{payment.id}}" />
+                    <input type="submit" value="Valider" class="btn btn-success"/>
+                </form>
+            </div>
+        {% else %}
+            <div class="paiementleft" style="text-align:right">
+                <form method="post" action="{{ path('payment.transaction') }}">
+                    <input type="hidden" name="state" value="success" />
+                    <input type="hidden" name="freepaymentid" value="{{payment.id}}" />
+                    <input type="submit" value="Valider" class="btn btn-success"/>
+                </form>
+            </div>
+        {% endif %}
+    {% else %}
+        <h3 style="text-align: center; font-weight: bold;">Veuillez s&eacute;lectionner le mode de paiement de votre choix</h3>
+        <div align="center">
+            <form action="{{ path('payment.etrans.redirect',{'id' : payment.id}) }}" method="post" name="cardSelectForm">
+                <input type="hidden" name="verificationToken" value="{{ verifToken }}" />
+                {% if userCards|length > 0 %}
+                    <div>
+                        <input type="radio" name="useSavedCard" id="useSavedCard" value="yes" checked/>
+                        <label for="useSavedCard" style="font-size: 18px;">Payer avec une carte déjà enregistrée</label>
+                    </div>
+                    <div id="savedCardBlock">
+                        {% for userCard in userCards %}
+                        <input type="radio" name="savedCardToUse" value="{{ userCard.id }}" id="savedCardToUse{{ userCard.id }}" {% if loop.index == 1 %}checked{% endif %}>
+                        <label for="savedCardToUse{{ userCard.id }}">{{ userCard.name }} &nbsp;{{ userCard.expiredate|date('m/y') }} <img style="width: 30px;" class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/{{ userCard.type }}.png" alt="logo {{ userCard.name }}" /></label>
+                        <br/>
+                        {% endfor %}
+                    </div>
+                    <input type="radio" name="useSavedCard" id="useAnotherMethod" value="no">
+                    <label for="useAnotherMethod" style="font-size: 14px;">Utiliser un autre moyen de paiement.</label>
+                {% endif %}
+                <div id="cardSelectBlock" {% if userCards|length > 0 %} style="display: none;" {% endif %}>
+                    <div>
+                        <div class="radioGroup">
+                            <label for="methodCb">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/cb.png" alt="logo cb" />
+                            </label>
+                            <input name="method" value="cb" type="radio" id="methodCb" checked>
+                        </div>
+                        <div class="radioGroup">
+                            <label for="methodVisa">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/visa.png" alt="logo visa" />
+                            </label>
+                            <input name="method" value="visa" type="radio" id="methodVisa">
+                        </div>
+                        <div class="radioGroup">
+                            <label for="methodMasterCard">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/mastercard.png" alt="logo mastercard" />
+                            </label>
+                            <input name="method" value="mastercard" type="radio" id="methodMasterCard">
+                        </div>
+                        <div class="radioGroup">
+                            <label for="methodEcarte">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/ecarte.png" alt="logo ecart" />
+                            </label>
+                            <input name="method" value="ecarte" type="radio" id="methodEcarte">
+                        </div>
+                        <div class="radioGroup">
+                            <label for="methodPaypal">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/paypal.png" alt="logo paypal" />
+                            </label>
+                            <input name="method" value="paypal" type="radio" id="methodPaypal">
+                        </div>
+                        <input type="hidden" name="direct" value="{{ direct }}">
+                    </div>
+                    <div id="cardSaveBlock">
+                        <input type="checkbox" name="saveCard" id="saveCard">
+                        <label for="saveCard">Enregistrer ma carte pour faciliter mes futures transactions</label>
+                        <div style="display: none;" id="cardNameBlock"><label for="saveCardName">Nom de votre carte : </label>&nbsp;<input type="text" name="saveCardName" id="saveCardName" placeholder="Nom de votre carte" value="{{ userData.firstName ~ " " ~ userData.lastName }}" title="nom de la carte" /></div>
+                    </div>
+                </div>
+                <br/><br/>
+                <div>
+                    <input type="submit" value="Valider" class="btn btn-success" style="font-size: 26px;" id="cardSelectSubmit"/>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+</div>

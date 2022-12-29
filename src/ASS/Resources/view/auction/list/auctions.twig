@@ -1,0 +1,92 @@
+<div class="module push-auction auction" v-bind:data-productname="auction.product_name | escapeCote" v-bind:class="classcss"
+     v-bind:data-pid="auction.product_id" v-bind:data-auction-uuid="'auction_'+auction.uuid" v-bind:data-time-start="auction.datatimestart"
+     v-bind:data-time-end="auction.datatimeend" v-bind:data-position="index">
+    <div class="enchere container">
+        <div class="row">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <i class="icon-favorite not-favorite" data-toggle="tooltip" data-placement="right" title="Ajouter aux favoris" v-once></i>
+            {% endif %}
+            <div class="col-xs-12 thumbContent nopadding">
+                <a v-bind:href="auction.product_id | link" class="no-opacity">
+                    <picture v-bind:title="auction.auction_name" v-if="auction.images.length > 0">
+                        {% if templatePageType is defined and templatePageType != 'default' %}
+                        <source media="(min-width: 1200px)" v-bind:srcset="auction.images | imgForList | noprotocol | transf('c_fit,w_555,g_north_east')">
+                        {% endif %}
+                        <source media="(min-width: 768px)" v-bind:srcset="auction.images | imgForList | noprotocol | transf('c_fit,w_470,g_north_east')">
+                        <source media="(min-width: 320px) and (max-width: 767px)" v-bind:srcset="auction.images | imgForList | noprotocol | transf('c_fit,w_735,g_north_east')">{# Full image for small screens that have one auction per row #}
+                        {% if templatePageType is defined and templatePageType != 'default' %}
+                        <img v-bind:alt="auction.auction_name" v-bind:src="auction.images | imgForList | noprotocol | transf('c_fit,w_555,g_north_east')" class="img-responsive">
+                        {% else %}
+                        <img v-bind:alt="auction.auction_name" v-bind:src="auction.images | imgForList | noprotocol | transf('c_fit,w_470,g_north_east')" class="img-responsive">
+                        {% endif %}
+                    </picture>
+                    <picture v-bind:title="auction.auction_name" v-else>
+                        <source media="(min-width: 1200px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/c_scale,h_273/c_crop,w_446,h_273/v1517479904/ressource/thumbnail-default.png">
+                        <source media="(min-width: 1024px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/c_fit,w_526,h_324/v1517479904/ressource/thumbnail-default.png">
+                        <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/c_scale,h_146/c_crop,w_238,h_146/v1517479904/ressource/thumbnail-default.png">
+                        <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/c_scale,h_117/c_crop,w_137,h_117/v1517479904/ressource/thumbnail-default.png">
+                        <img v-bind:alt="auction.auction_name" src="//img.loisirsencheres.fr/loisirs/image/upload/c_scale,h_273/c_crop,w_446,h_273/v1517479904/ressource/thumbnail-default.png" class="img-responsive">
+                    </picture>
+                    <div class="feedbackContainer" v-bind:class="[{ shadow: auction.feedback_nb && auction.feedback_score }]">
+                        <div v-if="auction.feedback_nb && auction.feedback_score">
+                            <template v-for="i in 5">
+                                <img v-if="auction.feedback_score >= (i - 1 + 0.8)" src="{{assetCdn}}/assets/gfx/stars_color_small_2.png" alt="#" />
+                                <img v-else-if="auction.feedback_score >= (i - 1 + 0.2) && auction.feedback_score <= (i - 1 + 0.8)" src="{{assetCdn}}/assets/gfx/picto_half_star-white.png" alt="#" />
+                                <img v-else src="{{assetCdn}}/assets/gfx/stars_white_small.png" alt="#" />
+                            </template>
+                            <span class="scorenb">{{ '{{auction.feedback_score}}' }}/5<span class="hidden-xs"> ({{ '{{auction.feedback_nb}}' }} avis)</span></span>
+                        </div>
+                        <div class="nouveautePictoContainer" v-else-if="auction.hasNewTag == 1">
+                            <img src="{{ assetCdn }}/assets/gfx/picto-nouveautes-orange.png" title="nouveauté" alt="nouveauté" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="moduleTexte moduleTexteAuction col-xs-12">
+                <a v-bind:href="auction.product_id | link">
+                    <div class="texte">
+                        <p class="auctionThumbInfo shortloc" v-if="auction.product_shortloc != null && auction.concatenate == '1'">{{ '{{auction.product_shortloc}}' }}</p>
+                        <p class="auctionThumbTitle">
+                            {{ '{{auction.auction_name}}' }}
+                        </p>
+                    </div>
+                    <div class="prix price-row">
+                        <div class="row">
+                            <div class="time col-sm-6 col-xs-7 nopadding-right-only-xs">
+                                <div v-if="auction.timelefttext">
+                                    {{ '{{ auction.timelefttext }}' }}
+                                </div>
+                                <div v-else>
+                                    <span class="time-placeholder hide">{{ '{{auction.auction_end}}' }}</span>
+                                    <span class="time-countdown">
+                                        <span class="hours">{{ '{{auction.hours}}' }}</span>:<span class="minutes">{{ '{{auction.minutes}}' }}</span>:<span class="seconds">{{ '{{auction.seconds}}' }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="price col-xs-5 col-sm-6 nopadding-left-only-xs">
+                                <span>
+                                    <span class="bid-amount">
+                                        {{ '{{auction.bid_amount | amount}}' }}
+                                    </span> &euro;
+                                </span>
+                            </div>
+                            <div class='col-xs-12' v-if="auction.product_shortprice != null && auction.concatenate">
+                                <span class='shortprice text-right'>{{ '{{auction.product_shortprice}}' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% if withStatus is defined %}
+            <div v-if="auction.lead">
+                <p class="text-success text-center">Vous êtes en tête !</p>
+                <a v-bind:href="auction.product_id | link" class="btn btn-default btn-block text-uppercase">Je suis mon enchère</a>
+            </div>
+            <div v-else>
+                <p class="text-danger text-center">Vous n'êtes plus en tête !</p>
+                <a v-bind:href="auction.product_id | link" class="btn btn-warning btn-block text-uppercase">Je surenchéris !</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

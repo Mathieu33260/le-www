@@ -1,0 +1,25 @@
+<script src="//maps.googleapis.com/maps/api/js?key={{ app['google.config'].mapApiKey }}" async defer></script>
+<script>
+    function initMap() {
+        var myLatLng = {lat:{{location.lat}}, lng:{{location.lng}}};
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map
+        });
+        var mapOptions = {
+            center: myLatLng,
+            zoom: 8,
+            gestureHandling: 'greedy',
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        marker.setMap(map);
+    }
+</script>
+<script>
+$('#staticmap, #staticmap + .openMap').on('click', function(){
+    $('#staticmap, #staticmap + .openMap').hide();
+    $('#map').removeClass('hide');
+    initMap();
+});
+</script>

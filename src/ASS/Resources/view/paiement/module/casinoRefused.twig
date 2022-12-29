@@ -1,0 +1,26 @@
+{% if error is defined and error is iterable and error|length > 0 %}
+    <div class="col-xs-12 col-md-8 casino-refused">
+        <p class="casino-warning">
+            <strong>Votre demande de paiement via Casino n'est pas passée.</strong><br/>
+            Les erreurs de saisies suivantes doivent être corrigées :<br/>
+            {% for msg in error %}
+                - {{ msg }}</br>
+            {% endfor %}
+            Pensez à bien sélectionner l'élément dans la liste des choix proposés.
+        </p>
+    </div>
+{% else  %}
+    <div class="col-xs-12 col-md-8 casino-refused">
+        <p class="casino-warning">Désolé… votre demande de financement pour le paiement en plusieurs fois a été refusée par Banque Casino.</p>
+        <p class="section-title">Pourquoi ma demande a été refusée ?</p>
+        <p>
+            Banque Casino se réserve le droit de refus selon des règles qui lui sont propres, liées au secret bancaire.
+            Loisirs Enchères n’a pas connaissance du ou des motifs de ce refus.<br>
+            <br>
+            Pour en savoir plus, <span data-toggle="modal" data-target="#casinoRgpdModal">vous pouvez visiter cette page.</span><br>
+            <br>
+            Bien évidemment, votre enchère est toujours valable et vous pouvez procéder au paiement en sélectionnant
+            un autre moyen de paiement.
+        </p>
+    </div>
+{% endif %}

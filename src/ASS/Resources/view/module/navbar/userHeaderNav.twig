@@ -1,0 +1,44 @@
+<ul class="dropdown-menu menu dropdown-menu-right nopadding"{% if ariaLabelledby is defined %} aria-labelledby="{{ ariaLabelledby }}"{% endif %}>
+    <li>
+        <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}" title="Remportez une enchère pour débloquer votre première médaille !">
+            <span title="{{ user.email }}">Bienvenue <b>{{ user.firstName }}</b></span>
+            {% if user.nbAuctionPaid <= 0 %}
+                <img src='{{assetCdn}}/assets/gfx/rank0.png?v=20170630' alt="rank0" width="27" />
+            {% elseif user.nbAuctionPaid > 0 and user.nbAuctionPaid < 5%}
+                <img src='{{assetCdn}}/assets/gfx/rank1.png?v=20160707' alt="rank1" />
+            {% elseif user.nbAuctionPaid >= 5 and user.nbAuctionPaid < 10 %}
+                <img src='{{assetCdn}}/assets/gfx/rank2.png?v=20160707' alt="rank2" />
+            {% elseif user.nbAuctionPaid >= 10 and user.nbAuctionPaid < 20 %}
+                <img src='{{assetCdn}}/assets/gfx/rank3.png?v=20160707' alt="rank3" />
+            {% elseif user.nbAuctionPaid >= 20 and user.nbAuctionPaid < 50 %}
+                <img src='{{assetCdn}}/assets/gfx/rank4.png?v=20160707' alt="rank4" />
+            {% elseif user.nbAuctionPaid >= 50 %}
+                <img src='{{assetCdn}}/assets/gfx/rank5.png?v=20160707' alt="rank5" />
+            {% endif %}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('user.profile') }}"> <i class="icon-mon-profil"></i> <span>Mon profil</span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.auctions') }}"><i class="icon-mes-encheres"></i> <span>Mes enchères <user-informations-payment-alert></user-informations-payment-alert></span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.purchase') }}"><i class="icon-mes-achats"></i> <span>Mes achats</span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.favorites') }}"><i class="icon-mes-favoris"></i> <span>Mes favoris</span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.parrainage') }}"><i class="icon-parrainage"></i> <span>Parrainer mes amis</span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.giftcard') }}"><i class="icon-cartes-cadeaux"></i> <span>Mes cartes cadeaux</span></a>
+    </li>
+    <li>
+        <a href="{{ path('user.avantages') }}"><i class="icon-mes-avantage"></i> <span>Mes avantages</span></a>
+    </li>
+    <li class="logout">
+        <a href="{{ path('user_logout') }}"><i class="icon-sign-out"></i> <span>Se déconnecter</span></a>
+    </li>
+</ul>

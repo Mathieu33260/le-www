@@ -1,0 +1,27 @@
+{% if value is defined and value == 1 %}
+    {% set checked = 'checked="checked"' %}
+{% elseif value is defined and value == 0 %}
+    {% set checked = '' %}
+{% elseif field.properties is not empty and field.properties.default is not empty %}
+    {% set checked = 'checked="checked"' %}
+{% else %}
+    {% set checked = '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+<div class="form-group">
+    <div class="checkbox">
+        <span class="radio-inline"><strong>{{ field.label }}</strong></span>
+        <input type="hidden" name="customField[{{ field.id }}]" value="0">
+        <label class="radio-inline" for="customField[{{ field.id }}]">
+            <input type="checkbox" name="customField[{{ field.id }}]" value="1" {{ checked }}>
+        </label>
+        <br>
+        <span><em>{{ information }}</em></span>
+    </div>
+</div>

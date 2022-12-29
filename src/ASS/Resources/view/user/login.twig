@@ -1,0 +1,87 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+{% block moremeta %}
+    {% if referer is not null %}
+        <meta name="robots" content="noindex">
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+<h1>Se connecter</h1>
+<div class="row-no-margin text-center">
+    <facebook-button
+        target-path-default="{{ referer }}"
+    ></facebook-button>
+    <google-button
+        target-path="{{ referer }}"
+    />
+</div>
+<div class="text-center">
+    <p class="socialCgv">En choisissant l'un de ces modes de connexion, vous acceptez <a href="/content/cgu" target="_blank" rel="nofollow">les conditions générales et particulières de prestation de services</a> et <a href="/content/privacy-policy" target="_blank" rel="nofollow">la politique de confidentialité de Loisirs Enchères</a>.</p>
+    <div class="divider">
+        <span class="title">Ou</span>
+        <div class="line"></div>
+    </div>
+</div>
+<div class="login-form">
+    {% if error %}
+        <div class="alert alert-danger">{{ error|trans|raw }}</div>
+    {% endif %}
+    <form id="formUserLogin" role="form" action="{{ path('user_login_check') }}" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">E-mail</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" name="_username" placeholder="E-mail" value="{{ email }}" required="" title="email" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-3 control-label">Mot de passe</label>
+            <div class="col-sm-9">
+                <input type="password" class="form-control" id="password_nomodal" name="_password" placeholder="Mot de passe" value="" title="mot de passe" />
+                <span id="emptyPwdMsg" class='help-block hidden'>Le mot de passe ne peut pas être vide.</span>
+                <input type="hidden" id="connect_form_hidden" name="_target_path" value="{{referer}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                {% include './include/remember-me.twig' %}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <a href="{{ path('user.lostpassword') }}">Mot de passe oublié</a>
+                /
+                <a href="{{ path('user.register') }}" rel="nofollow">Pas encore inscrit ?</a>
+            </div>
+        </div>
+        {% if app.session.get('login_target_path') %}
+            <input type="hidden" name="_target_path" value="{{ app.session.get('login_target_path') }}">
+        {% endif %}
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            if(window.location.hash !== '' && $('#hero-container #connect_form_hidden').val() !== ''){
+                $('#hero-container #connect_form_hidden').val($('#hero-container #connect_form_hidden').val()+window.location.hash);
+            }
+        });
+    </script>
+    <script>
+      $('#formUserLogin').on('submit',function (ev) {
+        if($('#password_nomodal').val() === '') {
+          $('#password_nomodal').parent().addClass("has-error");
+          $('#emptyPwdMsg').removeClass("hidden");
+          ev.preventDefault();
+        }
+      });
+    </script>
+{% endblock %}

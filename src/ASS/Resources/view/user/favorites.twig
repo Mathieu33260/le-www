@@ -1,0 +1,91 @@
+{% extends 'layout/html-user.twig' %}
+{% block title %}Mes favoris{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-12 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8" id="userFavorites">
+            {% if isApp(app.request) %}
+            <button type="button" id="modalUserNav" data-toggle="modal" data-target="#myModalUserNav" class="center-block btn btn-block with-icon">
+                 <span class="text-right">Mon compte</span> <i class="icon-mon-profil text-right"></i>
+            </button>
+            {% endif %}
+            <h1>Mes favoris</h1>
+            <div class="block-separ-top block-separ-bottom">
+                <picture>
+                    <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514452507/banner/wish-liste-877x76.png 1x">
+                    <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514452507/banner/wish-liste-768x187.png 1x">
+                    <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514452507/banner/wish-liste-768x187.png" alt="Cette année, transformez votre liste de favoris en liste de Cadeau de Noël" class="img-responsive" data-toggle="modal" data-target="#modalUserShareWishlist" />
+                </picture>
+            </div>
+            <user-products-favorite></user-products-favorite>
+            <hr class="bleu" />
+            <div id="userSuggestions">
+                <auction-list
+                    :is-app="{{ isApp(app.request)|json_encode() }}"
+                    :use-title="true"
+                    title-text="Ces enchères pourraient vous plaire :"
+                    url="{{ path('user.favorites') }}"
+                    :url-params="{ type: 'auctions' }"
+                    :nb-auctions-increment-default="{{ 3 }}"
+                    :nb-auctions-default="{{ 3 }}"
+                    class-css="col-xs-12 col-s-6 col-lg-4"
+                    :tab-index="1"
+                    :use-more-auctions-btn="false"
+                ></auction-list>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+    {% include 'modals/user/shareWishlist.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+
+            if($('#modalUserShareWishlist').hasClass('in')){
+                hauteurs_deux_colonnes('#modalUserShareWishlist .modal-body .col-xs-12');
+            }
+        };
+    </script>
+    <script>
+        $('#modalUserShareWishlist').on('shown.bs.modal', function (e) {
+            hauteurs_deux_colonnes('#modalUserShareWishlist .modal-body .col-xs-12');
+        });
+        var toCopy  = document.getElementById( 'to-copy' ),
+            btnCopy = document.getElementById( 'copy' ),
+            container = document.getElementById('copiedContainer');
+
+        btnCopy.addEventListener( 'click', function(){
+            toCopy.select();
+
+            if ( document.execCommand( 'copy' ) ) {
+                container.classList.add( 'copied' );
+                var temp = setInterval( function(){
+                    container.classList.remove( 'copied' );
+                    clearInterval(temp);
+                }, 600 );
+            }
+            return false;
+        });
+    </script>
+    {% if app.request.query.has('share') %}
+    <script>
+        $('#modalUserShareWishlist').modal('show');
+    </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layout/html.twig' %}
+{% block moremeta %}
+<meta name="robots" content="noindex">
+{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('faq') }}"><span property="name">FAQ</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Résultats de recherche</span>
+        <meta content="3" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+    <h1>Résultat de recherche</h1>
+    {% embed  'content/faq/search-form.twig' %}
+        {% block h2 %}Effectuer une nouvelle recherche{% endblock %}
+    {% endembed %}
+    <p class="text-muted"><em>{{query.count}} résultat{% if query.count > 1 %}s{% endif %} pour « {{ term }} »</em></p>
+    <ul class="list-unstyled">
+    {% for result in query.results %}
+        <li>
+            <a href="{{ path('faq.section', {categorie: result.categorie.name|escape('sanitize')~'-'~result.categorie.id, section: result.section.name|escape('sanitize')~'-'~result.section.id}) }}#{{ result.name|escape('sanitize')~'-'~result.id }}">{{result.title}}</a><br />
+            <a href="{{ path('faq.categorie', {categorie: result.categorie.name|escape('sanitize')~'-'~result.categorie.id}) }}">{{ result.categorie.name }}</a> > <a href="{{ path('faq.section', {categorie: result.categorie.name|escape('sanitize')~'-'~result.categorie.id, section: result.section.name|escape('sanitize')~'-'~result.section.id}) }}">{{ result.section.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

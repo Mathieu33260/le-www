@@ -1,0 +1,78 @@
+{% if transportType is defined and transportType == 'notincluded' %}
+    {% set User, cityMessage, dateMessage = 'Participant', 'Destination : ', 'Date d\'arrivée : ' %}
+{% elseif isPostPayment is not defined or not isPostPayment %}
+    {% set User, cityMessage, dateMessage = 'Passager', 'Ville de départ : ', 'Date de départ : ' %}
+{% else %}
+    {% set User, cityMessage, dateMessage = 'Personne', 'Destination : ', 'Date d\'arrivée : ' %}
+{% endif %}
+<p class="section-title">Récapitulatif de votre réservation</p>
+<div class="row">
+{% for passenger in passengers %}
+    <div class="col-xs-12 col-sm-6">
+        <span class="section-title">{{ User }} {{ loop.index }}</span>
+        <p>{{ passenger.gender|capitalize }} {{ passenger.firstName }} {{ passenger.lastName }}, {% if passenger.gender == 'm' %}né {% else %}née {% endif %} le {{ passenger.birthDay }}</p>
+    {% if passenger.customFields is defined %}
+        {% for customField in passenger.customFields %}
+            {% if customField.displayValue is defined and customField.displayValue is not empty %}
+                {% set value = customField.displayValue %}
+            {% else %}
+                {% set value = 'Non renseigné' %}
+            {% endif %}
+            <strong>{{ customField.label }}</strong> {{ value|nl2br }}<br>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endfor %}
+</div>
+{% if product.travelType != 'minicruise' %}
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <span class="section-title">Vos coordonnées</span>
+        <ul class="list-unstyled">
+            <li>Numéro de téléphone : {{ reservation.telephone }}</li>
+            <li>Email : {{ reservation.email }}</li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <span class="section-title">Votre demande de réservation</span>
+        <ul class="list-unstyled">
+            {% if (transportType is not defined or (transportType is defined and transportType != 'notincluded')) and reservation.departureCity.location.city is defined %}
+            <li>{{ cityMessage }} {{ reservation.departureCity.location.city }} {{ reservation.departureCity.location.name }}</li>
+            {% endif %}
+            <li>{{ dateMessage }} {{ reservation.departureCity.dateTrip|date('d/m/Y') }}</li>
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% if customFields is defined and customFields is not empty %}
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        {% if product.travelType != 'minicruise' %}<b>Vos demandes supplémentaires :</b>{% endif %}
+        <ul class="list-unstyled">
+            {% for customField in customFields %}
+                {% if customField.displayValue is defined and customField.displayValue is not empty %}
+                    {% set value = customField.displayValue %}
+                {% else %}
+                    {% set value = 'Non renseigné' %}
+                {% endif %}
+                {% if customField.type == 3 %}
+                    {% if value is defined %}
+                        <li><strong>{{ customField.label }}</strong> {{ value }}</li>
+                    {% endif %}
+                {% else %}
+                    <li><strong>{{ customField.label }}</strong> {{ value }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% if product.travelType == 'minicruise' %}
+    <div class="col-xs-12 col-sm-6">
+        <span class="section-title">Votre demande de réservation :</span>
+        <ul class="list-unstyled">
+            {% if reservation.departureCity.location.city is defined %}<li>{{ cityMessage }}<i>{{ reservation.departureCity.location.city }} {{ reservation.departureCity.location.name }}</i></li>{% endif %}
+            <li>{{ dateMessage }}<i>{{ reservation.departureCity.dateTrip|date('d/m/Y') }}</i></li>
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

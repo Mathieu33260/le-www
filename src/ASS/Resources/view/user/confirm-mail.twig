@@ -1,0 +1,10 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Renvoyer mail de confirmation{% endblock %}
+
+{% block main_content %}
+    <h3 class="blue-bg">Renvoyer mail de confirmation</h3>
+    {% embed './form/changeEmail.twig' with {
+        'action': 'user.mail', 'emailForm': mailForm, 'formClass': 'form-horizontal', 'labelClass': 'col-sm-3 control-label', 'inputClass': 'form-control', 'inputContainerClass': 'col-sm-5 col-xs-12', 'submitContainerClass':'col-sm-4 col-xs-12'
+    } %}{% endembed %}
+{% endblock %}

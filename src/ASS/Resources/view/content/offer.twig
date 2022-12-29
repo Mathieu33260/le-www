@@ -1,0 +1,25 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Vous avez aimé{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Vous avez aimé</h1>
+    <p class="block-separ-bottom">Ces enchères sont terminées mais elles peuvent recommencer à tout moment.</p>
+    <div class="row">
+    {% for product in products %}
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 offer">
+            <a href="/product/{{ product.id }}">
+                {% if product._links.images|length > 0 %}
+                    <img src="{{ product._links.images[0].url|noprotocol|cdnUrl }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" />
+                {% else %}
+                    <img src="{{ "https://img.loisirsencheres.fr/loisirs/image/upload/v1517479904/ressource/thumbnail-default.png"|noprotocol }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" />
+                {% endif %}
+            </a>
+            <div class="description">
+                <h2><a href="/product/{{ product.id }}">{{ product.name }} - {{ product.shortLoc }}</a></h2>
+            </div>
+            <a href="/product/{{ product.id }}" class="btn btn-default btn-block">Consulter</a>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

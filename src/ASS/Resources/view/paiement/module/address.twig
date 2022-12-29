@@ -1,0 +1,119 @@
+{% if (order.gender is defined and order.gender == 'm') %}
+    {% set checked0, checked1 = 'checked="checked"', '' %}
+{% elseif order.gender is defined and order.gender == 'mme' %}
+    {% set checked0, checked1 = '', 'checked="checked"' %}
+{% else %}
+    {% set checked0, checked1 = '', '' %}
+{% endif %}
+
+<p class="section-title">Adresse de livraison</p>
+<div class="panel-body">
+    <fieldset>
+        <input type="hidden" name="delivery" value="1">
+        <div class="row">
+            <div class="form-group">
+                <div class="radio">
+                    <div class="col-sm-2">
+                        <span><strong>Civilité *</strong></span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label class="radio-inline" for="genderM">
+                            <input autocomplete="off" type="radio" name="gender" id="genderM" value="m" required {{ checked0 }}> M.
+                        </label>
+                        <label class="radio-inline" for="genderMme">
+                            <input autocomplete="off" type="radio" name="gender" id="genderMme" value="mme" required {{ checked1 }}> Mme.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Prénom</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control" name="firstName" autocomplete="off" value="{{ order.firstName }}" required>
+            </div>
+            <div class="col-sm-2">
+                <label>Nom</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control" name="lastName" autocomplete="off" value="{{ order.lastName }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>N° de la rue</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="number" class="form-control" name="houseNumber" autocomplete="off" value="{{ order.location.houseNumber }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Nom de la rue</label>
+            </div>
+            <div class="form-group col-sm-10">
+                <input type="text" class="form-control" name="street" autocomplete="off" value="{{ order.location.street }}" required maxlength="35">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Complément d'adresse</label>
+            </div>
+            <div class="form-group col-sm-10">
+                <input type="text" class="form-control" value="{{ order.location.addressSupplement }}" name="addressSupplement" autocomplete="off" maxlength="35">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Boîte postale</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control" name="mailbox" autocomplete="off" value="{{ order.location.mailbox }}">
+            </div>
+            <div class="col-sm-2">
+                <label>Code postal</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="number" pattern="[0-9]{5}" title="Entrez un code postal à 5 chiffres" class="form-control address__zipcode" name="zipCode" id="zipCode" autocomplete="off" value="{{ order.location.zipCode }}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Ville</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control" name="city" autocomplete="off" value="{{ order.location.city }}" required maxlength="35">
+            </div>
+            <div class="col-sm-2">
+                <label>Pays</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control" name="country" autocomplete="off" value="France" disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Tel fixe</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control input-tel" name="phone" id="phone" autocomplete="off" value="{{ order.phone }}" maxlength="10">
+            </div>
+            <div class="col-sm-2">
+                <label>Tel portable</label>
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" class="form-control input-tel" name="mobile" id="mobile" autocomplete="off" value="{{ order.mobile }}" required maxlength="10">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label>Email</label>
+            </div>
+            <div class="form-group col-sm-10">
+                <input type="text" class="form-control" name="email" autocomplete="off" value="{{ order.email }}" required>
+            </div>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,20 @@
+<div class="row padding-text-mobile">
+    <div class="col-md-6">
+        <h2 class="title-h2-page-quality"><b>Le principe</b></h2>
+        <p>Loisirs Enchères propose gratuitement à ses membres des  loisirs et de la billetterie culturelle aux enchères. Notre concept vous permet d’accéder à des bons plans vacances ou détente tout en expérimentant l’adrénaline et la chance du jeu. Pour cela, il suffit de créer votre profil et d’enchérir en espérant remporter l’enchère.
+        {% if forMobile is not defined or forMobile==false  %}
+            Qu’attendez-vous pour en profiter ? <a href="{{ path('all.page') }}">Voir toutes nos enchères</a>
+        {% endif %}</p>
+    </div>
+    <div class="col-md-6">
+        <h2 class="title-h2-page-quality"><b>Enchérissez gratuitement : notre petit plus qui fait la différence</b></h2>
+        <p>Contrairement aux autres sites d'enchères au centime, enchérir sur Loisirs Enchères, c’est gratuit ! Une enchère non remportée est considérée comme perdue, vous n’avez rien à débourser. Votre mise ne sera encaissée que si vous avez remporté l’enchère.</p>
+    </div>
+</div>
+<div class="row padding-text-mobile">
+    <div class="col-md-6">
+        <h2 class="title-h2-page-quality"><b>Le prix de réserve, un gage de qualité</b></h2>
+        <p>Un prix de réserve caché est appliqué sur certaines enchères. Le prix de réserve caché est un prix minimum en dessous duquel l'enchère n'est pas attribuée. Si la dernière mise ne dépasse pas ce prix, l'enchère n'est pas adjugée.</p>
+        <p>Ce système constitue une garantie supplémentaire pour vous de bénéficier d'une prestation de qualité, quel que que soit le prix auquel vous avez remporté l'enchère, en permettant au prestataire de recevoir une rétribution suffisante pour assurer cette prestation.</p>
+    </div>
+</div>

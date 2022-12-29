@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<items>
+{% for auction in auctions %}
+    <item>
+        <description>{{ auction['product_description']|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 250) }}</description>
+        <brand>{{ auction['merchant_name'] }}</brand>
+        <brand_logo>{{ auction['merchant_logo'] }}</brand_logo>
+        <availability>in stock</availability>
+        <id>{{ auction['auction_product_id'] }}</id>
+        <imageurl>{{ auction['images'][0] }}</imageurl>
+        <price>{{ auction['product_publicPrice'] }}</price>
+        <short_price>{{ auction['product_shortprice'] }}</short_price>
+        <link>https://www.loisirsencheres.com/product/{{ auction['auction_product_id'] }}</link>
+        {% for key, tag in auction['tags'] if key < 5 %}
+        <category{{ loop.index }}>{{ tag }}</category{{ loop.index }}>
+        {% endfor %}
+        <product_type>{{ auction['tags'][0] }}</product_type>
+        <title>{% if auction['product_shortName'] != '' %}{{ auction['product_shortName'] }}{% else %}{{ auction['product_name'] }}{% endif %}</title>
+        <seatitle>{{ auction['product_seatitle'] }}</seatitle>
+        <starttime>{{ auction['auction_start'] }}</starttime>
+        <endtime>{{ auction['auction_end'] }}</endtime>
+        {% if auction['product_shortloc'] != '' %}
+        <location_city>{{ auction['product_shortloc'] }}</location_city>
+        {% else %}
+        <location_city>{{ auction['location_city'] }}</location_city>
+        {% endif %}
+        <location_country>{{ auction['location_country'] }}</location_country>
+        <offerer>Loisirs Enchères</offerer>
+        <offerer_logo>https://www.loisirsencheres.com/assets/gfx/logo3.png?v=20170125</offerer_logo>
+        <price_current>{% if auction['bid_amount']|length > 0 %}{{ auction['bid_amount'] / 100 }}{% else %}0{% endif %}</price_current>
+        <administration_cost>{{ auction['cost_amount'] / 100 }}</administration_cost>
+        <additional_image_link>{% for key, image in auction['images'] %}{% if loop.first == false %}{{ image }}{% if loop.last == false %},{% endif %}{% endif %}{% endfor %}</additional_image_link>
+        <condition>new</condition>
+    </item>    
+{% endfor %}
+</items>

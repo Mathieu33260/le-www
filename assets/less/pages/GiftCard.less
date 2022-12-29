@@ -1,0 +1,156 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+
+.giftcard-offer {
+  height: 400px;
+  text-align: center;
+  padding-top: 100px;
+  background-repeat: no-repeat;
+  font-size: 2.1em;
+  color: @white;
+  font-family: 'proxima_nova_bold';
+  text-decoration: none;
+  @media (min-width: 480px) {
+    height: 600px;
+  }
+  &.to-offer {
+    background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466584554/ressource/fond-je-offre-carte-cadeau.jpg');
+  }
+  &.received {
+    background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466685906/ressource/fond-je-recu-carte-cadeau.jpg');
+  }
+  .btn-transparent, .btn-transparent:hover, .btn-transparent:focus, .btn-transparent:active {
+    border: 2px solid;
+  }
+}
+
+/**********************************************************************************************************************/
+/************************************************** Carte cadeau reçu *************************************************/
+/**********************************************************************************************************************/
+.header_program_gift{
+  background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/v1449754878/header_program_carte_cadeau2_bmo6uy.jpg');
+  height: 300px;
+  color: @white;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 24px;
+  padding: 170px 0px 100px 0px;
+}
+
+#formulaire {
+  padding: 0;
+}
+
+
+/**********************************************************************************************************************/
+/************************************************** Offrir une carte cadeau *************************************************/
+/**********************************************************************************************************************/
+#giftcard {
+  header {
+    border-right: 15px solid @beige;
+    border-left: 15px solid @beige;
+    color: @black_light;
+    position: relative;
+    .icons {
+      margin-bottom: 0.5em;
+      > div {
+        font-size: 0.8em;
+      }
+      .media {
+        line-height: 53px;
+        margin-bottom: 1.2em;
+        .media-left.visible-xs {
+          @media (max-width: @max-width-xs) {
+            display: table-cell !important;
+          }
+        }
+        .media-body {
+          @media (max-width: @max-width-xs) {
+            vertical-align: middle;
+          }
+          @media (min-width: @min-width-sm) {
+            text-align: center;
+          }
+        }
+      }
+      .media-body {
+        line-height: normal;
+      }
+    }
+    .social-link {
+      margin-top: 2em;
+      display: inline-block;
+      i {
+        border-radius: 100%;
+        width: 42px;
+        height: 42px;
+        background: @gold_christmas;
+        color: @white;
+        text-align: center;
+        line-height: 42px;
+      }
+    }
+    .headerImgContainer {
+      line-height: 228px;
+    }
+  }
+  h1 {
+    font-weight: bold;
+    font-size: 1.9em;
+    margin-bottom: 31px;
+    color: @gold_christmas;
+    margin-top: 0.8em;
+    @media (min-width: 1024px){
+      margin-top: 20px;
+    }
+    @media (min-width: @min-width-lg){
+      margin-top: 42px;
+    }
+  }
+  h2 {
+    padding: 15px 0 0;
+    margin-bottom: 0.5em;
+    @media (min-width: 1024px) {
+      margin-bottom: 0;
+    }
+    span {
+      font-size: 0.58em;
+      display: block;
+      @media (min-width: 1024px) {
+        display: initial;
+      }
+    }
+  }
+  form {
+    label {
+      font-weight: normal;
+      font-size: 1em;
+      color: @grey_light;
+    }
+    input, textarea {
+      background: @beige;
+      border-color: @grey;
+    }
+    .block_etape {
+      .background-blanc;
+      padding: 0 15px;
+      &.first {
+        padding: 0;
+        h2 {
+          padding-left: 15px;
+        }
+        label {
+          cursor: pointer;
+          img {
+            width: 80%;
+          }
+        }
+      }
+      &.info_gift_card {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: center;
+      }
+    }
+  }
+}

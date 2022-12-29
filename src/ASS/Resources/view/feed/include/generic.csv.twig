@@ -1,0 +1,18 @@
+{# remove indents to clean csv #}
+{% spaceless %}
+{% if items|length > 0 %}{% for key in items[0]|keys %}{{ key }};{% endfor %}RETURN
+{# content #}
+{% for item in items %}
+{% for val in item %}
+{% if val is iterable and val.type == 'description' %}
+{# type description, we clean content #}
+"{{ val.value|raw|striptags|trim|trim('"')|slice(0, 250) }}";
+{% else %}
+{# no type, we display raw content #}
+"{{ val }}";
+{% endif %}
+{% endfor %}
+RETURN
+{% endfor %}
+{% endif %}
+{% endspaceless %}

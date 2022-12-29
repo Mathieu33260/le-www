@@ -1,0 +1,49 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Validation de votre email - {{parent()}}{% endblock %}
+{% block moremeta %}
+    <meta name="robots" content="noindex">
+{% endblock %}
+{% block breadcrumb_content %}{{parent()}}{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Validation de votre email</span>
+        <meta content="2" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="alert alert-success col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 text-center" role="alert">Votre adresse email a bien été validé.</div>
+    </div>
+    {% if productId is defined and productId is not null and productId != '' %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-2 col-md-offset-4 col-md-4">
+                <a href="{{ path('product.auction', {'id': productId}) }}" class="btn btn-primary center-block">Continuer sur le site</a>
+            </div>
+            <div class="visible-xs col-xs-12"><br /></div>
+            <div class="col-xs-12 col-sm-4 visible-xs visible-sm">
+                <a href="comloisirsencheres://product/{{productId}}?refreshuser=1" class="btn btn-primary center-block">Ouvrir l'app</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        dataLayer.push({
+            'event': 'registrationConfirmed',
+            'userId' : '{{ userId }}'
+        });
+        ga('send', 'pageview', {title: "Acount validated",page: "/user/registration-confirm-app"});
+    </script>
+{% endblock %}

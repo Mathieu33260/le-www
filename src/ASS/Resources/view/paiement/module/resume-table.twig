@@ -1,0 +1,76 @@
+<table class="table table-condensed resume-table">
+    <tr class="text-muted">
+        <td class="nopadding-left">{% if productType == 'auction' %}Enchère{% elseif productType == 'giftcard' %}Carte cadeau{% endif %}</td>
+        <td align="right">
+            {% if productType == 'giftcard' %}
+                {% set lineOneAmount = payment.amount / 100 %}
+            {% else %}
+                {% if payment is not defined or payment.paymentType is not defined or payment.paymentType != 'buy_now' %}
+                    {% set lineOneAmount = winningBid.amount / 100 %}
+                {% else %}
+                    {% set lineOneAmount = (winningBid.amount + auction.cost) / 100 %}
+                {% endif %}
+            {% endif %}
+            {{ lineOneAmount }}&nbsp;&euro;
+        </td>
+        <td class="nopadding-right"></td>
+    </tr>
+    {% if productType == 'auction' and (payment is not defined or payment.paymentType is not defined or payment.paymentType != 'buy_now') %}
+        <tr class="text-muted">
+            <td class="nopadding-left">Frais de dossier</td>
+            <td align="right">+ {{ (auction['cost']/100) }} &euro;</td>
+            <td class="nopadding-right"></td>
+        </tr>
+    {% endif %}
+    {% if addedInsurance is defined %}
+    <tr data-type="insurance" class="text-muted insurance{% if addedInsurance is not defined or (addedInsurance is defined and addedInsurance is empty) %} hide{% endif %}" data-value="{% if addedInsurance is defined and addedInsurance.sellPrice is defined %}{{addedInsurance.sellPrice}}{% endif %}">
+        <td class="nopadding-left denomination">{% if addedInsurance is defined and addedInsurance.sellPrice is defined and addedInsurance.sellPrice == 0 %}Aucune assurance{% else %}Assurance{% if addedInsurance is defined and addedInsurance.insuranceType is defined and possibleInsurances[addedInsurance.insuranceType].modal is defined and 'Premium' in possibleInsurances[addedInsurance.insuranceType].modal %} premium{% endif %}{% endif %}</td>
+        <td align="right">+ <span class="amount">{% if addedInsurance is defined and addedInsurance.sellPrice is defined %}{{addedInsurance.sellPrice/100}}{% else %}0{% endif %}</span> &euro;</td>
+        <td class="nopadding-right"></td>
+    </tr>
+    {% endif %}
+    {% if option is defined %}
+        <tr class="text-muted {% if option.send is null or option.send.amount is not defined %}hide {% endif %}option offer-good">
+            <td class="nopadding-left name">{% if option.send is not null and option.send.amount is defined %}Option : offrir un bon{% endif %}</td>
+            <td align="right">+ <span class="amount">{% if option.send is not null and option.send.amount is defined %}{{ option.send.amount/100 }}{% endif %}</span> &euro;</td>
+            <td class="nopadding-right"></td>
+        </tr>
+    {% endif %}
+    <tr class="js-percentDiscounts"></tr>
+    {% if coupon != null and coupon.type == 'percent' %}
+        <tr data-type="code" class="text-muted border-top js-percentcoupons" data-value="{% if coupon != null %}{{ coupon.code }}{% elseif promocode != null %}{{ promocode.code }}{% endif %}">
+            <td class="nopadding-left">
+                    -{{ (coupon.amount/100) }}% avec le code {{ coupon.code|upper }}
+                    {% if coupon.discountLimit is not empty and coupon.discountLimit != 0 %}
+                        <br>({{ (coupon.discountLimit/100) }} &euro; de réduc. max.)
+                    {% endif %}
+            </td>
+            <td align="right">-
+                <span class="amount">{{- (discountValue/100) -}}</span> &euro;
+            </td>
+            <td class="nopadding-right text-right">{% if confirmation == false %}<i class="icon-close"></i>{% endif %}</td>
+        </tr>
+    {% endif %}
+    {% if productType == 'auction' %}
+    {% endif %}
+    {% if (coupon != null and coupon.type == 'fixed') or promocode != null %}
+    <tr data-type="code" class="text-muted" data-value="{% if coupon != null %}{{ coupon.code }}{% elseif promocode != null %}{{ promocode.code }}{% endif %}">
+        <td class="nopadding-left">Code promo «{% if promocode != null %}{{ promocode.code|upper }}{% elseif coupon != null %}{{ coupon.code|upper }}{% endif %}»</td>
+        <td align="right">- {% if promocode != null %}{{ (promocode.amount/100) }}{% elseif coupon != null %}{{ (coupon.amount/100) }}{% endif %} &euro;</td>
+        <td class="nopadding-right text-right">{% if confirmation == false %}<i class="icon-close"></i>{% endif %}</td>
+    </tr>
+    {% endif %}
+    <tr class="js-lastDiscounts"></tr>
+    {% if cartecadeau > 0 %}
+        <tr data-type="debit" class="text-muted debit border-top" data-value="{{ (cartecadeau/100) }}">
+            <td class="nopadding-left">Carte cadeau</td>
+            <td align="right">- {{ (cartecadeau/100) }} &euro;</td>
+            <td class="nopadding-right text-right">{% if confirmation == false %}<i class="icon-close"></i>{% endif %}</td>
+        </tr>
+    {% endif %}
+    <tr class="total-price">
+        <td class="nopadding-left">TOTAL</td>
+        <td align="right"><span class="total">{{ payment['amount']/100 }}</span> &euro;</td>
+        <td class="nopadding-right"></td>
+    </tr>
+</table>

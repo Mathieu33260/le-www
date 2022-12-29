@@ -1,0 +1,62 @@
+{% if not isApp(app.request) %}
+    {% include './paiement/include/gtm.twig' %}
+{% else %}
+    <script>
+        firebase_logEvent('ecommerce_purchase', {
+            value: {{ amount/100 }}.00,
+            currency: 'EUR',
+            transaction_id: 'P{{ paymentId }}'
+        });
+    </script>
+{% endif %}
+
+{% if eulerianPaymentWeb is defined and eulerianPaymentWeb is not empty %}
+    <script>
+        // App supports native tag
+        if (window.eulerianNativeTagPaymentV1) {
+            var eulerianDataEncoded = "{{ eulerianPaymentNatif | raw }}";
+            window.eulerianNativeTagPaymentV1.trackEulerian('payment', eulerianDataEncoded);
+        } else {
+            // Load Eulerian tracker asyncrhonously, then send transaction data
+            loadJs('{{ eulerianUrl }}/ea.js', function() {
+                EA_collector ([
+                    "ref",                  "{{eulerianPaymentWeb['ref']}}"
+                    ,"amount",              "{{eulerianPaymentWeb['amount']}}"
+                    ,"uid",                 "{{eulerianPaymentWeb['uid']}}"
+                    ,"payment",             "{{eulerianPaymentWeb['payment']}}"
+                    ,"currency",            "{{eulerianPaymentWeb['currency']}}"
+                    ,"newcustomer",         "{{eulerianPaymentWeb['newcustomer']}}"
+                    ,"pagegroup",           "{{eulerianPaymentWeb['pagegroup']}}"
+                    ,"code-promo",          "{{eulerianPaymentWeb['code-promo']}}"
+                    ,"nom_code-promo",      "{{eulerianPaymentWeb['nom_code-promo']}}"
+                    ,"montant_code-promo",  "{{eulerianPaymentWeb['montant_code-promo']}}"
+                    ,"margin",              "{{eulerianPaymentWeb['margin']}}"
+                    ,"nb-encheres-gagnant", "{{eulerianPaymentWeb['nb-encheres-gagnant']}}"
+                    ,"nb-users-sur-enchere","{{eulerianPaymentWeb['nb-users-sur-enchere']}}"
+                    ,"uid",                 "{{eulerianPaymentWeb['uid']}}"
+                    ,"email",               "{{eulerianPaymentWeb['email']}}"
+                    ,"profile",             "{{eulerianPaymentWeb['profile']}}"
+                    ,"path",                "{{eulerianPaymentWeb['path']}}"
+                {%  if eulerianPaymentWeb['optin-mail'] is defined %}
+                    ,'optin-mail',          "{{eulerianPaymentWeb['optin-mail']}}"
+                {% endif %}
+                {%  if eulerianPaymentWeb['optin-nl'] is defined %}
+                    ,'optin-nl',            "{{eulerianPaymentWeb['optin-nl']}}"
+                {% endif %}
+                {%  if eulerianPaymentWeb['optin-sms'] is defined %}
+                    ,'optin-sms',           "{{eulerianPaymentWeb['optin-sms']}}"
+                {% endif %}
+                {%  if eulerianPaymentWeb['edev'] is defined %}
+                    ,"edev", "{{eulerianPaymentWeb['edev']}}"
+                {% endif %}
+                    // product don't use index, ea SDK needs order
+                    ,"prdref",      "{{eulerianPaymentWeb['prdr0']}}"
+                    ,"prdamount",   "{{eulerianPaymentWeb['prda0']}}"
+                    ,"prdquantity", "{{eulerianPaymentWeb['prdq0']}}"
+                    ,"prdname",     "{{eulerianPaymentWeb['prdn0']}}"
+                    ,"prdgroup",    "{{eulerianPaymentWeb['prdg0']}}"
+                ]);
+            });
+        }
+    </script>
+{% endif %}

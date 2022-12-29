@@ -1,0 +1,153 @@
+<script>
+    function removeOptionInResumeTable(){
+        // Remove option in resume table
+        if($('.resume-table .option.offer-good .amount').text() !== ''){
+            if($('.resume-table .option.offer-good').hasClass('hide') === false){
+                $('.resume-table .total').text(parseInt($('.resume-table .total').text())-parseInt($('.resume-table .option.offer-good .amount').text()));
+            }
+        }
+        if(!$('.resume-table .option.offer-good').hasClass('hide')){
+            $('.resume-table .option.offer-good').addClass('hide');
+        }
+        positioning_submit();
+    }
+
+    $('#wing').on('hidden.bs.collapse', function () {
+        $('.wing').find('.btn-default i').switchClass( "icon-arrow-up", "icon-arrow-down", 1000, "easeInOutQuad" );
+        $(this).find('.addoption.btn-register').addClass('btn-primary').removeClass('btn-register').text('AJOUTER');
+        removeAttrRequired($(this).find('.option-item.active').find('.form'));
+        $(this).find('.option-item.active').switchClass('active','no-active',500, "easeInOutQuad" );
+        $(this).find('.option-item').removeClass('no-select');
+        $(this).find('.option-item').find('.form').addClass('hide');
+        $("input[name='option[send]']").val('');
+        // Remove option in resume table
+        removeOptionInResumeTable();
+    });
+    $('#wing').on('show.bs.collapse', function () {
+        $('.wing btn-default').find('i').switchClass( "icon-arrow-down", "icon-arrow-up", 1000, "easeInOutQuad");
+    });
+    $('#wing').on('shown.bs.collapse', function () {
+        positioning_submit();
+    });
+
+    // Chose an option
+    removeFromAjax = {% if option.send is not null and error == false %}true{% else %}false{% endif %};
+    function optionAction(){
+        if($(this).hasClass('btn-register')){ // remove option
+            removeOption();
+            if(removeFromAjax){
+                removeFromAjax = false;
+                $.ajax({
+                    method: "GET",
+                    data: { operation: 'delete', type: 'option' }
+                }).fail(function() {
+                    location.reload();
+                });
+            }
+        }
+        else { // select option
+            // Remove current option
+            removeOption();
+            var item = $(this).parents('.option-item');
+            var option = $(this).data('option');
+            var amount = item.data('amount');
+            var value = $(this).data('value');
+            $("input[name='option["+option+"]']").val(value);
+
+            // If resume table has option
+            if(!$('.resume-table .option.offer-good').hasClass('hide')){
+                $('.resume-table .total').text(parseInt($('.resume-table .total').text())-parseInt($('.resume-table .option.offer-good .amount').text()));
+            }
+
+            // Add option in resume table
+            $('.resume-table .option.offer-good .name').text("Option : "+item.parents('.collapse').data('name'));
+            $('.resume-table .option.offer-good .amount').text(amount);
+            $('.resume-table .option.offer-good').removeClass('hide');
+            $('.resume-table').find('.total').text(parseInt($('.resume-table').find('.total').text())+amount);
+
+            // Change style other value for this option
+            $(this).parents('.panel-body').find('.addoption.btn-register').addClass('btn-primary').removeClass('btn-register').text('AJOUTER');
+            removeAttrRequired($(this).parents('.panel-body').find('.option-item.active').find('.form'));
+            // Hide form
+            $(this).parents('.panel-body').find('.option-item.active').find('.form').addClass('hide');
+            $(this).parents('.panel-body').find('.option-item').not(item).addClass('no-select');
+            $(this).parents('.panel-body').find('.option-item').switchClass('active','no-active',500, "easeInOutQuad" );
+
+            // Show form
+            item.find('.form').removeClass('hide');
+
+            // Change style for current option
+            $(this).addClass('btn-register').removeClass('btn-primary').text('RETIRER');
+            item.switchClass('no-active','active',500, "easeInOutQuad" );
+            item.removeClass('no-select');
+            addAttrRequired(item.find('.form'));
+            $( "#openDate" ).datepicker({
+                option: 'fr',
+                minDate: '4',
+                dateFormat: 'yy-mm-dd'
+            });
+            positioning_submit();
+        }
+        return false;
+    }
+    $(document).on('click','#wing .addoption', optionAction);
+    function removeOption(){
+        var currentOption = $('#wing').find('.addoption.btn-register');
+        if(currentOption.length){
+            var item = currentOption.parents('.option-item');
+            var option = currentOption.data('option');
+            var amount = item.data('amount');
+            $("input[name='option["+option+"]']").val('');
+            currentOption.addClass('btn-primary').removeClass('btn-register').text('AJOUTER');
+            removeAttrRequired(currentOption.parents('.option-item.active').find('.form'));
+
+            // Remove option in resume table
+            removeOptionInResumeTable();
+
+            $('#submitblock').find('.total').text(parseInt($('#submitblock').find('.total').text())-amount);
+
+            // Hide form
+            item.find('.form').addClass('hide');
+
+            currentOption.parents('.option-item').switchClass('active','no-active',500, "easeInOutQuad" );
+            currentOption.parents('.panel-body').find('.option-item').removeClass('no-select');
+        }
+    }
+</script>
+<script>
+    // Show or hide option description
+    $(document).on('click','#wing .descripion p', function() {
+        if (getWidth() < 1200) {
+            if($(this).find('.visible-lg').length){
+                $(this).find('.visible-lg').removeClass('visible-lg');
+                $(this).find('.hidden-lg').addClass('hide');
+            }
+            else {
+                $(this).find('.hide').siblings('span').addClass('visible-lg');
+                $(this).find('.hide').removeClass('hide');
+            }
+            positioning_submit();
+        }
+    });
+</script>
+<script>
+    $('#sendDirectlyCustomMessage, #sendSelfCustomMessage, #freeCardCustomMessage').keyup(function(){
+        formLimitsCharacters({
+            input: $(this),
+            limit: 80,
+            substr: true
+        });
+    });
+</script>
+{% if option.send is not null %}
+<script>
+    $(document).ready(function(){
+        addAttrRequired($('#wing').find('.option-item.active .form'));
+        $( "#openDate" ).datepicker({
+            option: 'fr',
+            minDate: '4',
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+{% endif %}

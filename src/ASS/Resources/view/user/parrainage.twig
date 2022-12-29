@@ -1,0 +1,270 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Parrainer mes ami(e)s{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-10 col-xs-offset-1 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8{% if app.request.get('onlycontent') is not null %} paddingtop1{% endif %}" id="parrainage">
+            {% if app.request.get('onlycontent') is null %}
+            {% include 'user/template/mobileMenu.twig' %}
+            <div class="row">
+                <h1>Parrainer mes ami(e)s</h1>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="nopadding-left-only nopadding-right-only col-xs-12 module">
+                            <img src="{{assetCdn}}/assets/img/parrainage/gagnez-jusqu-a-200-euro.png" alt="Gagnez jusqu'à 200 euro" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1 intro">
+                            <p>Invitez vos proches à rejoindre la communauté Loisirs Enchères. Dès que l'un d'eux règlera sa première enchère<sup>*</sup>, vous recevrez 10 euros ! <a href="#" data-toggle="modal" data-target="#modalparrainage">En savoir plus >></a></p>
+                        </div>
+                    </div>
+                    <p class="tt-hint">* pour tout règlement minimum de 15€ dans les 31 jours suivant l'inscription</p>
+                </div>
+            </div>
+            {% if godchilds|length > 0 %}
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>Mes filleuls</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped nomargin-bottom">
+                            <thead>
+                                <tr>
+                                    <th class="background-bleu text-center">Date d'envoi</th>
+                                    <th class="background-bleu text-center">Email</th>
+                                    <th class="background-bleu text-center">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for godchild in godchilds %}
+                                <tr{% if loop.index > 3 %} class="hide"{% endif %}>
+                                    <td class="text-center">{{ godchild.created|date('d/m/Y') }}</td>
+                                    <td class="text-center">{{ godchild.email }}</td>
+                                    <td class="text-center">
+                                    {% if godchild.status == "1" or godchild.status == "2" %}
+                                        <strong>Inscrit</strong>
+                                    {% elseif godchild.status == '3' %}
+                                        <strong>Enchère remportée</strong>
+                                    {% elseif godchild.status == '4' %}
+                                        <strong class="text-info">Filleu(e) confirmé(e)</strong><br />
+                                        (10€ ont été crédités sur votre <a href="{{ path('user.avantages') }}" class="cagnotte text-info"><u>Cagnotte</u></a>)
+                                    {% else %}
+                                        <strong>En attente d'inscription</strong>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if godchilds|length > 3 %}
+                        <div class="text-right more">
+                            <a class="btn-add btn text-center with-icon" href=""><span>Voir plus</span> <i class="icon-add"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h2>Pour parrainer, choisissez votre option préférée :</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="loader col-xs-12 text-center">
+                    <img src="{{assetCdn}}/assets//gfx/loader.gif?v=20170307" alt="chargement" width="64" />
+                </div>
+            </div>
+            <div class="row hide">
+                <div class="col-xs-12">
+                    <h2 class="option row">
+                        <span class="col-xs-3 col-sm-2 col-md-2 nopadding-right col-lg-2"><img src="{{assetCdn}}/assets/img/parrainage/option-1.png" alt="option 1" /></span><span class="background-bleu col-xs-9 col-sm-10 col-md-8 nopadding-left">
+                            <span class="background-bleu">Invitez vos proches par mail</span>
+                        </span>
+                    </h2>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1">
+                    {{ form_start(parrainageForm) }}
+                    <div class="form-group row">
+                        <div class="input-group col-xs-12">
+                            {{ form_widget(parrainageForm.godson) }}
+                            <div class="input-group-addon hidden-xs">
+                                <i class="icon-faq" data-toggle="tooltip" data-placement="top" title="Entrez les adresses de vos proches en les séparant par une virgule"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-xs-12">
+                            {{ form_widget(parrainageForm.message) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group row">
+                                <div class="input-group col-xs-11">{{ form_widget(parrainageForm.firstName) }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group row">
+                                <div class="input-group col-xs-12">{{ form_widget(parrainageForm.lastName) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row module">
+                        <div class="col-xs-12 text-center">
+                            {{ form_end(parrainageForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row hide" id="share">
+                <div class="col-xs-12">
+                    <h2 class="option row">
+                        <span class="col-xs-3 col-sm-2 col-md-2 nopadding-right col-lg-2"><img src="{{assetCdn}}/assets/img/parrainage/option-2.png" alt="option 2" /></span><span class="background-bleu col-xs-9 col-sm-10 col-md-8 nopadding-left">
+                            <span>Invitez vos contacts facebook et twitter</span>
+                        </span>
+                    </h2>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="row">
+                        <div class="col-xs-6 text-center">
+                            <a href="" target="popup" data-popupname="Partager sur facebook" class="facebook">
+                                <img src="{{assetCdn}}/assets/img/parrainage/facebook.png" alt="inviter par facebook" /><br />
+                                Invitation par Facebook
+                            </a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <a target="popup" href="" data-popupname="Partager sur twitter" class="twitter">
+                                <img src="{{assetCdn}}/assets/img/parrainage/twitter.png" alt="inviter par twiiter" /><br />
+                                Invitation par Twitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row hide">
+                <div class="col-xs-12">
+                    <h2 class="option row">
+                        <span class="col-xs-3 col-sm-2 col-md-2 nopadding-right col-lg-2"><img src="{{assetCdn}}/assets/img/parrainage/option-3.png" alt="option 3" /></span><span class="background-bleu col-xs-9 col-sm-10 col-md-8 nopadding-left">
+                            <span class="background-bleu">Invitation par partage de lien personnalisé</span>
+                        </span>
+                    </h2>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="link" class="col-xs-12 col-sm-6 control-label">Partagez votre lien personnel :</label>
+                            <div class="col-xs-12 col-sm-6">
+                                <input type="url" class="form-control" id="link" name="link" value="{{user.godfatherLink}}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% include 'modals/modalparrainage.twig' %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    <script>
+    function generate_parrainage_url(){
+        $.ajax({
+            url: '{{ path('user.profile.parrainagelink') }}',
+            success: function(response){
+                add_parrainage_url(response);
+                $('#link').val(response);
+            },
+            complete: function(){
+                $('#parrainage').find('.loader').parent('.row').remove();
+                $('#parrainage').find('.row.hide').removeClass('hide');
+            }
+        });
+    }
+
+    function add_parrainage_url(url){
+        $('#share').find('a').each(function(){
+            if($(this).hasClass('facebook')){
+                $(this).attr('href',"https://www.facebook.com/sharer/sharer.php?u="+url);
+            }
+            else if($(this).hasClass('twitter')){
+                $(this).attr('href',"https://twitter.com/intent/tweet?text={{ "Rejoins-moi sur loisirsencheres.com et profite de 10€ offerts sur tes vacances et sorties !"|url_encode }} "+url+"&via=LoisirsEncheres");
+            }
+        });
+
+        if('{{ app.request.get('social') }}' === 'facebook' || '{{ app.request.get('social') }}' === 'twitter'){
+            $(document).scrollTo("#share",300);
+        }
+    }
+    </script>
+    <script>
+        if('{{user.godfatherLink}}' !== ''){
+            add_parrainage_url('{{ user.godfatherLink|replace({'http://':'http%3A//'}) }}');
+            $('#link').val('{{ user.godfatherLink}}');
+            $('#parrainage').find('.loader').parent('.row').remove();
+            $('#parrainage').find('.row.hide').removeClass('hide');
+        }
+        else {
+            generate_parrainage_url();
+        }
+
+        if('{{user.godfatherLink}}' !== ''){
+            add_parrainage_url('{{ user.godfatherLink|replace({'http://':'http%3A//'}) }}');
+            $('#link').val('{{user.godfatherLink}}');
+            $('#parrainage').find('.loader').parent('.row').remove();
+            $('#parrainage').find('.row.hide').removeClass('hide');
+        }else {
+            generate_parrainage_url();
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            $(document).on('click','.more .btn, .less .btn',function(){
+                var ce = $(this).parent();
+                if($(ce).hasClass('more')){
+                    $(ce).parent().find('table tr.hide').addClass('hideoff').removeClass('hide');
+                    $(this).find('i + span').html('Voir moins');
+                    $(this).find('i').addClass('icon-supply').removeClass('icon-add');
+                    $(ce).addClass('less').removeClass('more');
+                }
+                else {
+                    $(ce).parent().find('table tr.hideoff').addClass('hide').removeClass('hideoff');
+                    $(this).find('i + span').html('Voir plus');
+                    $(this).find('i').addClass('icon-add').removeClass('icon-supply');
+                    $(ce).addClass('more').removeClass('less');
+                }
+                return false;
+            });
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

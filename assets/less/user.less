@@ -1,0 +1,197 @@
+@import (reference) "mixins";
+@import (reference) "variables";
+
+#usernav {
+    li {
+        text-align: left;
+        a {
+            color: @grey_fonce;font-size: 1.28em;.prefixed(transition, 'all ease 0.8s');height: 51px;
+            > span {display: block;margin-top: 4px}
+            &.active, &:after {background: @beige;background-image: url('/assets/img/profile/menu-bg-hover.png');background-position: right center;background-repeat: no-repeat}
+            &.active:hover {opacity: 1}
+            &:not(.active){
+                &:after {.prefixed(transition, 'all ease 0.8s');height: 51px;content: '';height: 100%;top:0;left: 0;position: absolute;z-index: -1;width: 0}
+                &:hover {background-color: @white;opacity: 0.99}
+                &:hover:after, &:active:after {width: 100%}
+            }
+        }
+        i {color: @blue;font-size: 1.6em;margin-right: 0.5em;float: left}
+    }
+    > li{
+        &.active > a, &.active > a:focus, &.active > a:hover, > a:focus, > a:hover {background-color: transparent}
+    }
+
+    @media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+        li {
+            width: 12.5%;display: inline-block;float: left;
+            a {
+                text-align: center;height: auto;font-size: 1em;padding-left: 0;padding-right: 0;height: 100%;
+                &.active, &:after {background-image: none}
+            }
+            i {float: none;margin-right: 0;font-size: 2em}
+        }
+    }
+}
+
+@import "./modules/user/Favorites";
+#userGiftcard {
+    h1 {margin-bottom: 1em}
+    .introduction {margin-bottom: 20px}
+    .giftcard {
+        padding-bottom: 20px;
+        .nogiftcard {
+            cursor: pointer;
+            .btn {margin-top: 2em}
+        }
+        .illustration {
+            position: relative;height: 142px;
+            img {position: absolute;right: 0;bottom: 0}
+        }
+        ul {padding: 23px 0 0 13px}
+        li {
+            margin-bottom: 5px;
+            em {font-weight: bold;color: @grey;font-size: 0.85em}
+        }
+        .col-lg-10 {background: @white;margin-bottom: 9px}
+    }
+    .more {margin-bottom: 2em}
+    .cagnotte, .bon {
+        background:@blue;font-weight: bold;
+        a {color: @white;display: block;text-align: center}
+        span {vertical-align:middle;display:inline-block;line-height: normal}
+    }
+    form {margin-top: 1em}
+    .search-submit {font-weight: bold}
+    .form-control {border-color: @blue}
+    .infosComplementaire {margin-top: 35px}
+}
+#userGiftcard h2, #userAuctions h2 {
+    display: inline-block; margin-top: 25px;color: @white;font-size: 1.28em;font-weight: bold;
+    padding-left: 1em;height: 1.44em;line-height: 1.44em;margin-bottom: 18px;
+}
+
+
+#userAuctions {
+    .moduleTexte {background: @white}
+    .enchere {
+        border: 0;
+        .filter {background: rgba(68, 57, 50, 0.5);width: 100%;height: 100%;
+            top: 0;left: 0;position: absolute;z-index: 10001;
+        }
+    }
+    .loader {width: 64px}
+    .descripion {
+        h2 {color: @grey_fonce;background: none;padding-left: 0;margin-bottom: 0}
+    }
+}
+#auctionsPending {
+    .item {
+        > div {margin-bottom: 2em}
+        .price {margin-right: 1em}
+        p.visible-xs {min-height: 40px}
+    }
+    + .background-bleu-claire {min-height: 309px}
+    .content {padding: 10px}
+}
+#userProductsContainer, #userSuggestions{
+    .loader img {width: 64px}
+}
+
+/*---------------------------------------
+  PURCHASES PAGE
+  ---------------------------------------*/
+*[id^="user"], #parrainage{
+    h1 {
+        font-size: 1.2em;font-weight: bold;text-transform: uppercase;color: @black_light;
+        padding-bottom: 0;margin-bottom: 30px;border-bottom: 0;
+    }
+}
+*[id^="user"]{
+    h2 {
+        font-size: 1em;font-weight: bold;color: @black_light;text-transform: uppercase;
+        padding-bottom: 0;margin-bottom: 20px;margin-top: 30px;
+    }
+}
+#account_user {
+    .resa_state {color: @green_valid}
+    header {position: relative}
+    .share {cursor: pointer;position: absolute;bottom: 15px;right: 15px}
+    .auction_model_1, .auction_model_2{
+        position: relative;
+        header {font-weight: bold;color: @black_light}
+        .price {text-align: left;color: @black_light}
+        @media (min-width: @min-width-sm) {
+            .price {text-align: right;font-size: 1em}
+            .resa_state {text-align: right;padding-right: 2em}
+            .donwload {margin-top: 0}
+        }
+        .donwload {
+            margin-bottom: 1em;margin-top: 1em;
+            .sub_buttons {margin-top: 1em}
+            .btn-link {
+                margin: 0 0.5em;
+                &:first-child {margin-left: 0}
+                &:last-child {margin-right: 0}
+            }
+            .alert-muted {background: rgba(30, 185, 228, 0.2);display: inline-block;/*padding: 10px 25px;margin-top: 30px;*/}
+            @media (min-width: @min-width-sm) {
+                .btn {float: right;margin-right: 2em}
+                .sub_buttons { display: block; float: right; margin-right: 2em; clear:both; }
+            }
+        }
+    }
+    .auction_model_1{
+        margin-bottom: 1em;padding: 10px;
+        .share {top: 10px}
+        header {font-size: 0.93333333333333em}
+        .price {font-weight: normal;font-size: 0.93333333333333em}
+        @media (min-width: @min-width-sm) {
+            .price {text-align: left}
+            .prefixed(box-shadow, '0 0 10px 0 rgba(0,0,0,0.2)');
+        }
+        @media (min-width: 320px) and (max-width: @max-width-sm), (min-width: @min-width-md) and (max-width: @max-width-md) {
+            .block-separ-top {margin-top: 0}
+            .btn + .block-separ-top {margin-top: 1em}
+        }
+        @media (min-width: @min-width-md) {
+            .block-separ-top {margin-top: 0}
+        }
+        footer {
+            span {color: @grey}
+            @media (max-width: @max-width-xs) {
+                span {display: block}
+            }
+            @media (min-width: @min-width-sm) {
+                span {
+                    &:first-child {float: left}
+                    &:last-child {float: right}
+                }
+            }
+        }
+    }
+    .auction_model_2{
+        padding-bottom: 10px;margin-bottom: 10px;border-bottom: 1px solid @beige;
+        .name {font-size: 0.933333em}
+        .untill {font-size: 0.8em;color: @grey}
+        @media (min-width: @min-width-sm) {
+            .donwload {text-align: right}
+        }
+    }
+    .gifted_card {
+        .card {
+            .prefixed(box-shadow, '0 0 10px 0 rgba(0,0,0,0.2)');padding: 10px 10px 0;
+            background: url('/assets/img/background-card.svg') no-repeat white;
+            background-position-y: bottom;background-position-x: left;background-size: 103%;
+            header {color: @black_light;font-size: 0.9em;font-weight: bold;text-transform: uppercase}
+            footer, header {display: inline-block;width: 100%}
+            @media (max-width: @max-width-xs) {
+                footer .right {float: left}
+            }
+        }
+
+        .glide__bullets .glide__bullet {
+            border-color: @black_light;
+            &.glide__bullet--active {background: @black_light}
+        }
+    }
+}

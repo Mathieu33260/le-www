@@ -1,0 +1,22 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Ma liste de Noël{% endblock %}
+
+{% block main_content %}
+    <h1>
+        <picture>
+            <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514456648/ressource/llanding-page-header-after-christmas-desktop.jpg">
+            <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514456647/ressource/llanding-page-header-after-christmas-mobile.jpg">
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514456647/ressource/llanding-page-header-after-christmas-mobile.jpg" alt="Rassemblez toutes vos offres préférées sur une page et partagez-la !" class="img-responsive" />
+        </picture>
+    </h1>
+    <div class="row">
+        <p class="col-sm-offset-3 col-xs-12 col-sm-6 col-md-6 text-center">Il suffit de <a href="{{ path('user.login') }}">vous connecter</a> et d'ajouter une offre dans votre liste de favoris, pour ce faire rien de plus simple, cliquez sur l'icône <em>liste</em> <i class="icon-mes-favoris-plein"></i> en haut à gauche d'une offre et retrouvez tous vos favoris depuis votre profil !</p>
+    </div>
+    {% if user %}
+    <div class="text-center">
+        <a href="{{ path('all.page') }}" class="btn btn-primary" role="button">TROUVER DES OFFRES</a><br /><br />OU<br />
+        <a href="{{ path('user.favorites') }}?share=1" class="btn btn-link text-black" role="button">PARTAGER MA LISTE <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514467275/ressource/picto-partage.png" alt="#" width="40" /></a>
+    </div>
+    {% endif %}
+{% endblock %}

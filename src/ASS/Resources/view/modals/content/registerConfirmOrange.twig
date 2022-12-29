@@ -1,0 +1,9 @@
+<div class="text-center">
+    <img src="{{assetCdn}}/assets/img/modal/register/confirm.png" alt="#" /><br /><br />
+    <p><strong>Félicitations vous êtes inscrit</strong></p>
+    <p>Connexion en cours...</p>
+</div>
+{% if trackRegisterWithNewsletter == '1' %}
+    <script>ga('send', 'event', 'newsletter', 'subscribed_register_form', 'default', '1');</script>
+{% endif %}
+<script>setTimeout(function(){ window.location.href = '{{redirect}}'; }, 2000);</script>

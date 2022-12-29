@@ -1,0 +1,42 @@
+{% extends 'layout/html-user.twig' %}
+{% block title %}La liste de Noël de {{ queryUser.firstName|capitalize }}{% endblock %}
+{% block facebook_image %}{{app.request.host}}/assets/img/wishlist.png{% endblock %}
+{% block metaDesc %}Cette année j'ai été (presque) sage, je ne demande pas grand chose pour Noël, ... Découvre ma liste ! {{ queryUser.firstName|capitalize }}{% endblock %}
+{% block facebook_description %}Cette année j'ai été (presque) sage, je ne demande pas grand chose pour Noël, ... Découvre ma liste ! {{ queryUser.firstName|capitalize }}{% endblock %}
+{% block facebook_title %}Ma liste de Noël{% endblock %}
+
+{% block main_content %}
+    <div class="wishlist" id="userFavorites">
+        <div class="header">
+            <picture>
+                <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514459825/banner/idee-envie-877x76.png">
+                <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514459562/banner/idee-envies-768x187.jpg">
+                <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514459562/banner/idee-envies-768x187.jpg" alt="#" class="img-responsive" />
+            </picture>
+            <h1>Ma liste d'<span>envies</span></h1>
+        </div>
+        <user-wish-list cryptdata="{{ cryptdata }}" :query-user="{{ queryUser|json_encode()|raw|e('html_attr') }}"></user-wish-list>
+        <div class="row block-separ-top">
+            <div class="col-xs-12">
+                <a href="{{ path('christmaspage.giftcard') }}">
+                    <picture>
+                        <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018_banner.png 1x">
+                        <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018_banner_mobile-08.png 1x">
+                        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018_banner_mobile-08.png" alt="La carte cadeau est là !" class="img-responsive">
+                    </picture>
+                </a>
+            </div>
+        </div>
+        {% if not user or (user and user.id != queryUser.id) %}
+            <div class="block-separ-bottom block-separ-top">
+            <a href="{{ path('user.favorites') }}">
+                <picture>
+                    <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1511453367/banner/wish-liste-noel-page-find-list-877x76.png 1x">
+                    <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1511453367/banner/wish-liste-noel-find-list-768x187.png 1x">
+                    <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1511453367/banner/wish-liste-noel-find-list-768x187.png" alt="Créez votre liste de cadeaux" class="img-responsive" />
+                </picture>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

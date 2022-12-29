@@ -1,0 +1,9 @@
+<div class="text-center">
+    <img src="{{assetCdn}}/assets/img/modal/register/confirm.png" alt="#" /><br /><br />
+    {% if hideTitle is not defined %}<p><strong>Promis c'est la dernière étape avant d'enchérir !</strong></p>{% endif %}
+    <p><small>Consultez votre adresse {{email}} pour confirmer votre inscription (pensez à vérifier vos spams on ne sait jamais !)</small></p>
+</div>
+<script>ga('send', 'event', 'subscription', 'new', '{{app.session.get('utm_source')}}', '1');</script>
+{% if trackRegisterWithNewsletter == '1' %}
+    <script>ga('send', 'event', 'newsletter', 'subscribed_register_form', 'default', '1');</script>
+{% endif %}

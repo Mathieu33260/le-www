@@ -1,0 +1,272 @@
+@import "../styles/StyleLight";
+@import "../modules/bootstrap/Custom";
+@import "../typos/proxima_nova";
+
+@blue_clubmed: #005489;
+@brun_clubmed: #403938;
+@black_clubmed: #4A4A4A;
+
+b, strong {font-weight: bold} // bootstrap overload
+body {
+    font-family: Arial;
+    background: transparent;
+    font-family: 'proxima_nova_regular';
+}
+.btn {
+    font-family: 'proxima_nova_bold';
+}
+hr.clubmed {
+    border-color: @blue_clubmed;
+    margin-top: 52px;
+    margin-bottom: 52px;
+}
+
+.logo img {
+    max-width: 129px;
+}
+
+.container-logo {
+    text-align: center;
+    @media (min-width: @min-width-sm) {
+        text-align: left;
+    }
+}
+
+.btn-primary {
+    background-color: @blue_clubmed;
+    border-color: @blue_clubmed;
+}
+
+.background-blanc {
+    p {
+        color: @black;
+    }
+}
+
+.navbar-inverse {
+    background: transparent;
+}
+#header {
+    position: relative;
+    top: 8px;
+    @media (min-width: @min-width-sm) {
+        position: absolute;
+        top: 0;
+        .center-horizontally-absolute;
+    }
+}
+section.head {
+    color: @white;
+    padding-top: 66px;
+    background-color: #56A0B9;
+    background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1574786213/landing-page/club_med/KANV_LUXE_J218_026.png");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center bottom;
+    @media (min-width: @min-width-sm) {
+        padding-top: 100px;
+        padding-bottom: 2vw;
+        background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_south,h_643/q_auto/v1575040201/ressource/BG-MAURICE.jpg");
+        background-size: auto 100%;
+    }
+    @media (min-width: @min-width-md) {
+        min-height: 592px;
+        background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_south,h_592/q_auto/v1575040201/ressource/BG-MAURICE.jpg");
+    }
+    @media (min-width: 1135px) {
+        min-height: 711px;
+    }
+    @media (min-width: @min-width-lg) {
+        min-height: 728px;
+        background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_south,h_753/q_auto/v1575040201/ressource/BG-MAURICE.jpg");
+    }
+    @media (min-width: 1318px) {
+        background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1575040201/ressource/BG-MAURICE.jpg");
+        background-size: auto;
+        background-color: @white;
+        background-position: center top;
+    }
+}
+
+h1 {
+    font-family: 'proxima_nova_bold';
+    font-size: 24px;
+    @media (min-width: @min-width-sm) {
+        font-size: 21px;
+    }
+    @media (min-width: @min-width-md) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+}
+
+h2 {
+    color: @black;
+    font-size: 18px;
+    font-family: 'proxima_nova_bold';
+}
+
+.introduction {
+    p {
+        font-size: 18px;
+        margin-bottom: 2em;
+        @media (min-width: @min-width-sm) {
+            font-size: 16px;
+        }
+        @media (min-width: @min-width-md) {
+            font-size: 21px;
+            line-height: 25px;
+        }
+    }
+}
+
+aside {
+    h2 {
+        @media (min-width: @min-width-md) {
+            margin-top: 0;
+        }
+    }
+    .introduction p {
+        @media (min-width: @min-width-md) {
+            font-size: 18px;
+        }
+    }
+}
+
+.seeMore {
+    text-align: center;
+    margin: 35px 0;
+    @media (min-width: @min-width-md) {
+        text-align: right;
+    }
+}
+
+.media {
+    margin-bottom: 44px;
+    @media (min-width: @min-width-sm) {
+        margin-top: 0;
+    }
+    @media (min-width: @min-width-md) {
+        margin-bottom: 0;
+    }
+    &:last-child {margin-bottom: 0}
+}
+.media-left {
+    text-align: center;
+    padding-right: 16px;
+}
+.media-object {
+    font-size: 36px;
+    width: 66px;
+    height: 66px;
+    line-height: 66px;
+    color: @white;
+    background: @blue_clubmed;
+    border-radius: 50%;
+    font-family: Arial;
+    font-weight: bold;
+}
+.media-body {
+    font-family: 'proxima_nova_bold';
+    font-size: 14px;
+    color: @black_clubmed;
+    @media (min-width: @min-width-sm) {
+        font-size: 13px;
+    }
+    @media (min-width: @min-width-md) {
+        font-size: 14px;
+    }
+}
+
+footer {
+    background-color: @brun_clubmed;
+    color: @white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    a.btn {
+        color: @white;
+        text-decoration: underline;
+        font-size: 18px;
+        white-space: normal;
+        text-align: left;
+    }
+    ul {
+        @media (min-width: @min-width-sm) {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    }
+    li {
+        @media (min-width: @min-width-sm) {
+            padding: 0 1em;
+        }
+    }
+    p {
+        font-size: 18px;
+    }
+}
+
+/**********************************************************************************************************************/
+/******************************************************** FORM ********************************************************/
+/**********************************************************************************************************************/
+#btns {
+    margin-bottom: 6.6em;
+    @media (min-width: @min-width-sm) {
+        margin-bottom: 0;
+    }
+}
+@import "../modules/Form/SimpleInputBloc";
+.container-form {
+    margin-top: 32px;
+    @media (min-width: @min-width-sm) {
+        margin-top: 0;
+    }
+    .introduction {
+        color: #504847;
+        font-size: 18px;
+    }
+}
+.user-register-form__wrapper {
+    color: @black_light;
+}
+#formulaire {
+    max-width: initial;
+    legend {
+        font-size: 18px;
+        color: @brun_clubmed;
+        font-weight: normal;
+        margin-bottom: 10.5px;
+        @media (min-width: @min-width-sm) {
+            margin-bottom: 20px;
+        }
+        @media (min-width: @min-width-md) {
+            font-size: 18px;
+        }
+    }
+    label {font-size: 12px}
+    input {font-size: 14px}
+}
+
+.already-member-container {
+    background-color: white;
+    border-radius: 2px;
+    padding: 15px;
+    margin-bottom: 35vw;
+    .title {
+        color: black;
+        font-size: 18px;
+        font-weight: 600;
+        border-bottom: 0;
+        margin-bottom: 12px;
+        font-family: 'proxima_nova_bold';
+    }
+}
+/**********************************************************************************************************************/
+/*************************************************** ELEM - Cookies ***************************************************/
+/**********************************************************************************************************************/
+@import "../modules/CookieConsent";
+
+#modals, .modal {
+    color: @grey_fonce;
+}

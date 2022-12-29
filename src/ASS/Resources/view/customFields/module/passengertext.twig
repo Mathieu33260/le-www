@@ -1,0 +1,22 @@
+{% if field.properties.mandatory is defined and field.properties.mandatory == true and (passenger == true or passengerRequired == true) %}
+    {% set labelRequire, required, title = true, 'required="required"', 'Ce champs est obligatoire. ' %}
+{% elseif field.properties.mandatory is defined and field.properties.mandatory == true and passengerRequired == false %}
+    {% set labelRequire, required, title = true, '', 'Ce champs est obligatoire. ' %}
+{% else %}
+    {% set labelRequire, required, title = '', '', '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+    <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passengerCustomField[loopindex][field.id] is defined %} has-error{% endif %}">
+        <label for="{{loopindex}}{{ field.id }}">{{ field.label }} {% if labelRequire is not empty %}*{% endif %}</label>
+        <em>{{ information }}</em>
+        <textarea class="form-control" name="passengerCustomField[{{loopindex}}][{{ field.id }}]" {{ required }} placeholder="{{ field.properties.placeholder|default('') }}" title="Ce champs est obligatoire.">{{ value }}</textarea>
+        {% if error != false and error.passengerCustomField[loopindex][field.id] is defined %}
+            <span class="help-block">{{ error.passengerCustomField[loopindex][field.id] }}</span>
+        {% endif %}
+    </div>

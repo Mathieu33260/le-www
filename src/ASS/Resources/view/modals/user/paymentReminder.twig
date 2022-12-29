@@ -1,0 +1,18 @@
+<div class="modal fade" id="paymentReminder">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header" id="paymentReminderTitle">
+                <h4 class="modal-title">Paiement en attente</h4>
+            </div>
+            <div class="modal-body">
+                {% if user.firstName is defined %}
+                    Bonjour {{ user.firstName }}, <br/><br/>
+                {% endif %}
+                Vous avez remporté une enchère que vous n’avez pas encore réglée.<br/>
+                Dès le règlement de votre enchère, vous pourrez de nouveau enchérir.<br/><br/>
+                Cliquez <a href="{{ path('user.auctions') }}">ici</a> pour payer votre enchère.
+            </div>
+        </div>
+    </div>
+</div>

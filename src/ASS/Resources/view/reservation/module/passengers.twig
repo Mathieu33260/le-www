@@ -1,0 +1,84 @@
+<p class="section-title">Informations personnes</p>
+<div class="reservation__identity">
+    <strong class="small">Veuillez saisir l'identité de tous les participants au séjour.</strong>
+</div>
+{% for i in 1..product['nbPassenger'] %}
+    {% if i == 1 or checkoutFlow.allPassengersRequired %}
+        {% set required = 'required' %}
+    {% else %}
+        {% set required = '' %}
+    {% endif %}
+<fieldset>
+    <legend class="text-info"><b>PERSONNE {{ i }}</b></legend>
+    <div class="form-group">
+        <div class="radio">
+            <span class="radio-inline"><strong>Civilité *</strong></span>
+            <label class="radio-inline" for="passager{{loop.index0}}_gender_m">
+                <input autocomplete="off" type="radio" name="passager[{{loop.index0}}][gender]" id="passager{{loop.index0}}_gender_m" value="m" {% if dataSave.passager[loop.index0]['gender'] is defined and dataSave.passager[loop.index0]['gender'] == 'm' %} checked{% endif %} {{ required }}> M.
+            </label>
+            <label class="radio-inline" for="passager{{loop.index0}}_gender_mme">
+                <input autocomplete="off" type="radio" name="passager[{{loop.index0}}][gender]" id="passager{{loop.index0}}_gender_mme" value="mme" {% if dataSave.passager[loop.index0]['gender'] is defined and dataSave.passager[loop.index0]['gender'] == 'mme' %} checked{% endif %} {{ required }}> Mme.
+            </label>
+            {% if error != false and error.passager[loop.index0].gender is defined %}
+                <span class="help-block" style="color: #a94442">{{ error.passager[loop.index0].gender }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passager[loop.index0].firstName is defined %} has-error{% endif %}">
+            <label for="passager{{loop.index0}}_firstName">Prénom *</label>
+            <input autocomplete="off" class="form-control" type="text" id="passager{{loop.index0}}_firstName" name="passager[{{loop.index0}}][firstName]" {% if dataSave.passager[loop.index0]['firstName'] is defined %} value="{{dataSave.passager[loop.index0]['firstName']}}"{% endif %} {{ required }} onkeyup="this.value=this.value.charAt(0).toUpperCase()+this.value.substring(1).toLowerCase();">
+
+            {% if error != false and error.passager[loop.index0].firstName is defined %}
+                <span class="help-block">{{ error.passager[loop.index0].firstName }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passager[loop.index0].lastName is defined %} has-error{% endif %}">
+            <label for="passager{{loop.index0}}_lastName">Nom *</label>
+            <input autocomplete="off" class="form-control" type="text" id="passager{{loop.index0}}_lastName" name="passager[{{loop.index0}}][lastName]" {% if dataSave.passager[loop.index0]['lastName'] is defined %} value="{{dataSave.passager[loop.index0]['lastName']}}"{% endif %} {{ required }} onkeyup="this.value=this.value.toUpperCase();">
+            {% if error != false and error.passager[loop.index0].lastName is defined %}
+                <span class="help-block">{{ error.passager[loop.index0].lastName }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-6 col-sm-6{% if error != false and error.passager[loop.index0].birthDay is defined %} has-error{% endif %}">
+            <label for="passager{{loop.index0}}_birthday">Date de naissance (jj/mm/aaaa) *</label>
+            <input autocomplete="off" class="form-control passengerBirthday" type="text" id="passager{{loop.index0}}_birthday" name="passager[{{loop.index0}}][birthDay]" {% if dataSave.passager[loop.index0]['birthDay'] is defined %} value="{{ dataSave['passager'][loop.index0]['birthDay'] }}"{% endif %} {{ required }}>
+            {% if error != false and error.passager[loop.index0].birthDay is defined %}
+                <span class="help-block">{{ error.passager[loop.index0].birthDay }}</span>
+            {% endif %}
+        </div>
+        {% include './customFields/passengercustomfields.twig' with {'passengerRequired' : required } %}
+    </div>
+</fieldset>
+{% endfor %}
+<fieldset>
+    <legend class="text-info"><b>CONTACT</b></legend>
+    <div class="row">
+        <div class="form-group col-lg-6 col-sm-6{% if error != false and error.telephone is defined %} has-error{% endif %}">
+            <label for="telephone">Votre numéro de téléphone *</label>
+            <input autocomplete="off" class="form-control" type="tel" id="telephone" name="telephone" {% if reservation.telephone is defined or dataSave.telephone is defined %} value="{% if dataSave.telephone is defined %}{{dataSave.telephone}}{% else %}{{reservation.telephone}}{% endif %}"{% endif %} required="required">
+            {% if error != false and error.telephone is defined %}
+                <span class="help-block">{{ error.telephone }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group col-lg-6 col-sm-6{% if error != false and error.email is defined %} has-error{% endif %}">
+            <label for="email">Votre email *</label>
+            <input autocomplete="off" class="form-control" type="email" id="email" name="email" {% if reservation.email is defined or dataSave.email is defined %} value="{% if dataSave.email is defined %}{{dataSave.email}}{% else %}{{reservation.email}}{% endif %}"{% endif %} required="required">
+
+            {% if error != false and error.email is defined %}
+                <span class="help-block">{{ error.email }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <p class="col-xs-12"><small>Votre adresse mail et numéro de téléphone ne seront pas utilisés à des fins commerciales mais uniquement pour communiquer à propos de votre réservation.</small></p>
+    </div>
+</fieldset>
+<div class="customfields row">
+    <div class="col-xs-12">
+        {% include './customFields/customfields.twig' %}
+        <p>Remarque : les champs suivis d'une étoile (*) sont obligatoires.</p>
+    </div>
+</div>

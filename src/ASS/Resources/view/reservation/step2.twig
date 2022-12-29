@@ -1,0 +1,76 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12 col-md-4">
+            {% include './paiement/module/resume.twig' %}
+        </div>
+        <div class="col-xs-12 col-md-8 productDescription right">{% include './paiement/module/productDescription.twig' %}</div>
+        <div class="col-xs-12 col-md-8 recapReservation right">{% include './paiement/module/recapReservation.twig' %}</div>
+        <div class="col-xs-12 col-md-8 editRecap right background-blanc">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form method="POST">
+                        <input type="hidden" name="back" value="{{currentStep-1}}" />
+                        <button name="submit" class="btn btn-link" value="back">Modifier mes informations</button>
+                    </form>
+                </div>
+                <div class="col-xs-12">
+                    <p class="text-muted text-left"><small>Toute réservation est définitive et non-modifiable après confirmation.<br />Le nom indiqué doit correspondre au nom <b>de naissance</b> inscrit sur la pièce d'identité que vous utiliserez pour voyager.</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="background-gris cgv col-xs-12 col-md-8 col-md-offset-4">
+            <p class="text-center text-muted"><small>En validant cette commande vous acceptez nos <a href="#" data-toggle="modal" data-target="#cgvModal">CGV</a>.</small></p>
+        </div>
+        <form method="post">
+        {% include './reservation/module/submitBlock.twig' %}
+        </form>
+        <div class="col-xs-12 col-md-8 col-md-offset-4 background-gris">
+            <div class="garantie row">
+                <div class="col-xs-12">
+                    {% include './paiement/module/garanties.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {# MODAL ASSURANCES #}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    <script>
+        ga('ec:addProduct', {
+            'id': {% if productType == 'giftcard' %}'G{{ payment.id }}'{% else %}'P{{ product.id }}'{% endif %},
+            'name': '{% if productType == 'giftcard' %}giftcard {{ payment.amount/100 }} euro{% else %}{{ product.name|trim("'") }}{% endif %}',
+            'category': 'giftcard',
+            'price': '{{ payment.amount/100 }}',
+            'quantity': 1
+        });
+
+        ga('ec:setAction','checkout', {
+            'step': 2{% if productType == 'auction' %},'option': '{% if product.bookable == true %}TO{% else %}NOTO{% endif %}'{% endif %}
+        });
+
+        ga('send', 'event', 'ecommerce', 'product_checkout', 'auction', {'nonInteraction': 1});
+    </script>
+    {% include './paiement/include/script.twig' %}
+    {% if hideOption == false %}
+        {% include './paiement/module/wing_script.twig' %}
+    {% endif %}
+{% endblock%}

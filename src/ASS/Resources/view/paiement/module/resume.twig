@@ -1,0 +1,19 @@
+<div class="resume row">
+    <div class="col-xs-5 col-md-12">
+        <div class="background-gris3 skeleton">&nbsp;</div>
+        {% set imgProd = productType == 'giftcard'? payment['giftcard_photo'] : (productImgs[0] is defined? productImgs[0]['url']: '')%}
+        <img alt="image du produit" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="img-responsive hide" data-min-width-1200-src="{{imgProd|cdnUrl|noprotocol|transf('c_fit,w_555')}}" data-min-width-768-src="{{imgProd|cdnUrl|noprotocol|transf('c_fit,w_470')}}" data-max-width-767-src="{{imgProd|cdnUrl|noprotocol|transf('c_fit,w_735')}}">
+    </div>
+    <div class="col-xs-7 nopadding-left-only-xs col-md-12">
+        <div class="background-blanc">
+            {% if productType == 'auction' %}<p>{{ product['name'] }}{% if product['category'] == 'TO' %} <a href="#productDescription">Voir plus</a>{% endif %}</p>{% endif %}
+        </div>
+    </div>
+    <div class="col-xs-12">
+        {% if onlyReservation is not defined %}
+            <div class="background-blanc">
+                {% include './paiement/module/resume-table.twig' %}
+            </div>
+        {% endif %}
+    </div>
+</div>

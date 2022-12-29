@@ -1,0 +1,29 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title|capitalize }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>{{ title|upper }}</strong></h1>
+            <div class="block-separ-bottom block-separ-top">
+                <div class="text-center">{{ text|raw }}</div>
+            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}{{ illustration }}" alt="#" width="215" /></div>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only block-separ-top block-separ-bottom">
+            <a href="{% if isApp(app.request) %}{{ link.url }}{% else %}{{ path(link.url)}}{% endif %}" class="btn btn-primary btn-block">{{ link.text|upper }}</a>
+            {% if uriChangeMethod %}
+                <a href="{{ uriChangeMethod }}" class="btn btn-link btn-block text-center">Changer la méthode de paiement</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

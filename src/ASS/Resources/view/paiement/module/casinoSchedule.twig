@@ -1,0 +1,39 @@
+{# Keep this div, because it is delete by jQuery with the append #}
+<div>
+    <div class="col-xs-12">
+        <table class="table">
+            <tr>
+                <td>Montant de la commande</td>
+                <td class="text-right">{{ (productAmount/100)|number_format(2) }} &euro;</td>
+            </tr>
+            <tr>
+                <td>Frais paiement en {{ method[0:1] }} fois</td>
+                <td class="text-right">{{ ((totalAmount-productAmount)/100)|number_format(2)}} &euro;</td>
+            </tr>
+            <tr class="active bold">
+                <td>Total de la commande</td>
+                <td class="text-right total-amount">{{ (totalAmount/100)|number_format(2) }} &euro;</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-xs-12">
+        <p>
+            Votre échéancier de paiement en {{ method[0:1] }} fois, <strong>soumis à l'acception de Banque Casino</strong>
+        </p>
+    </div>
+    <div class="col-xs-12">
+        <table class="table">
+            {% if schedule is defined and schedule %}
+                {% for instalment in schedule %}
+                    <tr>
+                        <td class="{% if loop.index == 1 %}bold{% endif %}">
+                            {{ loop.index }}{% if loop.index == 1 %}ère{% else %}ème{% endif %} mensualité,
+                            {% if loop.index == 1 %}aujourd'hui{% else %}le {{ instalment.ItemDate|date("d/m/Y") }}{% endif %}
+                        </td>
+                        <td class="text-right">{{ (instalment.ItemAmount/100)|number_format(2) }} &euro;</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+</div>

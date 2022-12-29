@@ -1,0 +1,86 @@
+@import (reference) "../variables";
+
+@keyframes example {
+  from {
+    width: 0px;
+  }
+}
+
+.persona {
+  cursor: pointer;
+  color: @black_light;
+  &:hover .backofcard-person {
+    top: 0px;
+  }
+  img {
+    padding: 10px 30px 0px 30px;
+  }
+}
+.frontofcard-person {
+  padding: 20px;
+  min-height: 459px;
+  &.activated {
+    border: 5px solid @orange;
+  }
+  p {
+    margin-bottom: 13px;
+  }
+}
+.carddiv-profil-encherisseur {
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: 100% 75px;
+  transition: all 0.5s ease;
+  margin: auto;
+}
+.backofcard-person {
+  position: relative;
+  top: 0;
+  z-index: 999;
+  transition: top 0.3s ease-out;
+  @media (min-width: @min-width-sm) {
+    top: 70px;
+  }
+}
+
+/**********************************************************************************************************************/
+/******************************************************* MODAL ********************************************************/
+/**********************************************************************************************************************/
+.progress {
+  width: 0%;
+  height: 40px;
+  max-width: 250px;
+  animation-name: example;
+  animation-duration: 3.5s;
+  animation-fill-mode: forwards;
+  left: 0px;
+  display: block;
+  position: absolute;
+  margin-left: 13px;
+  background-image: none;
+  @media (min-width: @min-width-sm) {
+    display: inline;
+    margin-left: 210px;
+    max-width: 260px;
+  }
+  b {
+    color: @white;
+    margin-top: 8px;
+    display: block;
+    margin-left: 10px;
+  }
+}
+.categ {
+  margin-bottom: 50px;
+  @media (min-width: @min-width-sm) {
+    margin-bottom: 30px;
+  }
+  span {
+    margin-top: 10px;
+  }
+}
+#connected {background-color: #3db39e}
+#spender {background-color: @orange}
+#sniper {background-color: #424a60}
+#warrior {background-color: #ea601c}
+#shy {background-color: #754e64}

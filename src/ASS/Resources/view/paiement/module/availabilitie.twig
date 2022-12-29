@@ -1,0 +1,54 @@
+{% include './paiement/module/calendar.twig' %}
+<div class="col-xs-12 col-sm-6 horaires">
+    <table class="table table-bordered">
+        <tr>
+            <th class="text-left background-gris3" colspan="3">
+                {% if transportType == 'notincluded' %}
+                VOS DATES
+                {% else %}
+                <span class="city"></span><br /><span class="name"></span>
+                {% endif %}
+            </th>
+        </tr>
+        <tr>
+            {% if transportType == 'notincluded' %}
+            <td class="text-center start" valign="middle">ARRIVÉE<br /><span class="text-warning date"></span></td>
+            {% else %}
+            <td class="text-center start" valign="middle">DÉPART<br /><span class="text-warning date"></span></td>
+            {% endif %}
+            <td class="text-center" valign="middle">
+            {% if product.travelType == 'minicruise' %}
+                <i class="icon-rudder text-muted text-info"></i>
+            {% elseif transportType == 'notincluded' %}
+                <i class="icon-itinerary text-muted"></i>
+            {% elseif transportType == 'rails' %}
+                <i class="icon-train text-muted"></i>
+            {% else %}
+                <i class="icon-plan-full text-muted"></i>
+            {% endif %}
+            </td>
+            {% if transportType == 'notincluded' %}
+            <td class="text-center back" valign="middle">DÉPART<br /><span class="text-warning date"></span></td>
+            {% else %}
+            <td class="text-center back" valign="middle">RETOUR<br /><span class="text-warning date"></span></td>
+            {% endif %}
+        </tr>
+    </table>
+    <p>
+        {% if product.travelType == 'minicruise' %}
+        Vous devez prendre contact avec le service réservation de Costa au plus tard 48H après votre paiement (À l'issue ou paiement nous vous transmettrons les coordonnées de Costa)
+        {% else %}
+        {% if transportType == 'notincluded' %}
+            Rendez-vous sur place.<br/>
+            Les documents nécessaires à l'élaboration de votre séjour vous seront remis selon les conditions préalablement mentionnées dans le contenu de l'offre.
+        {% else %}
+            <b>Votre demande sera envoyée à notre partenaire qui vous répondra dans un délai de 72h maximum (hors dimanche). Il vous enverra prochainement vos documents de voyage.</b>
+            {% endif %}
+        {% endif %}
+        <br /><br />
+        <small>Une question ? N'hésitez pas à contacter notre service Voyage au <a href="tel:0535549452">05.35.54.94.52</a>, en communiquant votre numéro de membre : <span class="text-info text-nowrap">{{ userData.num|number_format(0,',',' ') }}</span></small>
+    </p>
+</div>
+<p class="text-muted col-xs-12">Pour tout supplément, merci de voir directement avec notre partenaire (vous trouverez leurs coordonnées sur votre récapitulatif de réservation)</p>
+<input type="hidden" name="availabilitie" id="inputavailabilitie" value="{% if reservation.availability %}{{reservation.availability}}{% else %}0{% endif %}" />
+<input type="hidden" name="dateTrip" id="inputdateTrip" value="{% if reservation.availability %}{{reservation.dateBlocked|date("Y-m-d")}}{% endif %}" />

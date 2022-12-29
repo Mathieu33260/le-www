@@ -1,0 +1,87 @@
+@media (min-width: 320px) {
+    .cta-fixed {
+        position: fixed;left: 0;bottom: 0;width: 100%;padding: 1em;
+        background: white;z-index: 3;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.3);-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);-o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=180, Strength=5);
+        .rowtotal {
+            .label {
+                color: @black_light;padding: 0;font-size: 1.4em;line-height: normal;text-align: left;
+                small {font-size: 60%}
+            }
+            .text-warning {font-size: 1.4em}
+        }
+        .rowtotal{height: 46px;line-height: 46px}
+    }
+
+    .auctions[data-list="useractualauctions"] {
+        .auction picture {min-height: 160px}
+    }
+
+    /** Template template-multiple-tags **/
+    .template-multiple-tags {
+        &:not(.container-app-view) {
+            position: relative;
+            top: 42px;
+        }
+        h1 {font-weight: bold;font-size: 18px;color: @black_light;margin-top: 1em}
+        h2 {
+            font-weight: bold;color: @black_light;margin-bottom: 0.5em;min-height: 30px;
+            i {font-size: 30px;float: left;margin-right: 10px}
+            span {font-size: 16px;line-height: normal;display: block}
+        }
+        p {color: @black_light}
+        .introduction {
+            .btn {margin-top: 1em}
+        }
+        .btn {white-space: normal}
+        .btn {text-align: inherit} // For toussaint landingpage, btn in intro block
+        hr {margin-top: 2em;margin-bottom: 2em}
+        section{
+            &:last-child {margin-bottom: 2em}
+            .btn {margin-top: 1em}
+        }
+        .moduleEnchere {margin-bottom: 1em}
+    }
+    #enfoires.template-multiple-tags {
+        @import "modules/Btns/Pink.less";
+        // Landingpage enfoires
+        hr.hr-orange {
+            background-color: @pink_enfoires; // @pink in themes/enfoires.less
+        }
+        .price {
+            color: @pink_enfoires;
+        }
+        .planned_alert_row .btn {
+            .btn-pink;
+        }
+    }
+    /** END Template template-multiple-tags **/
+
+    #cgvModal, #casinoRgpdModal {
+        padding-right: 0 !important;
+        .modal-content, .modal-body {height: 100%}
+        .modal-body {overflow: hidden}
+        iframe {height: inherit}
+    }
+}
+@media (max-width: 374px) {
+    .auctions{
+        .auction .thumbContent:not(.fullpage) {padding-right: 0}
+    }
+}
+@media (max-width: @max-width-xs) {
+    #topDIV {
+        .fullpage .recherche .input-group-addon i {color: @white}
+    }
+
+    #cgvModal, #casinoRgpdModal {
+        .modal-dialog {height: 96vh}
+    }
+}
+@media (min-width: 320px) and (max-width: @max-width-xs){
+    #footer {
+        .center {padding-bottom: 15px}
+    }
+}

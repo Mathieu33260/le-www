@@ -1,0 +1,53 @@
+Gender is required: Gender is required
+Firstname is required: Firstname is required
+Lastname is required: Lastname is required
+Email is required: Email is required
+Password is required: Password is required
+Birthdate is required: Birthdate is required
+Your passwords do not match: Your passwords do not match
+You need to accept the terms and conditions: You need to accept the terms and conditions
+is invalid: is invalid
+Unable to register: Unable to register
+Our: Our
+Your password has been reset, you can now: Your password has been reset, you can now
+log in: log in
+with your new password: with your new password
+Could not change password... Make sure you copied the link from the email exactly!: Could not change password... Make sure you copied the link from the email exactly!
+Unable to change password: Unable to change password
+A link has been sent: A link has been sent to the emailaddress you\'ve provided, follow the link to set a new password
+Unable to save profile: Unable to save profile
+Your changes have been saved: Your changes have been saved
+Your new passwords do not match: Your new passwords do not match
+Unable to change password: Unable to change password
+Your password has been changed: Your password has been changed
+your email address: your email address
+You can now login with your credentials Quick: You can now login with your credential.
+You can now login with your credentials: You can now login with your credential.
+Could not confirm your account: Could not confirm your account
+Your email has been changed. You must use to connect: Your email has been changed. You must use to connect
+Forgot password: Forgot password
+This email is already used: This email is already used. if you forgot your password, please click on the link
+
+Bad credentials: Bad credentials
+
+Contact of Loisirs Encheres.com: Contact of Loisirs Encheres.com
+Email: Email
+Name: Name
+Message: Message
+Invalid email address: Invalid adress mail
+Please check the reCaptcha box: Please check the reCaptcha box
+Thank you, your message has been sent: Thank you, your message has been sent.
+Could not send email: Could not send email
+Mail not send: Mail not send
+
+send: Send
+category: Category
+
+cat.wellness: Wellness
+cat.culture: Culture
+cat.food: Food
+cat.hotel: Hotel
+cat.sportAdventure: Sport-Adventure
+cat.other: Other
+see.nb_product_by_city: >-
+ {0} No offers |{1} See one offer|[2,Inf] See the %count% offers

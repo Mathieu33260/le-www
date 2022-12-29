@@ -1,0 +1,13 @@
+{% if banner is defined and banner.imageUrl != null %}
+    {% if banner.urlWeb is not empty %}
+        <a class="banner-promo" href="{{ banner.urlWeb }}"{% if not isApp(app.request) and 'http' in banner.urlWeb %} target="_blank"{% endif %} data-ga-label="{{ tagTitle  }}">
+    {% endif %}
+    <img src="{{ banner.imageUrl|cdnUrl|noprotocol }}" alt="{{ banner.alt }}" class="img-responsive center-block">
+    {% if banner.urlWeb is not empty %}
+        </a>
+    {% endif %}
+{% else %}
+    <a href="#">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1516272008/banner/18-01-2018-877x76.png" alt="Enchérissez, remportez, rofitez !" class="img-responsive center-block">
+    </a>
+{% endif %}

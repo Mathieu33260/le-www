@@ -1,0 +1,132 @@
+{% for auction in auctions %}
+    {% set feedback_link = path('auction.detail', { 'id': auction['auctionId'] }) %}
+    {% set facture_link  = '/user/' ~  auction['user_id'] ~  '/invoice/' ~ auction['invoice_id'] %}
+    {% set voucher_link  = '/user/' ~ auction['user_id'] ~ '/voucher/' ~ auction['voucherId']  %}
+
+    {% if archive == 0 %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="auction_model_1">
+                    <div class="row">
+                        <div class="image hidden-sm hidden-md col-xs-12 col-lg-3">
+                            <a href="{{ path('auction.detail', { 'id': auction['auctionId'] }) }}">
+                                <img src="{{ auction['product_image'] ? auction['product_image']|noprotocol : "//img.loisirsencheres.fr/loisirs/image/upload/v1517479904/ressource/thumbnail-default.png" }}" alt="{{ auction['name'] }}" class="img-responsive" />
+                            </a>
+                        </div>
+                        <div class="informations col-xs-12 col-sm-7 col-md-6 col-lg-4 nopadding-left-only-lg">
+                            <header>{{ auction['name'] }}</header>
+                            <p class="price">Prix : {{ auction['amount'] / 100 }} €</p>
+                            <footer class="small">
+                                <span>Gagnée le : {{ auction['payment_created']|date("d-m-Y") }}</span>
+                                {% if auction['category_code'] != 'TO' and auction.flow != 'delivery' %}
+                                <span>Expire le : {{ auction['valid_untill']|date("d-m-Y") }}</span>
+                                {% endif %}
+                            </footer>
+                        </div>
+                        <div class="donwload col-xs-12 col-sm-5 col-md-6 col-lg-5">
+                            {% if auction.refund_status == 'done' %}
+                                <div class="alert alert-muted text-center" role="alert"><b class="text-info">Remboursé</b></div>
+                            {% elseif auction.refund_status == 'created' %}
+                                <div class="alert alert-muted text-center" role="alert"><b class="text-info">En attente de remboursement</b></div>
+                            {% elseif auction.refund_status == 'awaiting' %}
+                                <div class="alert alert-muted text-center" role="alert"><b class="text-info">En cours de remboursement</b></div>
+                            {% else %}
+
+                                {% if auction.reservationText %}
+                                    <div class="resa_state">{{ auction.reservationText }}</div>
+                                {% endif %}
+
+                                {% if auction.reservationButton %}
+                                    <a href="{{ path('user.voucher.book', { 'userId': auction['user_id'], 'voucherId': auction['voucherId'] }) }}" class="btn btn-warning" target="_blank">
+                                        {% if auction.alreadyRes is defined %}
+                                            Réserver à nouveau
+                                        {% else %}
+                                            Réserver
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+
+                                {% if auction.pdfButton %}
+                                    <a href="{{ voucher_link }}" target="_blank" class="btn btn-primary block-separ-top">{{ auction.pdfButtonText }}</a>
+                                {% endif %}
+
+                                <div class="sub_buttons">
+                                    {% if auction.isPersonalizable %}
+                                        <a href="{{ path('user.voucher.update', { 'userId': auction['user_id'], 'voucherId': auction['voucherId'] }) }}" class="btn-link custom">Personnaliser</a>
+                                    {% endif %}
+                                    {% if auction['invoice_id'] is not null %}
+                                        <a href="{{ facture_link }}" class="btn-link" target="_blank">{{ auction.invoiceTitle }}</a>
+                                    {% endif %}
+                                    {% if auction.isFeedbackShow %}
+                                        <a href="{{ feedback_link }}#commentSection" class="btn-link">Mon avis</a>
+                                    {% endif %}
+                                    {% if auction.trackingNumText is defined %}
+                                        <a href="{{ auction.trackingUrl }}" target="_blank" class="btn-link">{{ auction.trackingNumText }}</a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <img class="share hidden-xs" onclick="purchases.share({{ app['facebook.appid'] }}, '{{ url('auction.winnershare', {
+                            'title': auction.name | e('sanitize'),
+                            'auctionId16': auction.auctionId | baseConvert(10, 16)
+                        }) | url_encode }}')" alt="Partager sur Facebook" src="{{ assetCdn }}/assets/img/share.svg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="auction_model_2">
+            {% if auction.refund_id is not null %}
+                <header class="row">
+                    <div class="name col-xs-12 col-sm-9">{{ auction['name'] }}</div>
+                    <div class="col-xs-12 col-sm-3 price">Prix : {{ auction['amount'] / 100 }} € </div>
+                </header>
+                <footer class="row">
+                    <div class="untill col-xs-12 col-sm-3">Remboursé le : {{ auction['refund_update']|date("d-m-Y") }}</div>
+                </footer>
+            {% else %}
+                <header class="row">
+                    <div class="name col-xs-12 col-sm-9">{{ auction['name'] }}</div>
+                    <div class="col-xs-12 col-sm-3 price">Prix : {{ auction['amount'] / 100 }} € </div>
+                </header>
+                <footer class="row">
+                    {% if auction.reservationStatus != 'canceled' %}
+                        {% if auction.flow != 'delivery' %}
+                            <div class="untill col-xs-12 col-sm-3">Expiré le : {{ auction['valid_untill']|date("d-m-Y") }}</div>
+                        {% endif %}
+                        <div class="donwload col-xs-12 col-sm-9">
+                            {% if auction.flow != 'delivery' %}
+                                {% if auction['bookable'] == false %}
+                                    {% if auction['voucherId'] is not null %}
+                                        <a href="{{ voucher_link }}" target="_blank" class="btn-link">Bon de réservation</a>
+                                    {% endif %}
+                                {% else %}
+                                    {% if auction['reservation_id'] is not null %}
+                                        <a href="{{ voucher_link }}" target="_blank" class="btn-link">Récapitulatif</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+
+                            {% if auction['invoice_id'] is not null %}
+                                <a href="{{ facture_link }}" class="btn-link" target="_blank">{{ auction.invoiceTitle }}</a>
+                            {% endif %}
+
+                            {% if auction.isFeedbackShow %}
+                                <a href="{{ feedback_link }}#commentSection" class="btn-link text-warning">Mon avis</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="untill col-xs-12 col-sm-3">En cours de remboursement</div>
+                    {% endif %}
+                </footer>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    {% if archive == 0 %}
+        {% set empty_message = "Vous n'avez pas encore d'enchère à utiliser." %}
+    {% else %}
+        {% set empty_message = "Vous n'avez pas encore d'enchère archivée." %}
+    {% endif %}
+    <div class="alert alert-muted text-center" role="alert"><b>{{ empty_message }}</b></div>
+{% endfor %}

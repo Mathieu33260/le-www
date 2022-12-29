@@ -1,0 +1,107 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Mes enchères{% endblock %}
+{% block hasLightFooter %}yes{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        <div class="col-lg-9 col-xs-12 col-xs-offset-0 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8" id="userAuctions">
+            <h1>Mes enchères</h1>
+            {% if auctionsPending|length %}
+            <div id="auctionsPending">
+                <div class="background-bleu-light">
+                    <h2 class="background-bleu">À régler</h2> <user-informations-payment-alert></user-informations-payment-alert>
+                    <auctions-pending :auctions="{{ auctionsPending|json_encode()|raw|e('html_attr') }}"></auctions-pending>
+                </div>
+                <p class="text-right"><a href="{{ path('user.purchase') }}">Voir mes bons disponibles >></a></p>
+            </div>
+            {% endif %}
+            <div class="background-bleu-light">
+                <h2 class="background-bleu">En cours</h2>
+                <div id="actualAuctions">
+                    <auction-list
+                        url="{{ path('user.auctions') }}"
+                        list-name="useractualauctions"
+                        list-id="auctionsList"
+                        :use-carousel="true"
+                        :use-more-auctions-btn="false"
+                        :use-no-auction-found-mess="true"
+                        class-css="item"
+                        request-uri="{{ app.request.requesturi }}"
+                        :is-app="{{ isApp(app.request) | json_encode }}"
+                        :tab-index="0"
+                        no-auction-found-mess-component="NoAuctionFoundMessUser"
+                        :with-status="true"
+                        enchere-container-css=""
+                        enchere-container-row-css=""
+                    ></auction-list>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include 'modals/user/paymentReminder.twig' %}
+    {% include 'modals/vouchercustom.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {# vouchercustom #}
+        $('#giftText').on('keyup',function(){
+            formLimitsCharacters({
+                input: $(this),
+                limit: 80,
+                substr: true
+            });
+        });
+    </script>
+    <script>
+        // Check if there is hash in url and select item.
+        if(window.location.hash) {
+            var hash = window.location.hash.substring(1);
+            if(hash === 'winAuctions') {
+                $('#contWinAuctions').click();
+            }
+        }
+    </script>
+    {% if app.session.flashbag.get('popupAuctionToPay') %}
+    <script>
+        $('#paymentReminder').modal('show');
+    </script>
+    {% endif %}
+    <script>
+    $(document).on('click','#auctionsComplete .custom',function(){
+        showGeneralLoader();
+        var href = $(this).attr('data-href');
+        $.ajax({
+            type: "POST",
+            url: href
+        }).success(function () {
+            $('#vouchercustommodal').find('form').attr('action',href);
+            $('#vouchercustommodal').modal('show');
+            hideGeneralLoader();
+            return false;
+        }).error(function () {
+
+        });
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

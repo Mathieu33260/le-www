@@ -1,0 +1,263 @@
+{% extends 'layout/html.twig' %}
+
+{%- block title -%}
+    {{ title}}
+{%- endblock -%}
+{% block metaDesc %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 200) }}{% endblock %}
+
+{% block facebook_description %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"') }}{% endblock %}
+
+{% block background %}background-gris list{% endblock %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-xs-12 nopadding">
+            <h1>La carte aux enchères</h1>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row background-blanc block-separ-bottom">
+        <div class="col-xs-12">
+            <div class="h3">Nos offres par ville</div>
+            <div class="row">
+                <p class="col-xs-12 col-md-8 col-lg-9">Trouvez des offres dans les plus <a href="{{ path('geoloc.cities') }}">grandes villes de France</a>. De <a href="{{ path('geoloc.city', { city: 'paris'}) }}">Paris</a> en passant par <a href="{{ path('geoloc.city', { city: 'bordeaux'}) }}">Bordeaux</a> ou encore <a href="{{ path('geoloc.city', { city: 'lyon'}) }}">Lyon</a>.<br />
+                    Nous disposons d'un large choix d'activités partout en France. Trouvez votre ville, puis votre produit et enchérissez.</p>
+                <div class="col-xs-12 col-md-3 text-center block-separ-bottom">
+                    <a href="{{ path('geoloc.cities') }}" class="btn btn-warning">Voir les villes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: window.innerWidth >= 768 ? 2:1,
+            center: {lat: 46.227638, lng: 2.213749000000007},
+            gestureHandling: 'greedy',
+            styles: [
+                {
+                    "featureType": "administrative",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#635b58"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.country",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#003e69"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.country",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#003e69"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.province",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.locality",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "landscape",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#efefef"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#e8e8e8"
+                        },
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#afadae"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#f7d3a4"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "color": "#f7d3a4"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "color": "#b3eaf4"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                }
+            ]
+        });
+        var icons = {
+        {% for key, icon in icons %}
+            {{key}}: {
+                icon: '{{assetCdn~icon}}'
+            },
+        {% endfor %}
+        };
+        var prev_infowindow =false;
+        var markers = locations.map(function(location, i) {
+            var marker = new google.maps.Marker({
+                position: {lat: location.lat, lng: location.lng},
+                icon: location.icon
+            });
+            var infowindow = new google.maps.InfoWindow({
+                content: '<div class="content"><a href="/auction/'+location.id+'"><img src="'+location.img+'" srcset="'+location.img_large+' 2x" alt="'+location.name+'" /></a><div class="texts"><p><a href="/auction/'+location.id+'"><img style="float: right" alt="Voir l\'offre" src="{{assetCdn}}/assets/img/icon-arrow-right.png" /></a>'+location.name+'</p></div></div>'
+            });
+            marker.addListener('click', function() {
+                if( prev_infowindow ) {
+                    prev_infowindow.close();
+                }
+                prev_infowindow = infowindow;
+                infowindow.open(map, marker);
+            });
+            return marker
+        });
+        // Add a marker clusterer to manage the markers.
+        var clusterStyle = [{
+            textColor: '#fff',
+            url: './assets/gfx/map/map-picto.png',
+            height: 75,
+            width: 40,
+            textSize: 14,
+            fontFamily: 'Arial',
+            lineHeight: '41'
+        }];
+        var markerCluster = new MarkerClusterer(map, markers, {
+            styles: clusterStyle
+        });
+    }
+    var locations = {{ locations|json_encode|raw }};
+    </script>
+    {% include 'js/markerclusterer.js.twig' %}
+    <script async defer src="//maps.googleapis.com/maps/api/js?key={{ app['google.config'].mapApiKey }}&callback=initMap"></script>
+{% endblock %}

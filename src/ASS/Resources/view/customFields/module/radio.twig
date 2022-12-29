@@ -1,0 +1,37 @@
+{% if (value is defined and value == 0) or value is not defined %}
+    {% set checked0, checked1, checked2 = 'checked="checked"', '', '' %}
+{% elseif value is defined and value == 1 %}
+    {% set checked0, checked1, checked2 = '', 'checked="checked"', '' %}
+{% elseif value is defined and value == 2 %}
+    {% set checked0, checked1, checked2 = '', '', 'checked="checked"' %}
+{% else %}
+    {% set checked0, checked1, checked2 = 'checked="checked"', '', '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+<div class="form-group">
+    <div class="radio">
+        <span class="radio-inline pl-0"><strong>{{ field.label }}</strong></span>
+        <label class="radio-inline" for="{{ field.id }}-0">
+            <input type="radio" id="{{ field.id }}-0" name="customField[{{ field.id }}]" value="0" {{ checked0 }}>
+            {{ field.properties.choice0 }}
+        </label>
+        <label class="radio-inline" for="{{ field.id }}-1">
+            <input type="radio" id="{{ field.id }}-1" name="customField[{{ field.id }}]" value="1" {{ checked1 }}>
+            {{ field.properties.choice1 }}
+        </label>
+        {% if field.properties.choice2 is defined %}
+            <label class="radio-inline" for="{{ field.id }}-2">
+                <input type="radio" id="{{ field.id }}-2" name="customField[{{ field.id }}]" value="2" {{ checked2 }}>
+                {{ field.properties.choice2 }}
+            </label>
+        {% endif %}
+        <br>
+        <em>{{ information }}</em>
+    </div>
+</div>

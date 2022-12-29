@@ -1,0 +1,19 @@
+<div class="newsletter col-sm-12 col-md-5">
+    <h4>Newsletter</h4>
+    <form class="form_newsletter_subscribe form-inline text-left" action="/newsletter/subscribe/" id="form_newsletter_subscribe" method="post">
+       <fieldset>
+           <legend>Recevez notre newsletter et soyez informé immédiatement des dernières nouveautés.</legend>
+           <div class="input-group">
+               <input class="form-control" name="email" type="email" placeholder="Entrez votre email" title="votre email">
+           </div>
+           <button type="submit" class="btn btn-sm btn-warning">S'inscrire</button>
+       </fieldset>
+   </form>
+    <p class="newsletter-submit-success hide">
+        Il ne vous reste plus qu'à cliquer sur le lien de confirmation dans votre email.
+        {%- if not is_granted('IS_AUTHENTICATED_FULLY') -%}
+            Vous pouvez aussi vous <a href="{{ path('user.register')}}" rel="nofollow">inscrire maintenant pour enchérir</a>
+        {%- endif -%}
+    </p>
+    <p class="newsletter-submit-success-confirmed hide">Félicitations! Vous allez maintenant recevoir nos offres.</p>
+</div>

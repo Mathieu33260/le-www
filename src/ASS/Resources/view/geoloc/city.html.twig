@@ -1,0 +1,116 @@
+{% extends 'layout/html.twig' %}
+{%- block title -%}Enchères à {{ city.title }}{%- endblock -%}
+{% block metaDesc %}{{ city.metaDescription|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"') }}{% endblock %}
+{% block facebook_description %}{{ city.metaDescription|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"') }}{% endblock %}
+{% block moremeta %}
+    {% if app.request.query.all|length %}
+    <link rel="canonical" href="https://{{app.request.host}}{{path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))}}" />
+    {% endif %}
+{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('geoloc.cities') }}"><span property="name">Enchères par villes</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Proche de {{ city.title }}</span>
+        <meta content="3" property="position">
+    </li>
+{% endblock %}
+{% block h1 %}<div class="row"><h1 class="col-xs-10 col-xs-offset-1 nopadding-left-only-xs col-sm-12 col-sm-offset-0">Nos enchères à proximité de {{ city.title }}</h1></div>{% endblock %}
+{% block background %}background-gris list{% endblock %}
+{% block slideOutContents %}
+    <div id="formfiltersMobile" class="formfilters hide">
+        <auction-filters :filters="{{ filters|json_encode() }}" :for-screens-up-to="992"></auction-filters>
+    </div>
+    {% if noSort is not defined %}
+        <div id="sortMobile" class="hide">
+            <auction-sort sort="{{ sort }}"></auction-sort>
+        </div>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+{% block main_content %}
+    {% if app.session.getFlashBag.has('noAuctionsFound') %}
+        <div id="noAuctionFoundMess" class="bg-danger text-danger text-center" role='alert'>
+            {% for msg in app.session.getFlashBag.get('noAuctionsFound') %}
+                {{ msg|raw }}<br />
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row tsProduits">
+        <div class="col-xs-12 col-md-3">
+            <div id="filters">
+                <div class="visible-xs visible-sm row">
+                    <div class="col-xs-5 col-xs-offset-1 nopadding-only-xs col-sm-3 col-sm-offset-0">
+                        <button class="btn btn-sm btn-default" id="le-filter-button">
+                            <i class="icon-filtre"></i> <span>FILTRER PAR</span>
+                        </button>
+                    </div>
+                    {% if noSort is not defined %}
+                    <div class="col-xs-5 nopadding-right-only-xs col-sm-3 col-sm-offset-6 text-right">
+                        <button class="btn btn-sm btn-default" id="le-sort-button">TRIER PAR <i class="icon-tri"></i></button>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="formfilters">
+                    <auction-filters :filters="{{filters|json_encode()}}" :for-screens-from="992"></auction-filters>
+                </div>
+            </div>
+        </div>
+        <div class="moduleEnchere col-xs-12 col-md-9">
+            {% if noSort is not defined %}
+                <div class="text-right hidden-xs hidden-sm">
+                    <auction-sort sort="{{ sort }}"></auction-sort>
+                </div>
+            {% endif %}
+            <auction-list
+                list-name="{{ listName is defined and listName ? listName : (tag is defined and tag ? tag : 'All') }}"
+                {% if city is defined and city -%}
+                    clust-name="{{ city.name|lower }}"
+                {% endif %}
+                {% if searchTerm is defined and searchTerm -%}
+                    search-terms="{{ searchTerm }}"
+                {% endif %}
+                v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+                v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+                {% if sort is defined %}
+                    sort="{{ sort }}"
+                {% endif %}
+                {% if tag|default() -%}
+                    tag="{{ tag|e('js') }}"
+                {% endif %}
+                request-uri="{{ app.request.requesturi }}"
+                v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                v-bind:tab-index="1"
+                class-css="col-sm-6"
+            ></auction-list>
+            <a href="{{ path('all.page') }}" class="btn btn-primary hide text-uppercase module with-icon" id="see_all_btn">Voir toutes nos enchères <i class="icon-arrow-right" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    {{end|default('')|raw}}
+{% endblock %}
+{% block footer %}
+    <div class="background-blanc paddingtop2 seotext">
+        <div class="container">
+            {% if city.description is defined and city.description is not empty %}
+                {{ city.description|raw }}
+            {% endif %}
+            <div class="h2">Notre sélection d'enchères en France</div>
+            {% include './module/city/cities.html.twig' with {
+                currentCity: city.name,
+            } %}
+        </div>
+    </div>
+    {% include './include/avis-verifies.html.twig' %}
+    {% include 'module/comment-ca-marche.twig' %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include './auction/list/scripts.twig' %}
+{% endblock %}

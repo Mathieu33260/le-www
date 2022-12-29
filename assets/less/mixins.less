@@ -1,0 +1,157 @@
+.prefixed(@property, @value) {
+    @localValue: if((isstring(@value)), e(@value), @value);
+    -webkit-@{property}: @localValue;
+    -moz-@{property}: @localValue;
+    -ms-@{property}: @localValue;
+    -o-@{property}: @localValue;
+    @{property}: @localValue;
+}
+
+/* Simplifie la définition des positions */
+.position(@top, @right, @bottom, @left) {
+    top: @top;
+    right: @right;
+    bottom: @bottom;
+    left: @left;
+}
+
+/* px to em */
+.fontSize(@px) {
+    font-size: (@px / @initialFontSize) * 1em;
+}
+
+/* clearfix function */
+.clearfix() {
+    &:before, &:after {
+        display: block;
+        content: '';
+        clear: both;
+    }
+}
+
+/* Stop float for mobile */
+.clearfloat() {
+    float: none;
+    clear: left;
+    max-width: 100%;
+}
+
+/* Animation for reserve price */
+.progressKeyframes(@name, @value) {
+    @keyframes @name {
+        0%, 50%, 100% { .prefixed(transform, scaleX(@value))}
+        90%           { .prefixed(transform, scaleX(calc(@value + 0.05))) }
+    }
+}
+
+.position_placeholder(@top, @right, @left, @width, @height) {
+    top: @top;
+    right: @right;
+    left: @left;
+    width: @width;
+    height: @height;
+}
+
+.no-radius {border-radius: 0px}
+
+/**********************************************************************************************************************/
+/***************************************************** SHADOW *****************************************************/
+/**********************************************************************************************************************/
+.box-shadow {
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.1);
+}
+
+/**********************************************************************************************************************/
+/***************************************************** BACKGROUND *****************************************************/
+/**********************************************************************************************************************/
+.bg-primary {padding: 1em}
+.bg-success {padding: 1em}
+.bg-info {padding: 1em}
+.bg-warning {padding: 1em}
+.bg-danger {padding: 1em}
+.background-gris {background-color: @beige}
+.background-gris2 {background-color: @grey}
+.background-gris3 {background-color: @grey_light}
+.background-bleu {background-color: @blue}
+.background-bleu-claire, .bg-info {background-color: @blue_grey1}
+.background-jaune {background-color: @orange}
+.background-bleuVif, background-bleuVif30, background-bleuVif60 {background-color: @blue}
+.background-blanc {background-color: @white}
+.background-orange {background-color: @orange}
+.background-none {background: none}
+/**********************************************************************************************************************/
+/***************************************************** TEXT COLOR *****************************************************/
+/**********************************************************************************************************************/
+.texte-rose{color:@rose}
+.text-info {color: @blue}
+.text-success {color: @green_valid}
+.text-black-light {color: @black_light}
+.text-black {color: @black}
+.text-gold {color: @gold_christmas}
+.text-blue-dark2 {color: @blue_dark2}
+.text-grey-fonce {color: @grey_fonce}
+
+/**********************************************************************************************************************/
+/***************************************************** NOPADDING ******************************************************/
+/**********************************************************************************************************************/
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.nopadding-only {
+    padding: 0 !important;
+}
+.nopadding-top {
+    padding-top: 0 !important;
+}
+.nopadding-bottom {
+    padding-bottom: 0 !important;
+}
+@media (max-width: @max-width-xs) {
+    .nopadding-right-only-xs {
+        padding-right: 0 !important;
+    }
+    .nopadding-left-only-xs {
+        padding-left: 0 !important;
+    }
+    .nopadding-only-xs {
+        padding: 0 !important;
+    }
+}
+
+/**********************************************************************************************************************/
+/***************************************************** POSITION *******************************************************/
+/**********************************************************************************************************************/
+.left {float: left}
+.right {float: right}
+
+/**********************************************************************************************************************/
+/*************************************************** BLOCK SEPAR ******************************************************/
+/**********************************************************************************************************************/
+.block-separ-bottom {
+    margin-bottom: 2em;
+}
+.block-separ-top {
+    margin-top: 2em;
+}
+
+/**********************************************************************************************************************/
+/****************************************************** IMG ***********************************************************/
+/**********************************************************************************************************************/
+.img-rounded {
+    border-radius: 6px
+}
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto
+}
+
+/**********************************************************************************************************************/
+/************************************************* ALIGNEMENT *********************************************************/
+/**********************************************************************************************************************/
+.center-horizontally-absolute {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}

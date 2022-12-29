@@ -1,0 +1,93 @@
+FROM ubuntu:16.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+RUN apt-get update -o Acquire::CompressionTypes::Order::=gz
+RUN apt-get upgrade -y
+RUN apt install -y software-properties-common
+RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+RUN apt-get update && apt-get install -y apt-transport-https
+RUN apt-get install -y  \
+    curl \
+    php7.1-cli \
+    php7.1-curl \
+    php7.1-intl \
+    php7.1-gd \
+    php7.1-mysql \
+    php7.1-xml \
+    php7.1-soap \
+    php7.1-mbstring \
+    php7.1-zip \
+    wget \
+    libxrender1 \
+    fontconfig \
+    xfonts-75dpi \
+    xfonts-base
+
+RUN mkdir /var/log/loisirsencheres
+RUN chown -R www-data:www-data /var/log/loisirsencheres
+RUN chmod 777 -R /var/log/loisirsencheres
+
+COPY ./ /ass
+
+COPY ci/run_nginx.sh /ass
+RUN chmod +x /ass/run_nginx.sh
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+RUN apt-get update && apt-get install -y  \
+    php7.1-fpm \
+    nginx \
+    python-pip \
+    docker-ce \
+    nodejs \
+    unzip \
+    yarn
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer config -g github-oauth.github.com 752a8bfd81b4b942a560fed7f9df28f157b07fe8
+RUN composer global require hirak/prestissimo
+RUN composer global require squizlabs/php_codesniffer
+
+COPY ci/dev.www.onlineauction.com.conf /etc/nginx/sites-available/
+COPY ci/nginx/ssl/* /etc/nginx/ssl/
+
+RUN rm /etc/nginx/sites-enabled/default \
+&& rm /etc/nginx/sites-available/default \
+&& ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled \
+&& rm /etc/nginx/nginx.conf \
+&& rm /etc/php/7.1/fpm/pool.d/www.conf
+
+COPY ci/nginx.conf /etc/nginx/
+COPY ci/php/www.conf /etc/php/7.1/fpm/pool.d/
+COPY ci/php/01-ass.ini /etc/php/7.1/fpm/conf.d/
+
+RUN mkdir -p /var/www/www.loisirsencheres.com \
+&& mkdir -p /usr/local/share/wkhtmltox/bin/ \
+&& mkdir -p /var/run/php \
+&& mkdir -p /root/.ssh
+
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+RUN ln -s /ass /var/www/www.loisirsencheres.com/latest
+
+RUN wget -P /tmp https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.xenial_amd64.deb
+RUN dpkg -i /tmp/wkhtmltox_0.12.5-1.xenial_amd64.deb
+RUN rm /tmp/wkhtmltox_0.12.5-1.xenial_amd64.deb
+RUN ln -s /usr/local/bin/wkhtmltopdf /usr/local/share/wkhtmltox/bin/wkhtmltopdf
+
+RUN yarn global add @symfony/webpack-encore eslint eslint-plugin-vue prettier postcss-loader autoprefixer postcss-cli
+
+RUN chmod 777 -R /tmp
+
+WORKDIR /ass
+
+ENTRYPOINT ["./run_nginx.sh"]

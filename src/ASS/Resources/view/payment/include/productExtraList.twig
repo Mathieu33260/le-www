@@ -1,0 +1,42 @@
+{% if productExtras|length > 0 and paymentExtras|length == 0 %}
+    <h4>Suppléments</h4>
+    <div>
+        Pour consulter les différentes formules d'assurances, cliquez <a href="https://s3-eu-west-1.amazonaws.com/le-static/Assurances+transat.pdf" target="_blank">ici</a>.
+    </div>
+    <div id="productExtras">
+        <table class="table">
+            <tbody>
+            {% for productExtra in productExtras %}
+                <tr>
+                    <td>
+                        {% if token is defined %}
+                            <input type="radio" data-href="{{ path('payment.extra.add',{"paymentId" : payment.id, 'extraId' : productExtra.id, 'verificationToken' : token}) }}" class="productExtraRadio">
+                        {% else %}
+                            <input type="radio" data-href="{{ path('payment.extra.add',{"paymentId" : payment.id, 'extraId' : productExtra.id}) }}" class="productExtraRadio">
+                        {% endif %}
+                    </td>
+                    <td align="left">
+                        {{ productExtra.name|capitalize }}
+                        {#
+                            <br/>
+                            <a data-toggle="collapse" href="#collapseExtra-{{ productExtra.id }}" aria-expanded="false" aria-controls="collapseExample">
+                                + de Détails
+                            </a>
+                        #}
+                    </td>
+                    <td align="right">+ {{ "%.2f"|format(productExtra.price/100) }} &euro;</td>
+                </tr>
+                {#
+                <tr>
+                    <td colspan="3">
+                        <div class="collapse" id="collapseExtra-{{ productExtra.id }}">
+                            {{ productExtra.html_content|raw }}
+                        </div>
+                    </td>
+                </tr>
+                #}
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endif %}

@@ -1,0 +1,102 @@
+<div class="modal error-bid" role="dialog" aria-labelledby="bidErrorLabel" aria-hidden="{% if app.request.get('') or app.session.getFlashBag.has('error') %}false{% else %}true{% endif %}">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title h4">Une erreur s'est produite</p>
+            </div>
+            <div class="modal-body">
+                <div class="loader" style="display: none;">
+                    <p class="text-center"><img src="{{assetCdn}}/assets/gfx/loader.gif?v=20170307" alt="Chargement..." /></p>
+                </div>
+                <div class="error_unknown"{% if error[0] is defined and error[0] != 'error_unknown' %} style="display:none"{% endif %}>
+                    Une erreur est survenue. Réessayer, si le problème persiste vous pouvez nous contacter <a href="/content/contact">ici</a>.
+                </div>
+                <div class="failed"{% if error[0] is defined and error[0] != 'failed' %} style="display:none"{% endif %}>
+                    Votre enchère n'a pas été validée probablement parce que quelqu'un a surrenchéri avant vous.
+                </div>
+                <div class="declined invalid"{% if error[0] is defined and error[0] != 'failed' and error[0] != 'declined' and error[0] != 'invalid' %} style="display:none"{% endif %}>
+                    Votre enchère est trop petite. L'enchère minimum est de <span class="bid-next">{% if bids|length > 0 %}{{ bids[0]['amount'] / 100 + 1 }}{% else %}1{% endif %}</span>&nbsp;&euro;
+                    <br />
+                    Pensez aussi à actualiser votre page dans le cas où vous avez été deconnecté du système de mise à jour d'enchère en temps réel.
+                </div>
+                <div class="declined_phone error invalid" style="display:none">
+                    <strong>Merci de renseigner votre numéro de téléphone.</strong>
+                </div>
+                <div class="tooHighBid" style="display: none;">
+                    <div id="tooHighBidMsg">
+                    </div>
+                </div>
+                <div class="unpaid">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <img class="img-responsive" src="{{assetCdn}}/assets/gfx/payment.png" alt="Paiement" />
+                        </div>
+                        <div class="col-sm-10">
+                            <p>Oups ! Vous avez une <b>enchère remportée en attente de paiement</b> sur <a href="/user/auctions#winAuctions">mes enchères</a> Loisirs Enchères. Dès son règlement (cela prend moins d'une minute), vous pourrez enchérir à nouveau sur notre site.
+                                Ne ratez pas une nouvelle occasion de faire des affaires ! <br /> <br />
+                                Vous rencontrez un problème lors du paiement ? Nous restons à votre disposition <a href="/content/contact">ici</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:none;" id="readonly">
+                    Le site fonctionne actuellement de façon limité. Nous serons de retour prochainement.
+                </div>
+                <div style="display:none;" id="maxLeader">
+                    Vous ne pouvez pas être en tête sur plus de {6 ou 3} enchères à la fois.
+                </div>
+                <div class="overMaxDelta" style="display:none;" >
+                    Exceptionnellement pour cette offre vous ne pouvez surenchérir que de {{product['maxBidDelta']}} euros au maximum.
+                </div>
+                <div class="underMinDelta" style="display:none;" >
+                    Exceptionnellement pour cette offre vous devez surenchérir de {{product['minBidDelta']/100}} euros au minimum.
+                </div>
+                <div class="winAuction" style="display:none">
+                    <h2 class="auctionName">{{ auction['name'] }}</h2>
+                    <div class="row light-bg">
+                        <div class="col-sm-6 detail price">
+                            <div>Montant total à payer: </div>
+                            <div><p class="priceContent"></p></div>
+                            <div class="row step2 payNowHolder">
+                                <a id="auctionPayment" href="#" class="btn btn-default">REGLER MAINTENANT</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            {% if bigimage %}
+                                <img class="img-responsive auctionImg" src="{{ bigimage['url']|noprotocol }}" alt="{{ auction['name'] }} - enchère finie" title="{{ auction['name'] }}" />
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 processPayment">
+                            <b>Réglez le montant total de votre commande pour en profiter.</b>
+                            <p>Dès validation du paiement,
+                                votre bon sera disponible
+                                dans votre compte, à la
+                                rubrique « mes enchères ».
+                                Imprimez-le et présentez le
+                                auprès du prestataire auquel
+                                vous aurez fait votre
+                                réservation.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row step2 otherAuction text-center">
+                                <span class="otherAuction">
+                                    Attention! Vous ne <br />
+                                    pourrez plus enchérir, <br />
+                                    tant que vous n’aurez <br />
+                                    pas réglé cette enchère. <br />
+                                </span>
+                                <img id="bidLogoCB" class="winpopop" src="{{assetCdn}}/assets/gfx/logoCB.png" alt="cb" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ipblocked">
+                    <span>Notre système a automatiquement détecté que votre adresse IP pouvait représenter un risque pour le site www.loisirsencheres.com.
+                    Il s'agit très probablement d'une erreur de notre part. Aussi, nous vous invitons à <a href="/content/contact">nous contacter</a> pour trouver une solution immédiate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

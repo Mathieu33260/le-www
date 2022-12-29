@@ -1,0 +1,72 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d'offres de voyages, d'hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('christmaspage.giftcard.choice') }}" title="Carte cadeau"><span property="name">Carte cadeau</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">J'ai reçu une carte cadeau</span>
+        <meta content="3" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+    <div class="header_program_gift margin-bottom-sm text-center">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1448287625/icon_cadeau_msuerh.png" alt="#" />
+        J'ai reçu une carte cadeau
+    </div>
+    <h1 class="h3 text-center margin-bottom-sm">
+        COMMENT FONCTIONNE VOTRE CARTE CADEAU ?
+    </h1>
+    <div class="row margin-bottom-sm">
+        <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+            <img width="100" height="100" alt="creer" title="creer" src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466587162/ressource/step1.png">
+            <p><strong>Connectez-vous</strong><br>ou inscrivez-vous gratuitement si vous n'avez pas encore de compte.</p>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+            <img width="100" height="100" alt="code" title="code" src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466587162/ressource/step2.png">
+            <p><strong>Saisissez votre code personnel</strong><br>dans l'onglet 'Mes avantages' de votre profil.</p>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+            <img width="100" height="100" alt="encherir" title="encherir" src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466587162/ressource/step3.png">
+            <p><strong>Enchérissez et gagnez</strong><br>Choisissez une activité puis enchérissez pour la remporter.</p>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 text-center">
+            <img width="100" height="100" alt="regler" title="regler" src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1466587162/ressource/step4.png">
+            <p><strong>Réglez, réservez et profitez !</strong><br>Votre cagnotte sera débitée au moment de régler votre enchère.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            <h2 class="h3">Vous êtes déjà membre ?</h2>
+            <authentification-buttons
+                    :hide-register-button="true"
+                    class-css-login-btn-default="btn login"
+                    login-text="Se connecter"
+                    :force-button-version="true"
+            ></authentification-buttons>
+        </div>
+        <div class="col-md-1 col-lg-2 hidden-sm hidden-xs text-center">
+            <img src="{{assetCdn}}/assets/gfx/ligne_separation.png" alt="#" />
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+            <h2 class="h3">Vous n'êtes pas encore membre ?</h2>
+            <p>Inscrivez-vous gratuitement en moins d'une minute pour utiliser votre code personnel et commencer à enchérir sur l'activité de vos rêves.</p>
+            <user-register-form
+                    :nostep="0"
+                    legend=""
+            ></user-register-form>
+        </div>
+    </div>
+    <div class="info-gift-card">
+        <h2 class="h3">Informations Complémentaires</h2>
+        <p>La carte cadeau LOISIRS ENCHÈRES est utilisable sur toutes les offres du site ou de l'application Loisirs Enchères. La carte cadeau peut être utilisée sur un compte seulement, elle ne sera pas envoyée par voie postale. Le bénéficiaire pourra consulter le solde de sa carte cadeau dans l'onglet “Mes avantages” de son profil.</p>
+        <p>Cette carte est valable 1 an à partir de la date d'achat, elle n'est ni échangeable, ni remboursable même partiellement, ni portée au crédit d'une carte ou d'un compte bancaire, ni faire l'objet d'un escompte et ne peut donner lieu à aucun rendu de monnaie. Elle n'est ni remplacée, ni remboursée en cas de perte, de vol ou de fin de validité. Le paiement d'une carte cadeau ne peut pas se faire au moyen d'une autre carte cadeau.</p>
+    </div>
+{% endblock %}

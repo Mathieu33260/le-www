@@ -1,0 +1,47 @@
+<div aria-labelledby="lightboxLabel" role="dialog" aria-hidden="false" id="lightbox" class="modal show in" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id="myModalLabel" class="modal-title">Bienvenue sur cette enchère privée !</p>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="text-center">{{ groupMessage }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-11 col-md-offset-1 col-xs-12">
+                        <form action="{{ path('auction.vip.confirmation',{'id': auction.id}) }}{% if onlytabs %}?onlytabs=1{% elseif onlyview %}?onlyview=1{% endif %}" method="post" name="vipConfirmationForm">
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="hidden" name="pid" value="{{ product['id'] }}">
+                                    <input type="text" name="code" value="" placeholder="Code" class="form-control" title="code" />
+                                </div>
+                                <div class="col-xs-6">
+                                    <button class="btn btn-default">Valider</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% if errorVip is not null %}
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <div class="alert alert-danger" role="alert">{{ errorVip }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if not isApp(app.request) %}
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-sm-offset-0">
+                        <p class="text-center"><br><a href="{{ path('all.page') }}" class="btn btn-primary" role="button">Voir toutes les enchères</a></p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

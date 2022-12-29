@@ -1,0 +1,41 @@
+<h2>Loisirs Enchères, comment ça marche ?</h2>
+<ul class="list-unstyled">
+    <li class="col-xs-12"{% if not is_granted('IS_AUTHENTICATED_FULLY') %}{% if onlyview %} data-link-url="comloisirsencheres://registration"{% endif %}{% endif %}>
+        <a href="{{path('user.register')}}" rel="nofollow" class="text-black-light">
+            <!--[if gte IE 9]><!-->
+            <img width="65" height="45" src="{{assetCdn}}/assets/img/ccm/inscription-gratuite-gray.svg" title="creer" alt="creer" class="left">
+            <!--<![endif]-->
+                        <!--[if lte IE 8]>
+                        <img src="{{assetCdn}}/assets/img/ccm/inscription-gratuite-gray.png" title="creer" alt="creer" class="left" />
+                        <![endif]-->
+            <p>Je m'inscris gratuitement</p>
+        </a>
+    </li>
+    <li class="col-xs-12">
+        <!--[if gte IE 9]><!-->
+        <img width="65" height="45" src="{{assetCdn}}/assets/img/ccm/encherir-gagner-gray.svg" title="encherir" alt="encherir" class="left">
+                <!--<![endif]-->
+                    <!--[if lte IE 8]>
+                    <img src="{{assetCdn}}/assets/img/ccm/encherir-gagner-gray.png" title="encherir" alt="encherir" class="left" />
+                    <![endif]-->
+        <p class="text-black-light">J'enchéris et je gagne</p>
+    </li>
+    <li class="col-xs-12">
+        <!--[if gte IE 9]><!-->
+        <img width="65" height="45" src="{{assetCdn}}/assets/img/ccm/regler-profiter-2-gray.svg" title="regler" alt="regler" class="left">
+                <!--<![endif]-->
+                    <!--[if lte IE 8]>
+                    <img src="{{assetCdn}}/assets/img/ccm/regler-profiter-2-gray.png" title="regler" alt="regler" class="left" />
+                    <![endif]-->
+        <p class="text-black-light">Je règle et je profite</p>
+    </li>
+    <li class="col-xs-12 noborder">
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') and not onlyview %}
+        <p><a href="{{path('user.register')}}" rel="nofollow">Créez facilement votre profil &gt;&gt;</a></p>
+    {% endif %}
+    {% if not onlyview %}
+        <p class="text-black-light">Comment <a data-toggle="tooltip" data-placement="bottom" title="Vous souhaitez être alerté par SMS avant la fin de l'enchère ? Enchérissez dès à présent pour bénéficier de l'alerte par SMS 5 minutes avant la fin de l'enchère.">suivre cette enchère par SMS ?</a></p>
+        <p class="text-black-light">Vous avez des questions <a href="{{ path('faq') }}"> FAQ &gt;&gt; </a></p>
+    {% endif %}
+    </li>
+</ul>

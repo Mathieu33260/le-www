@@ -1,0 +1,21 @@
+{% extends 'layout/html-app.twig' %}
+{% block main_content %}
+    <div class="row text-center" style="padding: 20px;">
+        {% if not success %}
+            Une erreur est survenue, merci de fermer cette fenêtre et de réessayer.
+        {% else %}
+            Finalisation en cours...
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        {% if success %}
+        if (window.top.location.pathname === '/user/profile') {
+          parent.postMessage("BidOk", "*");
+        }
+        {% endif %}
+    </script>
+{% endblock %}

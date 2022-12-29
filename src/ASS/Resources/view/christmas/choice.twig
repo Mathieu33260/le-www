@@ -1,0 +1,46 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d'offres de voyages, d'hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Carte cadeau</span>
+        <meta content="2" property="position">
+    </li>
+{% endblock %}
+{% block main_content %}
+    <h1>Carte Cadeau</h1>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only-xs text-center">
+            <p class="h3">Soyez sûr de faire plaisir !</p>
+            <p>Offrez une expérience unique ! Séjour à l'étranger, nuit en amoureux, gîte familial, sports extrêmes, restaurant à deux, places de théâtre … Avec des cartes cadeaux de 15€ à 300€ et un bon personnalisable disponible et immédiatement valable sur toutes les offres du site vous êtes sûr de faire plaisir !<br>
+                Vous avez reçu une carte cadeau ? Chanceux ! Elle est utilisable sur toutes nos enchères et peut s'utiliser en plusieurs fois !</p>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <hr class="hr-orange" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 margin-bottom-sm">
+            <a href="{{ path('christmaspage.giftcard') }}">
+                <div class="giftcard-offer to-offer">
+                    <div>J'offre une carte cadeau</div><br>
+                    <button class="btn btn-transparent bordered">CRÉER UNE CARTE CADEAU</button><br>
+                    <div class="col-md-12 col-sm-12 col-xs-12"><img alt="carte cadeau" class="head_carte" src="//img.loisirsencheres.fr/loisirs/image/upload/v1466583600/ressource/carte-cadeaux.png" /></div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 margin-bottom-sm">
+            <a href="{% if is_granted('IS_AUTHENTICATED_FULLY') %}{{ path('user.giftcard') }}{% else %}{{ path('christmas.giftcard.landing') }}{% endif %}">
+                <div class="giftcard-offer received">
+                    <div>J'ai reçu une carte cadeau</div><br>
+                    <button class="btn btn-transparent bordered">UTILISER UNE CARTE CADEAU</button>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

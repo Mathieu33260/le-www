@@ -1,0 +1,26 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d’offres de voyages, d’hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+
+{% block main_content %}
+    <div class="row header_custom_voucher nopadding">&nbsp;</div>
+    <!--star step-->
+        <div class="block_etape">
+            <div>Changez le nom et prénom du bénéficiaire :</div>
+            <form action="{{app.request.uri}}" id="form_gift_card" method="POST" target="_blank" class="form-horizontal">
+                <div class="form-group">
+                    <label for="giftFirstname" class="control-label col-md-4">Prénom</label>
+                    <div class="col-md-8">
+                        <input type="text" name="giftFirstname" id="giftFirstname" class="form-control" title="prénom" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="giftLastname" class="control-label col-md-4">Nom</label>
+                    <div class="col-md-8">
+                        <input type="text" name="giftLastname" id="giftLastname" class="form-control" title="nom" />
+                    </div>
+                </div>
+                <input value="Valider" type="submit" class="btn btn-primary col-md-2 col-md-offset-10">
+            </form>
+        </div>
+{% endblock %}

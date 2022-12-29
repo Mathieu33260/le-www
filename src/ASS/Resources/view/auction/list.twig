@@ -1,0 +1,254 @@
+{% extends 'layout/html.twig' %}
+
+{%- block title -%}
+    {%- if title is defined and title -%}{{- title|replace({'Featured':'Top 10'}) }}{%- elseif searchTerm -%}Résultat(s) pour '{{ searchTerm }}'{%- endif -%}
+{%- endblock -%}
+{% block metaDesc %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 200) }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    {# Early download and use later #}
+    <link rel="preload" href="{{ asset(buildDir ~ '/AuctionList.js') }}" as="script">
+{% endblock %}
+
+{%- block facebook_image -%}
+    {%- if urlImageMetaOg is defined and urlImageMetaOg is not null -%}
+        {{ urlImageMetaOg|cdnUrl|noprotocol|replace({'//': ''}) }}
+    {%- else -%}
+        {%- if urlImage is defined and urlImage is not null -%}
+            {{ urlImage|cdnUrl|noprotocol|replace({'//': ''}) }}
+        {%- endif -%}
+    {%- endif -%}
+{%- endblock -%}
+
+{% block moremeta %}
+    {% if (searchTerm is defined and searchTerm) or app.request.query.has('sort') %}
+        <meta name="robots" content="noindex">
+    {% endif %}
+    {% if canonicalUrl is defined and canonicalUrl is not null %}
+        <link rel="canonical" href="{{ canonicalUrl }}" />
+    {% elseif app.request.query.all|length %}
+        <link rel="canonical" href="https://{{app.request.host}}{{path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))}}" />
+    {% endif %}
+{% endblock %}
+
+{% block facebook_description %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"') }}{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    {% if (isChristmasCategory is defined and isChristmasCategory == true) %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('christmaspage') }}"><span property="name">Boutique de noël</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">{{ tagTitle }}</span>
+        <meta content="3" property="position">
+    </li>
+    {% elseif path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) != path('all.page') %}
+        <li typeof="ListItem" property="itemListElement">
+            <a typeof="WebPage" property="item" href="{{ path('all.page') }}"><span property="name">Toutes les enchères</span></a>
+            <meta content="2" property="position">
+        </li>
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">{%- if tagTitle is empty -%}Résultat(s) pour votre recherche '{{ searchTerm }}'{%- else -%}{{tagTitle|capitalize}}{%- endif -%}</span>
+            <meta content="3" property="position">
+        </li>
+    {% else %}
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">{{ tagTitle }}</span>
+            <meta content="2" property="position">
+        </li>
+    {% endif %}
+{% endblock %}
+{% block h1 %}<div class="row"><h1 class="col-xs-10 col-xs-offset-1 nopadding-left-only-xs col-sm-12 col-sm-offset-0">{% if tagTitle is empty %}Résultat(s) pour votre recherche '{{ searchTerm }}'{% else %}{{tagTitle}}{% endif %}</h1></div>{% endblock %}
+{% block background %}{% if isChristmasCategory is defined and isChristmasCategory == true %}background-christmas{% else %}background-gris list{% endif %}{% endblock %}
+{% block slideOutContents %}
+    <div id="formfiltersMobile" class="formfilters hide">
+        <auction-filters :filters="{{ filters|json_encode() }}" :for-screens-up-to="992"></auction-filters>
+    </div>
+    {% if noSort is not defined %}
+    <div id="sortMobile" class="hide">
+        <auction-sort
+            sort="{{ sort }}"
+            :for-mobile="true"
+        ></auction-sort>
+    </div>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+{% block main_content %}
+    {% if app.session.getFlashBag.has('noAuctionsFound') %}
+    <div id="noAuctionFoundMess" class="bg-danger text-danger text-center" role='alert'>
+        {% for msg in app.session.getFlashBag.get('noAuctionsFound') %}
+            {{ msg|raw }}<br />
+        {% endfor %}
+    </div>
+    {% else %}
+        {% if searchTerm is defined %}
+        <p class="bg-info">Cette recherche ne vous satisfait pas ? <a href="#form_newsletter_subscribe"><strong>Inscrivez vous à notre newsletter</strong></a>, vous serez informé(e) en priorité des dernières nouveautés.</p>
+        {% endif %}
+    {% endif %}
+    <div class="row tsProduits">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 col-md-3">
+                    <div id="filters">
+                        <div class="visible-xs visible-sm row">
+                            <div class="col-xs-5 col-xs-offset-1 nopadding-only-xs col-sm-3 col-sm-offset-0">
+                                <button class="btn btn-sm btn-default" id="le-filter-button">FILTRER PAR <i class="icon-filtre"></i></button>
+                            </div>
+                            {% if noSort is not defined %}
+                            <div class="col-xs-5 nopadding-right-only-xs col-sm-3 col-sm-offset-6 text-right">
+                                <button class="btn btn-sm btn-default" id="le-sort-button">TRIER PAR <i class="icon-tri"></i></button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="formfilters">
+                            <auction-filters :filters="{{ filters|json_encode() }}" :for-screens-from="992"></auction-filters>
+                        </div>
+                        {% if description is defined and description is not empty %}<div class="visible-lg visible-md">{{description|raw}}</div>{% endif %}
+                    </div>
+                </div>
+                {#<div class="partiegauche col-xs-12 col-md-3 col-md-push-9 abtestingmap hide">
+                    <div class="row">
+                        <div class="col-xs-12 text-center" id="partiegaucheCol">
+                            <div class="col-md-12" id="regionSelectArea">
+                                {% if noMap is not defined %}
+                                <div class="hidden-sm visible-md visible-lg row" id="mapContainer">
+                                    <h2>Recherche par zone</h2>
+                                    <p>Cliquez sur la région dans laquelle vous souhaitez trouver des enchères.
+                                        Consultez aussi nos offres <a id="abroadBtn" href="?region=Etranger" class="btn btn-sm btn-primary">à l'étranger</a></p>
+                                    <div class="col-md-12 text-center">
+                                        <div id="francemap" style="width: 220px; height: 175px;"></div>
+                                    </div>
+                                </div>
+                                <div class="hidden-md visible-sm visible-xs col-md-12 radioRegion text-center" id="regionRadios">
+                                    <p>Cliquez sur la région dans laquelle vous souhaitez trouver des enchères.</p>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Sud-Ouest" id="linkSudOuest">Sud-Ouest</a>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Sud-Est" id="linkSudEst">Sud-Est</a>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Nord-Est" id="linkNordEst">Nord & Nord-Est</a>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Nord-Ouest" id="linkNordOuest">Nord-Ouest</a>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Ile-de-France" id="linkIleDeFrance">Ile-de-France</a>
+                                    <a class="regionLinks btn btn-sm btn-primary" href="?region=Etranger" id="linkEtranger">Etranger</a>
+                                </div>
+                                {# Ne pas retirer ce code. Il pourrait être réutilisé plus tard.
+                                <div class="hidden-sm visible-md visible-lg text-center">
+                                    <a target="_blank" href="https://blog.loisirsencheres.com">
+                                        <img alt="Blog Loisirs Enchères" src="//img.loisirsencheres.fr/loisirs/image/upload/v1450281278/button_categorie_wggowa.png"/>
+                                    </a>
+                                </div>#}{#
+                                {% endif %}
+                            </div>
+                            {% if description is defined and description is not empty %}{{description|raw}}{% endif %}
+                        </div>
+                    </div>
+                </div>#}
+                <div class="moduleEnchere col-xs-12 col-md-9">
+                {%- if noSort is not defined -%}
+                    <div class="text-right">
+                        <div class="btn-group">
+                            <div class="hidden-xs hidden-sm">
+                                <div id="sort">
+                                    <auction-sort sort="{{ sort }}"></auction-sort>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if tagName is defined and tagName == 'ski' %}
+                    <auction-list
+                        list-name="ski-1"
+                        v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+                        v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+                        {% if sort is defined %}
+                            sort="{{ sort }}"
+                        {% endif %}
+                        {% if tag|default() -%}
+                            tag="{{ tag|e('html_attr') }}"
+                        {% endif %}
+                        request-uri="{{ app.request.requesturi }}"
+                        v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                        v-bind:tab-index="1"
+                        :nb-auctions-default="4"
+                        :use-more-auctions-btn="false"
+                        :use-no-auction-found-mess="false"
+                        list-id="auctionsListShort"
+                        v-bind:use-placeholder="true"
+                    ></auction-list>
+                    <div class="row auctions_placeholder">
+                        {% set nbPlaceholder = auctionsWithoutRealTime|length %}
+                        {% for auctions in 1..nbPlaceholder %}
+                            {% include './module/auction-placeholder.twig' with {'colClass': 'col-xs-6'} %}
+                        {% endfor %}
+                    </div>
+                    {% include './auction/auctions-without-real-time.twig' with {'auctions': auctionsWithoutRealTime} %}
+                    <auction-list
+                        list-name="ski-2"
+                        v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+                        v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+                        {% if sort is defined %}
+                            sort="{{ sort }}"
+                        {% endif %}
+                        {% if tag|default() -%}
+                            tag="{{ tag|e('html_attr') }}"
+                        {% endif %}
+                        request-uri="{{ app.request.requesturi }}"
+                        v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                        v-bind:tab-index="2"
+                        :nb-auctions-default="26"
+                        :use-no-auction-found-mess="true"
+                        :offset="4"
+                    ></auction-list>
+                {% else %}
+                    <auction-list
+                            list-name="{{ listName is defined and listName ? listName : (tag is defined and tag ? tag : 'All') }}"
+                            {% if city is defined and city -%}
+                                clust-name="{{ city.name|lower }}"
+                            {% endif %}
+                            {% if searchTerm is defined and searchTerm -%}
+                                search-terms="{{ searchTerm }}"
+                            {% endif %}
+                            v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+                            v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+                            {% if sort is defined %}
+                                sort="{{ sort }}"
+                            {% endif %}
+                            {% if tag|default() -%}
+                                tag="{{ tag|e('html_attr') }}"
+                            {% endif %}
+                            request-uri="{{ app.request.requesturi }}"
+                            v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                            v-bind:tab-index="1"
+                    ></auction-list>
+                {% endif %}
+                </div>
+                {%- if description_footer is defined and description_footer is not empty -%}
+                    <div class="col-xs-12">
+                        {{ description_footer|raw }}
+                    </div>
+                {%- endif -%}
+                {% if description is defined and description is not empty %}
+                    <div class="visible-xs visible-sm col-xs-10 col-xs-offset-1 nopadding-only-xs col-sm-12 col-sm-offset-0">{{description|raw}}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {{end|default('')|raw}}
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+{% endblock %}
+{% block footer %}
+    {% include './include/avis-verifies.html.twig' %}
+    {% include 'module/comment-ca-marche.twig' %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include './auction/list/scripts.twig' %}
+{% endblock %}

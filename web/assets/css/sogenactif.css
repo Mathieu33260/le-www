@@ -1,0 +1,89 @@
+/*------------------ SAISIE DES COORDONNEES BANCAIRES (ACCUEIL)  ------------------*/   
+
+body {
+    font-family: Arial;
+}
+
+.sips_body_page {
+    width:700px;
+    margin: auto;
+}
+
+.sips_shop_name_table {
+    width:700px;
+    margin: auto;
+}
+
+.sips_shop_name_font {
+    float:left;
+    width:300px;
+    margin-left: 200px;
+    text-align: center;
+}
+
+.sips_logo{
+    float: right;
+}
+
+.sips_cryptogram_table{
+    border: solid 1px #000;
+    border-spacing: 0px;
+
+}
+
+.sips_cryptogram_message{
+    padding: 5px;
+}
+
+.sips_trans_ref_table {
+    margin: auto;
+}
+
+.sips_secure_message {
+    float: left;	
+}
+
+@media (max-width: 640px) {
+
+    .sips_shop_name_font {
+        float:left;
+        width:100%;
+        margin-left: 0px;
+        text-align: center;
+    }
+
+    .sips_body_page {
+        width:100%;
+        margin: auto;
+    }
+
+    .sips_shop_name_table {
+        width:100%;
+        margin: auto;
+    }
+
+    .sips_shop_name_table img {
+        width:1px;
+        margin: auto;
+    }
+
+    .sips_trans_ref_table {
+        width:100%;
+    }
+
+    br {
+        line-height: 5px;
+        height: 5px;
+        margin:0px;
+        padding:0px;
+        display: block;
+        content: " ";
+    }
+
+    .sips_expiry_date_card_title:before {
+        content: ' ';
+        clear: right;
+        display: block; 
+    }
+
+}

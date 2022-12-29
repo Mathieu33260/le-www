@@ -1,0 +1,25 @@
+{% if value is defined and value == 1 %}
+    {% set checked = 'checked="checked"' %}
+{% elseif value is defined and value == 0 %}
+    {% set checked = '' %}
+{% elseif field.properties is not empty and field.properties.default is not empty %}
+    {% set checked = 'checked="checked"' %}
+{% else %}
+    {% set checked = '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+    <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passager[loopindex].value is defined %} has-error{% endif %}">
+        <span class="radio-inline"><strong>{{ field.label }}</strong></span>
+        <input type="hidden" name="passengerCustomField[{{loopindex}}][{{ field.id }}]" value="0">
+        <label class="radio-inline" for="{{loopindex}}{{ field.id }}">
+            <input type="checkbox" id="{{loopindex}}{{ field.id }}" name="passengerCustomField[{{loopindex}}][{{ field.id }}]" value="1" {{ checked }}>
+        </label>
+        <br>
+        <span><em>{{ information }}</em></span>
+    </div>

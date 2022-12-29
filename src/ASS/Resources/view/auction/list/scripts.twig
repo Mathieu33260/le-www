@@ -1,0 +1,91 @@
+<script>
+    {% if tag|default() %}
+    dataLayer.push({
+        'category': "{{ tag|e('js') }}"
+    });
+    {% endif %}
+
+    {% if banner is defined and banner.imageUrl != null and banner.urlWeb is not empty %}
+        document.addEventListener("DOMContentLoaded", function() {
+          // Tracking Eulerian printing
+          if (typeof EA_dyntpview !== 'undefined') {
+            EA_dyntpview(
+              "{{ eulerianSite }}",
+              "banner-{{ banner.alt | replace({' ':'-'}) }}_{{ banner.date | date('Y-m-d') }}",
+              "banner",
+              "{{ eulerianSite }}",
+              'generic'
+            );
+          }
+        });
+
+        var bannerAnchors = document.getElementsByClassName("banner-promo");
+        if (bannerAnchors.length > 0) {
+          Array.from(bannerAnchors).forEach(function(bannerAnchor) {
+            bannerAnchor.addEventListener('click', function (event) {
+              event.preventDefault();
+
+              // Defer href redirect
+              setTimeout(goToBanner, 500);
+              var goto = false;
+              var href = this.getAttribute('href');
+
+              function goToBanner() {
+                if (!goto) {
+                  goto = true;
+                  window.location.href = href;
+                }
+              }
+
+              // Tracking Eulerian click
+              if (typeof EA_dyntpclick !== 'undefined') {
+                EA_dyntpclick(
+                  "{{ eulerianSite }}",
+                  "banner-{{ banner.alt | replace({' ':'-'}) }}_{{ banner.date | date('Y-m-d') }}",
+                  "banner",
+                  "{{ eulerianSite }}",
+                  'generic'
+                );
+              }
+            }, false);
+          });
+        }
+    {% endif %}
+</script>
+{% if tagName is defined and tagName == 'ski' %}
+<script>
+    // without-real-time
+    var auctionsWithoutRealTime = document.querySelectorAll(".auctions.without-real-time a");
+    if (auctionsWithoutRealTime.length > 0) {
+      auctionsWithoutRealTime.forEach(function(auctionWithoutRealTime) {
+        auctionWithoutRealTime.addEventListener('click', function (event) {
+          event.preventDefault();
+
+          // Defer href redirect
+          setTimeout(goToAuction, 500);
+          var goto = false;
+          var href = this.getAttribute('href');
+
+          function goToAuction() {
+            if (!goto) {
+              goto = true;
+              window.location.href = href;
+            }
+          }
+
+          // Tracking Eulerian click
+          if (typeof EA_dyntpclick !== 'undefined') {
+            var productId = this.dataset.id;
+            EA_dyntpclick(
+              "{{ eulerianSite }}",
+              "bloc recommandation ",
+              "p" + productId,
+              "{{ eulerianSite }}",
+              'generic'
+            );
+          }
+        }, false);
+      })
+    }
+</script>
+{% endif %}

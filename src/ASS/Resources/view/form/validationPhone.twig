@@ -1,0 +1,10 @@
+<form class="form-inline" id="validationPhone">
+    <fieldset>
+        <div class="form-group">
+            <label for="phone" class="sr-only">Numéro de téléphone mobile</label>
+            <input type="tel" class="form-control input-lg" id="phone" value="{{ user.telephone }}" placeholder="Numéro de téléphone mobile" required="" pattern="^(06|07)[0-9]{8}$">
+        </div>
+        <button type="submit" class="btn btn-warning">ENVOYER</button>
+        <p class="text-danger hide">Numéro de téléphone invalide</p>
+    </fieldset>
+</form>

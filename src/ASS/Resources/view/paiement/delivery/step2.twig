@@ -1,0 +1,74 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12 col-md-4">
+            {% include './paiement/module/resume.twig' %}
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="visible-md visible-lg promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeDesktop'} %}</div>
+        {% endif %}
+            <div id="didyouknownxcb"{% if not useNxcb or not useCasino %} class="hide"{% endif %}>
+                <div class="nxcb visible-md visible-lg">
+                    <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                    {% include './paiement/include/3xcb.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="col-xs-12 visible-xs visible-sm promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeMobile'} %}</div>
+        {% endif %}
+        <div class="col-xs-12 col-md-8 productDescription right">{% include './paiement/module/productDescription.twig' %}</div>
+        <div class="col-xs-12 col-md-8 recapReservation right">{% include './paiement/module/recapDelivery.twig' %}</div>
+        <div class="col-xs-12 col-md-8 editRecap right background-blanc">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form method="POST">
+                        <input type="hidden" name="back" value="{{currentStep-1}}" />
+                        <button name="submit" class="btn btn-link" value="back">Modifier mes informations</button>
+                    </form>
+                </div>
+                <div class="col-xs-12">
+                    <p class="text-muted text-left"><small><b>Cette commande vous engage, sa validation entraîne la formation d'un contrat de vente. Toute commande est définitive et non-modifiable après votre paiement.</b> La personne concluant le présent contrat accepte de transmettre les données dans le but de son exécution.</small></p>
+                </div>
+            </div>
+        </div>
+        <form method="post" id="formain" class="col-xs-12 col-md-8 right background-blanc">
+            <input type="hidden" name="confirmOrder" value="1">
+            {% include './paiement/module/submitBlock.twig' %}
+        </form>
+        <div class="background-gris cgv col-xs-12 col-md-8 col-md-offset-4">
+            <p class="text-center text-muted"><small>En validant cette commande vous acceptez nos <a href="#" data-toggle="modal" data-target="#cgvModal">CGV</a>.</small></p>
+        </div>
+        <div class="col-xs-12 col-md-8 col-md-offset-4 background-gris">
+            <div class="garantie row">
+                <div class="col-xs-12">
+                    {% include './paiement/module/garanties.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {% include './modals/paiement/casino.twig' %}
+    {% include './modals/paiement/casinoRgpd.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    {% include './paiement/include/track-checkout.twig' %}
+    {% include './paiement/include/script.twig' %}
+{% endblock%}

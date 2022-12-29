@@ -1,0 +1,262 @@
+env: ${app.env}
+debug: ${app.debug}
+name: ${app.name}
+maintenance: false
+www.host: ${www.host}
+cdn-www.host: ${cdn-www.host}
+req:
+  baseUrl: ${req.base_url}
+
+cache.dir: ${cache.dir}
+
+# Logging
+monolog.logfile: ${www.log.file}
+monolog.level: ${monolog.loglevel}
+monolog.name: ${app.env}
+
+facebook_appId: ${facebook.appId}
+
+# API Url
+api.baseurl: ${api.url}
+api.BuildNoPath: ${api.buildNoPath}
+
+api.client.oauth:
+  clientId: ${api.oauth.client}
+  clientSecret: ${api.oauth.secret}
+  redirectUri: ${api.oauth.redirect_uri}
+  defaultToken: ${api.oauth.defaultToken}
+  webviewClientId: ${api.oauth.webview.client}
+  webviewClientSecret: ${api.oauth.webview.secret}
+  webviewRedirectUri: ${api.oauth.webview.redirect_uri}
+
+# Firebase
+firebase.config:
+  baseuri: ${firebase.baseuri}
+  apiKey: ${firebase.apiKey}
+  authDomain: ${firebase.authDomain}
+  projectId: ${firebase.projectId}
+  path: ${firebase.path}
+
+google.config:
+  mapApiKey: AIzaSyAYrSQ4UJqhMhKZjwrgdfG9C9WQTI7QaSE
+  clientId: ${google.config.clientId}
+google.hashPWD: ${google.hashPWD}
+
+# Twig
+twig.config:
+  twig.path:
+    - ${www.root}/app/view/
+    - ${www.root}/src/ASS/Resources/view/
+  twig.options:
+    debug: ${app.debug}
+    cache: ${cache.dir}/twig
+    auto_reload: ${twig.auto_reload}
+    strict_variables: ${app.debug}
+
+# Webpack Encore
+assets:
+  json_modern_manifest_path: ${www.root}/web/build/manifest.json
+  json_legacy_manifest_path: ${www.root}/web/build-legacy/manifest.json
+  json_manifest_css_path: ${www.root}/web/build-css/manifest.json
+  enable_manifest_cache: ${assets.enable_manifest_cache}
+  manifest_content: []
+
+nbAuctionsIncrement: ${nbAuctionsIncrement}
+nbAuctionsIncrementDesktop: ${nbAuctionsIncrementDesktop}
+
+# Swiftmailer
+swiftmailer.options:
+  host: ${mail.host}                # e.g. smtp.gmail.com
+  port: ${mail.port}                # e.g. 587
+  username: ${mail.username}        # e.g. your gmail address
+  password: ${mail.password}        # e.g. your gmail password
+  encryption: ${mail.encryption}    # e.g. tls
+swiftmailer.use_spool: false        # Send synchronously so we can catch errors
+
+# PayPal
+paypal:
+  clientID: ${paypal.clientID}
+  clientSecret: ${paypal.clientSecret}
+  logFile: ${paypal.logFile}
+  logEnabled: true,
+  logLevel: FINE
+  mode: ${paypal.mode}
+
+# eTrans
+etrans.url: ${etrans.url}
+etrans.iframe.url: ${etrans.iframe.url}
+etrans.mobile.url: ${etrans.mobile.url}
+
+codevip: ${codevip}
+
+redis.host: ${redis.host}
+redis.password: ${redis.password}
+
+redis2.host: ${redis2.host}
+redis2.password: ${redis2.password}
+redis2.timeout: ${redis2.timeout}
+redis2.dbsession: ${redis2.dbsession}
+
+redissession.host: ${redissession.host}
+redisapicache.host: ${redisapicache.host}
+
+session.ttl: 604800
+session.storage.options:
+  cookie_lifetime: 604000
+
+rememberme.secret: ${rememberme.secret}
+rememberme.expire: ${rememberme.expire}
+rememberme.active: ${rememberme.active}
+
+readonly: ${readonly}
+url_redirect:
+  /category/saintvalentin: homepage
+  /sondage/profil-encherisseur/ : survey.personaHome
+  /enchere-smartbox-coffret-cadeau-evasion-amoureux-l26.html: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l2.html: homepage
+  /enchere-smartbox-coffret-cadeau-evasion-amoureux-l22.html: homepage
+  /inscription/: user.register
+  /enchere-smartbox-coffret-cadeau-week-end-charme-l16.html: homepage
+  /finished/?page=auction: homepage
+  /enchere-smartbox-coffret-cadeau-week-end-charme-l18.html: homepage
+  /viewproduct.php?aid=133: homepage
+  /privacy-policy.php: content.apropos
+  /enchere-smartbox-coffret-cadeau-aventure-insolite-l20.html: homepage
+  /enchere-smartbox-coffret-cadeau-bien-etre-l6.html: homepage
+  /enchere-smartbox-coffret-cadeau-evasion-amoureux-l4.html: homepage
+  /enchere-smartbox-coffret-cadeau-bien-etre-l28.html: homepage
+  /assets/gfx/download_user/fichePoste.pdf%20: homepage
+  /enchere-billet-date-libre-futuroscope-l29.html: homepage
+  /enchere-smartbox-coffret-cadeau-bien-etre-l9.html: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l25.html: homepage
+  /auction/33846-enchere-latino-1h30-de-cours-despagnol-pour-adultes-senor-y-senora-bordeaux: homepage
+  /privacy.php: content.apropos
+  /category/saintvalentin?region=Sud-Ouest: homepage
+  /product/www.loisirsencheres.com/product/3944: homepage
+  /enchere-smartbox-coffret-cadeau-bien-etre-l18.html: homepage
+  /contact.php: faq
+  /contact/: faq
+  /encheres-beaute/enchere-smartbox-coffret-cadeau-bien-etre-l9.html: homepage
+  /debug: homepage
+  /auction/1723: homepage
+  /auction/2565-enchere-spectacle-la-fille-theatre-de-la-cite-internationale-paris: homepage
+  /auction/4943: homepage
+  /c/application-mobile-bon-planvoyage-sejour-vacances-weekend: app.mobile
+  /auction/168571-brunch-a-volonte-pour-2-personnes-chez-luna-paris-20-eme: homepage
+  /auction/16749-enchere-detente-1h-devasion-au-spa-5-sens-narbonne: homepage
+  /auction/2674-enchere-spectacle-la-fille-theatre-de-la-cite-internationale-paris: homepage
+  /assets/js/pushstream.js?v14102015: homepage
+  /produc: homepage
+  /auction/11172-enchere-detente-1h-devasion-au-spa-5-sens-narbonne: homepage
+  /category/hotel%20vol: homepage
+  /content/commentca-marche: homepage
+  /encheres-beaute/: homepage
+  /auction/11271-enchere-detente-1h-devasion-au-spa-5-sens-narbonne: homepage
+  /centre-aide/centre-aide: faq
+  /c/application-mobile-bonplan-voyage-sejour-vacances-weekend: app.mobile
+  /auction/auctionId/bid: homepage
+  /category/croisi%C3%A8re?region=Sud-Ouest: homepage
+  /category/croisi%C3%A8re?region=Sud-Est: homepage
+  /category/croisi%C3%A8re?region=Nord-Est: homepage
+  /category/croisi%C3%A8re?region=Ile-de-France: homepage
+  /category/croisiere: homepage
+  /content/comment-ca-marche/content/comment-ca-marche: homepage
+  /assets/js/pushstream-5d50f46.min.js;139340: homepage
+  /content/game-rules: homepage
+  /Y: homepage
+  /indesirable: newsletter.indesirable
+  /ville/city: geoloc.cities
+  /finished: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l17.html: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l23.html: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l13.html: homepage
+  /inscription/enchere-smartbox-coffret-cadeau-evasion-amoureux-l15.html: homepage
+  /enchere-smartbox-coffret-cadeau-bien-etre-l3.html: homepage
+  /enchere-smartbox-coffret-cadeau-evasion-amoureux-l15.html: homepage
+  /contact: centre-aide
+  /finished/: homepage
+  /enchere-smartbox-coffret-cadeau-diner-romantique-l5.html: homepage
+  /enchere-smartbox-coffret-cadeau-evasion-amoureux-l10.html: homepage
+  /enchere-smartbox-coffret-cadeau-week-end-charme-l24.html: homepage
+  /category/parc%20attraction: category.name?name=parc-attraction
+  /auction/89-enchere-2-pass-pour-une-journee-a-atlantic-park-hossegor: homepage
+  /auction/2525-enchere-cirque-festival-international-du-cirque-de-lyon-pour-2: homepage
+  /concours-facebook: homepage
+  /encherelive1: homepage
+  /encherelive2: homepage
+  /encherelive3: homepage
+  /encherelive: homepage
+  /c/page-facebook: homepage
+  /content/page-facebook: homepage
+  /content/photobox: homepage
+  /leparisien: homepage
+  /evenement/semaine-digitale-bordeaux-2016: homepage
+  /evenement/semaine-digitale-bordeaux-2016/photobox: homepage
+  /evenement/semaine-digitale-bordeaux-2016/inscription: user.register
+  /guestviews: homepage
+  /jeuidtgv: homepage
+  /idtgv: homepage
+  /semaine-digitale: homepage
+  /club-med/confirmation: product.auction?id=8065
+
+  # Fill with redirection if needed
+
+tracking.server: ${tracking.server}
+tracking.auth: ${tracking.auth}
+
+gaq.propertyWebId: ${gaq.propertyWebId}
+gaq.propertyWebviewId: ${gaq.propertyWebviewId}
+gtm.id: ${gtm.id}
+googleconversion.id: ${googleconversion.id}
+facebook.appid: ${facebook.appid}
+facebook.hashPWD: ${facebook.hashPWD}
+reactivpub.id: ${reactivpub.id}
+kiaoramedia.id: ${kiaoramedia.id}
+placedesleads.sc: ${placedesleads.sc}
+errorcep.id: ${errorcep.id}
+
+newrelic:
+  snippetEnabled: ${newrelic.snippetEnabled}
+  licenseKey: ${newrelic.licenseKey}
+  applicationID: ${newrelic.applicationID}
+
+speedcurve:
+  snippetEnabled: ${speedcurve.snippetEnabled}
+  id: ${speedcurve.id}
+
+sms.autobid.enabled: ${sms.autobid.enabled}
+sms.endauction.enabled: ${sms.endauction.enabled}
+
+3xcb:
+  action: ${3xcb.action}
+
+admin:
+  productSecret: ${admin.productSecret}
+
+casino:
+  3x:
+    minAmount: ${casino.3x.minAmount}
+    maxAmount: ${casino.3x.maxAmount}
+  4x:
+    minAmount: ${casino.4x.minAmount}
+    maxAmount: ${casino.4x.maxAmount}
+  action: ${casino.action}
+  active: ${casino.active}
+
+braze.apikey: ${braze.apikey}
+lepro.url: ${lepro.url}
+
+recaptcha:
+  secret: ${recaptcha.secret}
+
+emails:
+  info: ${emails.info}
+  app: ${emails.app}
+  commercial: ${emails.commercial}
+
+product.exclude: ${product.exclude}
+
+eulerian:
+  url: ${eulerian.url}
+  site: ${eulerian.site}
+  secretIv: ${eulerian.secretIv}

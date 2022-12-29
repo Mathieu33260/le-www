@@ -1,0 +1,30 @@
+<article id="blockApps" v-pre>
+    <section class="container">
+        <span><a href="#" class="closeApps" title="Fermer la fenêtre">Non, merci.<i class="icon-close"></i></a></span>
+        <div class="subContainer">
+            <h2>Enchérissez où vous voulez, quand vous voulez !</h2>
+            <p>Ne manquez plus aucune enchère grâce à l'application.</p>
+            {% set urlAdjust   = 'https://app.adjust.com/3t5swz?campaign=footer-bottom&redirect=' %}
+            {% set urlRedirect = 'https://play.google.com/store/apps/details?id=net.sharewire.loisirsencheres&referrer=' %}
+            {% set urlReferrer = 'utm_source=le-www&utm_campaign=all-page-footer-bottom&utm_medium=footer-logo-googleplay-black' %}
+            <a href="{{urlAdjust}}{{urlRedirect|url_encode}}{{urlReferrer|url_encode|url_encode}}" target="_blank" title="Télécharger l'application sur Google Play">
+                <lazy-image
+                    src="{{assetCdn}}/assets/img/blockApps/loisirsencheres-GooglePlay.svg?v=20171214"
+                    alt="Logo Google Play"
+                    title="Google Play"
+                    background-color="#efefef"
+                ></lazy-image>
+            </a>
+            {% set urlAdjust   = 'https://app.adjust.com/od6b1r?campaign=footer-bottom&redirect=' %}
+            {% set urlRedirect = 'https://itunes.apple.com/app/apple-store/id987860898?pt=110416813&ct=le-www-footer-bottom&mt=8' %}
+            <a href="{{urlAdjust}}{{urlRedirect|url_encode}}" target="_blank" title="Télécharger l'application sur l'AppStore">
+                <lazy-image
+                    src="{{assetCdn}}/assets/img/blockApps/loisirsencheres-AppStore.svg?v=20171214"
+                    alt="Logo de l'AppStore"
+                    title="AppStore"
+                    background-color="#efefef"
+                ></lazy-image>
+            </a>
+        </div>
+    </section>
+</article>

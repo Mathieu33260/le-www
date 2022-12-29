@@ -1,0 +1,33 @@
+<p class="col-xs-12 section-title">{% if transportType is defined and transportType == 'notincluded' %}Date de votre arrivée{% else %}Ville et date de départ{% endif %}</p>
+<div class="col-xs-12 col-sm-6">
+    <div class="form-group">
+        {% if error.availabilitie is defined %}<p class="error">{{error.availabilitie}}</p>{% endif %}
+        <label for="city" class="text-info sr-only">Veuillez choisir votre ville et date de départ</label>
+        <select name="departureCity" id="city" class="form-control" required="">
+            {% if departureCities|length == 0 or departureCities|length > 1 %}
+            <option value="0">{% if transportType != 'notincluded' %}Choisir votre ville de départ{% else %}Veuillez effectuer votre choix{% endif %}</option>
+            {% endif %}
+            {%- for departureCitie in departureCities %}
+            <option data-city="{{departureCitie.city}}" value="{{departureCitie.id}}"{% if (dataSave.departureCity is defined and dataSave.departureCity == departureCitie.id) or departureCities|length == 1 %} selected=""{% endif %}>{{departureCitie.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id="startDate">
+        <div class="loader text-center hide"><img src="{{assetCdn}}/assets/gfx/loader.gif?v=20170307" alt="Chargements des dates" /></div>
+        <div class="calendarcontainer">
+            <div class="module">
+                <div id="calendars">
+                    <div class="calendarDefault"></div>
+                    {%- for departureCitie in departureCities %}<div class="hide calendar{{departureCitie.id}}" data-key="{{departureCitie.id}}"></div>{% endfor %}
+                </div>
+                <div id="calendarLegend">
+                    <p><span class="color white"></span>Date non disponible</p>
+                    <p><span class="color soldout"></span>Plus de disponibilités</p>
+                    <p><span class="color less-available"></span>Peu de places disponibles</p>
+                    <p><span class="color available"></span>Dates disponibles</p>
+                    <p><span class="color selected"></span>Date choisie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

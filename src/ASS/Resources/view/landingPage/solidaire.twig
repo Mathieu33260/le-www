@@ -1,0 +1,134 @@
+{% set hideFooter = true %}
+{% set hideBreadcrumb = true %}
+{% set hideNavbar = true %}
+{% set headerHideSearchBar = true %}
+{% set headerHideClaim = true %}
+{% set headerHideRegisterButton = true %}
+{% set headerHideFaq = true %}
+{% set headerLoginButtonTransparent = true %}
+{% set headerHideUser = true %}
+
+{% extends 'layout/html.twig' %}
+
+{% block title %}Vivez le match PSG - Manchester avec Kimpembe !{% endblock %}
+{% block facebook_image %}img.loisirsencheres.fr/loisirs/image/upload/v1550151177/Linkdin-publication-basique-teasing.png{% endblock %}
+
+{% block moremeta %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@LoisirsEncheres" />
+    <meta name="twitter:title" content="Vivez le match PSG - Manchester avec Kimpembe !" />
+    <meta name="twitter:image" content="https://img.loisirsencheres.fr/loisirs/image/upload/v1550151177/twitter-publication-basique-teasing.jpg" />
+    <meta name="twitter:image:alt" content="Vivez le match PSG - Manchester avec Kimpembe !" />
+{% endblock %}
+
+{% block stylesheets %}
+ {{ parent() }}
+    {% include "css/solidaire.css.twig" %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    {# Early download and use later #}
+    <link rel="preload" href="{{ asset(buildDir ~ '/LandingpageSolidaire.js') }}" as="script">
+{% endblock %}
+
+{% block container %}row container-fluid{% endblock %}
+
+{% block prependContainter %}
+    {% include './module/navbar/desktop.twig' %}
+<div id="solidaire">
+    <header class="text-center">
+        <h1>Vivez le match PSG - Manchester avec Kimpembe !</h1>
+        <a href="#formulaire" onclick="if ($('#formulaire').length) {$('body, html').animate({ scrollTop: $('#formulaire').position().top }, 'slow');return false;}">
+            <picture>
+                <source media="(min-width: 1200px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/q_70/v1550249319/landing-page/Landing-page-KIMPEMBE-desktop-finale.jpg">
+                <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/w_1200/q_auto/v1550249319/landing-page/Landing-page-KIMPEMBE-desktop-finale.jpg">
+                <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/w_992/q_auto/v1550249319/landing-page/Landing-page-KIMPEMBE-desktop-finale.jpg">
+                <img alt="Vivez le match PSG - Manchester avec Kimpembe !" src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1550249318/landing-page/Landing-page-KIMPEMBE-mobile-final.jpg">
+            </picture>
+        </a>
+    </header>
+{% endblock %}
+{% block main_content %}
+    <div class="container">
+        <landingpage-solidaire
+        {% if user %}
+            :user-is-logged="true"
+        {% endif %}
+        ></landingpage-solidaire>
+        <aside id="comment-ca-marche">
+            <h2>Comment remporter ce lot exceptionnel ?</h2>
+            <div class="row">
+                <div class="media col-xs-12 col-sm-4" id="step1">
+                    <div class="media-left">
+                        <span class="sprite media-object">&nbsp;</span>
+                    </div>
+                    <div class="media-body media-middle">
+                        Inscrivez-vous gratuitement avec le formulaire ci-dessus
+                    </div>
+                </div>
+                <div class="media col-xs-12 col-sm-4" id="step2">
+                    <div class="media-left">
+                        <span class="sprite media-object">&nbsp;</span>
+                    </div>
+                    <div class="media-body media-middle">
+                        À partir du 25 février, fixez votre prix et dépassez les autres enchérisseurs
+                    </div>
+                </div>
+                <div class="media col-xs-12 col-sm-4" id="step3">
+                    <div class="media-left">
+                        <span class="sprite media-object">&nbsp;</span>
+                    </div>
+                    <div class="media-body media-middle">
+                        Vous êtes en tête à la fin du décompte ? Bravo vous avez gagné ! Réglez et à vous les billets !
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="row">
+            <section class="col-xs-12 col-sm-6" id="match">
+                <h2 class="text-uppercase"><span class="sprite">&nbsp;</span>Le match : PSG - Manchester United</h2>
+                <p class="text-justify">Premier club français à s'imposer à Old Trafford, face à Manchester United, le PSG nous a régalé d'une véritable démonstration de force le 12 février 2019, décrochant la victoire 2-0 face à des "Red Devils" bien démunis devant la qualité du jeu collectif parisien. Fort de ce succès, tous les rêves sont permis pour les rouges et bleus dans cette compétition aussi disputée que spectaculaire. Si jouer à domicile peut être un avantage de poids, ils auront néanmoins fort à faire pour tenir à distance Manchester une deuxième fois de suite. Match retour décisif pour les deux équipes, la rencontre du 6 mars 2019 promet du très grand football aux heureux élus présents dans le stade, avec à la clé, rien de moins qu'un quart de finale de la Ligue des Champions !</p>
+            </section>
+            <section class="col-xs-12 col-sm-6" id="joueur">
+                <h2 class="text-uppercase"><span class="sprite">&nbsp;</span>Le Joueur : Presnel Kimpembe</h2>
+                <p class="text-justify">À seulement 23 ans, Presnel Kimpembe présente déjà un CV à faire pâlir d'envie 90% des joueurs de Ligue 1 ! Triple champion de France avec le Paris Saint-Germain, il accède au graal de la sélection française pour la Coupe du Monde 2018 avant d'être sacré Champion du Monde le 15 juillet, sous la direction de Didier Deschamps. Défenseur solide, particulièrement physique et dévoué au collectif, il réalise un match aller exemplaire contre Manchester United, en ouvrant le score à la 52e minute sur un corner d'Angel Di Maria, trompant la vigilance du serbe Nemanja Matić. Le premier but de sa carrière professionnelle !<br />
+                    Après un tel tour de force, on peut être sûr que Thomas Tuchel attendra beaucoup de son jeune poulain pour le match retour du 6 mars, où Presnel Kimpembe aura toutes les cartes en main pour briller et pousser son équipe jusqu'aux quarts de finale !</p>
+            </section>
+            <div class="clearfix hidden-xs">&nbsp;</div>
+            <section class="col-xs-12 col-sm-6" id="association">
+                <h2 class="text-uppercase"><span class="sprite">&nbsp;</span>L'association : Les Virades de l'espoir</h2>
+                <img src="//img.loisirsencheres.fr/loisirs/image/upload/w_163/q_auto/v1549989486/landing-page/logo-asso.jpg" alt="Les virades de l'espoir" class="right visible-lg visible-md">
+                <p class="text-justify">Association de sensibilisation, d'aide pour la recherche et de soutien aux malades, les Virades de l'espoir ont pris pour combat la lutte contre la mucoviscidose. Si la communauté scientifique s'est largement saisie du sujet et que des progrès considérables ont été réalisés ces dernières années, cette maladie génétique concerne toujours aujourd'hui des milliers de personnes en France et dans le Monde. Chaque année, pour le dernier weekend de septembre, une nouvelle "Virade" est organisée. Le principe est simple : Se faire parrainer pour réaliser une certaine distance avec son sport de prédilection (course à pied, marche, vélo...), puis reverser les dons à l'association Vaincre la Mucoviscidose. En d'autres termes, accorder un peu de son souffle, pour offrir une vraie bouffée d'air aux familles et aux malades touchés par la maladie.<br />
+                    Les Virades de l'espoir se joignent aujourd'hui au grand sportif Presnel Kimpembe pour que ce match, qui se promet exceptionnel, serve une noble cause, la totalité des fonds collectés étant reversés à l'association. Pour que ce grand moment de football puisse rimer avec grand moment de solidarité !</p>
+                <div class="text-left hidden-md hidden-lg">
+                    <img src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1549989486/landing-page/logo-asso.jpg" alt="Les virades de l'espoir">
+                </div>
+            </section>
+            <section class="col-xs-12 col-sm-6" id="le">
+                <h2 class="text-uppercase"><span class="sprite">&nbsp;</span>Loisirs Enchères</h2>
+                <p class="text-justify">Lancé en 2014, Loisirs Enchères est un site internet et une application mobile qui propose des vacances et des loisirs aux enchères, avec un large panel de voyages, hôtels, restaurants, sorties, bien-être... Derrière ce concept unique, une ambition forte : rebattre les cartes du e-commerce traditionnel et redonner le pouvoir à ses membres de choisir le prix de ses loisirs. La consultation des offres est libre et l'inscription ainsi que les mises sont gratuites. Vous ne payez que si vous l'emportez à la fin du décompte !<br />
+                    Mais la mission que s'est donné Loisirs Enchères va plus loin que de simplement faciliter l'accessibilité aux loisirs, car la liberté des enchères peut être employée pour beaucoup plus que ça ! En proposant une tribune aux Virades de l'espoir et Presnel Kimpembe le temps de cette enchère solidaire exceptionnelle, Loisirs Enchères espère faire rejoindre une expérience hors du commun, autour d'un match d'anthologie et la rencontre d'un joueur d'exception, avec la mobilisation de ses membres autour de la question de l'entraide face à la maladie. Quelques jours seulement pour espérer vivre une expérience unique tout en faisant une bonne action. Des occasions comme celle-là ne se présente qu'une fois dans une vie !</p>
+            </section>
+            <div class="clearfix hidden-xs">&nbsp;</div>
+            <section class="col-xs-12 col-sm-6" id="regles">
+                <h2 class="text-uppercase"><span class="sprite">&nbsp;</span>Règlement</h2>
+                <p class="text-justify">Cette vente aux enchères exceptionnelle est réservée aux membres confirmés de Loisirs Enchères. L'inscription à Loisirs Enchères est libre et gratuite. Pour ce faire, remplissez le formulaire présent sur cette page (ou le formulaire d'inscription classique) puis confirmez votre adresse de messagerie en validant le lien joint dans l'e-mail de confirmation. Tous les membres Loisirs Enchères ayant suivi cette procédure pourront accéder à l'offre, indépendamment de leur ancienneté sur le site. Pour enchérir, trois valeurs de mise seront proposées aux participants. Dès lors que vous placez une mise, vous vous engagez à régler celle-ci, dans l'éventualité où vous demeureriez le meilleur enchérisseur à la fin du décompte. Placer une mise sur soi-même est interdit pour cette enchère. Si le montant total de l'enchère vient à atteindre une valeur supérieure à 1500€, des informations supplémentaires seront demandées aux participants. Ils devront ainsi compléter leur profil avec leur numéro de téléphone et leurs coordonnées bancaires afin de valider leur participation. Lors de cette étape, nous devrons interroger la banque pour un montant de 1€, mais <b>aucun prélèvement réel ne sera effectué sur le compte</b>, cette procédure est suivie uniquement à des fins de vérification. À noter, la participation aux enchères sur Loisirs Enchères est réservée aux personnes majeures uniquement, l'usage de comptes multiples est formellement interdit sur le site. Loisirs Enchères se réserve le droit d'exclure quiconque contreviendrait à ces règles, ou à ses conditions générales de vente. Transport inclus depuis la France métropolitaine.</p>
+            </section>
+        </div>
+    </div>
+</div>{# END <div id="solidaire"> #}
+{% endblock %}
+
+{% block tracking %}
+    {{ parent() }}
+    <script>
+      (function(){
+        step1Displayed('userRegisterSolidaire');
+      })();
+    </script>
+{% endblock %}
+{% block modal %}
+    {# force empty block, to fix id duplicates #}
+{% endblock %}

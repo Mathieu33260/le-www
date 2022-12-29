@@ -1,0 +1,50 @@
+#generated application files
+/app/config/config.yml
+/app/config/config.cache.php
+/app/config/webpack.manifestjson.cache.php
+/web/phpmyadmin/
+/web/robots.txt
+
+# Composer
+/composer.phar
+/dev/bin/
+/dev/tools/
+/vendor/
+
+Thumbs.db
+.DS_Store
+# IDE
+/.idea/
+/nbproject/private/
+/nbproject/project.xml
+/nbproject/project.properties
+/.vscode/
+.php_cs.cache
+
+# QA & prod
+/var/
+/tests/_output/*
+/tests/_output/*
+/tests/_support/_generated/*
+local.log
+
+# CSS
+/web/build-css/
+
+#node_modules
+/node_modules
+/package-lock.json
+
+#yarn
+/web/build/
+/web/build-legacy/
+yarn-error.log
+
+#vuese docs
+/web/docs/
+
+.env
+
+#optional overriding for local properties
+/app/config/phing/build.properties
+

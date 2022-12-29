@@ -1,0 +1,29 @@
+{% if customFields is defined and customFields is not empty %}
+    <p><b>INFORMATIONS COMPLÉMENTAIRES</b></p>
+    {% for resaCustomField in customFields %}
+        {% if dataSave.customField[resaCustomField.id] is defined %}
+            {% set value = dataSave.customField[resaCustomField.id] %}
+        {% elseif dataSave.customFieldDate[resaCustomField.id] is defined %}
+            {% set value = dataSave.customFieldDate[resaCustomField.id] %}
+        {% elseif resaCustomField.value is defined %}
+            {% set value = resaCustomField.value %}
+        {% else %}
+            {% set value = null %}
+        {% endif %}
+        {% if resaCustomField.type == 0 %}
+            {% include './customFields/module/radio.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 1 %}
+            {% include './customFields/module/checkbox.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 2 %}
+            {% include './customFields/module/text.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 3 %}
+            {% include './customFields/module/integer.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 4 %}
+            {% include './customFields/module/date.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 5 %}
+            {% include './customFields/module/shorttext.twig' with {'field': resaCustomField, 'value': value} %}
+        {% elseif resaCustomField.type == 6 %}
+            {% include './customFields/module/tel.twig' with {'field': resaCustomField, 'value': value} %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,97 @@
+<script>
+    $.validator.addMethod(
+        "franceDate",
+        function(value, element) {
+            return value.match(/^\d\d?\-\d\d?\-\d\d\d\d$/);
+        },
+        "Date de naissance invalide"
+    );
+    $.validator.addMethod(
+        "phoneNumber",
+        function(value, element) {
+            var telInput = $("#casino_userPhone");
+            return telInput.intlTelInput("isValidNumber");
+        },
+        "Numéro de téléphone invalide"
+    );
+    var validator = $("#formain").validate({
+        rules: {
+            "casino[method]": {
+                required: true
+            },
+            "casino[userGender]": {
+                required: true
+            },
+            "casino[userFirstName]": {
+                required: true
+            },
+            "casino[userLastName]": {
+                required: true
+            },
+            "casino[location]": {
+                required: true
+            },
+            "casino[userPhone]": {
+                required: true,
+                phoneNumber: true
+            },
+            "casino[userDateOfBirth]": {
+                required: true,
+                franceDate : true
+            },
+            "casino[userBirthZipcode]": {
+                required: true,
+                digits: true,
+                maxlength: 5,
+                minlength: 5
+            }
+        },
+        errorElement: "span",
+        errorPlacement: function ( error, element ) {
+            if($(element).parents('.form-group').find('.field-errors').length){
+                $(element).parents('.form-group').find('.field-errors').remove();
+            }
+            error.addClass( "field-errors" ).addClass('help-block').removeClass('error');
+            if ( element.prop( "type" ) === "checkbox" ) {
+                error.insertAfter( element.parent( "label" ) );
+            } else if(element.prop('type') === 'radio') {
+                error.insertBefore(element.parent());
+            } else {
+                if ($(element).parent('.col-xs-12').length > 0) {
+                    $(element).parent('.col-xs-12').prepend(error);
+                } else {
+                    error.insertBefore(element.parent());
+                }
+            }
+        },
+        highlight: function ( element, errorClass, validClass ) {
+            $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $( element ).parents( ".form-group" ).removeClass( "has-error" );
+            $(element).parents('.form-group').find('.help-block').remove();
+        },
+        invalidHandler: function(event, validator) {
+            $('#general-loader').addClass('hide');
+        },
+    });
+
+    $('#formain').on('submit', function (e) {
+        var $this = $(this);
+        if ($("input[name='method']:checked").val() == 'nxcb' && validator.numberOfInvalids() == 0) {
+            var gerenalLoader = $('#general-loader');
+            //show the general loader
+            gerenalLoader.removeClass('hide');
+            //hide the default loader
+            gerenalLoader.find('img').first().addClass('hide')
+            //show the casino loader
+            $('.casino-loading').removeClass('hide');
+            e.preventDefault();
+            //add a display time delay at the loader
+            setTimeout( function () {
+                //unbind the previous submit to avoid an infinite loop
+                $this.unbind('submit').submit();
+            }, 5000);
+        }
+    });
+</script>

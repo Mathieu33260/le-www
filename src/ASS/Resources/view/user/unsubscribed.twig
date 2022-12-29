@@ -1,0 +1,31 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Newsletter désinscription{% endblock %}
+
+{% block main_content %}
+    <h3 class="blue-bg">Vous êtes désormais désinscrits de la newsletter</h3>
+    L’équipe de Loisirs Enchères vous confirme votre désinscription de sa newsletter. Nous sommes tristes de vous voir partir mais serons ravis de recevoir de vos nouvelles sur notre site www.loisirsencheres.com.
+    A bientôt !
+{% endblock %}
+
+{% block footer %}
+<div class="row howto light-bg">
+    <div class="col-xs-12 title">Loisirs Enchères</div>
+    <div class="col-xs-4 step1">
+        <img class="img-responsive" src="{{ app.request.baseUrl }}/assets/gfx/icon_step1_big.png" alt="etape 1" />
+        <h3>Créez votre profil</h3>
+        C'est simple, rapide et gratuit
+    </div>
+    <div class="col-xs-4 step2">
+        <img class="img-responsive" src="{{ app.request.baseUrl }}/assets/gfx/icon_step2_big.png" alt="etape 2" />
+        <h3>Enchérissez gratuitement</h3>
+        Toujours à partir de 0 €
+    </div>
+    <div class="col-xs-4 step3">
+        <img class="img-responsive" src="{{ app.request.baseUrl }}/assets/gfx/icon_step3_big.png" alt=" etape 3" />
+        <h3>Gagnez l'enchère</h3>
+        Vous ne payez que si vous remportez l'enchère
+    </div>
+</div>
+{{ parent() }}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% set loopindex = loop.index0 %}
+{# Display passenger custom fields for passengers from database #}
+{% if dataSave.passager[loop.index0] is defined and dataSave.passager[loop.index0].customFields is defined %}
+    {% for customField in dataSave.passager[loop.index0].customFields %}
+        {% if loop.index is odd %}
+           <div class="row">
+        {% endif %}
+
+        {% if customField.value is defined %}
+            {% set value = customField.value %}
+        {% else %}
+            {% set value = null %}
+        {% endif %}
+        {% if customField.type == 0 %}
+            {% include './customFields/module/passengerradio.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 1 %}
+            {% include './customFields/module/passengercheckbox.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 2 %}
+            {% include './customFields/module/passengertext.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 3 %}
+            {% include './customFields/module/passengerinteger.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 4 %}
+            {% include './customFields/module/passengerdate.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 5 %}
+            {% include './customFields/module/passengershorttext.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% elseif customField.type == 6 %}
+            {% include './customFields/module/passengertel.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': true} %}
+        {% endif %}
+
+        {% if not loop.last and (loop.index0 == 0 or loop.index is even) %}
+           </div>
+        {% endif %}
+    {% endfor %}
+{% elseif passengersCustomFields is defined %} {# Display passenger custom fields for empty passenger form + display from datasave in case of error #}
+    {% for customField in passengersCustomFields %}
+        {% if loop.index is odd %}
+           <div class="row">
+        {% endif %}
+
+        {% if dataSave.passengerCustomField[loopindex][customField.id] is defined %}
+            {% set value = dataSave.passengerCustomField[loopindex][customField.id] %}
+        {% elseif dataSave.passengerDateCustomField[loopindex][customField.id] is defined %}
+            {% set value = dataSave.passengerDateCustomField[loopindex][customField.id] %}
+        {% elseif dataSave.passengerTelCustomField[loopindex][customField.id] is defined %}
+            {% set value = dataSave.passengerTelCustomField[loopindex][customField.id] %}
+        {% else %}
+            {% set value = null %}
+        {% endif %}
+        {% if customField.type == 0 %}
+            {% include './customFields/module/passengerradio.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 1 %}
+            {% include './customFields/module/passengercheckbox.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 2 %}
+            {% include './customFields/module/passengertext.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 3 %}
+            {% include './customFields/module/passengerinteger.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 4 %}
+            {% include './customFields/module/passengerdate.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 5 %}
+            {% include './customFields/module/passengershorttext.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% elseif customField.type == 6 %}
+            {% include './customFields/module/passengertel.twig' with {'field': customField, 'value': value, 'loopindex': loopindex, 'passenger': false} %}
+        {% endif %}
+
+        {% if not loop.last and (loop.index0 == 0 or loop.index is even) %}
+           </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

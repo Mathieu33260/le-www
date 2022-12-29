@@ -1,0 +1,62 @@
+.simpleInputBloc {
+    label {
+        color: black;
+        margin-bottom: 0.75em;
+        transition: all 0.3s ease-out;
+    }
+    .help-block {font-size: 0.75em}
+    .form-control {
+        border: 0;
+        color: black;
+        font-weight: 500 !important; /* !important is used to not break other registration pages */
+        width: 100%;
+        height: 27px !important; /* !important is used to not break other registration pages */
+        box-shadow: none;
+        padding: 1px 0 5px;
+        line-height: normal;
+        &::placeholder {
+            color: black;
+            opacity: 0.5;
+        }
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+    .has-error .form-control {
+        box-shadow: none;
+    }
+    .input {
+        position: relative;
+        input {
+            border: none;
+            border-bottom: 2px solid #d4d4d4;
+            background-color: inherit;
+            display: block;
+            width: 100%;
+            margin: 0;
+            &:focus {
+                outline: none;
+                +.line {
+                    width: 100%;
+                    background-color: #02add7;
+                }
+            }
+        }
+    }
+    .line {
+        height: 2px;
+        width: 0px;
+        position: absolute;
+        background-color: #d4d4d4;
+        display: inline-block;
+        transition: .3s width ease-in-out;
+        top: 25px;
+    }
+    &.has-error .input {
+        .line, input:focus + .line {
+            width: 100%;
+            background-color: #bd0000;
+        }
+    }
+}

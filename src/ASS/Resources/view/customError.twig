@@ -1,0 +1,25 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Erreur{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="echec">
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="block-separ-bottom block-separ-top">
+                <h2 class="text-center">{{ message }}</h2>
+            </div>
+            <div class="block-separ-bottom">
+                <p class="text-center">Vous pouvez aussi nous contacter par mail : <a href="mailto:info@loisirsencheres.com" target="_blank">info@loisirsencheres.com</a> ou au <strong>09 73 72 91 92</strong></p>
+                <div class="col-xs-10 col-xs-offset-1 nopadding-only block-separ-top block-separ-bottom">
+                    <a href="{% if isApp(app.request) %}{{ 'user.auctions' }}{% else %}{{ path('user.auctions')}}{% endif %}" class="btn btn-primary btn-block">{{ 'Voir mes enchères'|upper }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

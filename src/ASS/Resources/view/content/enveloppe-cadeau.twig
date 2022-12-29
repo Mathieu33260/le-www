@@ -1,0 +1,76 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Enveloppe cadeau{% endblock %}
+
+{% block main_content %}
+<h1 class="page-title-h1">Vous avez remporté une enchère ? Offrez-là dans une enveloppe cadeau !</h1>
+
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1 col-sm-12 col-sm-offset-0 col-xs-12">
+        <p><br />Surprenez vos proches ! Parce qu’un beau cadeau mérite un bel écrin, découvrez nos nouvelles enveloppes cadeau pour une expérience <span class="nowrap">Loisirs Enchères</span> encore plus aboutie.</p>
+        <div class="row">
+            <h2 class="h4 col-xs-12 col-lg-8"><i class="icon icon-arrow-right-full"></i> <b>Envoyer directement mon bon dans une enveloppe de qualité à l'heureux(se) élu(e).</b></h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-9">
+                <div class="row">
+                    <div class="col-xs-4 col-md-3 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing.png" alt="#" /></div>
+                    <div class="col-xs-8 col-md-9 nopadding-right-only-md nopadding-right-only-lg descripion"><p class="text-muted small">- Envoyé directement au bénéficiaire en 3 jours ouvrés<sup>1</sup> en France métropolitaine.<br />
+                        - Bon glissé dans une enveloppe cadeau de qualité (11x22cm) avec fermeture japonnaise.<span class="hidden-lg">...</span>
+                        <span class="visible-lg">- Cachet exclusif Loisirs Enchères.<br />- Options "Ne pas ouvrir avant le xx/xx/xxxx", "Pour..." et "De la part de..." écrites à la main.<br />- Message personnalisé sur le bon.<br />- Suremballage cartonné avec étiquette.</span></p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#wingExemple">Voir un aperçu</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="row">
+                    <div class="col-xs-4 col-md-12 text-center nopadding-right price">6,00 €</div>
+                </div>
+            </div>
+            <div class="col-xs-12 text-center"><small><sup>1</sup>Délai moyen constaté.</small></div>
+        </div>
+
+        <div class="row">
+            <h2 class="h4 col-xs-12 col-lg-8"><i class="icon icon-arrow-right-full"></i> <b>Recevoir mon bon dans une enveloppe de qualité pour l'offrir en main propre à l'heureux(se) élu(e).</b></h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-9">
+                <div class="row">
+                    <div class="col-xs-4 col-md-3 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing2.png" alt="#" /></div>
+                    <div class="col-xs-8 col-md-9 nopadding-right-only-md nopadding-right-only-lg descripion"><p class="text-muted small">- Envoyé directement chez vous en 3 jours ouvrés<sup>1</sup> en France métropolitaine.<br />
+                        - Bon glissé dans une enveloppe cadeau de qualité (11x22cm) avec fermeture japonnaise.<span class="hidden-lg">..</span>
+                        <span class="visible-lg">- Cachet exclusif Loisirs Enchères.<br />- Options "Pour..." et "De la part de..." écrites à la main.<br />- Message personnalisé sur le bon.<br />- Suremballage cartonné avec étiquette.</span></p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#wingExemple">Voir un aperçu</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="row">
+                    <div class="col-xs-4 col-md-12 text-center nopadding-right price">5,00 €</div>
+                </div>
+            </div>
+            <div class="col-xs-12 text-center"><small><sup>1</sup>Délaismoyen constaté.</small></div>
+        </div>
+
+        <h4><i class="icon icon-arrow-right-full"></i>Je me débrouille avec mon imprimante, j'espère juste qu'il reste de l'encre.</h4>
+        <div class="row">
+            <div class="col-xs-12 col-md-9">
+                <div class="row">
+                    <div class="col-xs-4 col-md-3 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing3.png" alt="#" /></div>
+                    <div class="col-xs-8 col-md-9 nopadding-right-only-md nopadding-right-only-lg "><p class="text-muted small">- Option "De la part de...".<br />- Message personnalisé.</p></div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <div class="row">
+                    <div class="col-xs-4 col-md-12 text-center nopadding-right price">Gratuit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+    {{ parent() }}
+    {% include 'modals/content/wingExemple.twig' %}
+{% endblock %}

@@ -1,0 +1,30 @@
+<script>
+    var assetCdn = '{{assetCdn}}';
+    var env = '{{app.env}}';
+    {% if user is not null or userData is defined %}
+    var userId = '{% if userData is defined %}{{ userData.id }}{% else %}{{ user.id }}{% endif %}';
+    {% else %}
+    var userId = '0';
+    {% endif %}
+    var errorcep = "{{ app['errorcep.id'] }}";
+    var ip = '{{app.request.getClientIp()}}';
+    var isPayment = {% if isPayment is defined %}true{% else %}false{% endif %};
+</script>
+
+{%- if isPayment is not defined and forPayment is not defined and showAndroidBanner(app.request) %}
+<script>
+    function androidBannerRemove(action) {
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'apps banner',
+            eventAction: 'click',
+            eventLabel: action=="installed"?"show":"hide"
+        })
+        setCookie("sb-"+action, true, 120)
+        document.getElementById('smartbanner').remove();
+        document.getElementById('hero-container').style.paddingTop="initial";
+    }
+</script>
+{% endif -%}
+
+<script src="{{ assetCdn }}/assets/js/basic.js?v=basicjsv" crossorigin="anonymous"></script>

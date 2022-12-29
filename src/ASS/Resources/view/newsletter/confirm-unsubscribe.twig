@@ -1,0 +1,36 @@
+{% extends 'layout/newsletter.twig' %}
+
+{% block main %}
+    <div class="col-lg-12">
+
+        <h2 class="center margin-bottom-sm">Nous vous confirmons que votre demande a bien été prise en compte.</h2>
+        <h4 class="center margin-bottom-sm">Vous pouvez à tout moment vous abonner de nouveau à la newsletter quotidienne et profiter de tous les bons plans.</h4>
+        <h4 class="center margin-bottom-sm">
+            À bientôt sur
+            <a href="https://www.loisirsencheres.com/?utm_source=unsubscription_ confirmation&utm_campaign=unsubscription_form&utm_medium=e-mail" class="text-warning">
+                Loisirs Enchères
+            </a>
+        </h4>
+
+    </div>
+{% endblock %}
+
+{% block analytics %}
+    </div>
+
+    <script>
+        ga('send', {
+            hitType: 'pageview',
+            page: '/newsletter/confirm-unsubscribe'
+        });
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'Unsubscribe_Newsletter',
+            eventAction: '{{ frequency }}',
+            eventLabel: '{{ avis }}'
+        });
+    </script>
+
+    </body>
+    </html>
+{% endblock %}

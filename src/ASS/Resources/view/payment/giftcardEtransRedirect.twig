@@ -1,0 +1,21 @@
+<html>
+<head>
+    <style>
+        #etransButton {
+            background: none;
+            border: none;
+            color: #0066ff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="document.form.submit()">
+<form method="POST" action="{{ etransLink }}" name="form">
+    {% for input in etransFormElements %}
+        <input type="hidden" name="{{ input.input }}" value="{{ input.value }}"/>
+    {% endfor %}
+    <input type="submit" id="etransButton" value="Vous allez être redirigé dans quelque instant. Sinon, cliquez ici...">
+</form>
+</body>
+</html>

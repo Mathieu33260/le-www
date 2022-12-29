@@ -1,0 +1,144 @@
+<footer id="footer" class="hidden-print{% if isHomepage is not defined %} footer-group-links{% endif %}" v-pre>
+    <section class="top hidden-xs">
+        <press-list></press-list>
+    </section>
+    <section class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="network col-sm-2 col-md-1 text-left">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="https://www.facebook.com/loisirsencheres" title="Page facebook Loisirs Enchères" target="_blank" rel="nofollow">
+                                <i class="icon icon-facebook-square-brands"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.twitter.com/loisirsencheres" title="Page twitter Loisirs Enchères" target="_blank" rel="nofollow">
+                                <i class="icon icon-twitter-brands"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/loisirsencheres_/" title="Page instagram Loisirs Enchères" target="_blank" rel="nofollow">
+                                <i class="icon icon-instagram-brands"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="link col-sm-10 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <h4>Informations</h4>
+                            {% set linkInfos =
+                                [
+                                    {'path': 'https://www.loisirsencheres.fr',                       'title':'Le concept', 'target': '_blank'},
+                                    {'path': app['lepro.url'],                                       'title':'Devenir partenaire', 'target': '_blank'},
+                                    {'path': path('content.page', {'page': 'equipe'}),               'title':'Notre équipe'},
+                                    {'path': path('content.recrutement'),                            'title':'Recrutement'},
+                                    {'path': path('christmaspage.giftcard.choice'),                  'title':'Cartes cadeaux'},
+                                    {'path': path('content.page', {'page': 'qualite'}),              'title':'Engagement qualité'},
+                                    {'path': path('content.page', {'page': 'programme-fidelite'}),   'title':'Programme de fidélité'}
+                                ]
+                            %}
+                            <ul class="list-unstyled">
+                                {% for item in linkInfos %}
+                                    {% if isHomepage is defined %}
+                                    <li><a href="{{ item.path }}" title="{{ item.title }}" class="btn btn-sm"><span>{{ item.title }}</span></a></li>
+                                    {% else %}
+                                    <li><span class="btn btn-sm fake-link" data-link="{{ item.path }}"{% if item.target is defined %} data-target="{{ item.target }}" {% endif %}><span>{{ item.title }}</span></span></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-xs-6 text-left">
+                            <h4>Liens utiles</h4>
+                            <ul class="list-unstyled">
+                                {% if isHomepage is defined %}
+                                <li><a href="{{ path('app.mobile') }}" title="Application mobile" class="btn btn-sm"><span>Application mobile</span></a></li>
+                                <li><a href="https://blog.loisirsencheres.com" title="Blog Loisirs Enchères" target="_blank" class="btn btn-sm"><span>Blog Loisirs Enchères</span></a></li>
+                                <li><a href="https://meilleurjobdefrance.fr/" title="Le meilleur job de France" class="btn btn-sm"><span>Le meilleur job de France</span></a></li>
+                                <li><a href="{{ path('feedback.home') }}" title="Avis sur Loisirs Enchères" class="btn btn-sm"><span>Avis sur Loisirs Enchères</span></a></li>
+                                <li><a href="{{ path('content.page', {'page':'presse-tv-recompenses'}) }}" title="Presse" rel="nofollow" class="btn btn-sm"><span>Presse</span></a></li>
+                                <li><a href="https://affilae.com/fr/programme-affiliation-loisirs-encheres-1" rel="nofollow" title="Programme d'affiliation" class="btn btn-sm"><span>Programme d'affiliation</span></a></li>
+                                {% else %}
+                                <li><span data-link="{{ path('app.mobile') }}" class="btn btn-sm fake-link"><span>Application mobile</span></span></li>
+                                <li><span data-link="https://blog.loisirsencheres.com" data-target="_blank" class="btn btn-sm fake-link"><span>Blog Loisirs Enchères</span></span></li>
+                                <li><span data-link="https://meilleurjobdefrance.fr/" class="btn btn-sm fake-link"><span>Le meilleur job de France</span></span></li>
+                                <li><span data-link="{{ path('feedback.home') }}" class="btn btn-sm fake-link"><span>Avis sur Loisirs Enchères</span></span></li>
+                                <li><span data-link="{{ path('content.page', {'page':'presse-tv-recompenses'}) }}" class="btn btn-sm fake-link"><span>Presse</span></span></li>
+                                <li><span data-link="https://affilae.com/fr/programme-affiliation-loisirs-encheres-1" class="btn btn-sm fake-link"><span>Programme d'affiliation</span></span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% if not user.preferences.isOptin is defined or not user.preferences.isOptin %}
+                    {% include 'module/newsletter.twig' %}
+                {% else %}
+                    {% include 'module/parrainage.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <section class="bottom background-blanc">
+        <div class="container">
+            <div class="row">
+                <p class="col-xs-12 col-lg-3">Copyright <i class="icon icon-copyright-solid icon-lg"></i> - Loisirs Enchères {{ "now"|date('Y') }}</p>
+                {% set link =
+                    [
+                        {'path': path('centre-aide'),                                   'title':"Centre d'aide"},
+                        {'path': path('faq'),                                           'title':'Faq'},
+                        {'path': path('content.apropos'),                               'title':'Mentions légales'},
+                        {'path': path('content.page', {'page': 'privacy-policy'}),      'title':'Confidentialité'},
+                        {'path': path('content.page', {'page': 'cgu'}),                 'title':'Conditions générales et particulières de ventes'}
+                    ]
+                %}
+                <ul class="linkInfos list-unstyled col-xs-12 col-md-8 col-lg-6">
+                    {% for item in link %}
+                        {% if isHomepage is defined %}
+                        <li><a href="{{ item.path }}" title="{{ item.title }}" class="btn btn-sm">{{ item.title }}</a></li>
+                        {% else %}
+                        <li><span data-link="{{ item.path }}" class="btn btn-sm fake-link">{{ item.title }}</span></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <ul class="linkInfos list-unstyled col-xs-12 col-md-4 col-lg-3 text-center available-payment">
+                    <li>
+                        <lazy-image
+                            src="{{assetCdn}}/assets/img/logo-cb.png"
+                            alt="Logo CB"
+                            title="Paiement CB"
+                        ></lazy-image>
+                    </li>
+                    <li>
+                        <lazy-image
+                            src="{{assetCdn}}/assets/img/logo-mastercard.png"
+                            alt="Logo MasterCard"
+                            title="Paiement MasterCard"
+                        ></lazy-image>
+                    </li>
+                    <li>
+                        <lazy-image
+                            src="{{assetCdn}}/assets/img/logo-visa.png"
+                            alt="Logo Visa"
+                            title="Paiement Visa"
+                        ></lazy-image>
+                    </li>
+                    <li>
+                        <lazy-image
+                            src="{{assetCdn}}/assets/img/logo-ancv.png"
+                            alt="Logo Chèque Vacances"
+                            title="Paiement Chèque Vacances"
+                        ></lazy-image>
+                    </li>
+                    <li>
+                        <lazy-image
+                            src="{{assetCdn}}/assets/img/cb4x.png"
+                            alt="Logo 3fois paiement"
+                            title="Paiement en 4 fois"
+                        ></lazy-image>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</footer>

@@ -1,0 +1,45 @@
+{% if field.properties.min_char is defined and field.properties.min_char is not empty and field.properties.max_char is defined and field.properties.max_char is not empty %}
+    {% set pattern = 'pattern=.{' ~ field.properties.min_char ~ ',' ~ field.properties.max_char ~ '}' %}
+    {% set maxLength = 'maxlength=' ~ field.properties.max_char %}
+    {% set indication = 'Nombre de caractères compris entre '~ field.properties.min_char ~ ' et ' ~ field.properties.max_char %}
+{% elseif field.properties.min_char is defined and field.properties.min_char is not empty %}
+    {% set pattern, maxLength = 'pattern=.{' ~ field.properties.min_char ~ ',}', '' %}
+    {% set indication = 'Nombre de caractères minimum '~ field.properties.min_char %}
+{% elseif field.properties.max_char is defined and field.properties.max_char is not empty %}
+    {% set pattern = 'pattern=.{0,' ~ field.properties.max_char ~ '}' %}
+    {% set maxLength = 'maxlength=' ~ field.properties.max_char %}
+    {% set indication = 'Nombre de caractères maximum '~ field.properties.max_char %}
+{% else %}
+    {% set pattern, maxLength, indication = '', '', '' %}
+{% endif %}
+
+{% if field.properties.mandatory is defined and field.properties.mandatory == true %}
+    {% set required, title = 'required=required', 'Ce champs est obligatoire' %}
+{% else %}
+    {% set required, title = '', '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+<label>{{ field.label }} {% if required is not empty %}*{% endif %}</label> <em>{{ information }}</em><br>
+<em>{{ indication }}</em>
+<div class="row">
+    <div class="form-group col-lg-12 col-sm-12{% if error != false and error.customField[field.id] is defined %} has-error{% endif %}">
+        <input autocomplete="off" type="input" id="cf{{ field.id }}" class="form-control{% if maxLength is not empty %} limitsCharacters{% endif %}" name="customField[{{ field.id }}]" placeholder="{{ field.properties.placeholder|default('') }}" value="{{ value }}"
+                {{ pattern }}
+                {{ maxLength }}
+                {{ required }}
+                title="{{ title }}"
+        >
+        {% if maxLength is not empty %}
+            <span class="counter"><span>{{ field.properties.max_char }}</span> caractères restants</span>
+        {% endif %}
+        {% if error != false and error.customField[field.id] is defined %}
+            <span class="help-block">{{ error.customField[field.id] }}</span>
+        {% endif %}
+    </div>
+</div>

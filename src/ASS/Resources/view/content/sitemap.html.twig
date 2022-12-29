@@ -1,0 +1,74 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Sitemap{% endblock %}
+{% block metaDesc %}Liste des pages dont certaines que vous auriez oubliées !{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Carte du site</h1>
+
+    <div class="row content">
+        <div class="col-md-12">
+            <ul>
+                <li><a href="{{path('feedback.home')}}">Avis des clients</a></li>
+                <li><a href="{{ path('content.page', {'page': 'presse-tv-recompenses'}) }}">Presse, Tv, récompenses</a></li>
+                <li><a href="{{ path('app.offer') }}">Offres que vous avez aimées</a></li>
+                <li><a href="{{ path('content.topweekpayers') }}">Enchérisseurs de la semaine</a></li>
+                <li><a href="https://vente-aux-encheres.clubmed.fr/">Vente aux enchère pour Club Med</a></li>
+            </ul>
+        </div>
+        <div class="col-md-12">
+            <ul>
+                <li><a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">Programme de fidélité</a></li>
+                <li><a href="{{ path('christmaspage.giftcard.choice') }}">Carte cadeau</a></li>
+                <li><a href="{{path('app.mobile')}}">Application mobile bon plan voyage sejour vacances et weekend</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <ul>
+                <li><a href="{{ path('faq') }}">FAQ Questions fréquemment posées</a></li>
+                <li><a href="https://meilleurjobdefrance.fr/">Le meilleur job de France</a></li>
+                <li><a href="https://blog.loisirsencheres.com">Notre blog vacances, restos et voyages</a></li>
+                <li><a href="https://www.loisirsencheres.fr">Site d'entreprise Loisirs Enchères</a></li>
+                <li><a href="https://www.videoperenoel.com/">La vidéo du Père Noël</a></li>
+                <li><a href="{{ path('content.page', {'page': 'equipe'}) }}">L'équipe Loisirs Enchères</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <ul>
+                <li><a href="{{ path('content.page', {'page': 'contact'}) }}" rel="nofollow">Contact</a></li>
+                <li><a href="{{ app['lepro.url'] }}">Devenir partenaire</a></li>
+                <li><a href="{{ path('content.apropos') }}">A propos</a></li>
+                <li><a href="{{ path('content.page', {'page': 'cgu'}) }}">Conditions générales de ventes</a></li>
+                <li><a href="{{ path('content.page', {'page': 'privacy-policy'}) }}">Confidentialité</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <h2 class="title-h2-page-quality">Catégories</h2>
+            <ul>
+                <li><a href="{{ path('all.page') }}">Toutes les offres</a></li>
+            {% for tag in tags %}
+                <li><a href="{{ path('category.name', {'name': tag.name}) }}">{{ tag.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <h2 class="title-h2-page-quality">Offres</h2>
+            <ul>
+                {% for auction in auctions %}
+                    <li><a href="{{ path('product.auction', {'id': auction['product_id']}) }}">{{ auction['auction_name'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-12">
+            <h2 class="title-h2-page-quality">Villes</h2>
+            <ul>
+                <li><a href="{{ path('geoloc.cities') }}">Villes</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Changement d'adresse email{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        <div class="col-lg-9 col-xs-10 col-xs-offset-1 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8" id="userProfile">
+            {% if app.request.get('onlycontent') is null %}
+                {% include 'user/template/mobileMenu.twig' %}
+            {% endif %}
+            
+            <h1>Changement d'email</h1>
+            <p>Liste de vos adresses emails renseignées depuis l'ouverture de votre compte. Votre adresse email principale est utilisée pour vous connecter à votre compte, changer votre mot de passe et recevoir vos notifications (ex : vous remportez une enchère).</p>
+            <ul id='emailsList'>
+            {% for mail in emails %}
+                <li>
+                    <span class="email">{{ mail.value }}</span>
+                    {% if email == mail.value %}<span class='warning'>Actuel</span>{% endif %}
+                    {% if mail.confirm_date is null %}
+                        <span class='unconfirmed'>Non confirmé</span><a href="{{ path('user.email.send',{'emailId':mail.id}) }}">Renvoyer le mail de confirmation</a>
+                    {% endif %}
+                    {% if mail.confirm_date is not null and email != mail.value %}
+                        <span class="unconfirmed">Ancien</span><a href="{{ path('user.email.reuse',{'email': mail.value}) }}">Utiliser</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+            <div class="login-form">{% embed './form/changeEmail.twig' with {
+                'action': 'user.email', 'formClass': 'form-horizontal', 'labelClass': 'col-sm-1 control-label', 'inputContainerClass': 'col-sm-5 col-xs-12', 'submitContainerClass':'col-sm-4 col-xs-12'            } %}{% endembed %}</div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+{% endblock %}

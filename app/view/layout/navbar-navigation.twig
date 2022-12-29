@@ -1,0 +1,199 @@
+<header id="header"{% if hideHeader is defined %} class="hidden-xs hidden-sm"{% endif %}>
+    <div id="topDIV" class="navbar navbar-inverse navbar-connexion no-radius hidden-xs">
+        <div class="container">
+            <div class="row">
+                {% set showSearchBar = (headerHideSearchBar is not defined and isPayment is not defined and forPayment is not defined) %}
+                {% set showUserCol = (user and headerHideUser is not defined) or headerHideUser is not defined %}
+                {% set useHeaderRightSide = (isPayment is not defined and forPayment is not defined) and (showSearchBar or headerHideFaq is not defined or showUserCol) %}
+                {% set isOrForPayment = (isPayment is defined or forPayment is defined) %}
+
+                <div class="{% if isOrForPayment %}col-sm-5{% elseif useHeaderRightSide == false %}col-xs-12{% else %}col-lg-5 col-sm-3{% endif %}">
+                    <div class="row">
+                        <div class="{% if isOrForPayment %}col-sm-12{% elseif useHeaderRightSide == false %}col-sm-4 col-sm-offset-4 only-logo{% else %}col-lg-4 col-sm-12{% endif %}">
+                            <a href="{% if isOrForPayment %}{{ path('user.auctions') }}{% else %}{{ path('homepage') }}{% endif %}">
+                                <img src="{{assetCdn}}/assets/gfx/{% if bodyclass is defined and 'fullpage' in bodyclass %}logo-blanc.svg?v=20191230{% else %}logo.svg?v=20191230{% endif %}" alt="loisirs encheres" title="loisirs encheres" class="logo img-responsive">
+                            </a>
+                        </div>
+                        {% if headerHideClaim is not defined and isPayment is not defined and forPayment is not defined %}
+                            <div class="col-lg-8 hidden-md hidden-sm hidden-xs nopadding"><p class="slogan"><strong>Vos expériences au meilleur prix,<br />{% if isHomepage is defined %}le vôtre.{% else %}<span class="text-warning">le vôtre.</span>{% endif %}</strong></p></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if useHeaderRightSide %}
+                <div id="headerRightSide" class="col-lg-7 col-sm-9 col-lg-offset-0">
+                    <div class="service text-right">
+                        {% if showSearchBar %}
+                        <div class="recherche visible-sm-inline visible-md-inline visible-lg-inline">
+                            <form class="form-inline visible-sm-inline visible-md-inline visible-lg-inline" action="{{path('searchBar.getProducts')}}" method="get">
+                                <div class="input-group">
+                                    <input class="form-control typeahead tagsSearch" type="text" name="q" placeholder="Recherche" title="rechercher" value="{{ (searchTerm is defined and searchTerm)?searchTerm:'' }}" autocomplete="off">
+                                    <span class="input-group-addon">
+                                        <button type="submit" class="search-submit">
+                                            <i class="icon icon-loupe"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %}
+                        {% if headerHideFaq is not defined %}
+                        <a href="{{ path('faq') }}" class="help hidden-xs btn btn-sm"><i class="icon-faq"></i><br />Aide</a>
+                        {% endif %}
+                        {% if user and headerHideUser is not defined %}
+                            <div class="col-user">
+                                <div class="parrainage">
+                                    <button class="btn btn-sm btn-transparent"><i class="icon-parrainage"></i><br />Parrainage</button>
+                                    <div class="hide">
+                                        <div class="row hide loader">
+                                            <p class="col-xs-12 text-center"><img src="{{assetCdn}}/assets/gfx/loader.gif?v=20170307" alt="Traitement en cours" width="32" /></p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-xs-10 col-xs-offset-1 text-black-light text-left nopadding-only"><b>Parrainer vos amis</b> <a href="{{ path('user.parrainage') }}"><i class="icon-info"></i></a></p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-offset-1 col-xs-10 nopadding-only">
+                                                <form action="{{ path('user.parrainage') }}" method="POST" id="headerParrainage">
+                                                    <input type="hidden" name="parrainage[message]" value="" />
+                                                    <input type="hidden" name="parrainage[lastName]" value="{{ user.lastName }}" />
+                                                    <input type="hidden" name="parrainage[firstName]" value="{{ user.firstName }}" />
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="email" name="parrainage[godson]" placeholder="Email de votre filleul(e)..." title="Email de votre filleul(e)..." required="">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-warning btn-block">Parrainer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="favorites">
+                                    <a href="{{ path('user.favorites') }}" class="btn btn-sm">
+                                        <i class="btn-7e icon-heart"></i><br />Favoris
+                                    </a>
+                                </div>
+                                <nav class="account dropdown">
+                                    <button id="userMenuBtn" class="btn btn-sm btn-transparent dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i>
+                                        {{ user.firstName }}
+                                        {% if user.nbAuctionPaid > 0 and user.nbAuctionPaid < 5%}
+                                            <img src='{{assetCdn}}/assets/gfx/rank1.png?v=20160707' alt="rank1" />
+                                        {% elseif user.nbAuctionPaid >= 5 and user.nbAuctionPaid < 10 %}
+                                            <img src='{{assetCdn}}/assets/gfx/rank2.png?v=20160707' alt="rank2" />
+                                        {% elseif user.nbAuctionPaid >= 10 and user.nbAuctionPaid < 20 %}
+                                            <img src='{{assetCdn}}/assets/gfx/rank3.png?v=20160707' alt="rank3" />
+                                        {% elseif user.nbAuctionPaid >= 20 and user.nbAuctionPaid < 50 %}
+                                            <img src='{{assetCdn}}/assets/gfx/rank4.png?v=20160707' alt="rank4" />
+                                        {% elseif user.nbAuctionPaid >= 50 %}
+                                            <img src='{{assetCdn}}/assets/gfx/rank5.png?v=20160707' alt="rank5" />
+                                        {% endif %}
+                                        </i><br />Mon compte
+                                        <user-informations-payment-alert></user-informations-payment-alert>
+                                    </button>
+                                    {% include './module/navbar/userHeaderNav.twig' with { 'ariaLabelledby': 'userMenuBtn' } %}
+                                </nav>
+                            </div>
+                        {% else %}
+                            {% if headerHideUser is not defined %}
+                                <div class="authentification">
+                                    <div class="placeholder-block">
+                                        <div class="placeholder-container register">
+                                            <div class="placeholder-animated">
+                                                <div class="masker load" aria-hidden="true"></div>
+                                            </div>
+                                        </div>
+                                        <div class="placeholder-container login">
+                                            <div class="placeholder-animated">
+                                                <div class="masker load" aria-hidden="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <authentification-buttons
+                                        :login-button-transparent="{{ headerLoginButtonTransparent is defined ? 'true' : 'false' }}"
+                                        :register-button-default="{{ path('homepage') == app.request.pathInfo ? 'true' : 'false' }}"
+                                        :hide-register-button="{{ headerHideRegisterButton is not defined ? 'false' : 'true' }}"
+                                    ></authentification-buttons>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.get('_route') != 'user.auctions' and app.request.get('_route') != 'product.auction' %}
+                        <auction-list-hide></auction-list-hide>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="visible-xs" id="enteteMobile">
+        {% if isPayment is not defined and forPayment is not defined and showAndroidBanner(app.request) and hideAppBanner is not defined %}
+            {% include './include/banner-android.html.twig' %}
+        {% endif %}
+        <div class="col-xs-12 barre">
+            <div class="row">
+                {% if isPayment is not defined and forPayment is not defined %}
+                <div class="col-xs-2 text-center nopadding-only">
+                    {% if hideNavbar is not defined %}
+                    <button class="btn-transparent toggle-button-menu">
+                        <i class="icon-menu-hamburger"></i>
+                        <i class="icon-close hide"></i>
+                    </button>
+                    {% else %}
+                    &nbsp;
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="col-xs-4 {% if isPayment is not defined and forPayment is not defined %}col-xs-offset-2{% else %}col-xs-offset-4{% endif %} text-center nopadding-only">
+                    <a href="{{path('homepage')}}" class="logo">
+                        <img src="{{assetCdn}}/assets/gfx/{% if bodyclass is defined and 'fullpage' in bodyclass %}logo-blanc.svg?v=20191230{% else %}logo.svg?v=20191230{% endif %}" title="loisirs encheres" alt="loisirs encheres" />
+                    </a>
+                </div>
+                {% if isPayment is not defined and forPayment is not defined %}
+                <div class="col-xs-2 text-center nopadding-only">
+                    {% if headerHideSearchBar is not defined %}
+                    <button class="btn-transparent search">
+                        <i class="icon-loupe"></i>
+                    </button>
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </div>
+                <div class="col-xs-2 text-center nopadding-only btns-right">
+                    {% if headerHideUser is not defined %}
+                        {% if app.security.getToken() is not null and not is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <authentification-buttons
+                                :login-button-transparent="true"
+                            ></authentification-buttons>
+                            <button class="btn-transparent toggle-button-menu hide">
+                                <i class="icon-close"></i>
+                            </button>
+                        {% else %}
+                            <button class="btn-transparent mobile-user-menu toggle-button-menu">
+                                <user-informations-payment-alert></user-informations-payment-alert>
+                                <i class="icon-mon-profil"></i>
+                                <i class="icon-close hide"></i>
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if notSearchBar is not defined %}
+        <div class="rechercheMobile col-xs-12 visible-xs hide">
+            <form class="search-form" role="search" action="{{path('searchBar.getProducts')}}">
+                <div class="input-group">
+                    <input class="form-control typeahead tagsSearch" type="text" name="q" placeholder="Recherche" title="rechercher" value="{{ (searchTerm is defined and searchTerm)?searchTerm:'' }}" autocomplete="off">
+                    <span class="input-group-addon background-orange">
+                        <button type="submit" class="search-submit btn-transparent"><i class="icon icon-loupe icon-inverse icon-lg"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</header>
+
+{% if isPayment is not defined and forPayment is not defined and isHomepage is not defined and hideNavbar is not defined %}
+    {% include './module/navbar/desktop.twig' %}
+{% endif %}

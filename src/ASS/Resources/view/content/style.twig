@@ -1,0 +1,242 @@
+{% extends 'layout/html.twig' %}
+{% block moremeta %}
+<meta name="robots" content="noindex">
+{% endblock %}
+{% block title %}Style graphique{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Présentation des styles graphiques</h1>
+    <p>Pour voir l'ensemble des styles de base dispo rendez-vous sur <a href="https://getbootstrap.com/docs/3.3/css/" target="_blank" rel="nofollow">https://getbootstrap.com/docs/3.3/css/</a></p>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#buttons" aria-expanded="true" aria-controls="buttons">
+              Les buttons
+            </a>
+          </h4>
+        </div>
+        <div id="buttons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>Buttons simple orange</h4>
+                    <button type="button" class="btn btn-warning btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-warning">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm">Button small</button><br /><br />
+                    <a href="#" class="btn btn-link text-warning">Button link</a>
+                    <h4>Buttons orange avec icon</h4>
+                    <button type="button" class="btn btn-warning btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-warning with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                    <a href="#" class="btn btn-link text-warning with-icon">Button link <i class="icon-arrow-right"></i></a>
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons arondi</h4>
+                    <button type="button" class="btn btn-warning btn-block btn-circle">Button 100%</button><br />
+                    <button type="button" class="btn btn-warning btn-circle">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm btn-circle">Button small</button><br /><br /><br />
+                    <h4>Buttons arondi avec icon</h4>
+                    <button type="button" class="btn btn-warning btn-block btn-circle with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-warning btn-circle with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm btn-circle with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons simple</h4>
+                    <button type="button" class="btn btn-default btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-default">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-default btn-sm">Button small</button><br /><br /><br />
+                    <h4>Buttons avec icon</h4>
+                    <button type="button" class="btn btn-default btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-default with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-default btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons primary</h4>
+                    <button type="button" class="btn btn-primary btn-block">Button 100%</button><br />
+                    <a type="button" href="#" class="btn btn-primary">Button normal</a><br /><br />
+                    <button type="button" class="btn btn-primary btn-sm">Button small</button><br /><br />
+                    <a href="#" class="btn btn-link text-primary">Button link</a>
+                    <h4>Buttons primary avec icon</h4>
+                    <button type="button" class="btn btn-primary btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-primary with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-primary btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                    <a href="#" class="btn btn-link text-primary with-icon">Button link <i class="icon-arrow-right"></i></a>
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons simple disable</h4>
+                    <button type="button" class="btn btn-warning btn-block disabled">Button 100% - class</button><br />
+                    <button type="button" class="btn btn-warning" disabled="disabled">Button normal - attr</button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm" disabled="disabled">Button small</button><br /><br />
+                    <a href="#" class="btn btn-link text-warning" disabled="disabled">Button link attr</a><br /><a href="#" class="btn btn-link text-warning disabled">Button link class</a>
+                    <h4>Buttons disable avec icon</h4>
+                    <button type="button" class="btn btn-warning btn-block disabled with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-warning with-icon"disabled="disabled with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm with-icon"disabled="disabled">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                    <a href="#" class="btn btn-link text-warning with-icon" disabled="disabled">Button link <i class="icon-arrow-right"></i></a><br />
+                    <a href="#" class="btn btn-link text-warning with-icon disabled">Button link <i class="icon-arrow-right"></i></a>
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons simple disable arondi</h4>
+                    <button type="button" class="btn btn-warning btn-block disabled btn-circle">Button 100% - class</button><br />
+                    <button type="button" class="btn btn-warning btn-circle" disabled="disabled">Button normal - attr</button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm btn-circle" disabled="disabled">Button small</button><br /><br /><br />
+                    <h4>BTN disable arondi avec icon</h4>
+                    <button type="button" class="btn btn-warning btn-block disabled btn-circle with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-warning btn-circle with-icon" disabled="disabled">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-warning btn-sm btn-circle with-icon" disabled="disabled">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons success</h4>
+                    <button type="button" class="btn btn-success btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-success disabled">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-success btn-sm">Button small</button><br /><br />
+                    <a href="#" class="btn btn-link text-success">Button link</a>
+                    <h4>Buttons success avec icon</h4>
+                    <button type="button" class="btn btn-success btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-success with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-success btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                    <a href="#" class="btn btn-link text-success with-icon">Button link <i class="icon-arrow-right"></i></a>
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons danger</h4>
+                    <button type="button" class="btn btn-danger btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-danger">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-danger btn-sm disabled">Button small</button><br /><br />
+                    <a href="#" class="btn btn-link text-danger">Button link</a>
+                    <h4>Buttons danger avec icon</h4>
+                    <button type="button" class="btn btn-danger btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-danger disabled with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-danger btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                    <a href="#" class="btn btn-link text-danger with-icon">Button link <i class="icon-arrow-right"></i></a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-3">
+                    <h4>Buttons christmas</h4>
+                    <button type="button" class="btn btn-christmas btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-christmas">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-christmas btn-sm disabled">Button small</button><br /><br />
+                    <h4>Buttons danger avec icon</h4>
+                    <button type="button" class="btn btn-christmas btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-christmas disabled with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-christmas btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                </div>
+                <div class="col-md-3">
+                    <h4>Buttons rose (Enfoirés)</h4>
+                    <button type="button" class="btn btn-pink btn-block">Button 100%</button><br />
+                    <button type="button" class="btn btn-pink">Button normal</button><br /><br />
+                    <button type="button" class="btn btn-pink btn-sm disabled">Button small</button><br /><br />
+                    <h4>Buttons danger avec icon</h4>
+                    <button type="button" class="btn btn-pink btn-block with-icon">Button 100% <i class="icon-arrow-right"></i></button><br />
+                    <button type="button" class="btn btn-pink disabled with-icon">Button normal <i class="icon-arrow-right"></i></button><br /><br />
+                    <button type="button" class="btn btn-pink btn-sm with-icon">Button small <i class="icon-arrow-right"></i></button><br /><br />
+                </div>
+            </div>
+            <h3>Tailles</h3>
+            <p>
+              <button type="button" class="btn btn-primary">Default button</button>
+              <button type="button" class="btn btn-default">Default button</button>
+            </p>
+            <p>
+              <button type="button" class="btn btn-primary btn-sm">Small button</button>
+              <button type="button" class="btn btn-default btn-sm">Small button</button>
+            </p>
+            <div>
+                <button type="button" class="btn btn-primary btn-block">Block level button</button>
+                <button type="button" class="btn btn-default btn-block">Block level button</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Typo
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+              <h2>Textes avec couleur</h2>
+                <p class="text-muted">class css <b>text-muted</b></p>
+                <p class="text-primary">class css <b>text-primary</b></p>
+                <p class="text-success">class css <b>text-success</b></p>
+                <p class="text-info">class css <b>text-info</b></p>
+                <p class="text-warning">class css <b>text-warning</b></p>
+                <p class="text-danger">class css <b>text-danger</b></p>
+                <p class="texte-rose">class css <b>texte-rose</b></p>
+                <h2>Text avec fond de couleur</h2>
+                <p class="bg-primary">Class css <b>bg-primary</b></p>
+                <p class="bg-success">Class css <b>bg-success</b></p>
+                <p class="bg-info">Class css <b>bg-info</b></p>
+                <p class="bg-warning">Class css <b>bg-warning</b></p>
+                <p class="bg-danger">Class css <b>bg-danger</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#marginpadding" aria-expanded="false" aria-controls="marginpadding">
+              Margin/Padding
+            </a>
+          </h4>
+        </div>
+        <div id="marginpadding" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <ul>
+                  <li>.paddingtop1 {padding-top: 1em}</li>
+                  <li>.paddingtop2 {padding-top: 2em}</li>
+                  <li>.paddingbottom1 {padding-bottom: 1em}</li>
+                  <li>.paddingbottom2 {padding-bottom: 2em}</li>
+                  <li>.paddingleft1 {padding-left: 1em}</li>
+                  <li>.paddingright1 {padding-right: 1em}</li>
+                  <li>.marginbottom1 {margin-bottom: 1em}</li>
+                  <li>.margintop1 {margin-top: 1em}</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#background" aria-expanded="false" aria-controls="background">
+              Background
+            </a>
+          </h4>
+        </div>
+        <div id="background" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <div class="background-gris">Class css <b>background-gris</b></div>
+              <div class="background-gris2">Class css <b>background-gris2</b></div>
+              <div class="background-gris3">Class css <b>background-gris3</b></div>
+              <div class="background-bleu">Class css <b>background-bleu</b></div>
+              <div class="background-bleu-claire">Class css <b>background-bleu-claire</b></div>
+              <div class="background-jaune">Class css <b>background-jaune</b></div>
+              <div class="background-bleuVif">Class css <b>background-bleuVif</b></div>
+              <div class="background-blanc">Class css <b>background-blanc</b></div>
+              <div class="background-orange">Class css <b>background-orange</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#separator" aria-expanded="false" aria-controls="separator">
+              Separator
+            </a>
+          </h4>
+        </div>
+        <div id="separator" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <h2>hr</h2>
+              <p>hr normal : &lt;hr /&gt;</p>
+              <hr />
+              <p>hr bleu &lt;hr class="bleu" /&gt;</p>
+              <hr class="bleu" />
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

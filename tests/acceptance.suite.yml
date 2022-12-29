@@ -1,0 +1,202 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \BrowserStackWebDriver:
+        - \Helper\Acceptance
+env:
+    windows10-chromeLatest:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+
+    windows10-chrome78:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+                        'browser_version': '78.0'
+
+    windows10-chrome76:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+                        'browser_version': '76.0'
+
+    windows10-chrome75:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+                        'browser_version': '75.0'
+
+    windows10-firefoxLatest:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: firefox
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+
+    windows10-firefox68:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: firefox
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+                        'browser_version': '68.0'
+
+    windows10-edgeLatest:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: edge
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+
+    windows10-ie11:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: ie
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'Windows'
+                        'os_version': '10'
+                        'acceptSslCerts': true
+                        'browser_version': '11.0'
+
+    windows7-ie11:
+      modules:
+        config:
+          \BrowserStackWebDriver:
+            url: 'https://local-www.loisirsentest.com'
+            browser: ie
+            host: 'hub-cloud.browserstack.com'
+            port: 80
+            capabilities:
+              'browserstack.user': 'mathieudumeztest2'
+              'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+              'browserstack.local': true
+              'name': 'Bstack-[Codeception] Local Test'
+              'os': 'Windows'
+              'os_version': '7'
+              'acceptSslCerts': true
+              'browser_version': '11.0'
+
+    mojave-safariLatest:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'OS X'
+                        'os_version': 'Mojave'
+                        'acceptSslCerts': true
+
+    mojave-safari12:
+        modules:
+            config:
+                \BrowserStackWebDriver:
+                    url: 'https://local-www.loisirsentest.com'
+                    browser: chrome
+                    host: 'hub-cloud.browserstack.com'
+                    port: 80
+                    capabilities:
+                        'browserstack.user': 'mathieudumeztest2'
+                        'browserstack.key': 'V8YKp4R5JcJqwr7spsyB'
+                        'browserstack.local': true
+                        'name': 'Bstack-[Codeception] Local Test'
+                        'os': 'OS X'
+                        'os_version': 'Mojave'
+                        'acceptSslCerts': true
+                        'browser_version': '12.0'
+
+coverage:
+    remote: true

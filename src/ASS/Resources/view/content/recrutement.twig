@@ -1,0 +1,43 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Recrutement{% endblock %}
+
+{% block breadcrumb %} {% endblock %}
+
+{% block main_content %}
+<h1>Loisirs Enchères recrute !</h1>
+
+<div class="media">
+    <div class="media-body">
+        <p>Loisirs Enchères vous propose régulièrement de <a href="{{ path('content.page', {'page': 'equipe'}) }}" title="Notre équipe">rejoindre son équipe</a> de développeurs web & mobile, commerciaux dénicheurs, experts en marketing digital, administratifs.
+        Si vous êtes tentés par l'aventure et que notre boite vous plait (beaucoup !),
+        alors <a href="https://loisirsencheres.welcomekit.co/" title="Page carrière de Loisirs Enchères" target="_blank">visitez notre page carrière</a>.<br />A bientôt !</p>
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1461931924/logo/label-happy-at-work-startup-2016.jpg" alt="Happy at work" width="150" class="visible-xs" />
+    </div>
+    <div class="media-right hidden-xs">
+        <img class="media-object" src="//img.loisirsencheres.fr/loisirs/image/upload/v1461931924/logo/label-happy-at-work-startup-2016.jpg" alt="Happy at work" width="150" />
+    </div>
+</div>
+
+<div class="block-separ-top">
+    <div class="text-center block-separ-bottom">
+        <a href="https://loisirsencheres.welcomekit.co/" target="_blank" class="btn btn-lg btn-default" title="Offres d'emplois de Loisirs Enchères">Voir nos offres</a>
+    </div>
+    <iframe src="https://www.welcometothejungle.co/companies/loisirs-encheres/embed?c=3&l=2" width="100%" height="700px" frameborder="0"></iframe>
+    <div class="text-center block-separ-top">
+        <a href="https://loisirsencheres.welcomekit.co/" target="_blank" class="btn btn-lg btn-default" title="Offres d'emplois de Loisirs Enchères">Voir nos offres</a>
+    </div>
+</div>
+
+<div class="row block-separ-top block-separ-bottom">
+    <figure class="col-xs-12 col-sm-6">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1485341180/dev_q1xxam.png" alt="#">
+        <figcaption>Stage développeur web, API & sysadmin</figcaption>
+    </figure>
+    <figure class="col-xs-12 col-sm-6">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1500304167/ressource/dev-sale.png" alt="#">
+        <figcaption>Stage Attaché(e) Commercial(e)</figcaption>
+    </figure>
+</div>
+
+{% endblock %}

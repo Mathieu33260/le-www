@@ -1,0 +1,81 @@
+#blockApps {
+    text-align: center;
+    background: linear-gradient( 90deg, @beige 0%, white 100%);
+    @media (max-width: @max-width-xs) {
+        text-align: left;
+    }
+    .container {
+        position: relative;
+        .subContainer {
+            max-width: 750px;
+            padding-top: 100px;
+            margin: 0 auto;
+            background: url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-android.png') left bottom no-repeat,
+            url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-ios.png') right bottom no-repeat;
+            background-size: auto 206px;
+            @media (max-width: @max-width-xs) {
+                padding: 0 0 20px 0;
+                background: url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-ios.png') right bottom no-repeat;
+            }
+            a {
+                display: inline-block;
+                margin: 20px;
+                @media (max-width: @max-width-xs) {
+                    display: block;
+                    margin-left: 0;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+                img {
+                    box-shadow: 0 0 5px 0.05px rgba(0, 0, 0, 0.1);
+                    width: 128px;
+                }
+            }
+        }
+        .webp & {
+            .subContainer {
+                background: url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-android.webp') left bottom no-repeat,
+                url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-ios.webp') right bottom no-repeat;
+                @media (max-width: @max-width-xs) {
+                    background: url('//img.loisirsencheres.fr/loisirs/image/upload/v1558948329/content/phone-ios.webp') right bottom no-repeat;
+                }
+            }
+        }
+        & > span {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            @media (max-width: @max-width-xs) {
+                right: 20px;
+            }
+            a, i {
+                color: @grey_light;
+                vertical-align: middle;
+            }
+            i {
+                color: black;
+                font-weight: bold;
+                margin-left: 10px;
+            }
+        }
+        h2 {
+            font-weight: bold;
+            font-size: 1.142em;
+            color: @black_light;
+            text-transform: uppercase;
+            & + p {
+                color: @orange;
+                @media (max-width: @max-width-xs) {
+                    padding-bottom: 25px;
+                }
+            }
+        }
+        @media (max-width: @max-width-xs) {
+            h2, h2 + p {
+                display: block;
+                width: 60%;
+            }
+        }
+    }
+}

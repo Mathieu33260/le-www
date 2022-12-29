@@ -1,0 +1,42 @@
+/**********************************************************************************************************************/
+/********************************************** BLOCK - Comment ça marche *********************************************/
+/**********************************************************************************************************************/
+#ccm {
+    background-color: @orange;
+    .etape {
+        background: url('/assets/img/ccm/right-arrow.png') 98% no-repeat transparent;
+        @media (max-width: @max-width-xs) {
+            background: none;
+        }
+        img {width: 50px}
+        .media-body {
+            font-weight: bold;
+            font-size: 1em;
+            text-transform: uppercase;
+            color: @white;
+            padding: 15px 0 15px 20px;
+        }
+        &:last-child {
+            background: none;
+        }
+        @media (max-width: @max-width-xs) {
+            span {
+                display: none;
+                padding: 15px 0 0 0;
+            }
+        }
+    }
+    .media:first-child {margin-top: 15px}
+    button.ccm-video {
+        color: @white;
+        text-decoration: underline;
+
+        &:hover, &:focus {
+            color: fade(@white, 40%);
+        }
+
+        &:focus {
+            outline: none; 
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block main_content %}
+    {% if title is defined and title is not null %}
+        <h2>{{ title }}</h2>
+    {% endif %}
+    {% if text is defined and text is not null %}
+        <p>{{ text }}</p>
+    {% endif %}
+    {% if link is defined and link is not null %}
+        <a href="comloisirsencheres://{{ link }}" class="btn btn-primary" style="width: 100%;">{{ linkText }}</a>
+    {% endif %}
+{% endblock %}

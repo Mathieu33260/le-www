@@ -1,0 +1,161 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}
+{% if pagination.actual_page == 1 %}Avis Loisirs encheres{% else %}Avis Loisirs encheres - page {{pagination.actual_page }}{% endif %}
+{% endblock %}
+{% block metaDesc %}Tous les avis des clients Loisirs Enchères qui ont remporté et profité de leurs enchères.{% endblock %}
+
+{% block moremeta %}
+    {% if pagination['prev_page'] is defined %}
+        {% if pagination['prev_page'] == 1 %}
+        <link rel="prev" href="{{ path('feedback.home') }}" />
+        {% else %}
+        <link rel="prev" href="{{ path('feedback.page', {'numpage':pagination['prev_page']}) }}" />
+        {% endif %}
+    {% endif %}
+    {% if pagination['next_page'] is defined %}
+    <link rel="next" href="{{ path('feedback.page', {'numpage':pagination['next_page']}) }}" />
+    {% endif %}
+    {% if pagination.actual_page != 1 %}
+    <link rel="canonical" href="{{ path('feedback.home') }}" />
+    {% endif %}
+    {% if pagination.actual_page > 3 %}
+    <meta name="robots" content="noindex">
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    {% if pagination.actual_page == 1 %}
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Avis clients</span>
+        <meta content="2" property="position">
+    </li>
+    {% else %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('feedback.home') }}"><span property="name">Avis clients</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Page {{ pagination.actual_page }}</span>
+        <meta content="3" property="position">
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    <h1 class="margintop1">Avis des clients Loisirs Enchères{% if pagination.actual_page > 1 %} <small>Page {{pagination.actual_page }}</small>{% endif %}</h1>
+    {% if pagination.actual_page == 1 %}
+    <div class="row">
+        <p class="lead col-md-8 col-xs-12 col-sm-8 col-md-9">Vous êtes chaque jour plus nombreux à partir aux quatre coins de la France (et du monde !) avec Loisirs Enchères, mais comment s'est passé votre séjour, votre repas au restaurant ou votre modelage bien-être... ?<br />
+            <strong>Découvrez ici tous les avis de la communauté Loisirs Enchères soumis directement par nos membres !</strong>
+        </p>
+        <div class="col-xs12 col-md-3 col-sm-4 text-center paddingbottom2">
+            Note moyenne, avec {{ nb }} avis
+            <meta class="netreviewsWidget" id="netreviewsWidgetNum5629" data-jsurl="//cl.avis-verifies.com/fr/cache/d/7/0/d70df594-0a4f-1214-9d62-8c50762d182b/widget4/widget21-5629_script.js" />
+            <a class="btn btn-small btn-default" href="#donner-votre-avis">Donnez votre avis</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        {% for feedback in feedbacks %}
+        <div class="col-xs-12 col-sm-6 col-lg-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <b>{{ feedback['firstName']|capitalize }} {{ feedback['lastName']|capitalize }}.</b>
+                {% for i in 1..5 %}
+                    {% if i <= feedback['score'] %}
+                        <img src="{{assetCdn}}/assets/gfx/stars_color_small_2.png" alt="#">
+                    {% else %}
+                        <img src="{{assetCdn}}/assets/gfx/stars_white_small.png" alt="#">
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <div class="col-xs-12">
+                    <em>Le {{ feedback['created']|date('d/m/Y') }}</em>
+                </div>
+                <div class="col-xs-12">
+                    {{feedback['comment']|nl2br }}
+                </div>
+                {% if feedback['salesResponse'] is not null and feedback['salesResponse'] is not empty %}
+                <div class="col-xs-12">
+                    <blockquote>
+                        <p>{{ feedback['salesResponse']|raw }}</p>
+                        <footer>La réponse de Loisirs Enchères</footer>
+                    </blockquote>
+                </div>
+                {% endif %}
+                <p class="col-xs-12 small margintop1 nomargin-bottom">
+                    <b>Enchère :</b> <a href="{{ path('product.auction', {'id': feedback['product']['id'] } ) }}" rel="nofollow">{{ feedback['product']['shortName'] }}</a>
+                </p>
+            </div>
+            <hr class="bleu">
+        </div>
+        {% if loop.index0%2 == 1 %}
+        <div class="clearfix visible-sm visible-md"></div>
+        {% endif %}
+        {% if loop.index0%3 == 2%}
+        <div class="clearfix visible-lg"></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if pagination.nb_pages > 1 %}
+        {% set nearbyPagesLimit = 3 %}
+        <nav class="text-center">
+            <ul class="pagination">
+                <li{% if pagination.actual_page == 1 %} class="disabled"{% endif %}>
+                    <a href="{% if pagination.actual_page == 1 %}#{% else %}{{ path('feedback.home') }}{% endif %}" aria-label="Previous"{% if pagination.actual_page != 1 %} rel="prev"{% endif %}>
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% for i in 1..pagination.nb_pages %}
+                    {% if 0 == (pagination.actual_page - nearbyPagesLimit) - loop.index %} {# dot before #}
+                        <li class="disabled"><a href="#">...</a></li>
+                    {% elseif 0 == (pagination.actual_page + nearbyPagesLimit) - loop.index %} {# dot after #}
+                        <li class="disabled"><a href="#">...</a></li>
+                    {% elseif 0 < (pagination.actual_page - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                    {% elseif 0 > (pagination.actual_page + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                    {% else %}
+                        <li {% if pagination.actual_page == loop.index %} class="active"{% endif %}>
+                        {% if pagination.actual_page == loop.index %}
+                            <a href="#">
+                                {{ loop.index }}<span class="sr-only">(current)</span>
+                            </a>
+                        {% else %}
+                            <a href="{% if loop.index == 1 %}{{ path('feedback.home') }}{% else %}{{ path('feedback.page', { 'numpage': loop.index }) }}{% endif %}" rel="{% if loop.index > 3 %}{#nofollow#}{% else %}{% if pagination.actual_page > loop.index %}prev{% else %}next{% endif %}{% endif %}">{{ loop.index }}</a>
+                        {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li{% if pagination.actual_page == pagination.nb_pages %} class="disabled"{% endif %}>
+                    <a href="{% if pagination.actual_page == pagination.nb_pages %}#{% else %}{{ path('feedback.page', { 'numpage': pagination.nb_pages}) }}{% endif %}" aria-label="Next"{#{% if pagination.actual_page != pagination.nb_pages %} rel="nofollow"{% endif %}#}>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    {% if pagination.actual_page == 1 %}
+        <div id="donner-votre-avis" class="paddingbottom2">
+            <h2 class="h3">À vous de donner votre avis</h2>
+            <p>Pour participer, rien de plus simple : il vous suffit de remporter une offre sur <a href="{{ path('homepage') }}">LoisirsEnchères.com</a>. Après avoir profité de la prestation, vous aurez la possibilité de noter l’activité et de raconter votre expérience aux autres usagers du site.</p>
+            <p><i>Vous êtes dans ce cas ?</i> N’attendez pas plus et partagez votre avis en vous rendant dans la section <a href="{{ path('user.purchase') }}" rel="nofollow">Mes achats</a> de votre compte.</p>
+            <p>Les notes vont de 1 (mauvaise expérience) à 5 (excellent moment) et vous permettent de laisser un commentaire et simplement donner votre avis, partager vos souvenirs de vacances, délivrer vos conseils, suggérer des améliorations ou même nous alerter si la qualité de la prestation n’a pas été au rendez-vous.</p>
+            <p>Spécialité à ne pas manquer, coin de paradis à partager, rencontre coup de coeur, instant insolite ou paysage hors du commun pendant une de vos balades : venez nous raconter tout ça, <b>vous</b> avez la parole.</p>
+            <p>Parce que notre travail au quotidien est avant tout pour nos membres, exprimez-vous ! Votre avis compte et votre satisfaction est notre priorité alors partagez votre expérience.</p>
+            <p>Retrouvez aussi des avis sur Loisirs Enchères grâce à <a href="https://www.avis-verifies.com/avis-clients/loisirsencheres.com" title="Les avis vérifiés" target="_blank">Avis Vérifiés</a> !</p>
+            <div class="text-center">
+                <a href="{{ path('user.register') }}" rel="nofollow" class="btn btn-primary">S'inscrire</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cl.avis-verifies.com/fr/widget4/widget21.js"></script>
+{% endblock %}

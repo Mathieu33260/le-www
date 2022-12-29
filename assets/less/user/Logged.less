@@ -1,0 +1,223 @@
+@import (reference) "../variables";
+
+.icon-favorite {background-image: url('/assets/img/heart-favorites.png');background-repeat: no-repeat;width: 24px;height: 22px}
+.icon-favorite.not-favorite, .icon-favorite.is-favorite {cursor: pointer}
+.icon-favorite.not-favorite {background-position: 0 0}
+.icon-favorite.is-favorite {background-position: -24px 0}
+.auction .icon-favorite {position: absolute;left: 10px;top:10px;z-index: 998}
+.icon-favorite + .loader {position: absolute;left: 8px;top:5px;z-index: 10000;width: 30px;height: auto}
+
+.badge.alert-danger {
+    background: @red_error;
+    color: @white;
+    @media (max-width: @max-width-xs) {
+        text-indent: -9999px;
+    }
+}
+
+/*** Button 7e ***/
+.btn-7e:after, .btn-7e:before {
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+.btn-7e.icon-heart:before {
+    content: "\e90c";
+    font-size: 18px;
+}
+.btn-7e.icon-heart:after {
+    content: "\e954";
+    font-size: 18px;
+}
+.btn-7e:after {
+    position: absolute;width: 100%;height: 100%;left: 0;top: 0;z-index: 1;font-size: 20px;color: @pink1;
+    transform: scale(0);
+    opacity: 0;
+    transition: none
+}
+.btn-7e.btn-activated:after {
+    animation: scaleFade 0.5s forwards;
+}
+@-webkit-keyframes scaleFade {
+    50% {opacity: 1;-webkit-transform: scale(1)}
+    100% {opacity: 0;-webkit-transform: scale(2.5)}
+}
+
+@-moz-keyframes scaleFade {
+    50% {opacity: 1;-moz-transform: scale(1)}
+    100% {opacity: 0;-moz-transform: scale(2.5)}
+}
+
+@keyframes scaleFade {
+    50% {opacity: 1;transform: scale(1)}
+    100% {opacity: 0;transform: scale(2.5)}
+}
+
+#enteteMobile {
+    .badge.alert-danger {
+        position: absolute;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        right: 9px
+    }
+}
+
+/** WISHLIST **/
+#modalUserShareWishlist{
+    .modal-content {
+        background-image: url(//img.loisirsencheres.fr/loisirs/image/upload/v1514457266/ressource/wish-list-box-bg.jpg);padding-top: 4.8em;
+        background-repeat: no-repeat;background-size: 100% auto;background-position: center top;background-color: #f3f1f2;
+    }
+    .modal-title {
+        font-size: 1.4em;font-weight: normal;
+        @media (max-width: 690px) {
+            line-height: 2em;
+        }
+        span {font-family: 'proxima_nova_regular';font-size: 2em;color: @gold_christmas}
+    }
+    .thumbnail{
+        height: 100%;color: @black_light;
+        box-shadow: 0px 0px 14.24px 1.76px rgba(0,0,0,0.11);
+        &:hover, &:active, &:visited, &:focus {text-decoration: none}
+        i {font-size: 3em;color: @blue}
+    }
+    .copiedtext {
+        position: absolute;left: 0; top: 0; right: 0;text-align: center;opacity: 0;color: #000;
+        transform: translateY(-1em);
+        transition: all .500s;
+    }
+    .copied .copiedtext {
+        opacity: 1;
+        transform: translateY(-2em)
+    }
+    .collapse {margin-top: 1em}
+    .modal-header {
+        border-bottom: none;
+        @media (max-width: 690px) {
+            padding-top: 0;
+        }
+    }
+    @media (max-width: @max-width-xs) {
+        .modal-body .col-xs-12:last-child {
+            margin-top: 1em
+        }
+    }
+}
+
+@media (max-width: @max-width-xs) {
+    .account.dropdown , #userHeaderNavMobile {
+        background: @white;
+        .dropdown-menu {
+            position: initial;
+            display: block;
+            box-shadow: none;
+            border: 0;
+            width: 100%;
+            li:first-child {
+                display: block;
+                background-color: #afadae;
+                box-shadow: -4px 1px 10px lightgrey;
+                a {
+                    padding: 10px 30px 0 0;
+                    color: @white;
+                    text-transform: capitalize;
+                    font-size: 16px;
+                    span {
+                        width: 160px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        line-height: 27px;
+                        display: inline-block;
+                    }
+                    img {
+                        vertical-align: initial;
+
+                    }
+                    &:hover, &:focus, &:active {
+                        background: @grey_light;
+                    }
+                }
+                &:hover, &:focus, &:active {
+                    background: @grey_light;
+                }
+            }
+            & > li {
+                box-shadow: none;
+                border-right: 5px solid #f3f2ef;
+                text-align: right;
+                & > a {
+                    padding: 8px 30px 8px 0;
+                    height: initial;
+                    line-height: 30px;
+                    color: #453932;
+                    text-transform: uppercase;
+                    font-size: 15px;
+                    & > span {
+                        vertical-align: initial;
+                        font-size: 0.92em;
+                    }
+                    & > i {
+                        display: none;
+                    }
+                    &:hover, &:focus, &:active {
+                        background: @white;
+                    }
+                }
+                &.logout {
+                    background: @white;
+                    border-right-color: @grey_light;
+                }
+                &:hover, &:focus, &:active {
+                    background: @white;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: @min-width-sm) {
+    #headerRightSide .account .dropdown-menu {
+        right: 15px;
+        top: 110%;
+        > li:first-child {display: none}
+        li {
+            box-shadow: inset 0px 1px 5px -1px rgba(0,0,0,0.18);
+            &.logout {
+                background: @grey_light;
+                a {
+                    color: @white;
+                    i {color: @white}
+                }
+            }
+            &:hover {
+                background: @orange;
+                a {
+                    background: @orange;
+                    color: @white;
+                    opcacity: 1;
+                    i {color: @white}
+                }
+            }
+            a {
+                font-size: 1em;
+                color: @grey_light;
+                height: 34px;
+                line-height: 34px;
+                padding-bottom: 0;
+                padding-top: 0;
+                i {color: @grey_light;font-size: 1.5em;font-weight: normal;text-transform: capitalize;line-height: 20px}
+                span {
+                    font-size: 0.92em;
+                    vertical-align: super;
+                }
+            }
+        }
+    }
+}

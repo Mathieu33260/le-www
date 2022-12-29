@@ -1,0 +1,104 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Participez aux enchères inédites des enfoirés au profit des Restos du Coeur{% endblock %}
+{% block facebook_image %}img.loisirsencheres.fr/loisirs/image/upload/w_200/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png{% endblock %}
+{% block facebook_type %}image/png{% endblock %}
+{% block facebook_height %}98{% endblock %}
+
+{% block moremeta %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@LoisirsEncheres" />
+    <meta name="twitter:title" content="Participez aux enchères inédites des enfoirés au profit des Restos du Coeur" />
+    <meta name="twitter:image" content="https://img.loisirsencheres.fr/loisirs/image/upload/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png" />
+    <meta name="twitter:image:alt" content="Participez aux enchères inédites des enfoirés" />
+{% endblock %}
+
+{% block html_class %}background-enfoires{% endblock %}
+{% block background %}background-enfoires{% endblock %}
+{% block container %}container paddingtop2 enfoires-confirm{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <picture>
+                <source media="(min-width: 1200px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/w_330,q_auto/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png">
+                <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/h_142,q_auto/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png">
+                <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/w_358,q_auto/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png">
+                <img alt="Les restaurants du Coeur - Du 28 novembre au 29 décembre 2019" src="//img.loisirsencheres.fr/loisirs/image/upload/w_200,q_auto/v1568972864/ressource/LOGO_restaurants_du_coeur_DATE.png">
+            </picture>
+            <picture class="right">
+                <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/w_156,q_70/v1568972863/ressource/LOGO_enfoires_2.png">
+                <img alt="Les enfoirés" src="//img.loisirsencheres.fr/loisirs/image/upload/w_94,q_70/v1568972863/ressource/LOGO_enfoires_2.png">
+            </picture>
+        </div>
+        <div class="col-xs-12 col-md-6 container-form">
+            <div class="fake-title">Félicitations <img src="//img.loisirsencheres.fr/loisirs/image/upload/h_42,q_auto/v1568972864/ressource/emoji-congratulation.png" alt="#"></div>
+            <h1>Votre inscription pour la vente aux enchères des Enfoirés est confirmée !</h1>
+            <p>(Vous recevrez un mail pour vous rappeler du début des enchères si vous l’avez accepté lors de votre inscription)</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <aside id="wait">
+        <picture class="background">
+            <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1569253197/ressource/img-bg-pageconfirmation-desktop.png">
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1569253216/ressource/img-bg-pageconfirmation-mobile.png" alt="#">
+        </picture>
+        <div class="container">
+            <h2>En attendant le début de la vente le 28 novembre 2019 découvrez les enchères du moment</h2>
+            <p>Voyages, gastronomie bien-être, idées cadeaux... vos plus belles expériences au meilleur prix, le vôtre !</p>
+        </div>
+        <div class="container cta">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+                    <a href="/" class="btn btn-warning btn-lg btn-block block-separ-bottom">Je découvre les offres du moment</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <footer>
+        <ul class="list-unstyled">
+            <li><a href="https://www.enfoires.fr/" target="_blank" class="btn btn-sm" rel="nofollow noopener"><span>Découvrir Les Enfoirés</span></a></li>
+            <li><a href="https://www.restosducoeur.org/?prehome=off" target="_blank" class="btn btn-sm" rel="nofollow noopener"><span>Découvrir Les Restaurants du Cœur</span></a></li>
+            <li><a href="/" class="btn btn-sm"><span>Découvrir Loisirs Enchères</span></a></li>
+            <li><a href="{{ path('content.page', {'page': 'cgu'}) }}" rel="nofollow" class="btn btn-sm"><span>Nos CGV</span></a></li>
+        </ul>
+        <p class="text-center">Copyright  - Loisirs Enchères 2019</p>
+    </footer>
+{% endblock %}
+
+{% block tracking %}
+    {{ parent() }}
+    <script>
+      var button = document.querySelector("#wait .btn-warning");
+      if (button) {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
+
+          // Defer href redirect
+          setTimeout(goToLink, 500);
+          let goto = false;
+          let href = this.getAttribute('href');
+
+          function goToLink() {
+            if (!goto) {
+              goto = true;
+              window.location.href = href;
+            }
+          }
+
+          // Tracking Eulerian click
+          if (typeof EA_dyntpclick !== 'undefined') {
+            EA_dyntpclick(
+              'loisirs-encheres-com',
+              'enfoires-confirmation',
+              '/home-enfoires',
+              'loisirs-encheres-com',
+              'generic'
+            );
+          }
+        });
+      }
+    </script>
+{% endblock %}

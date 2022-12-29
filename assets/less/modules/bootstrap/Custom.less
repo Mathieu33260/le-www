@@ -1,0 +1,111 @@
+@import "../../variables";
+
+.small-tooltip {font-size: 0.9em;color: @blue}
+img {max-width:100%}
+.media img {max-width:none}
+.media-heading {font-weight: bold;font-size: 18px;color: @dark_blue}
+.paddingtop1 {padding-top: 1em}
+.paddingtop2 {padding-top: 2em}
+.paddingbottom1 {padding-bottom: 1em}
+.paddingbottom2 {padding-bottom: 2em}
+.paddingleft1 {padding-left: 1em} // Used by tag description html
+.paddingright1 {padding-right: 1em} // Used by tag description html
+.marginbottom1 {margin-bottom: 1em} // Used by tag description html
+.margintop1 {margin-top: 1em} // Used by tag description html
+.margin-bottom-sm {margin-bottom:30px} // Used by cities page
+.nomargin {margin: 0 !important}
+.nomargin-right {margin-right: 0 !important}
+.nomargin-left {margin-left: 0 !important}
+.nomargin-bottom {margin-bottom: 0 !important}
+.nopadding-right {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+.nopadding-left {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.nopadding-right-only {
+    padding-right: 0 !important;
+}
+@media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+    .nopadding-right-only-sm {
+        padding-right: 0 !important;
+    }
+    .nopadding-left-only-sm {
+        padding-left: 0 !important;
+    }
+}
+.nopadding-left-only {
+    padding-left: 0 !important;
+}
+@media (min-width: @min-width-lg) {
+    .nopadding-only-lg {
+        padding: 0;
+    }
+}
+.alert-warning {
+    color: @white;border: none;background-color: @orange;.no-radius;
+    a {color: @white}
+    .popover {
+        color: @black_light;.no-radius;
+        a {color: @blue}
+    }
+}
+.alert-muted {
+    color: @grey;background: @beige;
+    a:not(.btn) {color: @red_error}
+}
+
+a {.prefixed(transition, 'all 100ms ease')}
+a:not(.btn):hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+    filter: alpha(opacity=50); /* IE7 */
+    opacity: 0.6;text-decoration: none;
+}
+a.no-opacity:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; /* IE 8 */
+    filter: alpha(opacity=100); /* IE7 */
+    opacity: 1;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {background-color: @beige}
+
+.modal {z-index: 999999}
+.text-danger {color: @red_error}
+.text-warning {color: @orange}
+.has-error{
+    .form-control {border-color: @red_error}
+    .help-block a {color: #a94442;text-decoration: underline}
+}
+
+.warning, .table>tbody>tr.warning>td, .table>tbody>tr.warning>th, .table>tbody>tr>td.warning, .table>tbody>tr>th.warning, .table>tfoot>tr.warning>td, .table>tfoot>tr.warning>th, .table>tfoot>tr>td.warning, .table>tfoot>tr>th.warning, .table>thead>tr.warning>td, .table>thead>tr.warning>th, .table>thead>tr>td.warning, .table>thead>tr>th.warning{
+    background-color: @orange
+}
+.table-bordered>tbody>tr.warning>td, .table-bordered>tbody>tr.warning>th, .table-bordered>tfoot>tr.warning>td, .table-bordered>tfoot>tr.warning>th, .table-bordered>thead>tr.warning>td, .table-bordered>thead>tr.warning>th {
+    border-color: @orange;color: @white
+}
+.table-bordered.warning-border>tbody>tr>td, .table-bordered.warning-border>tbody>tr>th, .table-bordered.warning-border>tfoot>tr>td, .table-bordered.warning-border>thead>tr>td, .table-bordered.warning-border>thead>tr>th {
+    border-color: @orange;
+}
+
+/**********************************************************************************************************************/
+/******************************************************* BUTTON *******************************************************/
+/**********************************************************************************************************************/
+@import '../../modules/Btns/Transparent';
+.btn.with-icon {
+    text-align: left;
+    white-space: normal;
+    i {
+        top: 50%;right: 24px;transform: translateY(-50%);
+    }
+}
+.btn {
+    &:not(.btn-transparent):not(.btn-link):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+        transition-duration: .3s;
+        transition-timing-function: ease-out;
+    }
+}

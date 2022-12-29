@@ -1,0 +1,34 @@
+<div class="jumbotron forfaq">
+    <div class="container">
+        <form class="form-inline row" method="get">
+            <div class="form-group form-group-lg col-xs-9 col-sm-10 nopadding-only">
+                <label class="sr-only" for="query">Recherche</label>
+                <input type="text" class="form-control no-radius" id="query" name="query" required="required" placeholder="Recherche"{% if term is defined %} value="{{ term }}"{% endif %}>
+            </div>
+            <button type="submit" class="btn btn-warning col-xs-3 nopadding-only-xs col-sm-2">&nbsp;<i class="icon-loupe"></i></button>
+        </form>
+        {% if articles is defined and term is not defined %}
+            <ul class="list-unstyled row">
+                {% for article in articles %}
+                    <li class="col-xs-12 col-sm-6">
+                        <a href="#{{ article.name|escape('sanitize')~'-'~article.id }}" class="btn btn-link no">{{ article.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <h2>Les 3 questions que vous vous posez le plus</h2>
+            <ul class="list-unstyled row">
+                <li class="col-xs-12 col-sm-6">
+                    <a href="/faq/mon-enchere-202879229#comment-profiter-de-mon-enchere-212712929" class="btn btn-link">Comment profiter de mon enchère ?</a>
+                </li>
+                <li class="col-xs-12 col-sm-6">
+                    <a href="/faq/sejours-avec-vol-202938325#puis-je-modifierannuler-mon-sejour-avec-vol-213517045" class="btn btn-link">Puis-je modifier/annuler mon séjour avec vol ?</a>
+                </li>
+                <li class="col-xs-12 col-sm-6">
+                    <a href="/faq/decouvrir-le-site-s%25e2%2580%2599inscrire-202879209#comment-sinscrire-209728509" class="btn btn-link">Comment s'inscrire ?</a>
+                </li>
+            </ul>
+            {% endif %}
+    </div>
+    <div class="filter" aria-hidden="true"></div>
+</div>

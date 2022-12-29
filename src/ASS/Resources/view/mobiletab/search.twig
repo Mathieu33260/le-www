@@ -1,0 +1,89 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block metaDesc %}Des centaines d’offres de voyages, d’hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+
+{% block main_content %}
+    <div class="row" v-pre>
+        <div class="col-md-12">
+            <br/>
+            <form class="search-form mobile-search" role="search" method="post">
+                <div class="input-group">
+                    <input style="float: none; height: 50px;" class="form-control typeahead tagsSearch" type="text" name="q" placeholder="Rechercher" title="rechercher" autocomplete="off" />
+                    <span class="input-group-addon background-orange" style="background: #ffba00 none repeat scroll 0 0"><button type="submit" class="search-submit"><i class="icon icon-loupe icon-inverse icon-lg"></i></button></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    {% if auctions is defined %}
+        <div class="padding-text-mobile mobileSearchResult container">
+            {% if auctions|length > 0 %}
+                <h3>{{auctions|length}} resultat{{(auctions|length)>1?'s':''}} pour votre recherche pour {{ term }}</h3>
+            {% endif %}
+            <div id="auctionsList">
+                {% if auctions|length %}
+                <auction-list
+                    list-name="mobile-search"
+                    :auctions-data="{{ auctions|json_encode|raw|e('html_attr') }}"
+                    request-uri="{{ app.request.requesturi }}"
+                    v-bind:is-app="true"
+                    v-bind:tab-index="1"
+                ></auction-list>
+                {% else %}
+                <div class="col-sm-12">
+                    <h3>Votre recherche n'a donné aucun résultat.<br />
+                        Vous pouvez essayer un autre terme ou <a href="comloisirsencheres://home">voir toutes les enchères</a>.
+                    </h3>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    <br/>
+
+    <div class="padding-text-mobile row">
+        <div class="col-md-12">
+            <h3>Recherches populaires</h3>
+            {% set cities       = ['Paris', 'Bordeaux', 'Toulouse', 'Lyon', 'Paris', 'Lille'] %}
+            {% set destination  = ['Marrakech', 'Chypre', 'Corse', 'Rome', 'Espagne', 'Lisbonne'] %}
+            {% set themes  = ['Parachute', 'Ski', 'Massage', 'Château', 'Spa'] %}
+            {% set types  = ['Week-end', 'Vol inclus' ]%}
+
+            <p>
+            Villes :
+            {% for term in cities %}
+                <a href="?q={{term}}">{{term}}</a> /
+            {% endfor %}
+            ...
+            </p>
+
+            <p>
+            Destinations :
+            {% for term in destination %}
+                <a href="?q={{term}}">{{term}}</a> /
+            {% endfor %}
+            ...
+            </p>
+
+            <p>
+            Thèmes :
+            {% for term in themes %}
+                <a href="?q={{term}}">{{term}}</a> /
+            {% endfor %}
+            ...
+            </p>
+
+            <p>
+            Type :
+            {% for term in types %}
+                <a href="?q={{term}}">{{term}}</a> /
+            {% endfor %}
+            ...
+            </p>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'default.js.twig' %}
+{% endblock %}

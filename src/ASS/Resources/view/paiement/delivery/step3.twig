@@ -1,0 +1,59 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-3{% else %} col-md-4{% endif %}">
+            {% include './paiement/module/resume.twig' %}
+            {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="visible-md visible-lg promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeDesktop'} %}</div>
+            {% endif %}
+        </div>
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="col-xs-12 visible-xs visible-sm promocode background-blanc">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeMobile'} %}</div>
+        {% endif %}
+        {% if casinoRefused is defined and casinoRefused %}
+            {% include './paiement/module/casinoRefused.twig' %}
+        {% endif %}
+        <form class="col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} background-blanc" action="{% if payment.amount == 0 %}{{ path('paiement.free', {id: payment.id}) }}?token={{ token }}{% else %}{{ path('paiement.page',{id:payment.id, productType:productType}) }}{% if token is defined %}?token={{ token }}{% endif %}{% endif %}" method="post" name="formSelectCard" id="formain">
+            <div class="paiementmode{% if payment.amount == 0 %} hide{% endif %}">
+                {% include './paiement/module/cardSelect.twig' %}
+            </div>
+            {% include './paiement/module/submitBlock.twig' %}
+        </form>
+        <div class="garantie col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right background-gris">
+            {% include './paiement/module/garanties.twig' %}
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {% include './modals/paiement/casino.twig' %}
+    {% include './modals/paiement/casinoRgpd.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    {% if useNxcb %}
+    <script src="{{assetCdn}}/assets/js/intlTelInput.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.min.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.messages_fr.js"></script>
+    {% endif %}
+    {% include './paiement/include/track-checkout.twig' %}
+    {% if useNxcb %}
+        {% include './paiement/include/nxcbScript.twig' %}
+    {% endif %}
+    {% include './paiement/include/script.twig' %}
+    {% include './paiement/paymentScript.twig' %}
+{% endblock %}

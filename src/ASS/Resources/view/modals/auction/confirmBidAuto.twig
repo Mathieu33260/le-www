@@ -1,0 +1,21 @@
+<div id="confirmBidAuto" class="modal fade">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title">Confirmez votre enchère automatique de <span class="amount"></span>€</p>
+            </div>
+            <div class="modal-body">
+                <p>Pour valider votre enchère automatique, il vous suffit de confirmer votre numéro de téléphone mobile, vous recevrez alors un code de vérification par sms</p>
+                    <div class="form">
+                        {% if app['sms.autobid.enabled']%}
+                            {% include 'form/validationPhone.twig' %}
+                        {% else %}
+                            L'autobid est actuellement désactivé, elle sera de retour très bientôt !
+                        {% endif %}
+                    </div>
+                <p class="text-muted small">En mettant votre prix maximum, le système automatique fera en sorte d’enchérir pour vous par palier dès que nécessaire afin que vous puissiez remporter l’enchère au prix le plus bas. Vous recevez un e-mail si votre enchère automatique est dépassée.</p>
+            </div>
+        </div>
+    </div>
+</div>

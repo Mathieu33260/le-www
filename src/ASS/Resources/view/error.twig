@@ -1,0 +1,18 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Erreur{% endblock %}
+
+{% block main_content %}
+    <picture>
+        <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1517503834/GIF/404-desktop-2.gif">
+        <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1517506833/GIF/404-mobile-2.gif">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1517506833/GIF/404-mobile-2.gif" alt="oups ! 404">
+    </picture>
+    <p class="text-center">Une erreur est survenue, merci de nous en excuser.</p>
+    <p class="text-center">Si le problème persiste merci de nous <a href="{{ path('content.page', {'page': 'contact'}) }}" rel="nofollow"><strong>nous contacter</strong></a>.</p>
+    <p class="text-center"><a href="{{ path('homepage') }}">Retourner sur l'accueil</a> ou <a href="{{ path('all.page') }}">voir toutes nos offres</a>.<br />
+        Si vous avez des questions n'hésitez pas à jeter un coup d'oeil à notre <a href="{{ path('centre-aide') }}">centre d'aide</a>.</p>
+    <script>
+        ga('send', 'event', 'error', 'non 404', document.location.pathname, 0);
+    </script>
+{% endblock %}

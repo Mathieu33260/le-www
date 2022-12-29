@@ -1,0 +1,27 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Inscription enregistrée{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Inscription enregistrée</span>
+        <meta content="2" property="position">
+    </li>
+{% endblock %}
+{% block main_content %}
+    <h1>Votre inscription à Loisirs Enchères est enregistrée !</h3>
+    <div class="alert alert-info" role="alert">
+        Un email de confirmation a été envoyé à l'adresse : <b>{{ email }}</b>
+    </div>
+    {% if user %}
+        <p>Vous pourrez désormais profiter de toutes nos enchères.<br />Merci de consulter votre boite mail pour confirmer votre inscription. Pensez à vérifier vos spams, on ne sait jamais.</p>
+    {% else %}
+    <p>Pour valider votre profil, <strong>cliquez sur le lien de confirmation</strong> dans l'e-mail que vous venez de recevoir.
+        Pensez à regarder s'il n'a pas atterri dans vos <strong>courriers indésirables</strong> SPAM.<br />
+        Vous pourrez désormais profiter de toutes nos enchères.</p>
+    {% endif %}
+    <p><br />L'équipe de Loisirs Enchère.</p>
+{% endblock %}

@@ -1,0 +1,18 @@
+<div class="modal fade modal-success">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title">Confirmation d'email requise</p>
+            </div>
+            <div class="modal-body">
+                {% for msg in app.session.getFlashBag.get('notconfirmed') %}
+                    Pour commencer à enchérir, merci d'activer votre profil en cliquant sur le <strong>mail de confirmation</strong> qui vous a été envoyé.<br/>
+                    Vous ne retrouvez pas notre mail de confirmation? Regardez dans vos <strong>courriers indésirables ou spams</strong>.<br/>
+                    <a href="{{ path('user.mail') }}">Recevoir de nouveau l'email de confirmation.</a><br/>
+                    <small>Astuce : pour bien recevoir nos emails, nous vous invitons à ajouter info@loisirsencheres.com à votre carnet d'adresses!</small>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

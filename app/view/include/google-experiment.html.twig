@@ -1,0 +1,38 @@
+{% if app.googleanalytics.getHasActiveTest() %}
+<script src="//www.google-analytics.com/cx/api.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ app['gaq.propertyWebId'] }}"></script>
+<script>
+  function sendExperimentToGA(testName, oldTest) {
+    if(oldTest && typeof cxApi !== 'undefined') {
+      ga(function() {
+        cxApi.setChosenVariation(abtest[testName]['variation'], abtest[testName]['key']);
+        ga('send', 'event', 'experiment', 'run', abtest[testName]['key'], {'nonInteraction': 1});
+      });
+    } else if (!oldTest) {
+      ga('set', 'exp', abtest[testName]['key'] + '.' + abtest[testName]['variation']);
+      setCookie(testName, abtest[testName]['variation'], abtest[testName]['duration']);
+    }
+  }
+</script>
+<script>
+  abtest = {};
+  {%- for testName, test in app.googleanalytics.getConfig() -%}
+      {% if test.active == true %}
+          abtest["{{ testName }}"] = {
+            variation: {{ test.variation|json_encode|raw }},
+            key: "{{ app.env=='prod' ? test.key.prod : test.key.dev }}",
+          };
+          {% if test.durationDays is defined %}
+            abtest["{{ testName }}"]['duration'] = {{ test.durationDays }};
+          {% endif %}
+          sendExperimentToGA("{{ testName }}", {{ (test.oldTest is defined)|json_encode|raw }});
+      {% endif %}
+  {% endfor %}
+  // Debug
+  for (var k in abtest) {
+    if(typeof _errs !== 'undefined') {
+      _errs.meta['ab_' + k] = 'key:' + abtest[k].key + ' | variation:' + abtest[k].variation + ' | name:' + k;
+    }
+  }
+</script>
+{% endif %}

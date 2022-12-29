@@ -1,0 +1,40 @@
+{# Init JS global vars #}
+<script>
+    var serverRequestDate = new Date({{ ("now"|date("U")) }} * 1000);
+    var browserRequestDate = new Date();
+    abtestarr = {};
+    isApp = {{isApp(app.request)?'true':'false'}};
+    urls = {};
+    urls['user.profile'] = '{{ path("user.profile")}}';
+    urls['user.register'] = '{{ path("user.register")}}';
+    urls['user.register.lightbox'] = '{{ path("user.register.lightbox")}}';
+    urls['user.auctions'] = '{{ path("user.auctions")}}';
+    urls['user.email'] = '{{ path("user.email")}}';
+    var route = {% if (app.request.attributes.get('_route')) %}'{{ app.request.attributes.get('_route') }}'{% else %}''{% endif %};
+    var currentUser;
+    {% if user %}
+    currentUser = {'userHash': "{{user.userHash}}"};
+    {% endif %}
+    debugMsg = {
+        show: false, // use true for debuging
+        logs: [],
+        push: function (msg, msg2) {
+            if (!this.show) { return; }
+            if (typeof msg2 !== 'undefined') {
+                this.logs.push(msg+msg2);
+            } else {
+                this.logs.push(msg);
+            }
+        }
+    };
+    var browserCompatible = {{ browserCompatible() | json_encode | raw }};
+    {% if browserCompatible() == false %}
+    var browserRequire = {{ browsersRequire() | json_encode | raw }};
+    if (env === 'prod') {
+        _errs.allow = function () {
+            return false;
+        };
+    }
+    {% endif %}
+</script>
+{# End init JS global vars #}

@@ -1,0 +1,100 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-3{% else %} col-md-4{% endif %}">
+        {% include './paiement/module/resume.twig' %}
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="visible-md visible-lg promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeDesktop'} %}</div>
+        {% endif %}
+            <div id="didyouknownxcb"{% if not useNxcb or not useCasino %} class="hide"{% endif %}>
+                <div class="nxcb visible-md visible-lg">
+                    <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                    {% include './paiement/include/3xcb.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="col-xs-12 visible-xs visible-sm promocode background-blanc">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeMobile'} %}</div>
+        {% endif %}
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} productDescription">{% include './paiement/module/productDescription.twig' %}</div>
+        <form method="post" id="formain">
+            <div class="col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right background-blanc">
+                {% if productType == 'auction' and checkoutFlow['reservationTime'] != 'postPayment' and checkoutFlow['hasDelivery'] != true %}
+                    <div class="wing row">
+                        <div class="col-xs-12">
+                            {% include './paiement/module/wing.twig' %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if checkoutFlow['hasDelivery'] == true %}
+                    <div class="address row">
+                        <div class="col-xs-12">
+                            {% include './paiement/module/address.twig' %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% include './paiement/module/submitBlock.twig' %}
+            </div>
+        </form>
+        <div class="background-blanc nxcb col-xs-12 visible-xs visible-sm {% if not useNxcb or not useCasino %}hide{% endif %}">
+            <div id="didyouknownxcb">
+                <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                    {% include './paiement/include/3xcb.twig' %}
+                </div>
+            </div>
+        </div>
+        <div class="background-gris cgv col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right">
+            <p class="text-center text-muted"><small>En validant cette commande vous acceptez nos <a href="#" data-toggle="modal" data-target="#cgvModal">CGV</a>.</small></p>
+        </div>
+        <div class="garantie col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right background-gris">
+            {% include './paiement/module/garanties.twig' %}
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {% include './modals/paiement/casino.twig' %}
+    {% include './modals/paiement/casinoRgpd.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% if checkoutFlow['hasReservation'] and product is defined %}
+    {% include './auction/partials/calendar.js.twig' %}
+    <script src="{{assetCdn}}/assets/js/languages/datepicker-fr.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                method: "GET",
+                url: '{{ path('product.auction', {'id': product.id }) }}',
+                data: {'data': 'availabilities'},
+                dataType : 'json',
+                success: function (result) {
+                    createCalendars(result.departureCities);
+                    $('#calendars').addClass('row');
+                    $('#calendars').find('> div').addClass('col-xs-12 col-sm-6');
+                }
+            });
+        });
+    </script>
+    {% endif %}
+    {% if hideOption == false %}
+        {% include './paiement/module/wing_script.twig' %}
+    {% endif %}
+    {% include './paiement/include/script.twig' %}
+
+    {% include './paiement/include/track-checkout.twig' %}
+{% endblock%}

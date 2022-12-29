@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /auction/auctionId/bid
+Disallow: /user/login_check
+Disallow: /encheres-loisirs/
+Disallow: /paiement/
+Disallow: /payment/
+Sitemap: https://www.loisirsencheres.com/feed/sitemap.xml
+Sitemap: https://www.loisirsencheres.com/feed/sitemap/landingpages.xml
+Sitemap: https://www.loisirsencheres.com/feed/sitemap/cities.xml
+Sitemap: https://www.loisirsencheres.com/feed/sitemap/auctions.xml
+Sitemap: https://www.loisirsencheres.com/feed/sitemap/tags.xml

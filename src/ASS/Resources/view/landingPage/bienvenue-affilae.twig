@@ -1,0 +1,29 @@
+{# empty Twig template #}
+{% extends 'layout/html.twig' %}
+{% block metaDesc %} Vous allez ENFIN avoir le pourvoir de choisir le prix de vos séjours et de vos loisirs !{% endblock %}
+{% block hasLightFooter %}yes{% endblock %}
+{% block prependContainter %}
+    <div class="container-fluid nopadding">
+        <picture title="Vous allez ENFIN avoir le pourvoir de choisir le prix de vos séjours et de vos loisirs !">
+            <source media="(min-width: 1200px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1502358813/slider/landing-page-bienvenue-affilae-1920x500.jpg 1x">
+            <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1502359349/slider/landing-page-bienvenue-affilae-1190x300.jpg 1x">
+            <source media="(min-width: 768px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1502359349/slider/landing-page-bienvenue-affilae-911x275.jpg 1x">
+            <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1502359697/slider/landing-page-bienvenue-affilae-767x400.jpg 1x">
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1502358813/slider/landing-page-bienvenue-affilae-1920x500.jpg " alt="Vous allez ENFIN avoir le pourvoir de choisir le prix de vos séjours et de vos loisirs !" title="Vous allez ENFIN avoir le pourvoir de choisir le prix de vos séjours et de vos loisirs !" class="img-responsive">
+        </picture>
+        <div class="text-center">
+            <modal-trigger
+                modal-target="ccm-video"
+                modal-id="ccmvideo"
+                class="btn btn-transparent btn-link"
+                title="Comment ça marche, vidéo Youtube (ouvre une fenêtre de dialogue)"
+            >Et si vous préférez les vidéos, cliquez ici.</modal-trigger>
+        </div>
+    </div>
+    <div  class="container" class="nopadding-only">
+        <user-register-form :nostep="0"></user-register-form>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Confirmation de paiement par virement{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>VOTRE PAIEMENT EST EN ATTENTE</strong></h1>
+            <div class="block-separ-bottom block-separ-top">
+                <p class="text-center">Merci de nous envoyer votre virement à <strong>LOISIRS ENCHERES SAS, IBAN : FR76 1330 6001 5723 0666 1496 431</strong> en indiquant vos nom et prénom tels qu'ils apparaissent dans votre compte Loisirs Enchères ainsi que le titre de l'enchère remportée.</p>
+            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/pictos/horloge.png" alt="#" width="187" /></div>
+            <div class="text-center block-separ-top block-separ-bottom">
+                <p><b>Vous disposez de 7 jours à partir du gain de l'enchère pour faire votre virement, vous pouvez choisir un autre moyen de paiement si besoin depuis l'onglet <em>Mes achats / enchères à payer</em></b></p>
+            </div>
+            <div class="text-center block-separ-topbottom">
+                <a href="{% if not isApp(app.request) %}{{ path('user.auctions')}}{% else %}comloisirsencheres://myAuctions{% endif %}"><b>Voir mes achats</b></a> | <a href="{{ path('paiement.gateway',{id:payment.id}) }}?changemethod=1"><b>Utiliser un autre moyen de paiement</b></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include './paiement/include/track-purchase.twig' %}
+{% endblock %}

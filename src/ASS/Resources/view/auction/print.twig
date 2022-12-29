@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Votre réservation</title>
+    <link rel="stylesheet" href="{{assetCdn}}/assets/css/reset.css" />
+    <link rel="stylesheet" href="{{assetCdn}}/assets/css/pdf.css" />
+</head>
+<body>
+    <div id="content">
+        <div class="page">
+            <h1>{{ product['name'] }}</h1>
+            <div style="page-break-inside: avoid">
+                {% include './auction/partials/photosPrint.twig' %}
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="page">
+            <div style="page-break-inside: avoid">
+                <h2>Description</h2>
+                {{ product['description']|default('')|shortpriceoverride(product,onlytabs)|replace({'&amp;nbsp;':' '})|raw }}
+            </div>
+            <div style="page-break-inside: avoid">
+                <p><b>Frais de dossier : {{ auction['cost']/100 }} €</b></p>
+                {% if product.blogLink is not null %}
+                    <a target="_blank" href="{{ product.blogLink }}" title="Je découvre son article">
+                        <img alt="Approuvé par notre testeur Tristan"  src="//img.loisirsencheres.fr/loisirs/image/upload/v1501597663/ressource/vignette-tristan.png" width="400" />
+                    </a>
+                {% endif %}
+                {% if 'journal_sudouest' in tags %}
+                    {% include './auction/partials/sudouestoffer.twig' %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="page">
+            {% if checkoutFlow.calendarType is not null %}
+            <div>
+                {{availabilitiesHTML|raw}}
+            </div>
+            {% endif %}
+            <div class="clear">&nbsp;</div>
+            {% if product['cgvUrl'] %}
+            <p>Consulter les <a href="{{product['cgvUrl']}}" target="_blank">CGV pour cette offre</a></p>
+            {% endif %}
+        </div>
+        <div class="page">
+            <h1 style="text-align: left">Plus d'infos</h1>
+            {{ product['moreInfo']|raw }}
+        </div>
+        <div class="page">
+            {% if product['goThere'] != null or location != null %}
+            <h1 style="text-align: left">S'y rendre</h1>
+            <div id="gettingthere" style="page-break-inside: avoid">
+                {{ product['goThere']|raw }}
+                {% if location is defined and location != null %}
+                    <div class="gmap" id="map" style="width: 615px; height: 400px;margin:auto;">
+                        <img src="//img.loisirsencheres.fr/maps/api/staticmap?center={{location.lat}},{{location.lng}}&zoom=14&size=615x400&maptype=roadmap&markers=label:%7C{{location.lat}},{{location.lng}}&key={{ app['google.config'].mapApiKey }}" alt="map" />
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            <p>Les photographies et textes de présentation sont non contractuels ; ils permettent d'illustrer l'offre présentée et peuvent par nature différer des prestations fournies et de l’expérience vécue. L'ensemble des prestations fournies contractuellement est détaillé dans la section "Contenu de l'offre" (onglet Description).</p>
+        </div>
+    </div>
+</body>
+</html>

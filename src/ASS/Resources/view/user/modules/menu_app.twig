@@ -1,0 +1,22 @@
+<div class="modal fade" id="myModalUserNav" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width: 100%;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="text-center">
+                <a href="{{ path('user.profile') }}"><i class="icon-mon-profil"></i> <span>Mon profil</span></a>
+            </li>
+            <li class="text-center">
+                <a href="{{path('user.changePassword')}}{{app.request.get('onlycontent')?"?onlycontent=1" : "" }}"><i class="icon-change-password"></i> <span>Mon mot de passe</span></a>
+            </li>
+            <li class="text-center">
+                <a href="{{ path('user.avantages') }}"><i class="icon-mes-avantage"></i> <span>Mes avantages</span></a>
+            </li>
+            <li class="text-center">
+                <a href="{{ path('user.parrainage') }}"><i class="icon-parrainage"></i> <span>Parrainer mes amis</span></a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

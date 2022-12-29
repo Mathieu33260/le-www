@@ -1,0 +1,52 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Programme de fidélité{% endblock %}
+
+{% block main_content %}
+
+    <div class="text-center padding-text-mobile">
+        <h1>Découvrez notre programme de fidélité</h1>
+
+        <p class="block-separ-top">{% if (user.nbAuctionPaid is not defined) or (user.nbAuctionPaid <= 0) %}<i>Remportez une enchère pour débloquer votre première médaille !</i><br />{% endif %}Plus vous enchérissez, plus vous gagnez grâce à notre programme fidélité !<br />Changez de statut en remportant et en réglant vos enchères et bénéficiez de bons d'achat à valoir sur toutes nos offres.</p>
+
+        <div>
+            <img src='{{assetCdn}}/assets/gfx/rank1_50px.png?v=20160707' alt="Enchérisseur novice" /><h2 class="h4">Enchérisseur novice :</h2>
+            <p> <b>dès 1 enchère remportée et réglée</b> gagnez votre première médaille de bronze
+            <br />ainsi qu'un <b>bon d'achat de 5€*</b> à valoir sur n'importe quelle offre du site</p>
+        </div>
+        <div class="block-separ-top">
+            <img src='{{assetCdn}}/assets/gfx/rank2_50px.png?v=20160707' alt="Enchérisseur confirmé" /><h2 class="h4">Enchérisseur confirmé :</h2>
+            <p> <b>dès 5 enchères remportées et réglées</b>, gagnez une médaille d'argent
+                <br />ainsi qu'un <b>bon d'achat de 10€*</b> à valoir sur n'importe quelle offre du site</p>
+        </div>
+        <div class="block-separ-top">
+            <img src='{{assetCdn}}/assets/gfx/rank3_50px.png?v=20160707' alt="Enchérisseur aguerri" /><h2 class="h4">Enchérisseur aguerri :</h2>
+            <p> <b>dès 10 enchères remportées et réglées</b> , gagnez une médaille d'or
+                <br />ainsi qu'un <b>bon d'achat de 20€*</b> à valoir sur n'importe quelle offre du site</p>
+        </div>
+        <div class="block-separ-top">
+            <img src='{{assetCdn}}/assets/gfx/rank4_50px.png?v=20160707' alt="Enchérisseur expert" /><h2 class="h4">Enchérisseur expert :</h2>
+            <p> <b>dès 20 enchères remportées et réglées</b> , gagnez une couronne royale
+                <br />ainsi qu'un <b>bon d'achat de 40€*</b> à valoir sur n'importe quelle offre du site</p>
+        </div>
+        <div class="block-separ-top">
+            <img src='{{assetCdn}}/assets/gfx/rank5_50px.png?v=20160707' alt="Maître Enchérisseur" /><h2 class="h4">Maître Enchérisseur :</h2>
+            <p> <b>dès 50 enchères remportées et réglées</b> , gagnez une couronne impériale
+                <br />ainsi qu'un <b>bon d'achat de 100€*</b> à valoir sur n'importe quelle offre du site</p>
+        </div>
+        <p class="h3 block-separ-top"> MERCI DE VOTRE FIDÉLITÉ </p>
+        <div class="block-separ-top">
+            *Pour utiliser votre bon d'achat il vous suffit de remplir la case “Code Promo” lors du paiement d'une enchère. Attention, le montant de l'enchère doit être supérieur ou égal à celui du bon d'achat. Ces bons d'achat ne sont pas cumulables et sont valable 60 jours à compter de votre changement de statut. Retrouvez-les sur votre profil personnel.<br/>
+        </div>
+        <hr />
+        <h3>Découvrez aussi les profils d'enchérisseurs</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                Plutôt warrior ou timide ?<br>
+                <a href="{{ path('survey.personaHome') }}">Choisissez votre profil type d'enchérisseur</a> et regardez les choix des autres utilisateurs !<br>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+{% endblock %}

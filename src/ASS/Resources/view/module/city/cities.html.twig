@@ -1,0 +1,49 @@
+<div class="row">
+    {% set bigCities = [
+        {
+            name: 'paris',
+            title: 'Paris',
+        },
+        {
+            name: 'lyon',
+            title: 'Lyon',
+        },
+        {
+            name: 'marseille',
+            title: 'Marseille',
+        },
+        {
+            name: 'toulouse',
+            title: 'Toulouse',
+        },
+        {
+            name: 'bordeaux',
+            title: 'Bordeaux',
+        },
+        {
+            name: 'lille',
+            title: 'Lille',
+        },
+        {
+            name: 'nantes',
+            title: 'Nantes',
+        },
+        {
+            name: 'strasbourg',
+            title: 'Strasbourg',
+        },
+        {
+            name: 'rennes',
+            title: 'Rennes',
+        }
+    ] %}
+    {%- for city in bigCities -%}
+        {% if (currentCity is defined and currentCity != city.name) or currentCity is not defined %}
+            <div class="col-xs-6 col-sm-4">
+                <a href="{{path('geoloc.city', {'city': city.name|lower})}}" class="btn btn-link btn-block text-primary text-left">
+                    {{ city.title }}
+                </a>
+            </div>
+        {% endif %}
+    {%- endfor -%}
+</div>

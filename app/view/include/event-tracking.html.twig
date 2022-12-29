@@ -1,0 +1,121 @@
+{% if app.session.flashbag.get('trackLoginViaForm') %}
+    <script>ga('send', 'event', 'login', 'form', '{{app.session.get('utm_source')}}', '0');</script>
+{% endif %}
+{% if app.session.flashbag.get('trackLoginViaFacebook') %}
+    <script>ga('send', 'event', 'login', 'facebook', '{{app.session.get('utm_source')}}', '0');</script>
+{% endif %}
+
+{# User registered but did not confirm yet #}
+{% if app.session.flashbag.get('trackRegister') %}
+    <!-- Google Analytics event -->
+    <script>ga('send', 'event', 'subscription', 'new', '{{app.session.get('utm_source')}}', '1');</script>
+{% endif %}
+
+{% if app.session.flashbag.get('trackRegisterWithNewsletter') %}
+    <script>ga('send', 'event', 'newsletter', 'subscribed_register_form', 'default', '1');</script>
+{% endif %}
+
+<script>
+    {# Tracking flow register #}
+    var formId;
+    function step1Displayed(id){
+        formId = id;
+        ga('send', 'event', 'subscription', formId, 'step1Displayed');
+    }
+    function step1Error(error){
+        ga('send', 'event', 'subscription', formId, 'step1Error', error);
+    }
+    function step1Passed(){
+        ga('send', 'event', 'subscription', formId, 'step1Passed');
+    }
+    function step2Error(error){
+        ga('send', 'event', 'subscription', formId, 'step2Error', error);
+    }
+    function step2Passed(callback){
+        ga('send', 'event', 'subscription', formId, 'step2Passed', {
+            hitCallback: function() {
+                if(typeof callback === 'function'){
+                    callback();
+                }
+            }
+        });
+    }
+    function userConfirmed(){
+        ga('send', 'event', 'subscription', 'userConfirmed');
+    }
+</script>
+
+{% if app.session.flashbag.get('trackConfirm') %}
+    <script>
+        dataLayer.push({
+            'event': 'registrationConfirmed',
+            'userId' : '{% if user %}{{ user.id }}{% endif %}'
+        });
+        ga('send', 'pageview', {title: "Acount validated",page: "/user/registration-confirm"});
+    </script>
+    <!-- Google Analytics event -->
+    <script>ga('send', 'event', 'subscription', 'confirm', '{{app.session.get('utm_source')}}', '1');</script>
+    <script>userConfirmed();</script>
+
+    <!-- Google Code for Inscriptions Conversion Page -->
+    <script>
+    /* <![CDATA[ */
+    var google_conversion_id = {{ app['googleconversion.id'] }};
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "pw58CNP45loQh7HfzAM";
+    var google_remarketing_only = false;
+    /* ]]> */
+    </script>
+    <script src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+    <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="#" src="//www.googleadservices.com/pagead/conversion/{{ app['googleconversion.id'] }}/?label=pw58CNP45loQh7HfzAM&amp;guid=ON&amp;script=0"/>
+    </div>
+    </noscript>
+
+
+    <!-- Other trackers -->
+    {% set t_email = app.session.get("email")|url_encode %}
+    {% set t_code = app.session.get("leadId")|url_encode %}
+    {% set t_trackingUId = app.session.get("trackingUId")|url_encode %}
+
+    {% if 'placedesleads' in app.session.get("utm_source") %}
+        <script src="http://lead.plt-events.com/?lead_id={{ t_code }}&lead_email={{ t_email }}&tt=javascript&sc={{ app['placedesleads.sc'] }}"></script>
+        <noscript>
+            <img src="http://lead.plt-events.com/?lead_id={{ t_code }}&lead_email={{ t_email }}&tt=pixel&sc={{ app['placedesleads.sc'] }}" alt="#" width="1" height="1" border="0" />
+        </noscript>
+    {% endif %}
+
+    {% if '230media' in app.session.get("utm_source") %}
+        <img src="//loisirsencheres.grafia.fr/ws/l.php?code={{ t_code }}&email={{ t_email }}" alt="#" width="1" height="1" border="0" />
+    {% endif %}
+
+    {% if 'reactivpub' in app.session.get("utm_source") %}
+        <iframe src="https://nodes.reactivpub.fr/scripts/tracking.php?params={{ app['reactivpub.id'] }}|4&track={{ t_email }}" width="1" height="1" frameborder="0"></iframe>
+    {% endif %}
+
+    {% if 'kiaoramedia' in app.session.get("utm_source") %}
+        <iframe src="https://secure.img-cdn.mediaplex.com/0/{{ app['kiaoramedia.id'] }}/universal.html?page_name=confirmation&Lead=1&mpuid={{ t_trackingUId }}" HEIGHT=1 WIDTH=1 FRAMEBORDER=0></iframe>
+    {% endif %}
+{% endif %}
+
+{# Eulerian tracking action method #}
+<script>
+  function eulerianTrackAction(edata) {
+    if (typeof EA_collector !== "undefined") {
+        {% if app.env != 'prod' %}
+            // to debug eulerian tracking events
+            console.log(edata);
+        {% endif %}
+        EA_collector(edata);
+        return;
+    }
+    leErrs.track(new Error("EA_collector not found!"));
+  }
+</script>
+
+{% include './include/tag-injection.html.twig' %}
+

@@ -1,0 +1,30 @@
+{% if field.properties.mandatory is defined and field.properties.mandatory == true and (passenger == true or passengerRequired == true) %}
+    {% set labelRequire, required, title = true, 'required=required', 'Ce champs est obligatoire' %}
+{% elseif field.properties.mandatory is defined and field.properties.mandatory == true and passengerRequired == false %}
+    {% set labelRequire, required, title = true, '', 'Ce champs est obligatoire. ' %}
+{% else %}
+    {% set labelRequire, required, title = '', '', '' %}
+{% endif %}
+
+{% if value is defined and value is not empty %}
+    {% set inputValue = value %}
+{% elseif field.properties.default is defined and field.properties.default is not empty %}
+    {% set inputValue = field.properties.default|date('d/m/Y') %}
+{% else %}
+    {% set inputValue = '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information~"<br>" %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+    <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passengerDateCustomField[loopindex][field.id] is defined %} has-error{% endif %}">
+        <label for="passengerCustomField[{{loopindex}}][{{ field.id }}]">{{ field.label }} {% if labelRequire is not empty %}*{% endif %}</label>
+        <em>{{ information|raw }}</em>
+        <input value="{{ inputValue }}" placeholder="jj/mm/aaaa" autocomplete="off" class="form-control passengerBirthday js-date" type="text" id="passengerCustomField[{{loopindex}}][{{ field.id }}]" name="passengerDateCustomField[{{loopindex}}][{{ field.id }}]" {{ required }}>
+        {% if error != false and error.passengerDateCustomField[loopindex][field.id] is defined %}
+            <span class="help-block">{{ error.passengerDateCustomField[loopindex][field.id] }}</span>
+        {% endif %}
+    </div>

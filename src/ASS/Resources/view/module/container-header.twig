@@ -1,0 +1,24 @@
+{% if headerPromo is defined or isPayment is not defined and forPayment is not defined or headerPromo is defined %}
+<div class="row" data-ga-action="banner">
+{% if headerPromo is defined %}
+    <div class="visible-xs visible-sm hidden-md hidden-lg col-xs-12 headerPromo paddingbottom1">
+    {% include "module/headerPromo-mobile.twig" %}
+    </div>
+{% endif %}
+{% if isPayment is not defined and forPayment is not defined and (hideBreadcrumb is not defined or (hideBreadcrumb is defined and hideBreadcrumb != true)) %}
+    <div class="col-xs-12{% if headerPromo is defined and (template is not defined or template is defined and template == 'default') %} col-md-3{% endif %}{% if block('h1Content') is empty %} hidden-xs{% endif %}">
+        <div class="hidden-xs">
+            <ol class="breadcrumb" vocab="http://schema.org/" typeof="BreadcrumbList">
+                {% block breadcrumb_content %}{% endblock %}
+            </ol>
+        </div>
+        {% block h1Content %}{% endblock %}
+    </div>
+{% endif %}
+{% if headerPromo is defined %}
+    <div class="paddingbottom1 hiddien-xs hidden-sm visible-md visible-lg {% if template is not defined or template is defined and template == 'default' %}col-md-9 {% else %}col-md-12 {% endif %}headerPromo">
+    {% include "module/headerPromo-desktop.twig" %}
+    </div>
+{% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,302 @@
+{% set user = (app.security.getToken() is not null and is_granted('IS_AUTHENTICATED_FULLY'))? app.security.getToken().getAttribute('user') : null %}
+<!DOCTYPE html>
+<html lang="{{ (app.translator is not null)? app.translator.locale:'fr' }}" class="{% block html_class %}{% endblock %}">
+<head>
+    {% block head %}{# empty Twig template #}
+    {% if app.speedcurve.snippetEnabled %}
+        {% include './include/speedcurve.html.twig' %}
+    {% endif %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Loisirs Enchères{% endblock %}</title>
+    <meta name="description" content="{% block metaDesc %}{% endblock %}">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    {% if app.env!='prod' %}<!-- Don't let Google index non prod env -->
+    <meta name="robots" content="noindex">
+    {% endif %}
+    <meta property="fb:app_id" content="{{app.facebook_appId}}">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://{{app.request.host}}{{ app.request.getRequestUri() }}" >
+    <meta property="og:title" content="{% if block('facebook_title') is not empty %}{% block facebook_title %}{% endblock %}{% else %}{{ block('title') }}{% endif %}" />
+    <meta property="og:description" content="{% if block('facebook_description') is not empty %}{% block facebook_description %}{% endblock %}{% else %}{{ block('metaDesc') }}{% endif %}" />
+    {% set facebook_image = block('facebook_image') %}
+    {% if facebook_image is empty %}
+        {% set facebook_image = app.request.host~"/assets/img/facebook-default.jpg" %}
+    {% endif %}
+    <meta property="og:image" content="http://{{ facebook_image|trim }}" />
+    <meta property="og:image:secure_url" content="https://{{ facebook_image|trim }}" />
+    {% set facebook_type = block('facebook_type') %}
+    {% if facebook_type is empty %}
+        {% set facebook_type = 'image/jpeg' %}
+    {% endif %}
+    <meta property="og:image:type" content="{{ facebook_type }}" />
+    <meta property="og:image:width" content="200" />
+    {% set facebook_height = block('facebook_height') %}
+    {% if facebook_height is empty %}
+        {% set facebook_height = '200' %}
+    {% endif %}
+    <meta property="og:image:height" content="{{ facebook_height }}" />
+    {% block moremeta %}{% endblock %}
+    <meta name="author" content="Loisirs Encheres">
+    <meta name="google-play-app" content="app-id=net.sharewire.loisirsencheres">
+    <meta name="apple-itunes-app" content="app-id=987860898" />
+    <meta name="msapplication-config" content="none" />{# avoid IE11 404 #}
+    {% if notUseProximaNova is not defined %}
+    <link rel="preload" href="/assets/fonts/proximanova/ProximaNova-Bold.woff2?v=20190523" as="font" type="font/woff2" crossorigin>
+    {% endif %}
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=20170615" />{# leave at the root some browser ignore this #}
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-144x144.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png?v=20170615">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png?v=20170615">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png?v=20170615" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-194x194.png?v=20170615" sizes="194x194">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png?v=20170615" sizes="96x96">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png?v=20170615" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png?v=20170615" sizes="16x16">
+    <link rel="manifest" href="/manifest.json?v=20170615">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=20170615" color="#337597">
+    <meta name="apple-mobile-web-app-title" content="Loisirs Enchères">
+    <meta name="application-name" content="Loisirs Enchères">
+    <meta name="msapplication-TileColor" content="#337597">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png?v=20170615">
+    <meta name="theme-color" content="#337597">
+    {% block stylesheets %}
+        {% include 'styles.css.twig' %}
+        <link rel="stylesheet" href="{{ assetCdn }}/assets/css/jquery-bubble-popup-v3.css?v14102015" />
+    {% endblock %}
+    {% block head_links %}{% endblock %}
+
+    {% if app.newrelic.snippetEnabled %}
+        {% include './include/newrelic-browser.html.twig' %}
+    {% endif %}
+
+    {% include './include/basic.js.twig' %}
+    {% if isIE(app.request) %}
+        <link rel="stylesheet" href="{{ asset('build-css/ie.css') }}" />
+        <script src="{{ assetCdn }}/assets/js/polyfills.js"></script>
+    {% endif %}
+    {% block preconnect %}
+    <link rel="preconnect" href="https://gum.criteo.com">
+    <link rel="preconnect" href="https://accounts.google.com">
+    <link rel="preconnect" href="https://ssl.gstatic.com">
+    <link rel="preconnect" href="https://ag.gbc.criteo.com">
+    <link rel="preconnect" href="https://gem.gbc.criteo.com">
+    {% endblock %}
+    {% include './include/google-analytics.html.twig' %}
+
+    {# Eulerian script for event trackings #}
+    {% if eulerianPaymentWeb is not defined %}
+        <script defer src="{{ eulerianUrl }}/ea.js"></script>
+    {% endif %}
+{% endblock %}
+</head>
+<body class="{% if bodyclass is defined %}{{ bodyclass }}{% endif %}{% if(app['service.images'].isWebpEnabled()) %} webp{% endif %}{% if isIE(app.request) %} isie{% endif %}">
+    {% if notNeedLoader is not defined %}
+    <div id="general-loader" class="hide">
+        <img src="{{ assetCdn }}/assets/gfx/loader.gif?v=20170307" alt="Chargement..." />
+        {% if isPayment is defined %}
+        <img src="{{ assetCdn }}/assets/gfx/logopayment/logo-casino.svg" class="hide casino-loading" alt="Chargement..." />
+        <p class="hide casino-loading">Veuillez patienter, Banque Casino est en train d’analyser votre dossier.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% if isRunning is defined and isRunning == true %}
+        <div class="js-confetti js-container-confetti hide" aria-hidden="true"></div>
+    {% endif %}
+    {# Google Tag Manager #}
+    <noscript>
+        <iframe src="//www.googletagmanager.com/ns.html?id={{ app['gtm.id'] }}" height="0" width="0" class="hide"></iframe>
+    </noscript>
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','{{ app['gtm.id'] }}');
+    </script>
+    {% if user %}
+    <script>
+        dataLayer.push({'numMember': {{user.num}}});
+    </script>
+    {% endif %}
+    {# End Google Tag Manager #}
+
+    <div id="hero-container" class="{% block background %}background-blanc{% endblock %}">
+        {% block slideOutContents %}
+        {% if isPayment is not defined and forPayment is not defined %}
+            {% if hideNavbar is not defined %}
+                {% include './module/navbar/desktop.twig' with { 'navBarId': 'menuMobile', 'hideNavbar': 1 } %}
+            {% endif %}
+            {% if user and headerHideUser is not defined %}
+            <nav id="userHeaderNavMobile" class="hide">
+                {% include './module/navbar/userHeaderNav.twig' %}
+            </nav>
+            {% endif %}
+        {% endif %}
+        {% include './layout/navbar-navigation.twig' %}
+        {% endblock %}
+        <div id="le-wrap" class="{{ block('background') }}">
+            {% block prependContainter %}{% endblock %}
+            <div class="{% if hideNavbar is not defined %}paddingtop1 {% endif %}{{ block('background') |default('background-gris') }}">
+                {% if app.request.attributes.get('_route') is not null and app.request.attributes.get('_route') not in ['homepage', 'welcome', 'paiement'] and (hideBreadcrumb is not defined or (hideBreadcrumb is defined and hideBreadcrumb != true)) and template is not defined or (template is defined and template == 'default') %}
+                    <div class="container">
+                    {% set breadcrumbContent = block('breadcrumb') %}
+                    {% set h1Content = block('h1') %}
+                    {% embed 'module/container-header.twig' %}
+                        {% block h1Content %}{{ h1Content|raw }}{% endblock %}
+                        {% block breadcrumb_content %}
+                            {% if breadcrumbContent is not empty %}
+                                {% block breadcrumb %}{{breadcrumbContent|raw}}{% endblock %}
+                            {% else %}
+                                <li typeof="ListItem" property="itemListElement">
+                                    <a typeof="WebPage" property="item" href="{{ path('homepage') }}"><span property="name">Accueil</span></a>
+                                    <meta content="1" property="position">
+                                </li>
+                                <li typeof="ListItem" property="itemListElement" class="active">
+                                    <span itemprop="name">{{ block('title') }}</span>
+                                    <meta content="2" property="position">
+                                </li>
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
+                    </div>
+                {% endif %}
+                <div class="{{ block('container')|default('container') }}"{% if block("containerId") is defined %} id="{{ block('containerId') }}"{% endif %}>
+                {% block main_content %}{% endblock %}
+                </div>
+                {% if block('hasLightFooter') is not empty %}
+                    <div class="no-extended-footer" aria-hidden="true"></div>
+                {% endif %}
+            </div>
+            {% block footer %}
+                {% if showapps is defined and showapps == true %}
+                    {% if not user.preferences.loggedOnApp is defined or not user.preferences.loggedOnApp %}
+                        {% include 'module/block-apps.twig' %}
+                    {% endif %}
+                {% endif %}
+                {% if isPayment is not defined and forPayment is not defined and hideFooter is not defined %}
+                {% include './layout/footer.html.twig' %}
+                {% endif %}
+            {% endblock %}
+        </div>
+        {% block onceTime %}
+            {% if isPayment is not defined %}
+            {# To include only one component in the page. Example: a modal #}
+            <once-time
+                :user-logged="{{ is_granted('IS_AUTHENTICATED_FULLY') | json_encode }}"
+                target-path-default="{{ app.request.attributes.get('_route') ? path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) : '/' }}"
+                {% if auction is defined %}
+                    auction-id="{{ auction.id }}"
+                {% endif %}
+                :only-view="{{ onlyview is defined and onlyview == true ? 'true' : 'false' }}"
+                {% if app.session.getFlashBag.has('resendEmailConfirmation') %}
+                resend-email-confirmation="{{ app.session.getFlashBag.get('resendEmailConfirmation').0 }}"
+                {% endif %}
+                {% if checkboxes is defined %}
+                    :checkboxes="{{ checkboxes|json_encode()|raw|e('html_attr') }}"
+                {% endif %}
+                {% if headerHideRegisterButton is defined %}
+                    :header-hide-register-button="{{ headerHideRegisterButton == true or headerHideRegisterButton == 1 ? 'true' : 'false' }}"
+                {% endif %}
+            ></once-time>
+            {% endif %}
+        {% endblock %}
+        {% if isPayment is not defined %}
+        <div id="cookie-consent" class="hidden-print">
+            <p>En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies. <a class="btnMore" href="/content/privacy-policy#cookie" title="En savoir plus">En savoir plus...</a></p>
+            <span>
+                <a href="#" title="Ok, je comprend" class="close-cookie-content">
+                    <span>Fermer</span> <i class="icon-close"></i>
+                </a>
+            </span>
+        </div>
+        {% endif %}
+    </div>
+
+{% block modal %}
+    {% if user is not null %}
+        {% include 'modals/user/firebaseSignOut.twig' %}
+        {% if user.status == 'unconfirmed' %}
+            {% include 'modals/user/confirmEmail.twig' %}
+        {% endif %}
+    {% endif %}
+
+    {% if app.session.getFlashBag.has('success') %}
+        {% include 'modals/modal-success.twig' %}
+    {% endif %}
+
+    {% if app.session.getFlashBag.has('error') %}
+        {% include 'modals/modal-error.twig' %}
+    {% endif %}
+
+    {% if app.session.getFlashBag.has('notconfirmed') %}
+        {% include 'modals/notconfirmed.twig' %}
+    {% endif %}
+
+    {% if app.session.getFlashBag.has('userblocked') %}
+        {% include 'modals/userblocked.twig' %}
+    {% endif %}
+
+    <!-- modal when add godchild with godchild form footer -->
+    {% include 'modals/parrainageSuccess.twig' %}
+    {% include 'modals/parrainageError.twig' %}
+{% endblock %}
+
+{% if hideGototop is not defined %}
+<div id="gototop" class="hidden-print">
+    <!--[if gte IE 9]><!-->
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" xml:space="preserve">
+    <g id="icon_top_page">
+        <path class="st0" d="M68.8,35L68.8,35c0.1,18.6-15,33.7-33.5,33.8c-0.1,0-0.1,0-0.2,0l0,0c-18.6,0.1-33.7-15-33.8-33.5c0-0.1,0-0.1,0-0.2l0,0C1.2,16.4,16.2,1.3,34.8,1.2c0.1,0,0.1,0,0.2,0l0,0c18.6-0.1,33.7,15,33.8,33.5C68.8,34.9,68.8,34.9,68.8,35z"></path>
+        <path class="st1" d="M35,70C15.7,70,0,54.3,0,35S15.7,0,35,0s35,15.7,35,35S54.3,70,35,70z M35,2.7C17.2,2.7,2.7,17.2,2.7,35S17.2,67.3,35,67.3S67.3,52.8,67.3,35l0,0C67.3,17.2,52.8,2.7,35,2.7z"></path>
+        <path class="st2" d="M50.7,42.4c-0.3,0-0.6-0.2-0.8-0.4L35,27.4L20.4,42c-0.4,0.5-1.1,0.6-1.6,0.2c-0.1-0.1-0.2-0.1-0.2-0.2c-0.5-0.4-0.6-1.1-0.2-1.6c0.1-0.1,0.1-0.2,0.2-0.2l14.8-14.8c0.9-0.8,2.2-0.8,3.1,0l14.8,14.8c0.5,0.4,0.6,1.1,0.2,1.6c-0.1,0.1-0.1,0.2-0.2,0.2C51.3,42.2,50.8,42.4,50.7,42.4z"></path>
+    </g></svg>
+    <!--<![endif]-->
+    <!--[if lte IE 8]>
+        <img width="55" height="55" alt="creer" title="creer" src="{{ assetCdn }}/assets/gfx/pictos/up-arrow.png">
+    <![endif]-->
+</div>
+{% endif %}
+{% if isPayment is not defined %}
+<div id="fb-root" class="hidden-print" aria-hidden="true"></div>
+{% endif %}
+{% block javascripts %}
+    {# Init JS global vars and functions #}
+    {% include './include/global-vars.js.twig' %}
+    {% include 'global-functions.js.twig' %}
+    {# End init JS global vars and functions #}
+    {# Bootstrap core JavaScript #}
+    {# Placed at the end of the document so the pages load faster #}
+    {% include 'jquery-bootstrap.js.twig' %}
+    {% if isIE(app.request) %}
+        <script src="{{ assetCdn }}/assets/js/ie-specific.js"></script>
+    {% endif %}
+    {% if isPayment is not defined %}
+        <script src="{{ asset(buildDir ~ '/app.js')}}"></script>
+    {% endif %}
+    {% if user %}
+        <link rel="preload" href="{{ asset(buildDir ~ '/UserConnected.js') }}" as="script">
+    {% endif %}
+    {% include 'common-in-page.js.twig' %}
+    {% include 'google-analytics-bottom.js.twig' %}
+    {% include 'default.js.twig' %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% include 'user.connected.js.twig' %}
+    {% endif %}
+    {% if useTwitterShare is defined %}
+    <script>window.twttr=function(t,e,r){var n,i=t.getElementsByTagName(e)[0],w=window.twttr||{};return t.getElementById(r)||((n=t.createElement(e)).id=r,n.src="https://platform.twitter.com/widgets.js",i.parentNode.insertBefore(n,i),w._e=[],w.ready=function(t){w._e.push(t)}),w}(document,"script","twitter-wjs");</script>
+    {% endif %}
+{% endblock %}
+{% block tracking %}
+    {% include './include/event-tracking.html.twig' %}
+{% endblock %}
+</body>
+</html>

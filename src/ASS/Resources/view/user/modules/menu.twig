@@ -1,0 +1,10 @@
+<ul class="nav nav-pills nav-stacked" id="usernav">
+    <li><a href="{{ path('user.profile') }}"{% if app.request.get('_route') == 'user.profile' %} class="active"{% endif %}><i class="icon-mon-profil"></i> <span>Mon profil</span></a></li>
+    <li><a href="{{ path('user.changePassword') }}"{% if app.request.get('_route') == 'user.changePassword' %} class="active"{% endif %}><i class="icon-change-password"></i> <span>Mon mot de passe</span></a></li>
+    <li><a href="{{ path('user.auctions') }}"{% if app.request.get('_route') == 'user.auctions' %} class="active"{% endif %}><i class="icon-mes-encheres"></i> <span>Mes enchères <user-payment-alert-component v-bind:informations="informations"></user-payment-alert-component></span></a></li>
+    <li><a href="{{ path('user.purchase') }}"{% if app.request.get('_route') == 'user.purchase' %} class="active"{% endif %}><i class="icon-mes-achats"></i> <span>Mes achats</span></a></li>
+    <li><a href="{{ path('user.favorites') }}"{% if app.request.get('_route') == 'user.favorites' %} class="active"{% endif %}><i class="icon-mes-favoris"></i> <span>Mes favoris</span></a></li>
+    <li><a href="{{ path('user.parrainage') }}"{% if app.request.get('_route') == 'user.parrainage' %} class="active"{% endif %}><i class="icon-parrainage"></i> <span>Parrainer mes ami(e)s</span></a></li>
+    <li><a href="{{ path('user.giftcard') }}"{% if app.request.get('_route') == 'user.giftcard' %} class="active"{% endif %}><i class="icon-cartes-cadeaux"></i> <span>Mes cartes cadeaux</span></a></li>
+    <li><a href="{{ path('user.avantages') }}"{% if app.request.get('_route') == 'user.avantages' %} class="active"{% endif %}><i class="icon-mes-avantage"></i> <span>Mes avantages</span></a></li>
+</ul>

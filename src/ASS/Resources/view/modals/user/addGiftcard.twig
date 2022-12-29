@@ -1,0 +1,56 @@
+<div class="modal fade" id="addGiftcard">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Ajouter une carte</div>
+            </div>
+            <div class="modal-body">
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object" src="{{assetCdn}}/assets/img/modal/addgiftcard/code.png" alt="code">
+                    </div>
+                    <div class="media-body">
+                        <p><span class="media-heading">Saisissez votre code personnel</span><br />
+                        Dans l'espace ci-dessous puis validez.</p>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object" src="{{assetCdn}}/assets/img/modal/addgiftcard/encherisser.png" alt="Enchérissez">
+                    </div>
+                    <div class="media-body">
+                        <p><span class="media-heading">Enchérissez et gagnez</span><br />
+                        Choisissez une activité puis enchérissez pour la remporter</p>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object" src="{{assetCdn}}/assets/img/modal/addgiftcard/regler.png" alt="Régler">
+                    </div>
+                    <div class="media-body">
+                        <p><span class="media-heading">Réglez, réservez et profitez !</span><br />
+                        Votre cagnotte sera débitée au moment de régler votre enchère, il ne vous reste plus qu'à profiter.</p>
+                    </div>
+                </div>
+                <form method="post" action="">
+                    <div class="input-group">
+                        <input name="giftcardcode" class="form-control" type="text" placeholder="Mon code" required="" />
+                        <span class="input-group-addon background-bleu">
+                            <button type="submit" class="btn btn-primary btn-sm">VALIDER</button>
+                        </span>
+                    </div>
+                </form>
+                <div class="infosComplementaire">
+                    <a class='collapseAction' data-toggle="collapse" href="#collapseInfosComplementaire" aria-expanded="false" aria-controls="collapseInfosComplementaire">Informations Complémentaires <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+                    <div class="collapse collapseContent" id="collapseInfosComplementaire">
+                        <div class="well">
+                            <p class="text-justify">La carte cadeau LOISIRS ENCHÈRES est utilisable sur toutes les offres du site ou de l’application Loisirs Enchères (hors options et assurances). La carte cadeau peut être utilisée sur un compte seulement, elle ne sera pas envoyée par voie postale. Le bénéficiaire pourra consulter le solde de sa carte cadeau dans l’onglet “Mes avantages” de son profil.<br />
+                            Cette carte est valable 1 an à partir de la date d’achat, elle n'est ni échangeable, ni remboursable même partiellement, ni portée au crédit d'une carte ou d'un compte bancaire, ni faire l'objet d'un escompte et ne peut donner lieu à aucun rendu de monnaie. Elle n'est ni remplacée, ni remboursée en cas de perte, de vol ou de fin de validité. Le paiement d’une carte cadeau ne peut pas se faire au moyen d’une autre carte cadeau.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

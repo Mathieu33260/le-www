@@ -1,0 +1,151 @@
+{% extends 'layout/html-app.twig' %}
+{% block html_class %}background-bleu-claire{% endblock %}
+{% block body_class %}background-bleu-claire{% endblock %}
+{% block main_content %}
+<div class="background-bleu-claire" id="deposit">
+    <div class='col-xs-10 col-xs-offset-1 background-bleu-claire'>
+        <h1 class="text-center">Votre mise actuelle est de {{ app.request.get('bid') }} €</h1>
+        <p>Pour toute mise supérieure à <strong>{{product.cardCheckAmount/100}}€</strong> sur cette enchère, nous demandons un dépôt de garantie par carte à hauteur des frais de dossier ({{ auction.cost/100 }}€). <strong>Rien ne sera prélevé sur votre compte</strong>.
+            <br /><br />En cas de gain (on vous l'espère), vous aurez 14 jours pour régler votre enchère avec le mode de paiement de votre choix. Si toutefois le paiement de l'enchère n'était pas effectué passé ce délais, ces frais de dossiers seront encaissés.</p>
+        <form method="post" class="module">
+            <div class="form-group">
+                <div class="checkbox nopadding">
+                    <label for="understood">
+                        <input type="checkbox" name="understood" id="understood" value="1" required="" />
+                        <b>J'ai compris que mon compte ne sera pas débité</b>
+                    </label>
+                </div>
+            </div>
+            <div class='paymentMethods'>
+                {% if validCards|length > 0 %}
+                <div id="savedCardBlock">
+                    <div class="row">
+                        <div class="radio col-xs-12">
+                            <h2>Carte(s) enregistrée(s)</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                {% for userCard in validCards %}
+                                <div class="radio col-xs-12">
+                                    <label for="card_{{ userCard.id }}">
+                                        <input class='isSaveCard' type="radio" name="method" required="" value="savedCard-{{ userCard.id }}" id="card_{{ userCard.id }}"{% if loop.index == 1 %} checked="checked"{% endif %} />
+                                        {{ userCard.name }} &nbsp;{{ userCard.expiredate|date('m/y') }} <img style="width: 30px;" class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/{{ userCard.type }}.png" alt="logo {{ userCard.name }}" />
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div id="cardSelectBlock" class="block-separ-bottom">
+                    <div class="row text-center">
+                        <div class="col-xs-4">
+                            <input name="method" value="cb" type="radio" id="methodCb" checked="checked" required="" />
+                            <label for="methodCb">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/cb.png" alt="logo cb" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4">
+                            <input name="method" value="visa" type="radio" id="methodVisa" required="" />
+                            <label for="methodVisa">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/visa.png" alt="logo visa" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4">
+                            <input name="method" value="mastercard" type="radio" id="methodMasterCard" required="" />
+                            <label for="methodMasterCard">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/mastercard.png" alt="logo mastercard" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="cardNameBlock" class="row block-separ-bottom">                
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="checkbox nopadding">
+                                <label for="saveCard">
+                                    <input type="checkbox" name="saveCard" id="saveCard" value="1" />
+                                    Enregistrer cette carte pour faciliter mes futures transactions :
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group saveCardName hide">
+                            <label for="saveCardName" class="hide">Nom de la carte</label>
+                            <input type="text" class="form-control" id="saveCardName" name="saveCardName"  placeholder="nom de la carte" value="{{user.firstName}} {{user.lastName}}" title="nom de la carte" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary center-block submit" name="submit" />
+        </form>
+        <div class="row garantie">
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 text-center"><img src="{{assetCdn}}/assets/img/bouclier-gris.png" alt="#" /></div>
+                    <div class="col-xs-12 col-sm-12 text-center"><p>Paiement sécurisé</p></div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 text-center"><img src="{{assetCdn}}/assets/img/casque-gris.png" alt="#" /></div>
+                    <div class="col-xs-12 col-sm-12 text-center"><p>Service client à votre écoute</p></div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 text-center"><img src="{{assetCdn}}/assets/img/avis-verifier-etoiles-45.png" alt="#" width="100%" /></div>
+                    <div class="col-xs-12 col-sm-12 text-center"><p>Avis de nos clients <strong>4.5 / 5</strong></p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            if($('#understood').prop("checked") === false){
+                $('#deposit').find('.paymentMethods').addClass('hide');
+                $('#deposit').find('.submit').attr('disabled','disabled');
+            }
+        });
+    </script>
+    <script>
+        $('form.module').on('submit', function(e){
+            if($('#saveCard').prop("checked") == true && $('#saveCardName').val() == ''){
+                $('#saveCardName').parent('.form-group').addClass('has-error');
+                return false;
+            }
+        });
+        $('#saveCard').on('change',function(){
+            if($(this).prop("checked") == true){
+                $('.saveCardName').removeClass('hide');
+            }
+            else if($(this).prop("checked") == false){
+                $('.saveCardName').addClass('hide');
+            }
+        });
+        $('#understood').on('change',function(){
+            if($(this).prop("checked") == true){
+                $('#deposit').find('.paymentMethods').removeClass('hide');
+                $('#deposit').find('.submit').removeAttr('disabled');
+            }
+            else if($(this).prop("checked") == false){
+                $('#deposit').find('.paymentMethods').addClass('hide');
+                $('#deposit').find('.submit').attr('disabled','disabled');
+            }
+        });
+        $("input[name='method']").on('change',function(){
+            if($(this).hasClass("isSaveCard")){
+                $('#cardNameBlock').addClass('hide');
+            }
+            else {
+                $('#cardNameBlock').removeClass('hide');
+            }
+        });
+    </script>
+{% endblock %}

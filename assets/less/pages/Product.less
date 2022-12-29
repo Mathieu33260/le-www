@@ -1,0 +1,448 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+@import "../modules/Pgwslideshow";
+@import "../modules/Calendars";
+@import "../modules/BidModule/Index";
+@import "../_confetti";
+
+h1 {
+    font-size: 1.2em;
+    line-height: 1.3em;
+    margin-top: 0.5em;
+    /*padding-left: 0.8em;
+    padding-right: 0.8em;*/
+    @media (min-width: @min-width-sm) {
+        padding-bottom: 0;
+    }
+    @media (min-width: @min-width-md) {
+        font-size: 1.3em;
+    }
+    + div {
+        margin-bottom: 10px;
+    }
+}
+
+.switch {
+    padding-top: 1em;
+    padding-bottom: 10px;
+    .btn-group {
+        display: block;
+    }
+    .btn-default, .btn-default:not(.disabled):not([disabled]).active, .btn-default:not(.disabled):not([disabled]):hover {
+        border-color: @grey_light;
+        border-width: 2px;
+        background: @white;
+        color: @black;
+        font-weight: bold;
+    }
+    .btn-default {
+        background: @grey_light;
+        width: 50%;
+    }
+}
+
+.slids {
+    position: relative;
+    &.nolist {
+        @media (min-width: @max-width-xs) {
+            margin-bottom: 15px;
+        }
+    }
+    .placeholder-block {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        left: 7px;
+        width: 98.2%;
+    }
+    .placeholder-container {
+        background-color: @beige_fonce;
+    }
+    .placeholder-container, .placeholder-block {
+        min-height: 408px;
+        @media (min-width: @min-width-sm) {
+            min-height: 382px;
+        }
+        @media (min-width: @min-width-md) {
+            min-height: 491px;
+        }
+        @media (min-width: @min-width-lg) {
+            min-height: 573px;
+        }
+    }
+}
+
+.smallInfos {
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.validDates {
+    color: @green_valid;
+    font-weight: 700;
+}
+
+.invalidDates {
+    color: @red_error;
+    font-weight: 700;
+}
+
+blockquote {
+    text-align: right;
+    padding: 10px 60px 10px 0;
+    box-sizing: border-box;
+    background: url('/assets/img/quote.png') no-repeat center right transparent;
+
+    // Surcharge bootstrap
+    margin: 0;
+    font-size: inherit;
+    border-left: none;
+    p {
+        &:first-child {
+            color: @black_light;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+        &:last-child {
+            color: @grey_light;
+            padding-top: 0 !important;
+            margin-top: 0;
+        }
+    }
+}
+.blockquote {
+    width: 75%;
+}
+
+*[class^="ico-"] {
+    &:before {
+        font-family: 'icomoon';
+        display: inline-block;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: @blue;
+        margin-right: 15px;
+    }
+}
+
+.texte {
+    @media (max-width: @max-width-xs) {
+        border: none;
+        height: auto !important;
+    }
+}
+
+.icon-favorite {
+    position: absolute;
+    top: 7px;
+    left: 20px;
+    z-index: 9;
+    + .loader {
+        top: 2px;
+        left: 17px;
+        z-index: 9;
+    }
+}
+
+h2 {font-size: 21px}
+h3 {font-size: 18px}
+h2, h3 {
+    &.ico-paperclip  { &:before { content: '\e937' } }
+    &.ico-plane      { &:before { content: '\e979' } }
+    &.ico-bed        { &:before { content: '\e942' } }
+    &.ico-cutlery    { &:before { content: '\e941' } }
+    &.ico-location   { &:before { content: '\e92f' } }
+    &.ico-smile      { &:before { content: '\e916' } }
+    &.ico-people     { &:before { content: '\e940' } }
+    &.ico-car        { &:before { content: '\e921' } }
+    &.ico-bus        { &:before { content: '' } }
+    &.ico-wheelchair { &:before { content: '\e918' } }
+    &.ico-phone      { &:before { content: '\e910' } }
+    &.ico-globe      { &:before { content: '\e91c' } }
+    &.ico-bicycle    { &:before { content: '\e947' } }
+    &.ico-dog        { &:before { content: '\e91a' } }
+    &.ico-extra      { &:before { content: '\e919' } }
+    &.ico-booking    { &:before { content: '\e91e' } }
+}
+
+/**********************************************************************************************************************/
+/******************************************************** RIGHT *******************************************************/
+/**********************************************************************************************************************/
+@media (min-width: @min-width-sm) {
+    .partieDroite {
+        padding-left: 0
+    }
+}
+.procedure {
+    border: 1px solid @beige;padding: 0;margin-bottom: 10px;margin-top: 10px;
+    ul {margin: 0px 20px;padding: 0 10px 0 10px;display: inline-block}
+    li {border-bottom: none;padding: 5px 0;margin-bottom: 5px}
+    img {margin-right: 1em}
+    p {line-height: normal;padding-left: 5px;padding-top: 15px;vertical-align: middle;text-align: left;font-size: 0.9em;}
+    .mentions a {color: @blue;line-height: 20px}
+    .noborder {border: none}
+    .mentions {display: block}
+}
+
+/**********************************************************************************************************************/
+/******************************************************** BIDMODULE ********************************************************/
+/**********************************************************************************************************************/
+.encard {
+    border: 1px solid @beige;
+    margin: 15px 0;
+    .background-blanc;
+    h2 {
+        background: @grey_light;
+        color: @white;
+        text-align: left;
+        padding: 8px;
+        font-size: 16px;
+        margin-top: 0;
+    }
+}
+
+/**********************************************************************************************************************/
+/******************************************************** TABS ********************************************************/
+/**********************************************************************************************************************/
+.nav-tabs {
+    margin: 0;
+    width: 100%;
+    border-bottom: 0;
+    > li {
+        padding: 0;
+        margin-top: 4px;
+        border-radius: 0;
+        @media (min-width: @min-width-sm) {
+            margin-top: 0;
+        }
+        a {
+            margin: 0;
+            border-radius: 0;
+            background: @white;
+            .text-grey-fonce;
+            border: 0;
+            border-bottom: 1px solid @beige;
+            padding: 10px 0.6em;
+            font-size: 0.875em;
+            &:focus, &:hover {
+                background: @white;
+            }
+            @media (min-width: @min-width-sm) {
+                font-size: 1.2em;
+            }
+        }
+        &.active > a, &.active > a:hover, &.active > a:active, &:hover > a, &:hover > a:hover, &:active > a, &:active > a:active, &.active > a:focus {
+            color: @orange;
+            border-bottom-color: @orange;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+    }
+}
+.tab-content {
+    padding: 0 15px;
+    border: 1px solid @beige;
+    overflow: hidden;
+    .background-blanc;
+}
+.tab-pane {
+    padding-top: 15px;
+    h2 {
+        margin-top: 40px;
+    }
+}
+#description {
+    a[href='#calendars'] {
+        &.btn-link {
+            text-decoration: none;
+        }
+        .icon-calendar {
+            font-size: 2.7em;
+            right: 0;
+        }
+    }
+    ul li {
+        padding-bottom: 15px;
+    }
+    h2 ~ ul li {
+        padding-bottom: 0;
+    }
+}
+
+#moreinfo {
+    > div {
+        @media (max-width: 480px) {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+}
+#staticmap {cursor: pointer}
+#staticmap + .openMap {position: absolute;top: 10px;right: 40px;cursor: pointer;z-index: 1}
+#map .content {
+    position: relative;width: 400px;min-height: 245px;background: @grey_light;
+    img {position: relative;z-index: 1;width: 100%}
+    .texts {
+        position: absolute;bottom: 0;left: 0;width: 100%;z-index: 2;background-color: rgba(0, 0, 0, 0.6);min-height: 45px;line-height: 45px;padding: 1em;
+        p {line-height: normal;color: #fff;margin-bottom: 0;font-family: 'proxima_nova_regular'}
+        img {width: 2em}
+    }
+}
+.gmap {
+    width:100%;
+    border: 1px solid @beige_fonce;
+    height: 200px;
+    @media (min-width: @min-width-sm) {
+        height: 400px;
+    }
+}
+
+.feedback {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    @media (min-width: @min-width-sm) {
+        bottom: 94px;
+        &.hasNoThumbnail {
+            bottom: 0;
+        }
+    }
+    @media (min-width: @min-width-md) {
+        bottom: 114px;
+    }
+}
+#feedback {
+    .popup-info-bidder-status {
+        padding-left: 20px;
+    }
+}
+.alinea {
+    text-indent: 20px;
+}
+.indent-block {
+    margin-left: 1em;
+}
+.comment-form {
+    margin-top: 1em;
+    .form-control-feedback.counter {
+        position: relative;
+        text-align: right;
+        line-height: normal;
+        height: auto;
+        right: 0;
+        display: inline-block;
+        float: right;
+        width: auto;
+    }
+    .form-group {
+        position: relative;
+    }
+}
+
+.freeback-note{
+    background-color: @blue;
+    font-size: 36px;
+    color:@white;
+    border-radius: 50%;
+    padding: 25px 0px 25px 0px;
+    margin: 5px auto;
+    width:100px;
+    height:100px;
+    text-align: center;
+    box-shadow: 5px 5px 26px -4px rgba(0,0,0,0.17);
+}
+.feedbackContainer {
+    position: relative;
+    span {float: none}
+}
+
+/**********************************************************************************************************************/
+/************************************************** CROSS SELLING *****************************************************/
+/**********************************************************************************************************************/
+#crossSellingBlock {
+    margin-top: 10px;
+    @media (min-width: @min-width-sm) {
+        .auction picture {
+            min-height: 220px;
+        }
+    }
+    .feedbackContainer {
+        position: absolute;
+    }
+}
+
+/**********************************************************************************************************************/
+/*************************************************** SOCIAL BTNS ******************************************************/
+/**********************************************************************************************************************/
+.facebook-link,
+.twitter-link {
+    a {
+        border: 0;
+        border-radius: 2px;
+        white-space: normal;
+        margin-top: 5px;
+    }
+}
+.facebook-link {
+    text-align: right;
+    a { background: #3b5998; }
+}
+.twitter-link {
+    a { background: #00aced; }
+}
+
+/**********************************************************************************************************************/
+/****************************************************** FOLLOW ********************************************************/
+/**********************************************************************************************************************/
+.suivezNous {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 53px;
+}
+
+/**********************************************************************************************************************/
+/******************************************************* PRINT ********************************************************/
+/**********************************************************************************************************************/
+@media print {
+    .frais_de_dossier, .ui-widget-header  {
+        background-color: @blue !important;
+        -webkit-print-color-adjust: exact;
+        color: @white !important;
+    }
+    #calendars .ui-datepicker-title span {
+        color: @white !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #calendars .ui-datepicker-inline {width: 100% !important}
+
+    #calendars .ui-datepicker-group {width: 50% !important}
+    #calendars h2 {
+        background-color: @beige !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #calendarLegend{
+        .color {-webkit-print-color-adjust: exact}
+        .white {background: @white !important}
+        .soldout {background: @grey !important}
+        .less-available {background: @blue !important}
+        .available {background: @dark_blue !important}
+        .selected {background: @orange !important}
+    }
+
+    .ui-datepicker-calendar .soldout a, .ui-datepicker-calendar .soldout span {
+        background-color: @grey !important;
+        color: @white !important;
+        -webkit-print-color-adjust: exact;
+    }
+    .ui-datepicker-calendar .less-available a {
+        background-color: @blue !important;
+        color: @white !important;
+        -webkit-print-color-adjust: exact;
+    }
+    .ui-datepicker-calendar .available a {
+        background-color: @dark_blue !important;
+        color: @white !important;
+        -webkit-print-color-adjust: exact;
+    }
+}

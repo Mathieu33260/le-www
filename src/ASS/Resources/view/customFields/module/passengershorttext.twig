@@ -1,0 +1,45 @@
+{% if field.properties.min_char is defined and field.properties.min_char is not empty and field.properties.max_char is defined and field.properties.max_char is not empty %}
+    {% set pattern = 'pattern=.{' ~ field.properties.min_char ~ ',' ~ field.properties.max_char ~ '}' %}
+    {% set maxLength = 'maxlength=' ~ field.properties.max_char %}
+    {% set indication = 'Nombre de caractères compris entre '~ field.properties.min_char ~ ' et ' ~ field.properties.max_char %}
+{% elseif field.properties.min_char is defined and field.properties.min_char is not empty %}
+    {% set pattern, maxLength = 'pattern=.{' ~ field.properties.min_char ~ ',}', '' %}
+    {% set indication = 'Nombre de caractères minimum '~ field.properties.min_char %}
+{% elseif field.properties.max_char is defined and field.properties.max_char is not empty %}
+    {% set pattern = 'pattern=.{0,' ~ field.properties.max_char ~ '}' %}
+    {% set maxLength = 'maxlength=' ~ field.properties.max_char %}
+    {% set indication = 'Nombre de caractères maximum '~ field.properties.max_char %}
+{% else %}
+    {% set pattern, maxLength, indication = '', '', '' %}
+{% endif %}
+
+{% if field.properties.mandatory is defined and field.properties.mandatory == true and (passenger == true or passengerRequired == true) %}
+    {% set labelRequire, required, title = true, 'required=required', 'Ce champs est obligatoire' %}
+{% elseif field.properties.mandatory is defined and field.properties.mandatory == true and passengerRequired == false %}
+    {% set labelRequire, required, title = true, '', 'Ce champs est obligatoire. ' %}
+{% else %}
+    {% set labelRequire, required, title = '', '', '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+    <div class="form-group col-xs-12 col-sm-6{% if error != false and error.passengerCustomField[loopindex][field.id] is defined %} has-error{% endif %}">
+        <label for="{{loopindex}}{{ field.id }}">{{ field.label }} {% if labelRequire is not empty %}*{% endif %}</label> <em>{{ information }}</em><br>
+        <em>{{ indication }}</em>
+        <input autocomplete="off" value="{{ value }}"  placeholder="{{ field.properties.placeholder|default('') }}"  class="form-control{% if maxLength is not empty %} limitsCharacters{% endif %}"  type="text" id="cf{{loopindex}}{{ field.id }}" name="passengerCustomField[{{loopindex}}][{{ field.id }}]"
+                {{ pattern }}
+                {{ maxLength }}
+                {{ required }}
+                title="{{ title }}"
+        >
+        {% if maxLength is not empty %}
+        <span class="counter"><span>{{ field.properties.max_char }}</span> caractères restants</span>
+        {% endif %}
+        {% if error != false and error.passengerCustomField[loopindex][field.id] is defined %}
+            <span class="help-block">{{ error.passengerCustomField[loopindex][field.id] }}</span>
+        {% endif %}
+    </div>

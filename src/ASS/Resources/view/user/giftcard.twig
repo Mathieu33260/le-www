@@ -1,0 +1,136 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Mes cartes cadeaux{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-10 col-xs-offset-1 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8" id="userGiftcard">
+            {% if isApp(app.request) %}
+                <button type="button" id="modalUserNav" data-toggle="modal" data-target="#myModalUserNav" class="center-block btn btn-block with-icon">
+                    <span class="text-right">Mon compte</span> <i class="icon-mon-profil text-right"></i>
+                </button>
+            {% endif %}
+            <h1>Mes cartes cadeaux</h1>
+            <div class="introduction">
+                <div class="text-center">
+                    <picture>
+                        <source media="(min-width: 768px)" srcset="{{assetCdn}}/assets/img/profile/carte-cadeau-intro.png">
+                        <img src="{{assetCdn}}/assets/img/profile/carte-cadeau-intro-simple.png" alt="Soyez sûr de faire plaisir !">
+                    </picture>
+                </div>
+                <p class="visible-lg visible-md hidden-sm hidden-xs">Offrez une expérience unique ! Séjour à l’étranger, nuit en amoureux, gîte familial, sports extrêmes, restaurant à deux, places de théâtre … Avec des cartes cadeaux de 15€ à 300€ et un bon personnalisable disponible et immédiatement valable sur toutes les offres du site vous êtes sûr de faire plaisir ! Vous avez reçu une carte cadeau ? Chanceux ! Elle est utilisable sur toutes nos enchères et peut s’utiliser en plusieurs fois !</p>
+            </div>
+            <div class="giftcard">
+                <h2 class="background-bleu">{% if giftcards|length %}Mes cartes liées à mon compte{% else %}On vous a offert une carte ?{% endif %}</h2>
+                <div class="row{% if giftcards|length == 0 %} nogiftcard{% endif %}"{% if giftcards|length == 0 %} data-toggle="modal" data-target="#addGiftcard"{% endif %}>
+                    {% for giftcard in giftcards %}
+                    <div class="col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-sm-6 col-md-8">
+                                <ul class="list-unstyled">
+                                    <li>Code : <strong>{{ giftcard.code }}</strong></li>
+                                    <li>Montant : <strong>{{ giftcard.original_amount/100 }} €</strong></li>
+                                    <li>Restant : <strong class="{% if giftcard.amount_left > 0 %}text-success{% else %}text-danger{% endif %}">{{ giftcard.amount_left/100 }} €</strong></li>
+                                    <li>Date d'expiration : <strong>{{ giftcard.expire_date|date('d/m/Y') }}</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-2 hidden-xs hidden-sm hidden-md illustration"><img src='{{assetCdn}}/assets/img/profile/carte-cadeau-illustration.png' alt='#' /></div>
+                            {% if giftcard.fromSponsorchip == false %}<div class="col-lg-2 col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-2 bon"><a href="{{ path('user.giftcard.show',{'giftcardId':giftcard.id}) }}" target="_blank"><span>BON <br class="hidden-xs" />CADEAU</span></a></div>{% endif %}
+                            <div class="{% if giftcard.fromSponsorchip == false %}col-lg-2 col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-2{% else %}col-lg-4 col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4{% endif %} cagnotte"><a href='{{ path('user.avantages')}}'><span>VOIR MA <br class="hidden-xs" />CAGNOTTE</span></a></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if giftcards|length == 0 %}
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 text-center">
+                        <img src="{{assetCdn}}/assets/img/profile/jai-recu-une-carte-cadeau.png" alt="J'ai reçu une carte cadeau, cliquez ici pour la rajouter dans votre liste" />
+                        <a class="btn btn-primary with-icon" href="#">Ajouter une carte <i class="icon-add"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-4"><img src="{{assetCdn}}/assets/img/profile/jai-recu-une-carte-cadeau-illustration.png" alt="#" /></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="giftcard">
+                <h2 class="background-bleu">{% if giftedcards|length > 0 %}Mes cartes achetées{% else %}Vous souhaitez offrir une carte ?{% endif %}</h2>
+                <div class="row{% if giftedcards|length == 0 %} nogiftedcard{% endif %}">
+                    {% for giftedcard in giftedcards %}
+                    <div class="col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1">
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12 col-sm-6 col-md-8">
+                                <ul class="list-unstyled">
+                                    <li>Code : <strong>{{ giftedcard.code }}</strong></li>
+                                    <li>Montant : <strong>{{ giftedcard.original_amount/100 }} €</strong></li>
+                                    <li>Offert à : <strong>{{ giftedcard.username }}</strong></li>
+                                    <li><em>Reglé le {{giftedcard.created|date('d/m/Y')}}</em></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-2 hidden-xs hidden-sm hidden-md illustration"><img src='{{assetCdn}}/assets/img/profile/carte-cadeau-illustration-2.png' alt='#' /></div>
+                            <div class="col-lg-2 col-lg-offset-0 col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-2 bon"><a href="{{ path('user.giftcard.show',{'giftcardId':giftedcard.id}) }}" target="_blank"><span>BON <br class="hidden-xs" />CADEAU</span></a></div>
+                            <div class="col-lg-2 col-lg-offset-0 col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-2 cagnotte"><a href='{{ path('user.giftcard.invoice',{'giftcardId':giftedcard.id})}}' target="_blank"><span>FACTURE</span></a></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if giftedcards|length == 0 %}
+                    <div class="hidden-xs col-sm-offset-1 col-sm-3"><img src="{{assetCdn}}/assets/img/profile/je-souhaite-offrir-une-carte-cadeau-illustration.png" alt="#" /></div>
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 accroche"><img src="{{assetCdn}}/assets/img/profile/je-souhaite-offrir-une-carte-cadeau.png" alt="Je souhaite offrir une carte cadeau" /></div>
+                    <div class="col-xs-3 col-xs-offset-5 col-sm-1 col-sm-offset-6 col-md-offset-5"><br /><img src="{{assetCdn}}/assets/img/profile/jai-recu-une-carte-cadeau-row.png" alt="#" /></div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="text-right more">
+                <a class="btn btn-primary with-icon" href="{{ path('christmaspage.giftcard') }}"><span>Offrir une carte cadeau</span> <i class="icon-give-card"></i></a>
+            </div>
+
+            <p class="visible-xs visible-sm hidden-md hidden-lg">Offrez une expérience unique ! Séjour à l’étranger, nuit en amoureux, gîte familial, sports extrêmes, restaurant à deux, places de théâtre … Avec des cartes cadeaux de 15€ à 300€ et un bon personnalisable disponible et immédiatement valable sur toutes les offres du site vous êtes sûr de faire plaisir ! Vous avez reçu une carte cadeau ? Chanceux ! Elle est utilisable sur toutes nos enchères et peut s’utiliser en plusieurs fois !</p>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include 'modals/user/addGiftcard.twig' %}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $(document).on('submit','#addGiftcard form',function(e){
+        showGeneralLoader();
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '{{path('user.avantages')}}',
+            data: {giftcardcode: $('#addGiftcard').find('.form-control').val()},
+            dataType: 'json'
+        }).success(function (data) {
+            $('#addGiftcard').find('form + .text-back').remove();
+            $('#addGiftcard').find('form').after('<p class="text-back text-'+data.type+'"><i class="icon-correct-code"></i> '+data.message+'</p>');
+            hideGeneralLoader();
+        }).error(function (data) {
+            $('#addGiftcard').find('form + .text-back').remove();
+            $('#addGiftcard').find('form').after('<p class="text-back text-'+data.responseJSON.type+'"><i class="icon-error-code"></i> '+data.responseJSON.message+'</p>');
+            hideGeneralLoader();
+        });
+        return false;
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

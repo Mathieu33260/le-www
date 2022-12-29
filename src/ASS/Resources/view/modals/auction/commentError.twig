@@ -1,0 +1,16 @@
+<div id="commentError" class="modal fade">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title h4">Erreur lors de la soumission de votre commentaire</p>
+            </div>
+            <div class="modal-body text-center">
+                <span class="commentErrorContent"></span>
+                <span class="commentErrorLimit hide">
+                    Votre avis dépasse les 1000 caractères. Pour un retour personnalisé qui puisse répondre à vos demandes, nous vous proposons de <a href="{{path('content.page', {'page': 'contact'}) }}" rel="nofollow">contacter le service client</a>.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

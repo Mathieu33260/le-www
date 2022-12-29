@@ -1,0 +1,15 @@
+{% if amount is defined and product_id is defined %}
+    <script>
+        dataLayer.push({
+            'transId': 'T{{ paymentId }}',
+            'userId': '{% if user %}{{ user.id }}{% endif %}',
+            'setHashedEmail': '{% if user %}{{ user.trackingUId }}{% endif %}',
+            'event': 'trackTransaction',
+            'amount': {{ amount/100 }},
+            {% if paymentType is defined %}'paymentType':'{{paymentType}}',{% endif %}
+            'amountHT':'{{ ((amount/100)*0.85)|round(2) }}',
+            'productID': {% if productType is defined and productType == 'giftcard' %}'G{{ product_id }}'{% else %}'{{ product_id }}'{% endif %},
+            'user_segment': 2
+        });
+    </script>
+{% endif %}

@@ -1,0 +1,24 @@
+<div class="modal fade modal-error">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    {% set errorTitle = app.session.getFlashBag.get('errorTitle') %}
+                    {% if errorTitle is empty %}
+                        Une erreur s'est produite
+                    {% else %}
+                        {% for msg in errorTitle %}
+                            {{ msg|trans|raw }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-body">
+                {% for msg in app.session.getFlashBag.get('error') %}
+                    {{ msg|trans|raw }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

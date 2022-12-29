@@ -1,0 +1,20 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Erreur 404{% endblock %}
+
+{% block main_content %}
+    <picture>
+        <source media="(min-width: 992px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1517503834/GIF/404-desktop-2.gif">
+        <source media="(min-width: 320px)" srcset="//img.loisirsencheres.fr/loisirs/image/upload/v1517506833/GIF/404-mobile-2.gif">
+        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1517506833/GIF/404-mobile-2.gif" alt="oups ! 404">
+    </picture>
+    <p class="text-center">Essayez plutôt de <a href="{{ path('homepage') }}">retourner sur l'accueil</a> ou <a href="{{ path('all.page') }}">voir toutes nos offres</a>.<br />
+        Si vous avez des questions n'hésitez pas à jeter un coup d'oeil à notre <a href="{{ path('centre-aide') }}">centre d'aide</a>.</p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      ga('send', 'event', 'error', '404', document.location.pathname, 0);
+    </script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% set user = (app.security.getToken() is not null and is_granted('IS_AUTHENTICATED_FULLY'))? app.security.getToken().getAttribute('user') : null %}
+<!DOCTYPE html>
+<html class="{% block html_class %}{% endblock %}">
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#337597">
+        <meta name="description" content="">
+        {% if app.env!='prod' %}
+            {# Don't let Google index non prod env #}
+            <meta name="robots" content="noindex">
+        {% endif %}
+        <meta name="author" content="">
+        <meta property="og:description" content="{% block facebook_description %}{% endblock %}" />
+        <meta name="msapplication-config" content="none" />{# avoid IE11 404 #}
+        <link rel="shortcut icon" href="/favicon.ico" />{# leave at the root some browser ignore this #}
+
+        <title>{% block title %}Loisirs Enchères{% endblock %}</title>
+        {% block stylesheets %}
+            {% include 'styles.css.twig' %}
+            <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+            <link rel="stylesheet" href="{{assetCdn}}/assets/css/jquery-bubble-popup-v3.css?v14102015" />
+            <style>
+                body{
+                    padding-top: 0;
+                }
+            </style>
+        {% endblock %}
+        {% block head_links %}
+            {% include './include/basic.js.twig' %}
+            {% include './include/google-analytics.html.twig' %}
+        {% endblock %}
+
+        {# Eulerian script for event trackings #}
+        {% if eulerianPaymentWeb is not defined %}
+            <script defer src="{{ eulerianUrl }}/ea.js"></script>
+        {% endif %}
+    {% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}{% if(app['service.images'].isWebpEnabled()) %} webp{% endif %}">
+    <div id="general-loader" class="hide">
+        <img src="{{ assetCdn }}/assets/gfx/loader.gif?v=20170307" alt="Chargement..." />
+        <img src="{{ assetCdn }}/assets/gfx/logopayment/logo-casino.svg" class="hide casino-loading" alt="Chargement..." />
+        <p class="hide casino-loading">Veuillez patienter, Banque Casino est en train d’analyser votre dossier.</p>
+    </div>
+    {% if isRunning is defined and isRunning == true %}
+        <div class="js-confetti js-container-confetti hide" aria-hidden="true"></div>
+    {% endif %}
+    <div id="hero-container" class="{% block containerClass %}{% endblock %}">
+        <div id="{{ block('containerId')|default('le-wrap') }}" class="{{ block('container')|default('container') }} container-app-view hidenavbar">
+            {% block header %}
+            {% endblock %}
+
+            {% block main_content %}
+
+            {% endblock %}
+
+            {% block footer %}
+
+            {% endblock %}
+        </div> <!-- /container -->
+        {% if isPayment is not defined %}
+        {# To include only one component in the page. Example: a modal #}
+        <once-time
+                :user-logged="{{ is_granted('IS_AUTHENTICATED_FULLY') | json_encode }}"
+                target-path-default="{{ app.request.attributes.get('_route') ? path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) : '/' }}"
+                {% if auction is defined %}
+                    auction-id="{{ auction.id }}"
+                {% endif %}
+                :only-view="{{ onlyview is defined and onlyview == true ? 'true' : 'false' }}"
+                {% if checkboxes is defined %}
+                    :checkboxes="{{ checkboxes|json_encode()|raw|e('html_attr') }}"
+                {% endif %}
+                {% if headerHideRegisterButton is defined %}
+                    :header-hide-register-button="{{ headerHideRegisterButton == true or headerHideRegisterButton == 1 ? 'true' : 'false' }}"
+                {% endif %}
+        ></once-time>
+        {% endif %}
+    </div>
+
+{% block modal %}
+    {% if app.session.getFlashBag.has('success') %}
+    {% include 'modals/modal-success.twig' %}
+    {% endif %}
+    {% if app.session.getFlashBag.has('error') %}
+    {% include 'modals/modal-error.twig' %}
+    {% endif %}
+{% endblock%}
+
+{% block javascripts %}
+    {# Init JS global vars and functions #}
+    {% include './include/global-vars.js.twig' %}
+    {% include 'global-functions.js.twig' %}
+    {# End init JS global vars and functions #}
+    {# Bootstrap core JavaScript #}
+    {# Placed at the end of the document so the pages load faster #}
+    {% include 'jquery-bootstrap.js.twig' %}
+    {% if isPayment is not defined %}
+        <script src="{{ asset('build/app.js')}}"></script>
+    {% endif %}
+    {% include 'webview.js.twig' %}
+    {% include 'common-in-page.js.twig' %}
+    {% include 'default.js.twig' %}
+{% endblock %}
+{% include './include/tag-injection.html.twig' %}
+</body>
+</html>

@@ -1,0 +1,220 @@
+{% extends 'layout/html.twig' %}
+
+{% block background %}{% endblock %}
+
+{% block metaDesc %}Avec une carte cadeau personnalisée, offrez des centaines d'offres de voyages, d'hôtels, de week-end et de sorties aux enchères.{% endblock %}
+{% block title %}Offrez des loisirs avec une carte cadeau personnalisée{% endblock %}
+{% block facebook_description %}Avec une carte cadeau personnalisée, offrez des centaines d'offres de voyages, d'hôtels, de week-end et de sorties aux enchères.{% endblock %}
+{% block facebook_title %}Offrez des loisirs avec une carte cadeau personnalisée{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('christmaspage.giftcard.choice') }}" title="Carte cadeau"><span property="name">Carte cadeau</span></a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">J'offre une carte cadeau</span>
+        <meta content="3" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+    <div id='giftcard'>
+        <div class="row">
+            <header class="col-xs-12 background-blanc">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-7 col-sm-10 col-md-11">
+                        <h1 class="text-center">J'offre une carte cadeau</h1>
+                        <div class="row icons">
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="media">
+                                    <div class="media-left media-middle visible-xs">
+                                        <img class="media-object" src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-shopping_bag_2x.png" alt="#">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="hidden-xs">
+                                            <img class="hidden-xs" src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-shopping_bag_2x.png" alt="#">
+                                            <br /><br />
+                                        </div>
+                                        VALABLE SUR TOUTES NOS OFFRES
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="media">
+                                    <div class="media-left media-middle visible-xs">
+                                        <img class="media-object" src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-recycle_2x.png" alt="#">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="hidden-xs">
+                                            <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-recycle_2x.png" alt="#">
+                                            <br /><br />
+                                        </div>
+                                        UTILISABLE EN UNE OU PLUSIEURS FOIS
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="media">
+                                    <div class="media-left media-middle visible-xs">
+                                        <img class="media-object" src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-calendar_2x.png" alt="#">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="hidden-xs">
+                                            <img class="hidden-xs" src="//img.loisirsencheres.fr/loisirs/image/upload/v1511342966/ressource/icon-calendar_2x.png" alt="#">
+                                            <br /><br />
+                                        </div>
+                                        VALABLE PENDANT UN AN
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 hidden-md hidden-xs hidden-sm headerImgContainer"><img src="//img.loisirsencheres.fr/loisirs/image/upload/v1514458262/ressource/carte_cadeau_2018.-carte-header.png" alt="#" /></div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 hidden-xs">
+                        <a class="social-link" href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}" data-popupname="Partager sur facebook" target="popup">
+                            <i class="icon icon-facebook-square-brands icon-2x"></i>
+                        </a>
+                        <a class="social-link" href="https://twitter.com/intent/tweet?url={{ app.request.uri }}">
+                            <i class="icon icon-twitter-brands icon-2x"></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <form method="post">
+            <div class="block_etape first">
+                <h2>Etape 1 <span>Choissisez un montant</span></h2>
+                <div class="row">
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 15 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018-15e.png" /><br />
+                            <input type="radio" name="giftCard" value="15" required="" title="carte cadeau 15 euro"{% if oldData != null and oldData != null and oldData.get('giftCard') == '15' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 30 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018-30e.png" /><br />
+                            <input type="radio" name="giftCard" value="30" title="carte cadeau 30 euro"{% if oldData != null and oldData.get('giftCard') == '30' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 50 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018-50e.png" /><br />
+                            <input type="radio" name="giftCard" value="50" title="carte cadeau 50 euro"{% if oldData != null and oldData.get('giftCard') == '50' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 100 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018-100e.png" /><br />
+                            <input type="radio" name="giftCard" value="100" title="carte cadeau 100 euro"{% if oldData != null and oldData.get('giftCard') == '100' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 200 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457948/ressource/carte_cadeau_2018-200e.png" /><br />
+                            <input type="radio" name="giftCard" value="200" title="carte cadeau 200 euro"{% if oldData != null and oldData.get('giftCard') == '200' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6">
+                        <label class="text-center">
+                            <img alt="carte cadeau de 300 euro" src="//img.loisirsencheres.fr/loisirs/image/upload/v1514457949/ressource/carte_cadeau_2018-300e.png" /><br />
+                            <input type="radio" name="giftCard" value="300" title="carte cadeau 300 euro"{% if oldData != null and oldData.get('giftCard') == '300' %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="block_etape">
+                <h2>Etape 2 <span>Choissisez une image pour le fond de votre carte cadeau</span></h2>
+                <div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+                    {% for value, giftCardStyle in giftCardsStyle %}
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <label class="text-center">
+                            <img alt="#" class="" src="{{giftCardStyle}}"/>
+                            <input required type="radio" name="giftCardStyle" value="{{ value }}" title="image pour le fond de votre carte cadeau"{% if oldData != null and oldData.get('giftCardStyle') == value %} checked=""{% endif %} />
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="block_etape">
+                <h2>Etape 3 <span>Ecrivez un petit texte qui apparaîtra sur le bon cadeau*</span></h2>
+                <div class="form-group">
+                    <label for="to">Pour (nom du béneficiaire) :</label>
+                    <input type="text" name="to" id="to" class="form-control" title="béneficiaire"{% if oldData != null and oldData.get('to') != '' %} value="{{ oldData.get('to')}}"{% endif %} />
+                </div>
+                <div class="form-group">
+                    <label for="message">Votre message :</label>
+                    <textarea id="message" rows="3" maxlength="500" class="form-control" name="message">{% if oldData != null and oldData.get('message') != '' %}{{ oldData.get('message')}}{% else %}Parce qu'il est essentiel de prendre du temps pour soi, je t'offre ce bon pour profiter de centaines de séjours, restaurants et autres activités de Loisirs Enchères !{% endif %}</textarea>
+                    <small id="helpBlock" class="help-block">* Vous pouvez laisser notre texte par défaut, si vous ne souhaitez pas qu'un message apparaisse sur votre bon, ne laissez pas de texte dans les champs libres.</small>
+                </div>
+            </div>
+            <div class="block_etape">
+                <h2>Etape 4 <span>Je récupère ma carte cadeau*</span></h2>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for='sendToMe'>
+                            <input type="checkbox" name="sendToMe" id="sendToMe"{% if oldData != null and oldData.get('sendToMe') != '' %} checked=""{% endif %}>
+                            Je souhaite la recevoir directement sur mon adresse mail
+                        </label>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="cbSendToHim">
+                                <input type="checkbox" name="sendToHim" id="cbSendToHim"{% if oldData != null and oldData.get('sendToHim') != '' %} checked=""{% endif %}>
+                                Je l'envoie directement par mail au bénéficiaire
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="forMailInput">Email</label>
+                        <input type="email" class="form-control" id="forMailInput" name="forMailInput"{% if oldData != null and oldData.get('forMailInput') != '' %} value="{{ oldData.get('forMailInput')}}"{% endif %} >
+                    </div>
+                    <small id="helpBlock" class="help-block">* Votre carte sera disponible dans l'onglet "Mes cartes cadeaux"</small>
+                </div>
+            </div>
+            <div class="block_etape info_gift_card btn-gift-card">
+                <button type="submit" name="preview" class="btn btn-sm btn-default">APERÇU</button>
+                <button type="submit" name="confirm" class="btn btn-sm btn-primary">CONFIRMER</button>
+            </div>
+        </form>
+        <div class="alert background-blanc block-separ-top" role="alert">
+            <h2 class="h3 nomargin nopadding">Informations Complémentaires</h2>
+            <p>La carte cadeau LOISIRS ENCHÈRES est utilisable sur toutes les offres du site ou de l'application Loisirs Enchères (hors options et assurances). La carte cadeau peut être utilisée sur un compte seulement, elle ne sera pas envoyée par voie postale. Le bénéficiaire pourra consulter le solde de sa carte cadeau dans l'onglet “Mes avantages” de son profil.</p>
+            <p>Cette carte est valable 1 an à partir de la date d'achat, elle n'est ni échangeable, ni remboursable même partiellement, ni portée au crédit d'une carte ou d'un compte bancaire, ni faire l'objet d'un escompte et ne peut donner lieu à aucun rendu de monnaie. Elle n'est ni remplacée, ni remboursée en cas de perte, de vol ou de fin de validité. Le paiement d'une carte cadeau ne peut pas se faire au moyen d'une autre carte cadeau.</p>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#cbSendToHim").change(function(ev) {
+            if(this.checked) {
+                $('#forMailInput').prop('required',true);
+                $('#forMailInput').focus();
+            } else {
+                $('#forMailInput').prop('required',false);
+            }
+        });
+        $('#forMailInput').on('click',function(){
+            $('#cbSendToHim').prop('checked', true);
+        });
+    </script>
+    <script>
+        $('#giftcard').find('form').on('submit',function(e){
+            var btn = $(document.activeElement);
+            if($(btn[0]).is('button[name="preview"]')){
+                $('#giftcard').find('form').attr('target','_blank');
+            }
+            else {
+                $('#giftcard').find('form').removeAttr('target');
+            }
+        });
+    </script>
+{% endblock %}

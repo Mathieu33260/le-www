@@ -1,0 +1,904 @@
+@import (reference) "variables";
+@import (reference) "mixins";
+@import "intlTelInput";
+
+.glyphicon-remove {cursor: pointer}
+address {display: inline}
+#breadcrumb-etape {
+    margin-top: 0.5em;
+    li {
+        color: @grey_light;font-size: 1.28em;text-align: center;height: 31px;padding: 0;margin-bottom: 4px;
+        span {display: inline-block;height: 31px;text-transform: uppercase}
+        &.active {
+            color: @blue;
+            .num {background-image: url(/assets/img/etape-num-circle-active.png)}
+        }
+    }
+    .num {
+        background-image: url(/assets/img/etape-num-circle-no-active.png);background-position: center;background-repeat: no-repeat;
+        width: 31px;line-height: 31px;text-align: center
+    }
+    .legend {text-align: left}
+    .breadcrumb.mobile {
+        padding-bottom: 0;
+        li {
+            font-size: 10px;height: 44px;color: @blue;text-transform: uppercase;margin-bottom: 0;line-height: normal;padding-top: 4px;
+            &:before {content: none}
+            form {height: 28px;line-height: 28px;width: 100%}
+            > div {
+                height: 28px;line-height: 28px;
+                div {line-height: normal;display: inline-block}
+            }
+        }
+        .btn-link {padding: 0;border: none;text-transform: uppercase;line-height: normal;}
+        & + .progressbar {
+            top: -5px;height: auto;background: none;counter-reset: step;padding: 0;z-index: 0;
+            li {
+                list-style: none;display: inline-block;position: relative;text-align: center;cursor: pointer;height: 10px;
+                &:before {
+                    content: " ";
+                    width: 0.5em;height: 0.5em;line-height : 0.5em;.prefixed(border-radius, 100%);display: block;text-align: center;
+                    margin: 0 auto 0;background-color: @beige_fonce;
+                }
+                &:after {content: "";position: absolute;width: 100%;height: 2px;background-color: @beige_fonce;top: 4px;left: -50%;z-index: -1}
+                &:first-child:after {content: none}
+                &.active {
+                    &:before {background-color: @green_valid2}
+                    &:after {background-color: @green_valid2}
+                }
+            }
+        }
+    }
+}
+.progressbar {
+    height: 4px;background: @beige;margin-bottom: 1em;
+}
+.progressbar span {
+    background: @blue;
+    display: inline-block;
+    height: 4px;
+    width: 0;
+    float: left;
+}
+h1, h2 {
+    color: @grey_fonce;
+    font-size: 1.71em;
+    margin-top: 0.66em;
+    margin-bottom: 0.75em;
+    text-transform: uppercase;
+}
+div.resume {
+    border: 1px solid @beige
+}
+.resume {
+    h2 {text-align: center}
+    .title {
+        font-size: 1.14em;
+        font-weight: bold;
+    }
+    .skeleton {min-height: 58px;width: 100%}
+    form:last-child {margin-bottom: 0}
+}
+.resume-table {
+    margin: 0;
+    th {font-size: 1.5em;font-weight: 600}
+    td[align="right"] {white-space: nowrap}
+    tr:not(.reduc) td {border: 0 !important;font-size: 1em;padding: 0}
+    .reduc {
+        td {padding-top: 10px;border-bottom: 0}
+        label {font-size: 0.9em}
+    }
+    .text-muted {color:@dark_grey;}
+    .total-price {
+        color: @black;
+        font-family: "proxima_nova_bold";
+        font-size: 16px;
+        td {padding: 0.5em 0 !important;}
+    }
+}
+div.resume {
+    input {
+        border: 1px solid @blue;
+        width: 100%;
+        color: @grey_fonce;
+        font-size: 1em;
+        height: 1.7em;
+        padding: 0 5px;
+        .prefixed(border-radius, '0px');
+    }
+}
+.resume label {
+    margin: 0;
+}
+.resume-table .reduc .loader, .resume-table .reduc .valide, .resume-table .reduc .erreur {
+    display: none;
+    font-size: 0.85em;
+}
+.resume-table .reduc .loader img, .resume-table .reduc .valide img, .resume-table .reduc .erreur img {
+    height: 14px;width: auto;
+}
+.resume-table .reduc {
+    .valide {color: @green_valid}
+    .erreur {color: @red_error}
+    form {
+        padding: 0 !important;margin: 0;
+        + form {margin-top: 1em}
+    }
+}
+.content form {margin-bottom: 1em;}
+.garantie span {
+    width: 100%;
+    display: inline-block;
+    margin: 1em 0;
+}
+.nav-tabs {
+    > li {
+        width: 50%;background-color: @white;
+        > a {
+            .prefixed(border-radius, '0px');
+            border: 1px solid @beige;
+            color: @grey_fonce;
+            font-size: 1.4em;
+            margin: 0;
+            padding: 5px 15px;
+        }
+        &.active {
+            > a, > a:focus, > a:hover {background-color: @blue;border-color: @blue;color: @white}
+        }
+    }
+}
+.nav > li > a:focus, .nav > li > a:hover {
+    color: @blue;
+    border: 1px solid @beige;
+    background-color: @white;
+}
+.tab-content.background-bleu-claire {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+#cardSelectBlock label {
+    height: 69px;
+    line-height: 69px;
+    width: 100%;
+    text-align: center;
+}
+#cardNameBlock label {
+    color: @grey_fonce;
+    font-size: 1em;
+    font-weight: normal;
+}
+#saveCardName {
+    height: 3.14em;
+    background-color: @white;
+    border: 1px solid @grey_fonce;
+    padding: 10px 1em;
+    .prefixed(border-radius, '6px');
+    width: 100%;
+}
+#autre .descripion {
+    color: @grey_fonce;
+    font-size: 0.85em;
+    display: none;
+}
+label {
+    cursor: pointer;
+}
+
+#confirmation {
+    padding-top: 1em;
+    p {
+        font-size: 1em;
+    }
+}
+
+#echec h2 {
+    text-transform: none;
+}
+.rechercheMobile {
+    display: none;
+}
+.paiementmode h2 {
+    color: @grey_fonce;
+    font-size: 1.14em;
+    font-weight: 700;
+    text-align: left;
+}
+#startDate .ville {
+    color: @grey_fonce;font-size: 1em;margin: 0;height: 2em;line-height: 2em;
+}
+#calendar > div > div {width: 100%}
+.panel-heading {
+    background: @beige;padding: 0;
+    a {
+        font-size: 1.25em;padding: 10px 15px;width: 100%;display: inline-block;
+        &:hover {opacity: 1}
+    }
+    i {margin-right: 0.3em;color: @grey}
+    span {font-size: 0.7em;color: @grey_fonce}
+    i, span {display:inline-block;vertical-align:middle}
+}
+#accordion, #wing{
+    .panel-body {
+        padding: 0;
+        h4 {
+            font-size: 16px;margin-top: 0;
+            b {font-size: 0.9em}
+        }
+        h5 {
+            font-size: 14px;margin-bottom: 1.5em;margin-top: 0;
+            b {color: @black_light}
+            em {color: @grey_light;margin-top: 5px;display: block}
+        }
+        .form-group {min-height: 34px}
+        .form-control-feedback {color: @grey_light}
+        .option-item {
+            border-top: 1px solid #ddd;padding: 1em;border-left: 3px solid @white;
+            &.no-active {
+                border-left-color: @white;
+                &.no-select {opacity: 0.4}
+            }
+            &.active {border-left-color: @blue}
+            &:first-child {border-top: none;margin-top: 0}
+            .price {color: @grey_fonce;font-size: 14px;line-height: 34px}
+        }
+        .icon-clock.form-control-feedback {right: 15px}
+        input::-webkit-input-placeholder {font-size: 13px}
+        input::-moz-placeholder {font-size: 13px}
+        input:-ms-input-placeholder {font-size: 13px}
+        input:-moz-placeholder {font-size: 13px}
+    }
+}
+#promocodeDesktopReduc, #promocodeMobileReduc {
+    form{
+        .form-control {border-color: @blue}
+        &.active {
+            .form-control {border-color: @grey_light}
+            .btn-default {background-color: @grey_light;background-color: @grey_light;border-color: @grey_light}
+        }
+    }
+}
+
+.intl-tel-input {position: relative}
+@media (max-width: 1024px) {
+    .nav-tabs > li > a {
+        font-size: 1.03em;
+        padding: 5px;
+    }
+}
+@media (min-width: @min-width-sm) {
+    #accordion, #wing{
+        .panel-body label:not(.radiolabel) {line-height: 25px}
+    }
+}
+@media (max-width: @max-width-xs) {
+    .nav-tabs > li, .nav-tabs > li > a {
+        height: 4em;
+    }
+    .nav-tabs > li > a
+    {
+        line-height: 3.2em;
+    }
+    .nav-tabs > li > a span {
+        line-height: normal;
+        display: inline-block;
+    }
+    #echec {
+        margin-top: 55px;
+    }
+    .cta-fixed {
+        position: fixed;left: 0;bottom: 0;width: 100%;z-index: 102;padding: 1em;
+        background: white;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.3);-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);-o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=180, Strength=5);
+    }
+}
+@media (max-width: 480px) {
+    .nav-tabs > li > a {
+        font-size: 1.2em;
+        line-height: 2em;
+    }
+    .nav-tabs > li, .nav-tabs > li > a {
+        height: 63px;
+        line-height: 51px;
+    }
+    #echec > col-xs-10 {
+        padding: 0;
+    }
+}
+@media (min-width: 420px){
+    #breadcrumb-etape .breadcrumb.mobile {
+        li {
+            font-size: 12px;
+            .btn-link {font-size: inherit;}
+        }
+
+    }
+}
+@media (min-width: 320px){
+    #assurance {
+        label.row {max-width: none;font-weight: normal}
+        .list-group-item {border-top-left-radius: 0;border-top-right-radius: 0}
+        .price {font-size: 1em;text-align: left;color: @black_light;font-weight: normal}
+        h3 {font-size: 1em;font-weight: bold;text-transform: uppercase}
+        .list-group-item-text {font-size: 0.928em;color: @grey}
+        .link {color: @blue}
+        .active {
+            .price, .list-group-item-text {color: @white}
+            .link {color: @white}
+        }
+        label + label {
+            h3 {display: inline}
+        }
+    }
+    .nxcb {
+        &:not(.text-left) {border-top: 4px solid @beige;border-top: 4px solid @beige;background-color: @white;padding: 1em;}
+        h2 {font-size: 15px;font-family: 'proxima_nova_bold';text-transform: none}
+        p:not(.section-title) {font-size: 13px;color: @dark_grey;}
+        span {font-family: 'proxima_nova_bold';}
+        .btn-link {color: @dark_grey;font-size: 14px;}
+        img {height: 30px}
+        label{line-height: 20px;}
+    }
+    .container-app-view {padding-right: 15px;padding-left: 15px}
+    #breadcrumb-etape {
+        margin-top: 0;height: 50px;line-height: 50px;margin-bottom: 1em;
+        .btn {color: #fff}
+        a {height: 50px}
+        .icon-arrow-left {font-size: 30px;line-height: 50px;color: @grey_light}
+        form .btn {border: none}
+        .progressbar {
+            margin-bottom: 0;line-height: 1em;position: relative;
+            span {position: absolute;left: 0}
+        }
+        .btn-link {text-decoration: none;font-size: 10px}
+    }
+    .right.background-blanc {
+        background-color: @white !important
+    }
+    .right.background-gris {
+        background-color: @beige !important
+    }
+    div.resume {
+        border: none;padding-bottom: 1em;
+        color: @dark_grey;
+        p {line-height: normal}
+    }
+    .resume-table {
+        tr:not(.reduc) td {font-size: 1em;padding: 0}
+    }
+    .productDescription {
+        .more-action {
+            color: @dark_grey;
+            text-decoration: underline;
+            font-family: "proxima_nova_bold";
+        }
+        color: @dark_grey;
+        font-size: 14px;
+    }
+    #deliveryAddress {
+        border-top: 4px solid @beige;
+        padding-top: 1em;
+        form {border-top: none;}
+    }
+    .wing {
+        margin-bottom: 1em;
+        a {
+            font-size: 14px;
+            color:@dark_grey;
+            &:hover {color:@dark_grey;opacity: 1}
+        }
+        .btn-default {
+            text-align: left;color: @blue;
+            .icon-arrow-down, .icon-arrow-up {float: right;font-size: 1.5em;position: relative;margin-left: 0;line-height: normal}
+            span {float: left}
+        }
+        .btn-default:not(.disabled):not([disabled]).active,
+        .btn-default:not(.disabled):not([disabled]):active,
+        .btn-default:not(.disabled):not([disabled]):hover,
+        .btn-default:not(.disabled):not([disabled]):focus,
+        .open>.dropdown-toggle.btn-default:not(.disabled):not([disabled]) {
+            background: @white;color: @blue;border-color: @grey_light;
+            [class^="icon-"] {position: relative !important}
+        }
+        .collapse {border-top: none}
+        h2 {font-size: 15px;text-transform: none}
+        h3 {font-size: 15px}
+    }
+    .rowtotal {
+        padding: 5px;
+        .label {
+            color: @black_light;padding: 0;font-size: 1.4em;line-height: normal;text-align: left;
+            small {font-size: 60%}
+        }
+        .text-warning {font-size: 1.4em}
+    }
+    .cta-fixed {
+        -moz-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+        -o-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+        filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=NaN, Strength=15);
+    }
+    .section-title {
+        color: @black;
+        font-family: "proxima_nova_bold";
+        font-size: 16px;
+    }
+    .panel-group .panel {
+        -webkit-border-radius: 0px;-moz-border-radius: 0px;border-radius: 0px;border: none;
+        -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0);
+        -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0);
+        -o-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0);
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0);
+        filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=NaN, Strength=15);
+    }
+    .panel-default > .panel-heading {background: none}
+    .panel-heading span {font-size: inherit}
+    .panel-title a {
+        padding: 0;font-size: 0.75em;
+        .icon-arrow-down {float: right;font-size: 1.5em;color: @grey_light}
+    }
+    .panel-group .panel-heading+.panel-collapse>.panel-body {border: none;padding: 0}
+    .form-inline {
+        .form-group {display: inline-block;margin-bottom: 0; vertical-align: middle;float: left;}
+        .form-control {display: inline-block;width: auto;vertical-align: middle;border-right: none}
+    }
+    #promocodeMobileCodepromo, #promocodeDesktopCodepromo, #promocodeDesktopCartecadeau, #promocodeMobileCartecadeau {padding-top: 0;padding-bottom: 0;min-width: 176px}
+    #promocodeDesktopReduc, #promocodeMobileReduc {
+        form + form {margin-top: 20px}
+        .btn-default {background-color: @blue;color: @white;border-color: @blue}
+    }
+    #promocodeMobile {
+        margin-bottom: 0;
+    }
+    .promocode, .options-wing {
+        span {color:@dark_grey;font-size: 14px;}
+    }
+    .garantie {
+        padding-bottom: 130px;
+        h2 {font-size: 16px}
+        li {
+            font-size: 1.5em;
+            i {float: left;margin-right: 10px}
+            span {font-size: 0.6em;margin: 0;display: inline-block;width: 87%;vertical-align: super}
+        }
+        ul {margin-bottom: 0}
+        .text-muted {line-height: normal;font-size: 14px}
+    }
+    .paiementmode {
+        margin-top: 1em;
+        h2 {font-size: 15px;color: @grey}
+    }
+    .section-title {
+        color: @black;
+        font-family: "proxima_nova_bold";
+        font-size: 16px;
+    }
+    .casino-refused {
+        padding: 0;
+        border-top: 4px solid @beige;
+        background-color: @white;
+        color: @dark_grey;
+        p {padding: 0em 1em}
+        span {text-decoration: underline;font-family: proxima_nova_bold}
+        .casino-warning {
+            padding: 0.5em 1em;
+            color: @orange2;
+            background-color: @orange2_01;
+        }
+    }
+    @keyframes scaling {
+        From {
+            transform: scale(1.0);
+        }
+        To {
+            transform: scale(0.8);
+        }
+    }
+    img.casino-loading {
+        animation: scaling 0.5s infinite alternate;
+        width: auto !important;
+        margin-top: 60% !important;
+    }
+    p.casino-loading {
+        background-color: @white;
+        width: 80%;
+        padding: 0.5em;
+        margin: 0 auto;
+        .prefixed(border-radius, '3px');
+    }
+    #methods {
+            .panel-default {
+            border: 1px solid @light-grey-le;
+            .prefixed(border-radius, '3px');
+            .panel-heading {
+                padding: 0.5em;
+                height: 60px;
+                label {width: 100%;height: 100%;font-weight: 500;}
+                table {
+                    width: 100%;
+                    height: 100%;
+                    tr {
+                        td:not(.text-muted) {color: black;font-family: "proxima_nova_bold";font-size: 14px;}
+                        td.text-muted {font-size: 12px;}
+                        td img {height: 20px;margin-left:1px;}
+                    }
+                    tr:first-child td:first-child {
+                        width: 30px;
+                    }
+                    tr:nth-child(2) {
+                        vertical-align: top;
+                        td {line-height: 0px}
+                    }
+                }
+                input[type="radio"] {
+                    display: none;
+                    & ~ i.icon-circle-regular {
+                        color: @light-grey-le;display: inline;
+                    }
+                    & ~ i.icon-dot-circle-regular {
+                        display: none;
+                    }
+                    &:checked ~ i.icon-dot-circle-regular {
+                        color: @green_valid2;display: inline;
+                    }
+                    &:checked ~ i.icon-circle-regular {
+                        display: none;
+                    }
+                }
+            }
+            .panel-body {
+                border-top: 1px solid @green_valid2;
+                font-size: 12px;
+                color: @grey_fonce;
+                p.text-muted, label.text-muted {padding: 0.5em 1em}
+                .text-muted {color: @grey_fonce;}
+                .icon-lg {vertical-align: -20%;}
+                label, p {margin-bottom: 0;font-weight: 500;}
+                input[type="checkbox"] {
+                    display: none;
+                    & ~ i {padding-right: 10px}
+                    & ~ i.icon-square-regular {
+                        color: @beige_fonce;display: inline;
+                    }
+                    & ~ i.icon-check-square-regular {
+                        display: none;
+                    }
+                    &:checked ~ i.icon-check-square-regular {
+                        color: @green_valid2;display: inline;
+                    }
+                    &:checked ~ i.icon-square-regular {
+                        display: none;
+                    }
+                }
+                #nxcbBlock_casino3x, #nxcbBlock_casino4x {
+                    label {font-size: 15px;font-family: 'proxima_nova_bold'}
+                    p.text-muted {margin-bottom: 0.5em;color:@black}
+                    .casino-info {
+                        background-color: @green_valid2_01;
+                        color: @black;
+                        border-bottom: 1px solid @green_valid2_04;
+                        padding: 0.5em 1em;
+                        span:not(.btn-link) {font-size: 14px;font-family: 'proxima_nova_regular'}
+                        table {
+                            border-collapse: separate;
+                            border-spacing: 5px;
+                            th {font-family: 'proxima_nova_bold';font-size:16px;vertical-align: top}
+                            td {font-size: 14px}
+                        }
+                        .how-to-work-up {
+                            display: none;
+                        }
+
+                    }
+                    .casino-schedule {
+                        padding: 1em 1em 0 1em;
+                        font-size: 14px;
+                        color: @black;
+                        table {
+                            border-collapse: separate;
+                            border-left:1px solid @beige_fonce;
+                            border-right:1px solid @beige_fonce;
+                            border-bottom:1px solid @beige_fonce;
+                            .prefixed(border-radius, '2px');
+                            td:nth-child(2) {font-family: 'proxima_nova_bold'}
+                            .total-amount {color:@green_valid2}
+                        }
+                        p {margin-bottom: 0.5em;}
+                        .bold {font-family: proxima_nova_bold}
+                    }
+                    .casino-form {
+                        padding: 0.5em 1em;
+                        p.text-muted {padding: 0}
+                    }
+                }
+                .nxcbRGPD {
+                    color:@dark_grey;
+                    p {font-size: 12px;}
+                    span {text-decoration: underline;}
+                }
+            }
+        }
+        .paymentMeanSelected {
+            border: 1px solid @green_valid2;
+        }
+        .icon-arrow-down {float:none}
+        .morePaymentMeans {
+            color: @dark_grey;
+            font-size:14px;
+            display: block;
+            i {color: @dark_grey;vertical-align: middle;}
+        }
+        .notchecked, .disabled {opacity: 0.5}
+    }
+    .paiementmode .descripion > * {
+        background: @beige;padding: 10px 1em;
+    }
+    #saveCardName {
+        border-color: #ccc;
+    }
+    .cgv p {margin: 10px 0}
+    .passagers, .customfields {
+        legend {border: none;font-size: 1em;margin-bottom: 0}
+        span.radio-inline {padding-left: 0;font-weight: bold}
+        fieldset {margin-bottom: 1em}
+    }
+    .availabilitie {
+        label {font-weight: normal}
+    }
+    .horaires table {
+        th {
+            color: @white;
+            .city {text-transform: uppercase}
+            .name {font-weight: normal}
+        }
+        [class^='icon-'], [class*=' icon-'] {font-size: 2em}
+        .start, .back {font-size: 1.2em;color: @black_light}
+    }
+    #calendars {
+        margin-bottom: 1em;
+        .calendarDefault {opacity: 0.4}
+        .noAvailabilities {
+            position: relative;
+            .overlay {z-index: 2}
+        }
+    }
+    #assurance {
+        .insuranceOptions {font-family: "proxima_nova_bold";font-size: 14px; color: @black}
+        label {font-size: 0.8em}
+    }
+    .recapReservation {
+        background-color: @white;
+        border-top: 4px solid @beige;
+        padding-top: 1em;
+        p:not(.section-title) {color: @dark_grey}
+    }
+    .editRecap button{
+            color: @dark_grey;
+            text-decoration: underline;
+            font-family: "proxima_nova_bold";
+            font-size: 14px;
+            padding: 0;
+            margin-bottom: 0.5em;
+    }
+
+    .passagersVoyages, .wing {background-color: @white !important}
+    .descripion {margin-bottom: 1.3em}
+    .container-app-view {
+        #breadcrumb-etape{
+            > .row:first-child {
+                height: 50px
+            }
+        }
+    }
+    #city {
+        color: @blue;font-size: 0.9em;font-weight: bold;
+        option {
+            color: @black_light;font-size: 1em;font-weight: bold;
+        }
+    }
+    /** MODALS **/
+    #casinoModal {
+        h2, h3 {text-transform: uppercase;font-size: 1.2em}
+        h3 {font-weight: bold;margin-bottom: 1.4em}
+        .step {
+            .media-left {border-right: 1px solid @beige_fonce;text-align: center}
+            .media-body {padding-left: 10px;font-size: 15px}
+            .media-object {width: 50px}
+        }
+    }
+    /** END MODALS **/
+}
+@media (min-width: 320px) and (max-width: 335px){
+    #methods table tr td.text-muted {
+        font-size: 11px !important;
+    }
+}
+@media (min-width: 320px) and (max-width: @max-width-xs){
+    .breadcrumb {background-color: @white}
+    #assurance .list-group-item-text .link {float: right}
+    .paiementmode h2 {text-align: center}
+    #assurance {
+        .radio, .checkbox {
+            margin-top: 0;margin-bottom: 0;
+            > * {
+                line-height: 45px;height: 45px;
+                > * {line-height: normal;display: inline-block;vertical-align: middle}
+            }
+            input {top: 25%}
+        }
+        .radio {border-top: 1px solid @beige_fonce}
+    }
+}
+@media (min-width: 320px) and (max-width: @max-width-sm){
+    div.resume, .productDescription, .promocode, .paiementmode {background: @white}
+    .productDescription, .promocode, .availabilitie, .passagersVoyages, #submitblock.row, .nxcb:not(.text-left), #formain, .wing, .assurance {border-top: 4px solid @beige;padding-top: 1em}
+    .promocode {padding: 1em;}
+    #formain {
+        padding-top: 0;
+         > .wing {border-top: none}
+    }
+    .availabilitie {border-top: none;padding-top: 0}
+    .passagersVoyages > #formain {border-top: none}
+    header {position: relative}
+    #breadcrumb-etape{
+        .breadcrumb.mobile li, .btn-link {color: @black}
+    }
+}
+@media (min-width: @min-width-md) and (max-width: @min-width-lg){
+    #accordion, #wing{
+        .panel-body label[for="destDate"] {line-height: normal}
+    }
+}
+@media (min-width: @min-width-sm) {
+    .ispayement #topDIV {background-color: @white}
+    #hero-container {
+        background-color: @beige;
+    }
+    body.isapp {background-color: @beige}
+    #breadcrumb-etape {margin-bottom: 2em;padding-bottom: 2em}
+    #submitblock{
+        padding: 1em;
+        &.cta-fixed {
+            position: fixed;left: 0;bottom: 0;width: 100%;
+            z-index: 102;
+            background: white;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.3);-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);-o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=180, Strength=5);
+        }
+        &:not(.cta-fixed){
+            .container {width: auto;padding: 0;margin: 0}
+        }
+    }
+    .garantie {padding-bottom: 90px}
+    #methods .col-xs-4 label {
+        width: 100%;line-height: 68px;
+        img {width: 80px}
+    }
+    #wing label[for="openDate"] {
+        font-weight: normal;font-size: 0.9em;text-align: right;
+    }
+    #submitblock .rowtotal{height: 46px;line-height: 46px}
+    .availabilitie {border-top: 4px solid @beige;padding-top: 1em}
+    #formain > .wing {padding-top: 0}
+    .passagersVoyages, .paiementmode {
+        #formain {border-top: none;;padding-top: 0}
+    }
+    #assurance {
+        .radio, .checkbox {
+            &:not(.hasoption){border-bottom: 1px solid @beige_fonce}
+            label span:first-child {font-weight: bold}
+            label span:last-child {display: block}
+        }
+        > .row:last-child > div {border-bottom: 0}
+    }
+    .productDescription, .recapReservation {background-color: @white !important;}
+}
+@media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+    div.resume {padding-top: 1em}
+}
+@media (min-width: @min-width-md) {
+    body.isapp, #hero-container {background-color: @beige;min-height: 100vh}
+    #breadcrumb-etape{
+        .breadcrumb {
+            padding: 0.5em 0 0 0;
+            div, .btn-link {
+                color: @black;
+                font-size: 16px !important;
+            }
+        }
+    }
+    .panel-title {
+        font-size: 1em;line-height: 1em;
+        span {font-size: 0.8em;width: 78%}
+        span, i {display: inline-block;vertical-align: middle;float: none}
+        a {line-height: normal;font-size: 1em;}
+    }
+    .productDescription{
+        background: @white !important;
+        > p:first-child {padding: 1em 0}
+    }
+    div.resume {padding-bottom: 0}
+    .resume {
+        p {margin: 0;padding: 1em}
+        div.table {padding-bottom: 1px;margin-bottom: 0}
+        table {
+            td {
+                &:first-child {padding-left: 1em !important}
+                &:last-child {padding-right: 1em !important;text-align: right}
+            }
+        }
+    }
+    .passagers {
+        border-bottom: 4px solid @beige;
+    }
+    .promocode {
+        margin-top: 4px;padding: 1em;background-color: @white;
+        .panel-group {margin-bottom: 0}
+        .btn {width: 12%}
+        .form-group {
+            width: 88%;
+            input {width: 100%}
+        }
+        form {margin-top: 20px}
+    }
+    .paiementmode {background: @white}
+    .availabilitie {
+        label.text-info {font-size: 0.9em}
+    }
+    .recapReservation {
+        border-top: 4px solid @beige;padding-top: 1em;
+        & + .text-right {background-color: @white}
+    }
+    .casino-refused {
+        border-bottom: 4px solid @beige;
+    }
+    img.casino-loading {
+        margin-top: 18% !important;
+    }
+    p.casino-loading {
+        width: 20%;
+    }
+   #submitblock.row, .assurance, .wing {border-top: 4px solid @beige;padding-top: 1em}
+    #casinoModal {
+        h2, h3, .media-left {text-align: center}
+        h3 {margin-bottom: 1em}
+        .step {
+            .media-left {border-right: none;padding-right: 15px}
+            .media-object {display: inline;width: auto; height: 50px}
+            .media {border-right: 1px solid @beige_fonce;margin-top: 0;min-height: 188px}
+            .media-body {padding-left: 0;width: 78%;margin-left: 11%;padding-right: 0}
+        }
+    }
+    .modal-iframe {
+        .modal-body {
+            height: 600px;
+            iframe {
+                height: 100%;
+            }
+        }
+    }
+}
+
+div#cgvModal div.modal-body, div#casinoRgpdModal div.modal-body {
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+}
+
+.modal-body > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 350px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.modal-iframe {
+    .modal-body {
+        .prefixed(overflow-y, scroll);
+        min-height: 300px;
+    }
+}

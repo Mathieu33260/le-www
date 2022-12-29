@@ -1,0 +1,37 @@
+<div class="modal fade" id="ResultatVoteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-ga-title="Résultat profil enchérisseur" data-ga-page="/modal/ResultatProfilEncherisseur">
+    <div class="modal-dialog" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-content background-white">
+            <div class="modal-header text-center">
+                <div class="modal-title">
+                    Vous êtes un enchérisseur
+                    {% if userChoice %}
+                        {% if userChoice == "shy" %}timide{% elseif userChoice == "spender" %}flambeur{% elseif userChoice == "connected"%}connecté{% else %}{{userChoice}}.{% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="categ">
+                    <span>Enchériseurs <b>connectés</b></span>
+                    <div class="progress" id="connected"><b></b></div>
+                </div>
+                <div class="categ">
+                    <span>Enchériseurs <b>flambeurs</b></span>
+                    <div class="progress" id="spender"><b></b></div>
+                </div>
+                <div class="categ">
+                    <span>Enchériseurs <b>snipers</b></span>
+                    <div class="progress" id="sniper"><b></b></div>
+                </div>
+                <div class="categ">
+                    <span>Enchériseurs <b>warriors</b></span>
+                    <div class="progress" id="warrior"><b></b></div>
+                </div>
+                <div class="categ">
+                    <span>Enchériseurs <b>timides</b></span>
+                    <div class="progress" id="shy"><b></b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

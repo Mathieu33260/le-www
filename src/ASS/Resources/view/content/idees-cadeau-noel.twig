@@ -1,0 +1,372 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}La boutique de Noël est ouverte ! Gagnez vos cadeaux aux enchères et faites plaisir à vos proches avec Loisirs Enchères.{% endblock %}
+{% block facebook_image %}img.loisirsencheres.fr/loisirs/image/upload/v1572449055/boutique%20noel/image-prevu-url.jpg{% endblock %}
+{% block facebook_description %}La boutique de Noël est ouverte ! Gagnez vos cadeaux aux enchères et faites plaisir à vos proches avec Loisirs Enchères.{% endblock %}
+{% block facebook_title %}La boutique de Noël Loisirs Enchères{% endblock %}
+{% block background %}background-christmas{% endblock %}
+{% block container %}container background-blanc{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Boutique de Noël</span>
+        <meta content="1" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+<h1 class="nopadding-bottom">
+{% if isIE(app.request) %}
+    <img src="//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_center,h_170,w_1140,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-desktop.png" alt="Boutique de noël">
+{% else %}
+<picture>
+    <source media="(min-width: 1200px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/w_1140,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-desktop.png"|cdnUrl }} 1x">
+    <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/w_1024,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-desktop.png"|cdnUrl }} 1x">
+    <source media="(min-width: 768px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/w_768,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-desktop.png"|cdnUrl }} 1x">
+    <source media="(min-width: 320px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/c_fill,w_720,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-mobile.png"|cdnUrl }} 1x">
+    <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_center,h_150,w_421,q_auto/v1571654626/boutique%20noel/header-boutique-noel-2019-desktop.png"|cdnUrl }}" alt="Boutique de noël">
+</picture>
+{% endif %}
+</h1>
+<div class="row title2">
+    <div class="col-xs-3 col-sm-3 col-sm-offset-1 col-md-offset-1 text-right">
+        {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/w_53,h_auto/v1571656823/boutique%20noel/flocon-1.png" alt="#">
+        {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/w_81,q_auto/v1571656823/boutique%20noel/flocon-1.png"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/h_35,q_auto/v1571656823/boutique%20noel/flocon-1.png"|cdnUrl }}" alt="#">
+            </picture>
+        {% endif %}
+    </div>
+    <div class="col-xs-6 col-sm-6 col-sm-offset-1 col-md-offset-1 col-md-3">
+        <h2 class="gift-title">Un cadeau...</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-sm-3">
+        <div class="category-item deux responsive-container ratio-1-1">
+            {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1539960455/ressource/img-categorie-2018-pour2.png" alt="#">
+            {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1571841049/boutique%20noel/boutique-noel-pour-deux.jpg"|cdnUrl }} 1x">
+                <source media="(min-width: 615px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_615_768/v1571841049/boutique%20noel/boutique-noel-pour-deux.jpg"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_320_615/v1571841049/boutique%20noel/boutique-noel-pour-deux.jpg"|cdnUrl }}" alt="#" sizes="90vw">
+            </picture>
+            {% endif %}
+            <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/21{% else %}{{ path('christmas.category.name', {name: 'cadeau-couples'})}}{% endif %}">
+                <div class="content">
+                    <div>
+                        <h3>Pour deux</h3><br />
+                        <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                        <div class="filtre"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <div class="category-item responsive-container ratio-1-1">
+            {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1539960454/ressource/img-categorie-2018-pour-elle.png" alt="#">
+            {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1571841049/boutique%20noel/boutique-noel-pour-elleou-lui.jpg"|cdnUrl }} 1x">
+                <source media="(min-width: 615px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_615_768/v1571841049/boutique%20noel/boutique-noel-pour-elleou-lui.jpg"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_320_768/v1571841049/boutique%20noel/boutique-noel-pour-elleou-lui.jpg"|cdnUrl }}" alt="#" sizes="90vw">
+            </picture>
+            {% endif %}
+            <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/19{% else %}{{ path('christmas.category.name', {name: 'cadeau-homme-femme'})}}{% endif %}">
+                <div class="content">
+                    <div>
+                        <h3>Pour elle <br class="hidden-md hidden-lg">& lui</h3><br />
+                        <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                        <div class="filtre"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <div class="category-item lui responsive-container ratio-1-1">
+            {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1539960455/ressource/img-categorie-2018-pour-lui.png" alt="#">
+            {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1571841049/boutique%20noel/boutique-noel-pour-famille.jpg"|cdnUrl }} 1x">
+                <source media="(min-width: 615px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_615_768/v1571841049/boutique%20noel/boutique-noel-pour-famille.jpg"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_320_768/v1571841049/boutique%20noel/boutique-noel-pour-famille.jpg"|cdnUrl }}" alt="#" sizes="90vw">
+            </picture>
+            {% endif %}
+            <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/22{% else %}{{ path('christmas.category.name', {name: 'cadeau-famille'})}}{% endif %}">
+                <div class="content">
+                    <div>
+                        <h3>Pour la famille</h3><br />
+                        <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                        <div class="filtre"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <div class="category-item famille responsive-container ratio-1-1">
+            {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1539960455/ressource/img-categorie-2018-pour-famille.png" alt="#">
+            {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_768/v1571841049/boutique%20noel/boutique-noel-pour-enfants.jpg"|cdnUrl }} 1x">
+                <source media="(min-width: 615px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_615_768/v1571841049/boutique%20noel/boutique-noel-pour-enfants.jpg"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_1:1,c_fill,q_auto/c_scale,w_auto:breakpoints_320_768/v1571841049/boutique%20noel/boutique-noel-pour-enfants.jpg"|cdnUrl }}" alt="#" sizes="90vw">
+            </picture>
+            {% endif %}
+            <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/20{% else %}{{ path('christmas.category.name', {name: 'cadeau-enfant'})}}{% endif %}">
+                <div class="content">
+                    <div>
+                        <h3>Pour les enfants</h3><br />
+                        <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                        <div class="filtre"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{#<div class="bannerVideo category-item">
+    <lazy-picture
+            :sources="{{ [
+                {
+                    media: "(min-width: 587px)",
+                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_center,h_240,q_auto/v1539960454/ressource/img-header-2018-desktop_copie.png'|cdnUrl ~ ' 1x',
+                },
+                {
+                    media: "(min-width: 320px)",
+                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_center,h_240,q_auto/v1540377697/ressource/img-categorie-2018-pourenfant-mobile.png'|cdnUrl ~ ' 1x',
+                },
+            ]|json_encode()|raw|e('html_attr') }}"
+            title="cadeau Magique pour les enfants"
+            alt="cadeau Magique pour les enfants"
+            fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/c_fill,g_center,h_240,q_auto/v1539960454/ressource/img-header-2018-desktop_copie.png"|cdnUrl }}"
+    ></lazy-picture>
+    <a class="text-center" href="{{ "/product/5815"|deeplink }}">
+        <div class="content">
+            <div>
+                <h3>Magie pour les Enfants</h3><br />
+                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre </button>
+                <div class="filtre"></div>
+            </div>
+        </div>
+    </a>
+</div>#}
+<div class="row title2">
+    <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6">
+        <h2 class="fir-title">Que mettre sous le sapin ?</h2>
+    </div>
+    <div class="hidden-xs col-sm-3 col-md-2 text-left">
+        {% if isIE(app.request) %}
+            <img src="//img.loisirsencheres.fr/loisirs/image/upload/w_53,h_auto/v1571656823/boutique%20noel/flocon-1.png" alt="#">
+        {% else %}
+            <picture>
+                <source media="(min-width: 992px)" srcset="{{ "//img.loisirsencheres.fr/loisirs/image/upload/w_72,q_auto/v1571656823/boutique%20noel/flocon-2.png"|cdnUrl }} 1x">
+                <img src="{{ "//img.loisirsencheres.fr/loisirs/image/upload/h_35,q_auto/v1571656823/boutique%20noel/flocon-2.png"|cdnUrl }}" alt="#">
+            </picture>
+        {% endif %}
+    </div>
+</div>
+<div class="category-item evasion responsive-container ratio-16-9">
+    <lazy-picture
+            :sources="{{ [
+                {
+                    media: "(min-width: 992px)",
+                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1571826470/boutique%20noel/boutique-noel-evation-desktop.jpg'|cdnUrl ~ ' 1x',
+                },
+                {
+                    media: "(min-width: 768px)",
+                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1571922479/boutique%20noel/boutique-noel-evation-tablette.jpg'|cdnUrl ~ ' 1x',
+                },
+                {
+                    media: "(min-width: 320px)",
+                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_615_992/v1571826179/boutique%20noel/boutique-noel-evation-mobile.jpg'|cdnUrl ~ ' 1x',
+                },
+            ]|json_encode()|raw|e('html_attr') }}"
+            title="Évasion"
+            alt="Image Évasion"
+            fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-evation-mobile.jpg"|cdnUrl }}"
+    ></lazy-picture>
+    <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/26{% else %}{{ path('christmas.category.name', {name: 'cadeau-evasion'}) }}{% endif %}">
+        <div class="content">
+            <div>
+                <h3>Évasion <i class="icon-arrow-right-sytle-lineal visible-xs-inline visible-sm-inline"></i></h3>
+                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                <div class="filtre"></div>
+            </div>
+        </div>
+    </a>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="category-item shopping responsive-container ratio-16-9">
+                    <lazy-picture
+                        :sources="{{ [
+                            {
+                                media: "(min-width: 992px)",
+                                srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-shopping.jpg'|cdnUrl ~ ' 1x',
+                            },
+                            {
+                                media: "(min-width: 320px)",
+                                srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_615_992/v1571826179/boutique%20noel/boutique-noel-shopping.jpg'|cdnUrl ~ ' 1x',
+                            },
+                        ]|json_encode()|raw|e('html_attr') }}"
+                        title="Shopping"
+                        alt="Image Shopping"
+                        fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-shopping.jpg"|cdnUrl }}"
+                    ></lazy-picture>
+                    <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/200{% else %}{{ path('christmas.category.name', {name: 'cadeau-shopping'})}}{% endif %}">
+                        <div class="content">
+                            <div>
+                                <h3>Shopping <i class="icon-arrow-right-sytle-lineal visible-xs-inline visible-sm-inline"></i></h3>
+                                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                                <div class="filtre"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="category-item sport responsive-container ratio-16-9">
+                    <lazy-picture
+                            :sources="{{ [
+                                {
+                                    media: "(min-width: 992px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_2.5,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/img-categorie-2018-sport.jpg'|cdnUrl ~ ' 1x',
+                                },
+                                {
+                                    media: "(min-width: 615px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_615_992/v1571826179/boutique%20noel/img-categorie-2018-sport.jpg'|cdnUrl ~ ' 1x',
+                                },
+                                {
+                                    media: "(min-width: 320px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_320_615/v1571826179/boutique%20noel/img-categorie-2018-sport.jpg'|cdnUrl ~ ' 1x',
+                                },
+                            ]|json_encode()|raw|e('html_attr') }}"
+                            title="Sport & activités"
+                            alt="Image Sport & activités"
+                            fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_2.5,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/img-categorie-2018-sport.jpg"|cdnUrl }}"
+                    ></lazy-picture>
+                    <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/25{% else %}{{ path('christmas.category.name', {name: 'cadeau-activite'})}}{% endif %}">
+                        <div class="content">
+                            <div>
+                                <h3>Sport & activités <i class="icon-arrow-right-sytle-lineal visible-xs-inline visible-sm-inline"></i></h3>
+                                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                                <div class="filtre"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="category-item bien-etre responsive-container ratio-16-9">
+                    <lazy-picture
+                            :sources="{{ [
+                                {
+                                    media: "(min-width: 992px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_2.5,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-bien-etre.jpg'|cdnUrl ~ ' 1x',
+                                },
+                                {
+                                    media: "(min-width: 615px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_615_992/v1571826179/boutique%20noel/boutique-noel-bien-etre.jpg'|cdnUrl ~ ' 1x',
+                                },
+                                {
+                                    media: "(min-width: 320px)",
+                                    srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_320_615/v1571826179/boutique%20noel/boutique-noel-bien-etre.jpg'|cdnUrl ~ ' 1x',
+                                },
+                            ]|json_encode()|raw|e('html_attr') }}"
+                            title="Petits prix"
+                            alt="Image petits prix"
+                            fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_2.5,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-bien-etre.jpg"|cdnUrl }}"
+                    ></lazy-picture>
+                    <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/8{% else %}{{ path('christmas.category.name', {name: 'cadeau-bien-etre'})}}{% endif %}">
+                        <div class="content">
+                            <div>
+                                <h3>Bien être <i class="icon-arrow-right-sytle-lineal visible-xs-inline visible-sm-inline"></i></h3>
+                                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                                <div class="filtre"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="category-item box responsive-container ratio-16-9">
+                    <lazy-picture
+                        :sources="{{ [
+                            {
+                                media: "(min-width: 992px)",
+                                srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-box.jpg'|cdnUrl ~ ' 1x',
+                            },
+                            {
+                                media: "(min-width: 615px)",
+                                srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_615_992/v1571826179/boutique%20noel/boutique-noel-box.jpg'|cdnUrl ~ ' 1x',
+                            },
+                            {
+                                media: "(min-width: 320px)",
+                                srcset: '//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_320_615/v1571826179/boutique%20noel/boutique-noel-box.jpg'|cdnUrl ~ ' 1x',
+                            },
+                        ]|json_encode()|raw|e('html_attr') }}"
+                        title="Petits prix & box"
+                        alt="Image petits prix & box"
+                        fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/ar_16:9,c_fill,q_auto/c_scale,w_auto:breakpoints_992/v1571826179/boutique%20noel/boutique-noel-box.jpg"|cdnUrl }}"
+                    ></lazy-picture>
+                    <a class="text-center" href="{% if onlyview %}comloisirsencheres://category/24{% else %}{{ path('christmas.category.name', {name: 'cadeau-pas-cher'})}}{% endif %}">
+                        <div class="content">
+                            <div>
+                                <h3>Petits prix & box <i class="icon-arrow-right-sytle-lineal visible-xs-inline visible-sm-inline"></i></h3>
+                                <button class="btn btn-transparent hidden-xs hidden-sm">Je découvre  <i class="icon-arrow-right-sytle-lineal"></i></button>
+                                <div class="filtre"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if not onlyview %}
+<div class="row block-separ-top">
+    <div class="col-xs-12 giftcard">
+        <a href="{{ path('christmaspage.giftcard')}}">
+            <lazy-picture
+                :sources="{{ [
+                    {
+                        media: "(min-width: 992px)",
+                        srcset: '//img.loisirsencheres.fr/loisirs/image/upload/q_auto/c_scale,w_auto:breakpoints_992/v1572880294/boutique%20noel/carte-cadeau-desktop.png'|cdnUrl ~ ' 1x',
+                    },
+                    {
+                        media: "(min-width: 588px)",
+                        srcset: '//img.loisirsencheres.fr/loisirs/image/upload/q_auto/c_scale,w_auto:breakpoints_588_992/v1572880294/boutique%20noel/carte-cadeau-desktop.png'|cdnUrl ~ ' 1x',
+                    },
+                    {
+                        media: "(min-width: 320px)",
+                        srcset: '//img.loisirsencheres.fr/loisirs/image/upload/q_auto/c_scale,w_auto:breakpoints_320_587/v1572880294/boutique%20noel/carte-cadeau-mobile.png'|cdnUrl ~ ' 1x',
+                    },
+                ]|json_encode()|raw|e('html_attr') }}"
+                title="La carte cadeau est là !"
+                alt="La carte cadeau est là !"
+                fallback-url="{{ "//img.loisirsencheres.fr/loisirs/image/upload/q_auto/c_scale,w_auto:breakpoints_992/v1572880294/boutique%20noel/carte-cadeau-desktop.png"|cdnUrl }}"
+            ></lazy-picture>
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

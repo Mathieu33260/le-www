@@ -1,0 +1,10 @@
+{% for image in images %}
+<div style="margin: 10px;display: inline-block;width: 200px;float: left">
+    {% if image['type'] == 'video' %}
+        {% set src, srclarge = '//img.youtube.com/vi/'~image['url']|youtubeParser~'/1.jpg', '//img.youtube.com/vi/'~image['url']|youtubeParser~'/maxresdefault.jpg' %}
+    {% else %}
+        {% set src = image['url']|cdnUrl|noprotocol %}
+    {% endif %}
+    <img src="{{ src }}" title="{{ auction['name'] }}" alt="{{ auction['name'] }}" width="200" />
+</div>
+{% endfor %}

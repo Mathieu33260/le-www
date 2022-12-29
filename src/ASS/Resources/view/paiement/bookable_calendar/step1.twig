@@ -1,0 +1,452 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12 col-md-4">
+            {% include './paiement/module/resume.twig' %}
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="visible-md visible-lg promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeDesktop'} %}</div>
+        {% endif %}
+            <div id="didyouknownxcb"{% if not useNxcb or not useCasino %} class="hide"{% endif %}>
+                <div class="nxcb visible-md visible-lg">
+                    <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                    {% include './paiement/include/3xcb.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="col-xs-12 visible-xs visible-sm promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeMobile'} %}</div>
+        {% endif %}
+        <div id="didyouknownxcb"{% if not useNxcb or not useCasino %} class="hide"{% endif %}>
+            <div class="nxcb col-xs-12 visible-xs visible-sm">
+                <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                {% include './paiement/include/3xcb.twig' %}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-8 right passagersVoyages">
+            <form method="post" id="formain">
+                <div class="availabilitie row">{% include './paiement/module/availabilitie.twig' %}</div>
+                <div class="passagers row">
+                    <div class="col-xs-12">{% include './paiement/module/passengers.twig' %}</div>
+                </div>
+                {% include './paiement/module/submitBlock.twig' %}
+            </form>
+            <div class="row" id="productDescription">
+                <div class="col-xs-12 productDescription">{% include './paiement/module/productDescription.twig' %}</div>
+            </div>
+            <div class="background-gris cgv row">
+                <p class="text-center text-muted"><small>En validant cette commande vous acceptez nos <a href="#" data-toggle="modal" data-target="#cgvModal">CGV</a>.</small></p>
+            </div>
+            <div class="garantie row background-gris">
+                <div class="col-xs-12">
+                    {% include './paiement/module/garanties.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {% include './modals/paiement/casino.twig' %}
+    {% include './modals/paiement/casinoRgpd.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.min.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.messages_fr.js"></script>
+    <script src="{{assetCdn}}/assets/js/intlTelInput.js"></script>
+    {% include './auction/partials/calendar.js.twig' %}
+    {% include './paiement/include/script.twig' %}
+    <script>
+        $('#telephone').intlTelInput({
+            initialCountry: "fr",
+            preferredCountries: ['fr', 'be', 'lu'],
+            utilsScript: "{{assetCdn}}/assets/js/phone/utils.js",
+            autoPlaceholder: false,
+            formatOnDisplay: true,
+            nationalMode: false
+        });
+        $('.input-tel').intlTelInput({
+            initialCountry: "fr",
+            preferredCountries: ['fr', 'be', 'lu'],
+            utilsScript: "{{assetCdn}}/assets/js/phone/utils.js",
+            autoPlaceholder: false,
+            formatOnDisplay: true,
+            nationalMode: false
+        });
+    </script>
+    <script>
+        function show_calendar(ce, onload){
+            var value = parseInt($(ce).find("option:selected").val());
+            var departureCitieName = $(ce).find("option:selected").html();
+            var departureCitieCity = $(ce).find("option:selected").data('city');
+            var startDateContainer = $('#startDate');
+            $('#calendars').find('[data-toggle="popover"]').popover('hide')
+            $('#calendars > div').addClass('hide');
+            if(value > 0){
+                $('.availabilitie .loader').addClass('show');
+                $('.availabilitie .horaires').removeClass('hide');
+                $.ajax({
+                    method: "GET",
+                    url: "{{ path('product.auction',{id: product.id})}}",
+                    data: {
+                        data: 'availabilities',
+                        onlyProductAvailability: true,
+                        departureCity: value,
+                        defaultDate: {% if reservation.availability is not null %}{{ reservation.availability }}{% else %}null{% endif %},
+                        reservationId: {% if reservation.id is not null %}'{{ reservation.id }}'{% else %}null{% endif %}
+                    },
+                    dataType: 'json'
+                }).done(function( result ) {
+                    // Defined the default date
+                    var defaultDate = null;
+                    var dateToAvailabilitie = generateDateToAvailabilities(result);
+                    var dateFirstAvailabilitieJson = JSON.parse(JSON.stringify(dateToAvailabilitie.objDateStart));
+                    var dateFirstAvailabilitie = Date.fromISO(dateFirstAvailabilitieJson);
+                    var inputavailabilitie = parseInt($('#inputavailabilitie').val());
+                    if(result.hasAvailable === false){
+                        $('#calendars').find(".calendar"+value).addClass('noAvailabilities');
+                        $('#calendars').find(".calendar"+value).append( '<div class="overlay"><div data-toggle="popover" data-placement="top" data-container="body" data-content="Il n\'y a plus de disponibilité, merci de sélectionner un autre aéroport.">Plus de disponibilités <i class="icon-attention"></i></div></div>');
+                        $('#calendars').find('[data-toggle="popover"]').popover();
+                    }
+                    if(inputavailabilitie > 0 && onload){
+                        $.each(result.availabilities, function(i, val){
+                            if(val.id === inputavailabilitie){
+                                var objDateTrip = getDateFromString(val.dateTrip);
+                                defaultDate = objDateTrip;
+                                var currentDateTrip = objDateTrip.getFullYear() + '-' + ('0' + (objDateTrip.getMonth() + 1)).slice(-2) + '-' + ('0' + objDateTrip.getDate()).slice(-2);
+                                $("#inputdateTrip").val(currentDateTrip);
+                                selected_date(new Array(objDateTrip.getDate(), ("0" + parseInt(objDateTrip.getMonth()+1)).slice(-2), objDateTrip.getFullYear()), objDateTrip.getDate()+'/'+("0" + parseInt(objDateTrip.getMonth()+1)).slice(-2)+'/'+objDateTrip.getFullYear(), dateToAvailabilitie.dateToAvailabilitie);
+                            }
+                        });
+                    }
+                    {% if transportType != 'notincluded' %}
+                    $('.availabilitie .city').text(departureCitieCity);
+                    $('.availabilitie .name').text(departureCitieName);
+                    {% endif %}
+                    if(defaultDate === null){
+                        $('.availabilitie .horaires .date').text('');
+                    }
+
+                    monthsAvailable["calendar"+value] = getmonthsavailable(dateToAvailabilitie.objDateStart, dateToAvailabilitie.objDateFarther, dateToAvailabilitie.datesAvailable);
+
+                    $('#calendars').find('> div').not(".calendar"+value).removeClass('show').addClass('hide');
+                    startDateContainer.find('.calendar'+value).each(function(){
+                        $(this).removeClass( "hide" );
+                        $(this).datepicker({
+                            option: 'fr',
+                            minDate: '0',
+                            defaultDate: defaultDate,
+                            onSelect: function (dateText, obj) {
+                                var aDateText = dateText.split('/');
+                                selected_date(aDateText, dateText, dateToAvailabilitie.dateToAvailabilitie);
+                            },
+                            onChangeMonthYear: function(year, month, inst) {
+                                // Check if it is necessary to skip the month
+                                var changeType = $(this).find('.ui-corner-all.ui-state-hover').data('handler');
+                                if(typeof changeType !== 'undefined') {
+                                    var key = "calendar"+$(this).data('key');
+                                    if(month > 12){ // Fix a jQuery bug
+                                        month = 1;
+                                        year++;
+                                    }
+                                    if(typeof monthsAvailable[key] !== 'undefined'){ // This test is necessary for the init calendar
+                                        var currentMonth = year+'-'+("0" + parseInt(month)).slice(-2);
+                                        if(monthsAvailable[key].indexOf(currentMonth) == -1){
+                                            // If month is not available, go to next/prev
+                                            var date = new Date(year, month-1);
+                                            if(changeType == 'prev') {
+                                                var prevDate = new Date(date.setMonth(date.getMonth()-1));
+                                                calendargotodate(this, prevDate.getMonth(), prevDate.getFullYear());
+                                            } else {
+                                                var nextDate = new Date(date.setMonth(date.getMonth()+1));
+                                                calendargotodate(this, nextDate.getMonth(), nextDate.getFullYear());
+                                            }
+                                        }
+                                    }
+                                }
+                                // End - Check if it is necessary to skip the month
+                            },
+                        });
+                        calendar_add_availabilities(this,dateToAvailabilitie);
+                        calendar_add_maxDate(this,dateToAvailabilitie.objDateFarther);
+                        calendar_add_minDate(this, dateToAvailabilitie.objDateStart);
+
+                        if(inputavailabilitie > 0 && onload){
+                            startDateContainer.find('.calendar'+value).datepicker("setDate", defaultDate);
+                        }
+                        else {
+                            $(this).datepicker( "option", "defaultDate", null );
+                            calendargotodate(this, dateFirstAvailabilitie.getMonth(), dateFirstAvailabilitie.getFullYear());
+                        }
+                        {% if reservation.availability is null %}
+                        $(this).find('.ui-state-active').removeClass('ui-state-active');
+                        {% elseif dataSave.departureCity is defined %}
+                        if(value != {{ dataSave.departureCity }}){
+                            $(this).find('.ui-state-active').removeClass('ui-state-active');
+                        }
+                        {% endif %}
+                    });
+                    startDateContainer.find('.loader').addClass('hide').removeClass('show');
+                    positioning_submit();
+                });
+            }
+            else {
+                startDateContainer.removeClass('show');
+                $('.availabilitie .horaires').addClass('hide');
+                if($('#calendars').find('.calendarDefault').length){
+                    $('#calendars').find('.calendarDefault').removeClass('hide');
+                }
+            }
+        }
+
+        function selected_date(aDateText, dateText, dateToAvailabilitie){
+            // Calc date end
+            if({{ (product['nbDays'] is not null and product['nbDays'] != '0' and product['nbDays'] != '')?product['nbDays']:product['nbNight'] }}!=null){
+                var dateObj = new Date(aDateText[2],parseInt(aDateText[1])-1,aDateText[0]);
+                dateObj.setDate(dateObj.getDate() + parseInt({{ (product['nbDays'] is not null and product['nbDays'] != '0' and product['nbDays'] != '')?product['nbDays']-1:product['nbNight'] }}));
+                $('.availabilitie .back .date').text(''+("0" + dateObj.getDate()).slice(-2)+'/'+("0" + (parseInt(dateObj.getMonth()) + 1)).slice(-2)+'/'+dateObj.getFullYear());
+            }
+            $('.availabilitie .start .date').text(dateText);
+            for(var i=0; dateToAvailabilitie.length > i; i++){
+                if(dateToAvailabilitie[i].dateTrip == aDateText[2]+'-'+aDateText[1]+'-'+aDateText[0]){
+                    $('#inputavailabilitie').val(dateToAvailabilitie[i].availabilitie);
+                    $('#inputdateTrip').val(dateToAvailabilitie[i].dateTrip);
+                }
+            }
+            positioning_submit();
+        }
+    </script>
+    <script src="{{assetCdn}}/assets/js/languages/datepicker-fr.js"></script>
+    <script>
+        monthsAvailable = {};
+        $(document).ready(function(){
+            // If city is already selected
+            if($('#city').find('option:selected').val() != '0'){
+                show_calendar($('#city'), true);
+            }
+            $('#calendars').find('.calendarDefault').datepicker({
+                option: 'fr',
+                minDate: 0,
+                maxDate: 0
+            });
+            var defaultDate = $('#calendars').find('.calendarDefault .ui-datepicker-current-day');
+            var dayNb = defaultDate.find('a').text();
+            defaultDate.html('<span class="ui-state-default">'+dayNb+'</span>');
+            defaultDate.removeAttr('data-handler').removeAttr('data-event').removeAttr('data-month').removeAttr('data-year');
+            defaultDate.removeClass('ui-datepicker-days-cell-over ui-datepicker-current-day ui-datepicker-today');
+            defaultDate.addClass('ui-datepicker-unselectable ui-state-disabled');
+        });
+
+        // Change the departureCity
+        $(document).on('change','#city',function(){
+            show_calendar(this, false);
+        });
+    </script>
+    <script>
+        $('.limitsCharacters').keyup(function(){
+            var limit = $(this).prop('maxlength');
+            formLimitsCharacters({
+                input: $(this),
+                limit: limit,
+                substr: true
+            });
+        });
+
+        $(document).ready(function(){
+            $('.limitsCharacters').each(function(){
+                var limit = $(this).prop('maxlength');
+                formLimitsCharacters({
+                    input: $(this),
+                    limit: limit,
+                    substr: true
+                });
+            });
+        });
+
+        $.validator.addMethod(
+            "franceDate",
+            function(value, element) {
+
+                var isRequired = element.required
+                var value = element.value
+                if (isRequired == false && (value == null || value == '')) {
+                    return true;
+                }
+
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            },
+            "Date invalide"
+        );
+        $.validator.addMethod(
+            "phoneNumber",
+            function(value, element) {
+                var telInput = $("#" + element.id);
+
+                var isRequired = telInput.prop('required')
+                var value = telInput.val()
+                if (isRequired == false && (value == null || value == '')) {
+                    return true;
+                }
+
+                return telInput.intlTelInput("isValidNumber");
+            },
+            "Numéro de téléphone invalide"
+        );
+        $.validator.addMethod(
+            "departureCitySelected",
+            function(value, element) {
+                var cityValue = $(element).val();
+                return cityValue != '0';
+            },
+            {% if transportType != 'notincluded' %}
+            "Vous devez choisir une ville de départ."
+            {% else %}
+            "Vous devez faire un choix"
+            {% endif %}
+        );
+        $.validator.addMethod(
+            "isMajor",
+            function(birthDay, element) {
+                var inputdateTrip = $("#inputdateTrip").val();
+                if(birthDay !== '' && inputdateTrip !== ''){
+                    if(date_is_major(birthDay,inputdateTrip)){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else if(birthDay !== ''){
+                    if(!date_is_major(birthDay)){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            },
+            "Le premier passager doit-être majeur"
+        );
+        $("#formain").validate({
+            rules: {
+                {% for i in 1..product['nbPassenger'] %}
+                "passager[{{loop.index0}}][gender]": {
+                    required: true
+                },
+                "passager[{{loop.index0}}][firstName]": {
+                    required: true
+                },
+                "passager[{{loop.index0}}][lastName]": {
+                    required: true
+                },
+                "passager[{{loop.index0}}][birthDay]": {
+                    required: true,
+                    franceDate : true,
+                    {% if loop.index0 == 0 %}isMajor: true{% endif %}
+                },
+                {% endfor %}
+                {% if customFields is defined %}
+                    {% for customField in customFields %}
+                    "customFieldDate[{{customField.id}}]": {
+                        franceDate : true,
+                    },
+                    "customFieldTel[{{customField.id}}]": {
+                        phoneNumber: true
+                    },
+                    {% endfor %}
+                {% endif %}
+                {% if passengersCustomFields is defined %}
+                    {% for customField in passengersCustomFields %}
+                        {% for i in 1..product['nbPassenger'] %}
+                        "passengerDateCustomField[{{loop.index0}}][{{customField.id}}]": {
+                            franceDate : true,
+                        },
+                        "passengerTelCustomField[{{customField.id}}]": {
+                            phoneNumber: true
+                        },
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                "telephone": {
+                    required: true,
+                    phoneNumber: true
+                },
+                "email": {
+                    required: true,
+                    email: true
+                },
+                "departureCity": {
+                    required: true,
+                    departureCitySelected: true
+                },
+                "availabilitie": {
+                    departureCitySelected: true
+                },
+            },
+            errorElement: "span",
+            errorPlacement: function ( error, element ) {
+                if($(element).parents('.form-group').find('.help-block').length){
+                    $(element).parents('.form-group').find('.help-block').remove();
+                }
+                error.addClass( "help-block" ).removeClass('error');
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else if(element.prop('type') === 'radio') {
+                    error.insertAfter( element.parents( ".radio " ) );
+                } else {
+                    $(element).parents('.form-group').append(error);
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".form-group" ).removeClass( "has-error" );
+                $(element).parents('.form-group').find('.help-block').remove();
+            },
+            invalidHandler: function(event, validator) {
+                $('#general-loader').addClass('hide');
+            }
+        });
+    </script>
+    <script>
+        $('.passengerBirthday').keyup(function(e) {
+            var val = $(this).val();
+            var nb_car = val.length;
+            if (e.which != 8 && e.which != 46) {
+                if(nb_car == 2 || nb_car == 5) {
+                    $(this).val(val+'/');
+                }
+            } else {
+                if(nb_car == 2 || nb_car == 5) {
+                    $(this).val(val.substr(0, val.length -1));
+                }
+            }
+        });
+        $('.passengerBirthday').keypress(function(e) {
+            if (e.which == 47 || ($(this).val().length == 10 && $(this).prop('selectionEnd') == $(this).prop('selectionStart'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    {% include './paiement/include/track-checkout.twig' %}
+    <script>
+        $('[href="#productDescription"]').on('click', function(){
+            ga('send', 'event', 'ecommerce', 'product_description', 'show', {'nonInteraction': 1});
+        });
+    </script>
+{% endblock%}

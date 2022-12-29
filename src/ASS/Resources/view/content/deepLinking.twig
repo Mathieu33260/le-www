@@ -1,0 +1,31 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block title %}Deep linking for loisirsencheres{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Deep links</h1>
+
+            <a href="comloisirsencheres://home">home</a><br/><br/>
+            <a href="comloisirsencheres://categories">Categories</a><br/><br/>
+            <a href="comloisirsencheres://category/1">Category 1</a><br/><br/>
+            <a href="comloisirsencheres://category/2">Category 2</a><br/><br/>
+            <a href="comloisirsencheres://category/19">Category 19</a><br/><br/>
+            <a href="comloisirsencheres://registration">Registration</a><br/><br/>
+            <a href="comloisirsencheres://login">Login</a><br/><br/>
+            <a href="comloisirsencheres://tutorial">Tutorial</a><br/><br/>
+            <a href="comloisirsencheres://auction/50017">auction 50017</a><br/><br/>
+            <a href="comloisirsencheres://product/227">Product 227 running</a><br/><br/>
+            <a href="comloisirsencheres://product/153">Product 153 next</a><br/><br/>
+            <a href="comloisirsencheres://product/345">Product 345 ended</a><br/><br/>
+            <a href="comloisirsencheres://myAuctions/won">My Auctions won</a><br/><br/>
+            <a href="comloisirsencheres://myAuctions/paid">My Auctions paid</a><br/><br/>
+            <a href="comloisirsencheres://myAuctions/active">My Auctions active</a><br/><br/>
+            <a href="comloisirsencheres://webview-sso/?url=user/profile">My Profile</a><br/><br/>
+            <a href="comloisirsencheres://webview-sso/?url=idees-cadeau-noel">Christmas</a><br/><br/>
+            {% if categorieRedirectLink is defined and categorieRedirectLink is not null %}
+                <a href="{{ path('app.deepRedirect', {'url' : categorieRedirectLink}) }}" class="btn btn-primary" style="width: 100%;">Categorie 1 Redirect</a><br/><br/>
+            {% endif %}
+            {% if redirectLink is defined and redirectLink is not null %}
+                <a href="{{ path('app.deepRedirect', {'url' : redirectLink}) }}" class="btn btn-primary" style="width: 100%;">Go to redirect url</a>
+            {% endif %}
+{% endblock %}

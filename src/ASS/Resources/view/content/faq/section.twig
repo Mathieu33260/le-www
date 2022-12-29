@@ -1,0 +1,114 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{% if section is not null %}{{ section.name }}{% if term is defined %} - {{ term }}{% endif %} - {% endif %}FAQ{% endblock %}
+
+{% block moremeta %}
+    {% if term is defined and section is not null %}
+        <meta name="robots" content="noindex">
+        <link rel="canonical" href="{{ path('faq.section',{
+            section: section.name|escape('sanitize')~'-'~section.id
+        }) }}" />
+    {% endif %}
+{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres">
+            <span property="name">Accueil</span>
+        </a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('faq') }}">
+            <span property="name">FAQ</span>
+        </a>
+        <meta content="2" property="position">
+    </li>
+    {% if term is defined and section is not null %}
+        <li typeof="ListItem" property="itemListElement">
+            <a typeof="WebPage" property="item" href="{{ path('faq.section',{section: section.name|escape('sanitize')~'-'~section.id}) }}">
+                <span property="name">{{ section.name }}</span>
+            </a>
+            <meta content="3" property="position">
+        </li>
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">{{ term }}</span>
+            <meta content="4" property="position">
+        </li>
+    {% elseif section is not null %}
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">{{ section.name }}</span>
+            <meta content="3" property="position">
+        </li>
+    {% elseif term is defined %}
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">{{ term }}</span>
+            <meta content="3" property="position">
+        </li>
+    {% else %}
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span property="item.name">Recherche</span>
+            <meta content="3" property="position">
+        </li>
+    {% endif %}
+{% endblock %}
+{% block container %}none{% endblock %}
+{% block main_content %}
+    {% if section is not null %}
+    <div itemscope itemtype="http://schema.org/QAPage" itemid="{{ section.name|escape('sanitize')~'-'~section.id }}">
+        <div class="container">
+            <h1 itemprop="name">{{ section.name }}</h1>
+        </div>
+    {% endif %}
+        {% if section is null %}
+        <div class="alert alert-info alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <b>La page que vous avez demandée n'est pas disponible</b>, vous pouvez effectuer une recherche ou
+            vous rendre sur la page <b><a href="{{ path('faq') }}">FAQ</a></b> pour trouver ce que vous cherchez.
+        </div>
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                {% include 'content/faq/search-form.twig' %}
+            </div>
+        </div>
+        {% if section is not null %}
+        <div itemid="{{ section.name|escape('sanitize')~'-'~section.id }}" class="container">
+            <div class="faqContent">
+                {% for articleContent in articlesContent %}
+                    <div id="{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}" itemprop="{% if loop.first %}mainEntity{% else %}hasPart{% endif %}" itemscope itemtype="http://schema.org/Question"
+                         itemid="{{ section.name|escape('sanitize')~'-'~section.id }}#{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}">
+                        <meta itemprop="answerCount" content="1" />
+                        <meta itemprop="author" content="Loisirs Enchères" />
+                        <meta itemprop="dateCreated" content="{{ articleContent.created_at }}" />
+                        <h2 itemprop="name text">{{ articleContent.title }}</h2>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="http://schema.org/Answer">
+                            <meta itemprop="author" content="Loisirs Enchères" />
+                            <meta itemprop="dateCreated" content="{{ articleContent.created_at }}" />
+                            <meta itemprop="upvoteCount" content="{{ articleContent.vote_count - articleContent.vote_sum }}" />
+                            <meta itemprop="url" content="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}#{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}" />
+                            <div itemprop="text">{{ articleContent.body|raw }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% elseif articlesContent is defined %}
+        <div id="faqpage" class="container">
+            <div class="faqContent">
+                {% for articleContent in articlesContent %}
+                    <div id="{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}">
+                        <h2>{{ articleContent.title }}</h2>
+                        <div>
+                            {{ articleContent.body|raw }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    {% if section is not null %}
+    </div>{# Close div itemtype="http://schema.org/QAPage" #}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    font-family: "Arial Unicode";
+    src: url('../fonts/arialuni.ttf');
+    font-weight: normal;
+    font-style: normal;
+    unicode-range: U+0-10FFFF;
+}
+body {
+    font-family: "Arial Unicode";
+    font-size:14px;
+}
+#content {padding: 0 30mm 0mm}
+.page {page-break-after: always}
+h1 {text-align: center;color: #000000;font-weight: 600;font-size: 26px;margin-top: 10px}
+h2 {color: #1C7CD5;font-weight: 600;font-size: 18px;margin-top: 26px;margin-bottom: 10px}
+h3 {text-align: left;color: #F59B1A;font-weight: 600;font-size: 18px;margin-top: 20px;padding-bottom: 9px;}
+p, li {margin: 6px 0 0;line-height: 1.4;padding-bottom: 6px}
+b {font-weight: bold}
+.w50 {display: inline-block;width: 50%;float: left}
+.w100 {display: inline-block;width: 100%;float: left}
+.clear {clear: both}
+a {color: #1C7CD5}
+.checkbox {margin-right: 40px}
+em {font-style: italic}

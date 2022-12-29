@@ -1,0 +1,28 @@
+<div class="modal fade modal-success" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    {% if app.session.getFlashBag.has('success_title') %}
+                        {% for msg in app.session.getFlashBag.get('success_title') %}
+                            {{ msg|trans|raw }}<br />
+                        {% endfor %}
+                    {% else %}
+                        Confirmation
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-body">
+                {% for msg in app.session.getFlashBag.get('success') %}
+                    {{ msg|trans|raw }}<br />
+                {% endfor %}
+                {% if app.session.getFlashBag.has('success_landingpage') %}
+                    {% for msg in app.session.getFlashBag.get('success_landingpage') %}
+                        {{ msg }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

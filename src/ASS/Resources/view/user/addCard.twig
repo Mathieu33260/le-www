@@ -1,0 +1,79 @@
+{% extends 'layout/html-app.twig' %}
+{% block main_content %}
+<div>
+    <div class='col-xs-10 col-xs-offset-1'>
+        <form method="post" class="module">
+            <div class="form-group">
+                <div class="checkbox nopadding">
+                    <label for="understood">
+                        <input type="checkbox" name="understood" id="understood" value="1" required="" />
+                        <b>J'ai compris que mon compte ne sera pas débité</b>
+                    </label>
+                </div>
+            </div>
+            <div class='paymentMethods'>
+                <div id="cardSelectBlock">
+                    <div class="row text-center">
+                        <div class="col-xs-3 col-xs-offset-1">
+                            <input name="method" value="cb" type="radio" id="methodCb" checked="checked" required="" />
+                            <label for="methodCb">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/cb.png" height="47" alt="logo cb" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4">
+                            <input name="method" value="visa" type="radio" id="methodVisa" required="" />
+                            <label for="methodVisa">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/visa.png" height="50" alt="logo visa" />
+                            </label>
+                        </div>
+                        <div class="col-xs-4">
+                            <input name="method" value="mastercard" type="radio" id="methodMasterCard" required="" />
+                            <label for="methodMasterCard">
+                                <img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/mastercard.png" height="50" alt="logo master card" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary center-block submit" name="submit" />
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            if($('#understood').prop("checked") === false){
+                $('.paymentMethods').addClass('hide');
+                $('.submit').attr('disabled','disabled');
+            }
+        });
+    </script>
+    <script>
+        $('form.module').on('submit', function(e){
+            if($('#saveCardName').val() == ''){
+                $('#saveCardName').parent('.form-group').addClass('has-error');
+                return false;
+            }
+        });
+        $('#understood').on('change',function(){
+            if($(this).prop("checked") == true){
+                $('.paymentMethods').removeClass('hide');
+                $('.submit').removeAttr('disabled');
+            }
+            else if($(this).prop("checked") == false){
+                $('.paymentMethods').addClass('hide');
+                $('.submit').attr('disabled','disabled');
+            }
+        });
+        $("input[name='method']").on('change',function(){
+            if($(this).hasClass("isSaveCard")){
+                $('#cardNameBlock').addClass('hide');
+            }
+            else {
+                $('#cardNameBlock').removeClass('hide');
+            }
+        });
+    </script>
+{% endblock %}

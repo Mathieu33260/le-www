@@ -1,0 +1,21 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="winnerShare" aria-labelledby="winnerShare">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src='{{assetCdn}}/assets/img/modal/win/header.png' alt="Féliciation" class="felicitation" />
+                <div class="auction-img-name">
+                    <p class="firstname"></p>
+                    <div class="auction-img">
+                        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1521738635/ressource/product-circle.png" alt="#" />
+                    </div>
+                </div>
+                <p class="modal-title">{{ winner.firstName }} vient de remporter cette enchère{% if auction.reduction is not null %}<span class="economie"> et réalise une économie de {{auction.reduction}}€</span>{% endif %}</p>
+                <p class='auction-name'>{{ product['name'] }}</p>
+                <p>Rejoignez {{ winner.firstName }} sur Loisirs Encheres, le premier site français qui vous permet de choisir le prix de vos loisirs et vacances.<br />
+                    Offre de bienvenue : <strong class="text-primary">profitez de 10€ OFFERTS</strong> sur votre première enchère remportée !</p>
+                <a href="{{ path('user.register') }}" rel="nofollow" class="btn btn-default btn-primary">CONTINUER</a>
+            </div>
+        </div>
+    </div>
+</div>

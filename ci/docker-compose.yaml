@@ -1,0 +1,22 @@
+version: "3"
+services:
+  web_ci:
+    container_name: web_ci
+    build:
+      context: ../
+      dockerfile: ./ci/Dockerfile_web
+      args:
+        github_oauth_token: 752a8bfd81b4b942a560fed7f9df28f157b07fe8
+    environment:
+      APP_ENV: ciricleci_test
+      SSL_SERVER_KEY: FR\nGironde\nBordeaux\nLoisirs Encheres\nLoisirs Encheres\nlocal-www.loisirsentest.com\nadmin@loisirsentest.com
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 443:443
+    networks:
+      - ci_web-ci
+
+networks:
+  ci_web-ci:
+    external: true

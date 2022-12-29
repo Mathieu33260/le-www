@@ -1,0 +1,45 @@
+<div id="assurance">
+    <img src="{{assetCdn}}/assets/img/insurance/presence-assistance-tourisme.png" alt="Présence assistance tourisme" width="90px" align="right" />
+    <p class="section-title">Assurance</p>
+    <div class="clearfix"></div>
+    <p class="text-muted"><small>Partez en toute tranquilité, nos assurances vous couvrent avant votre départ et pendant votre séjour.<br />
+            Vous n'êtes couverts que sur les prestations vendues dans le cadre de votre offre Loisirs Enchères.</small></p>
+    {% for type, insurance in possibleInsurances if insurance.isOption == false %}
+    <div class="row{% if addedInsurance.insuranceType is defined and type in addedInsurance.insuranceType %} active{% endif %}">
+        <div class="radio col-xs-12{% if insurance.option != false %} hasoption{% endif %}">
+            <label for="assurance_{{type}}" class="{% if type != 'none' %}col-xs-8 col-sm-10{% else %}col-xs-12{% endif %}">
+                <span>
+                    <input type="radio" name="assurance" autocomplete="off" value="{{type}}" id="assurance_{{type}}" required=""{% if addedInsurance.insuranceType is defined and type in addedInsurance.insuranceType %} checked=""{% endif %}>
+                    <span class="insuranceOptions">
+                        {{insurance.title}}{% if type == 'none' %} (Je dispose déjà d'une assurance){% endif %}
+                        {% if insurance.modal is defined %}<i class="icon-info" data-toggle="modal" data-target="#modalPaiementAssurance{{insurance.modal|capitalize}}"></i>{% endif %}
+                    </span>
+                </span>
+                {% if insurance.shortText is defined %}<span class="hidden-xs text-muted">{{ insurance.shortText|raw }}</span>{% endif %}
+            </label>
+            {% if type != 'none' %}<div class="col-xs-3 col-sm-2 nopadding-only text-right">
+                <span>{{insurance.price/100}} €<small><br />/ Personne</small></span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if insurance.option != false %}
+    {% set option = possibleInsurances[insurance.option] %}
+    <div class="row{% if addedInsurance.insuranceType is defined and type in addedInsurance.insuranceType %} active{% endif %}">
+        <div class="checkbox col-xs-12">
+            <label for="assurance_{{insurance.option}}" class="col-xs-7 col-sm-9 col-xs-offset-1">
+                <span>
+                    <input data-parent="assurance_{{type}}" type="checkbox" name="assurance" autocomplete="off" value="{{insurance.option}}" id="assurance_{{insurance.option}}"{% if addedInsurance.insuranceType is defined and addedInsurance.insuranceType == insurance.option %} checked=""{% endif %}>
+                    OPTION <img src="{{assetCdn}}/assets/img/insurance/icon-premium.png" alt="premium" width="58px" />
+                    {% if option.modal is defined %}<i class="icon-info" data-toggle="modal" data-target="#modalPaiementAssurance{{option.modal|capitalize}}"></i>{% endif %}
+                </span>
+                {% if option.shortText is defined %}<span class="hidden-xs text-info">{{ option.shortText|raw }}</span>{% endif %}
+            </label>
+            <div class="col-xs-3 col-sm-2 nopadding-only text-right">
+                <span>+ {{(option.price-insurance.price)/100}} €<small><br />/ Personne</small></span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>

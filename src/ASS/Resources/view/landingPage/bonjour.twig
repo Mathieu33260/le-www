@@ -1,0 +1,37 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d’offres de voyages, d’hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:500' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block moremeta %}
+    {% if canonicalUrl is defined and canonicalUrl != null %}
+        <link rel="canonical" href="https://{{app.request.host}}{{canonicalUrl}}" />
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="landing_page_banner2">
+        <div class="landing_page_banner_titre text-center">BIENVENUE SUR LOISIRS ENCHERES ! </div>
+        <div class="landing_page_promocode">
+            <p class="landing_page_promocode_value">Code promo {{ promoValue }}€</p>
+            <p class="landing_page_promocode_code">{{ promoCode }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-extra-padding " style="color:#333333;">
+            <div><p style="margin-bottom:5px;"><img src="{{assetCdn}}/assets/gfx/tick.png" alt='tick' style="padding-right:10px;"/>Des centaines d'offres en France et à l'étranger mises à prix à 1€</p></div>
+            <div><p style="margin-bottom:5px;"><img src="{{assetCdn}}/assets/gfx/tick.png" alt='tick' style="padding-right:10px;"/>Une équipe française récompensée par la Palme du e-commerce</p></div>
+            <div><p style="margin-bottom:5px;"><img src="{{assetCdn}}/assets/gfx/tick.png" alt='tick' style="padding-right:10px;"/><strong>{{ promoValue }} euros OFFERTS</strong> sur votre première enchère</p></div>
+        </div>
+    </div>
+    <div class="row howto_landingpage">
+            <div class="col-xs-12 col-sm-6 col-md-3"><b><img class="button_howto_landingpage" src="{{assetCdn}}/assets/gfx/pictos/creer.png" alt='creer' />1. Créez votre profil</b></div>
+            <div class="col-xs-12 col-sm-6 col-md-3"><b><img class="button_howto_landingpage" src="{{assetCdn}}/assets/gfx/pictos/encherir.png" alt='encherir' />2. Enchérissez</b></div>
+            <div class="col-xs-12 col-sm-6 col-md-3"><b><img class="button_howto_landingpage" src="{{assetCdn}}/assets/gfx/pictos/regler.png" alt='regler' />3. Réglez l'enchère</b></div>
+            <div class="col-xs-12 col-sm-6 col-md-3"><b><img class="button_howto_landingpage" src="{{assetCdn}}/assets/gfx/pictos/reserver.png" alt='reserver' />4. Réservez / profitez</b></div>
+    </div>
+    <user-register-form :nostep="0"></user-register-form>
+{% endblock %}

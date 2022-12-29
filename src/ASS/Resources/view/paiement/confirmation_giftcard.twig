@@ -1,0 +1,36 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Paiement validé{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>PAIEMENT CONFIRMÉ</strong></h1>
+            <div class="block-separ-bottom block-separ-top">
+                <p class="text-center">Vous recevrez un e-mail avec votre facture dans quelques minutes.<br />
+                    Vous pouvez aussi les retrouvez dans l'onglet "<em>mes cartes cadeaux</em>" de votre profil.</p>            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/logopayment/illustration-validation-giftcard.png" alt="#" width="217" /></div>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only block-separ-top block-separ-bottom">
+            <a href="{% if not isApp(app.request) %}{{ path('user.purchase')}}{% else %}comloisirsencheres://myAuctions{% endif %}" class="btn btn-primary btn-block">VOIR MES ACHATS</a>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            {% if not isApp(app.request) %}
+            <p class="text-center"><a href="{{ path('user.parrainage')}}">Parrainez vos ami(e)s et gagnez jusqu'à 200€ !</a></p>
+            {% endif %}
+            <div class="text-center block-separ-topbottom">
+                <a href="{% if not isApp(app.request) %}{{ path('user.auctions')}}{% else %}comloisirsencheres://myAuctions{% endif %}"><b>Voir mes achats</b></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include './paiement/include/track-purchase.twig' %}
+{% endblock %}

@@ -1,0 +1,15 @@
+<div id="calendars">
+    <div class="text-center">
+        <img src="{{assetCdn}}/assets/gfx/loader.gif?v=20170307" alt="Chargement" width="32" />
+        <br />Chargement des calendriers
+    </div>
+</div>
+<div class="row" id="calendarLegend">
+    <div class="col-xs-12">
+        <p><span class="color white"></span>Date non disponible</p>
+        {% if checkoutFlow['hasDetailedAvailabilities'] %}<p><span class="color soldout"></span>Plus de disponibilités</p>{% endif %}
+        <p><span class="color less-available"></span>{% if checkoutFlow['hasDetailedAvailabilities'] %}Peu de places disponibles{% else %}Dates de validité <b class="text-danger">sous réserve de disponibilités</b>{% endif %}</p>
+        {% if checkoutFlow['hasDetailedAvailabilities'] %}<p><span class="color available"></span>Dates disponibles</p>{% endif %}
+        <p><em>Calendrier fourni à titre indicatif, sous réserve de confirmation par notre partenaire.</em></p>
+    </div>
+</div>

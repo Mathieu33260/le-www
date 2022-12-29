@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+<channel>
+    <title>Loisirs Enchères</title>
+    <link>{{ baseUrl }}</link>
+    <description>Des centaines d'offres de voyages, d'hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.</description>
+    {% for auction in auctions %}
+    <item>
+        <g:id>{{ auction.product_id }}</g:id>
+        <g:title>{{ auction.product_shortName != '' ? auction.product_shortName : auction.product_name }}</g:title>
+        <g:description>{{ auction.product_description|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 250) }}</g:description>
+        <g:link>{{ baseUrl }}/product/{{ auction.auction_product_id }}</g:link>
+        <g:image_link>{{ auction.images|imgForList|transf('c_fill,h_500,w_500') }}</g:image_link>
+        <g:brand>{{ auction.merchant_name }}</g:brand>
+        <g:condition>new</g:condition>
+        <g:availability>in stock</g:availability>
+        <g:price>1 EUR</g:price>
+        <g:product_type>{{ auction.category_code }}</g:product_type>
+        <g:custom_label_0>{{ auction.product_shortloc != '' ? auction.product_shortloc : auction.location_city }}</g:custom_label_0>
+        <g:custom_label_1>{{ auction.location_zipcode }}</g:custom_label_1>
+        <g:custom_label_2>{{ auction.location_country }}</g:custom_label_2>
+    </item>
+    {% endfor %}
+</channel>
+</rss>

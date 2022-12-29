@@ -1,0 +1,37 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Échec de paiement{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="echec">
+        <div class="col-xs-10 col-xs-offset-1">
+            <h1 class="text-center"><strong>{% if transaction is defined and transaction.title is defined %}{{transaction.title}}{% else %}VOTRE PAIEMENT N'A PAS PU ABOUTIR{% endif %}</strong></h1>
+            <div class="block-separ-bottom block-separ-top">    
+                <h2 class="text-center">Nous vous proposons d'utiliser un autre moyen de paiement.*</h2>
+            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/logopayment/illustration-echeque.png" alt="#" width="215" /></div>
+            <div class="text-center block-separ-top block-separ-bottom">
+                {% if productType == 'auction' %}
+                <a href="{{ path('paiement.page', {'id': id, 'token': token}) }}" class="btn btn-primary">RÉGLER MAINTENANT</a>
+                {% else %}
+                <a href="{{ path('paiement.gateway', {'id': id, 'productType': productType}) }}" class="btn btn-primary">RÉGLER MAINTENANT</a>
+                {% endif %}
+            </div>
+            <div class="block-separ-bottom">
+                <p class="text-center">Vous pouvez aussi nous contacter par mail : <a href="mailto:info@loisirsencheres.com" target="_blank">info@loisirsencheres.com</a> ou au <strong>09 73 72 91 92</strong>
+                {% if productType == 'auction' %}
+                    <br /><em>Attention, si vous ne réglez pas cet enchère vous ne pourrez pas enchérir sur de nouvelles offres</em>
+                {% endif %}
+                </p>
+             </div>
+             <div>
+                 <p class="text-center"><em><small>*CB, chèque, virement, paiement en plusieurs fois, par téléphone, chèques vacances selon la nature de votre offre</small></em></p>
+             </div>
+        </div>
+    </div>
+{% endblock %}

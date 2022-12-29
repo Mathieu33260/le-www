@@ -1,0 +1,51 @@
+{% extends 'layout/newsletter.twig' %}
+
+{% block main %}
+    <div class="col-lg-12 margin-bottom-sm">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <h2 class="margin-bottom-sm" style="margin-left: 25px">Vraiment ? Notre quotidien ne sera plus pareil sans vous…</h2>
+                <h4 class="margin-bottom-sm" style="margin-left: 25px">Mais si c’est ce que vous souhaitez vous pouvez :</h4>
+
+                <div class="margin-bottom-sm">
+                    <a href="{{ path('newsletter.confirmUnsubscribe',{'frequency': 'week', 'uniqueId': uniqueId, 'avis': avis }) }}" class="btn btn-comfirmer" style="word-wrap: break-word;white-space: normal">
+                        <b>Me désinscrire de la newsletter quotidienne</b><br/>
+                        <small style="font-size: 70%">Et m’en envoyer une par semaine</small>
+                    </a>
+
+                    <div class="col-lg-12" style="margin-left: 10px">
+                        <br/><a href="{{ path('newsletter.confirmUnsubscribe',{'frequency': 'month', 'uniqueId': uniqueId, 'avis': avis }) }}" class="text-warning">Recevoir une newsletter par mois</a>
+
+                        <br/><a href="{{ path('newsletter.confirmUnsubscribe',{'frequency': 'unsubscribe', 'uniqueId': uniqueId, 'avis': avis }) }}" class="text-warning">Ne plus jamais recevoir de newsletter*</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+                <img src="https://img.loisirsencheres.fr/loisirs/image/upload/v1521198310/Unsubscribe-page-newsletter.jpg" alt="chien triste" style="max-height: 400px">
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block analytics %}
+    <div class="col-lg-12">
+        <em class="text-muted">*cliquer ici est synonyme de 128 ans de malheur</em>
+    </div>
+
+    </div>
+
+    <script>
+        ga('send', {
+            hitType: 'pageview',
+            page: '/newsletter/unsubscribe'
+        });
+    </script>
+
+    </body>
+    </html>
+{% endblock %}

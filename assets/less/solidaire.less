@@ -1,0 +1,74 @@
+@import "variables.less";
+
+#solidaire {
+  header {
+    font-size: 16px;
+    font-family: 'proxima_nova_regular';
+    font-weight: normal;
+    position: relative;
+    h1 {position: absolute;z-index: 1;opacity: 0}
+    a { opacity: 1; }
+    picture {position: relative;z-index: 2}
+    margin-bottom: 34px;
+  }
+  .sprite {
+    background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1549989538/landing-page/sprite-landingpage-kimpembe.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+  }
+  h2 {
+    color: @black;font-size: 18px;font-weight: bold;
+    .sprite {
+      background-size: auto 40px;
+      height: 20px;width: 20px;margin-right: 6px;
+    }
+  }
+  #joueur .sprite {background-position-x: -21px}
+  #association {
+    .sprite {background-position-x: -44px}
+  }
+  #le .sprite {background-position-x: -65px}
+  #regles .sprite {background-position-x: -84px}
+  #comment-ca-marche {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    h2 {margin-bottom: 22px}
+    .sprite {
+      background-size: auto 40px;
+      height: 40px;width: 40px;
+    }
+    .media-body {font-weight: bold;color: @black;font-size: 14px}
+    #step1 .sprite {background-position-x: -143px;}
+    #step2 .sprite {background-position-x: -223px;}
+    #step3 .sprite {background-position-x: -183px;}
+    @media (min-width: @min-width-sm) {
+      h2 {text-align: center}
+      .media {margin-top: 0}
+    }
+  }
+  .accountComplete {
+    margin-top: 30px;
+    p {font-size: 16px;font-weight: 500;color: #4B525C}
+  }
+  .confirmation {
+    &.withoutEasyBid {
+      text-align: center;font-size: 11px;
+      .title {padding-bottom: 0;text-align: center} // Force text-align
+      .sprite {width: 56px;height: 56px;background-size: auto 56px;background-position-x: -145px;margin-bottom: 22px}
+    }
+  }
+  @media (min-width: @min-width-sm) {
+    .Form__section {text-align: center}
+    legend {text-align: center}
+  }
+  @media (max-width: @max-width-xs) {
+    #association {
+      img { width: 200px; }
+    }
+  }
+}
+
+@media (min-width: @min-width-md) {
+  #registerStatus .media {margin-top: 0}
+}

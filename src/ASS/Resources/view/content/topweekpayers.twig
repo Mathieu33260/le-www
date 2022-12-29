@@ -1,0 +1,50 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Enchérisseurs de la semaine{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Enchérisseurs de la semaine</h1>
+
+    <div class="text-center padding-text-mobile">
+        <!-- encherisseurs -->
+        <div class="encherisseurs col-sm-12 col-md-6">
+            <div class="border-grey">
+                <p>Classement des enchérisseurs qui ont remporté et réglé le plus d'enchères pendant les 7 derniers jours :</p>
+                {% for user in topWeekPayers|default([]) %}
+                    {% if loop.first or loop.index == 6%}
+                    <ul class="list-unstyled">
+                    {% endif %}
+                        <li><span class="number">N{{ loop.index }}</span>{{ user.firstName }} {{ user.lastName | first | upper }}.
+                        {% if user.nbAuctionPaid < 5 %}
+                            <span class="popup-info-bidder-status" data-value="<b>Enchérisseur novice</b> : ils débutent mais ne vous fiez pas aux apparences">
+                                <img title="enchérisseur" alt="enchérisseur" width="20" height="21" src="/assets/gfx/rank1.png">
+                            </span>
+                        {% elseif user.nbAuctionPaid >= 5 and user.nbAuctionPaid < 10%}
+                            <span class="popup-info-bidder-status" data-value="<b>Enchérisseur confirmé</b> : ils ont plus d’une enchère dans leur sac">
+                                <img title="enchérisseur" alt="enchérisseur" width="20" height="21" src="/assets/gfx/rank2.png">
+                            </span>
+                        {% elseif user.nbAuctionPaid >= 10 and user.nbAuctionPaid < 20%}
+                            <span class="popup-info-bidder-status" data-value="<b>Enchérisseur aguerri</b> : enchérir est devenu pour eux une seconde nature">
+                                <img title="enchérisseur" alt="enchérisseur" width="20" height="21" src="/assets/gfx/rank3.png">
+                            </span>
+                        {% elseif user.nbAuctionPaid >= 20 and user.nbAuctionPaid < 50%}
+                            <span class="popup-info-bidder-status" data-value="<b>Enchérisseur expert</b> : ils enchérissent plus vite que leur ombre">
+                                <img title="enchérisseur" alt="enchérisseur" width="20" height="21" src="/assets/gfx/rank4.png">
+                            </span>
+                        {% elseif user.nbAuctionPaid >= 50 %}
+                            <span class="popup-info-bidder-status" data-value="<b>Maître Enchérisseur</b> : aucune enchère ne leur résiste">
+                                <img title="enchérisseur" alt="enchérisseur" width="20" height="21" src="/assets/gfx/rank5.png">
+                            </span>
+                        {% endif%}
+                        </li>
+                    {% if loop.index == 5 or loop.last  %}
+                    </ul>
+                    {% endif %}
+                {% else %}
+                    <p>Aucun enchérisseur</p>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- FinEncherisseurs -->
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends './auction/list_nosidebar.twig' %}
+{% block auctionList %}
+    <auction-list
+        list-name="{{ listName is defined and listName ? listName : (tag is defined and tag ? tag : 'All') }}"
+        {% if city is defined and city -%}
+            clust-name="{{ city.name|lower }}"
+        {% endif %}
+        {% if searchTerm is defined and searchTerm -%}
+            search-terms="{{ searchTerm }}"
+        {% endif %}
+        v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+        v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+        {% if sort is defined %}
+            sort="{{ sort }}"
+        {% endif %}
+        {% if tag|default() -%}
+            tag="{{ tag|e('html_attr') }}"
+        {% endif %}
+        request-uri="{{ app.request.requesturi }}"
+        v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+        v-bind:tab-index="1"
+        template-page-type="nosidebar"
+        class-css="col-xs-12 col-s-6 col-sm-4"
+        :sources-edit="{{ [{
+            media: '(min-width: 1200px)',
+            srcset: { 'c_fit,w_360,g_north_east': '', 'c_fit,w_720,g_north_east': '2x' },
+            splice: 1,
+        }, {
+            media: '(min-width: 992px)',
+            srcset: { 'c_fit,w_294,g_north_east': '', 'c_fit,w_588,g_north_east': '2x' },
+            splice: 1,
+        },{
+            media: '(min-width: 768px)',
+            srcset: { 'c_fit,w_220,g_north_east': '', 'c_fit,w_440,g_north_east': '2x' },
+        }] | json_encode }}"
+    ></auction-list>
+{% endblock %}

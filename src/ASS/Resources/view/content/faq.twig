@@ -1,0 +1,83 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}FAQ{% endblock %}
+{% block moremeta %}
+    {% if term is defined %}
+    <link rel="canonical" href="{{path('faq')}}" />
+    {% endif %}
+{% endblock %}
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres">
+            <span property="name">Accueil</span>
+        </a>
+        <meta content="1" property="position">
+    </li>
+    {% if term is defined %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('faq') }}">
+            <span property="name">FAQ</span>
+        </a>
+        <meta content="2" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">{{ term }}</span>
+        <meta content="3" property="position">
+    </li>
+    {% else %}
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">FAQ</span>
+        <meta content="2" property="position">
+    </li>
+    {% endif %}
+{% endblock %}
+{% block container %}none{% endblock %}
+{% block main_content %}
+    <div itemscope itemtype="http://schema.org/QAPage">
+        <div class="container">
+            <h1 itemprop="name">Foire Aux Questions</h1>
+        </div>
+        <div class="container-fluid nopadding-only">
+            {% include 'content/faq/search-form.twig' %}
+        </div>
+        <div id="faqpage" class="container">
+            <div class="faqContent{% if categories is defined %} row{% endif %}">
+                {% if categories is defined %}
+                    {% for categorie in categories %}
+                        {% for section in categorie.sections %}
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <h2>
+                                    <a href="{{ path('faq.section', {
+                                        section: section.name|escape('sanitize')~'-'~section.id
+                                    }) }}"><span>{{ section.name }}</span></a>
+                                </h2>
+                                <ul class="list-unstyled">
+                                    {% for article in section.articles|slice(0, 3) %}
+                                        <li itemprop="hasPart" itemscope itemtype="http://schema.org/Question" id="{{ article.name|escape('sanitize')~'-'~article.id }}" itemid="{{ section.name|escape('sanitize')~'-'~section.id }}#{{ article.name|escape('sanitize')~'-'~article.id }}">
+                                            <a href="{{ path('faq.section', {
+                                                section: section.name|escape('sanitize')~'-'~section.id
+                                            }) }}#{{ article.name|escape('sanitize')~'-'~article.id }}" class="btn btn-link"><span itemprop="name text">{{ article.name }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <a href="{{ path('faq.section', {
+                                    section: section.name|escape('sanitize')~'-'~section.id
+                                }) }}" class="seemore btn btn-link" title="{{ section.name }}"><i class="icon-arrow-right-full"></i> Voir plus de questions</a>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% elseif articlesContent is defined %}
+                    {% for articleContent in articlesContent %}
+                    <div id="{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}" itemprop="hasPart" itemscope itemtype="http://schema.org/Question"
+                         itemid="{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}#{{ articleContent.name|escape('sanitize')~'-'~articleContent.id }}">
+                        <h2 itemprop="name text">{{ articleContent.title }}</h2>
+                        <div itemprop="acceptedAnswer" itemscope itemtype="http://schema.org/Answer">
+                            <div itemprop="text">{{ articleContent.body|raw }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

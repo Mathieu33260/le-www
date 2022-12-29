@@ -1,0 +1,433 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+
+@import "../modules/seoContent";
+
+/**********************************************************************************************************************/
+/**************************************************** PLACEHOLDER *****************************************************/
+/**********************************************************************************************************************/
+.auctions_placeholder {
+    .placeholder-block {
+        &:last-child {
+            display: block;
+            @media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 374px) {
+    .placeholder-container {
+        height: 84px;
+        .placeholder-animated{
+            .masker {position: relative !important;display: inline-block;float: left;top: initial !important;right: initial !important;left: initial !important}
+            .masker:nth-child(1) {width: 41%}
+            .masker:nth-child(2), .masker:nth-child(10), .masker:nth-child(17) {width: 59%}
+            .masker:nth-child(4), .masker:nth-child(12) {width: 44%}
+            .masker:nth-child(5), .masker:nth-child(6), .masker:nth-child(13), .masker:nth-child(17) {width: 20px;height: 15px;float: right}
+            .masker:nth-child(15) {width: 65px;height: 15px;float: left}
+            .masker:nth-child(6), .masker:nth-child(14) {float: left}
+            .masker:nth-child(7), .masker:nth-child(16), .masker:nth-child(18), .masker:nth-child(20), .masker:nth-child(9), .masker:nth-child(8), .masker:nth-child(6)
+            {display: none}
+            .masker:nth-child(14) {width: 59%;height: 5px}
+            .masker:nth-child(19) {width: 59%;top: 12.8em;z-index: 1}
+        }
+    }
+}
+
+/**********************************************************************************************************************/
+/**************************************************** NO AUCTIONS *****************************************************/
+/**********************************************************************************************************************/
+#noAuctionFoundMess{
+    &:not(.row) {padding: 15px}
+    margin-top: 20px;
+    margin-bottom: 20px;
+    @media (min-width: @min-width-sm) {
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+        &.row {
+            margin-left: 0;
+            margin-right: 0
+        }
+        p {
+            margin-top: 1em
+        }
+    }
+    .carte {
+        min-height: 156px;background: @beige;position: relative;
+        .btn {
+            position: absolute;
+            left: 1em;
+            top: 50%;
+            transform: translateY(-50%);
+            @media (min-width: @min-width-sm) {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+.price-row {
+    padding-top: 8px;
+}
+
+.price {
+    color: @orange;
+    font-weight: bold;
+    text-align: center;
+    font-size: 21px;
+}
+
+.moduleEnchere {
+    padding-top: 0;
+    h2, .h2 {
+        padding-left: 0;
+        text-transform: uppercase;
+        font-size: 20px;
+        line-height: 1.2em;
+        padding-top: 0;
+        margin:10px 0px 10px 0px;
+    }
+    @media (max-width: @max-width-xs) {
+        .auctions_placeholder .placeholder-block:last-child {display: block}
+    }
+}
+
+.moduleTexte {
+    padding: 10px;
+    a, a:not(.btn):focus, a:not(.btn):hover {color: @black_light}
+    .texte {height: 6em;line-height: 22px}
+    .btn {background: @orange;color: @white;border-color: @orange}
+}
+
+.moduleTexteAuction{
+    margin: 0;
+    .texte + * {
+        margin-bottom: 0;
+        > * {line-height: normal}
+    }
+}
+
+.auctionThumbInfo{
+    font-size: 1.1em;
+    margin-bottom: 0;
+    display: block
+}
+
+@media (min-width: 1500px){
+    .auctions {
+        .price-row {
+            .time, .price {font-size: 1em}
+            .shortprice {font-size: 0.78em}
+        }
+    }
+}
+
+.auctions {
+    .price-row {
+        .time {color: @black_light;font-size: 0.8em;height: auto;font-weight: 600;line-height: normal}
+        .price {font-size: 0.8em;text-align: right}
+        .shortprice {font-size: 0.62em;color: @grey;display: block;font-weight: normal}
+        @media (min-width: 1500px) {
+            .time, .price {
+                font-size: 1em
+            }
+            .shortprice {font-size: 0.78em}
+        }
+    }
+    .module {
+        margin-bottom: 12px
+    }
+    .enchere {
+        .background-blanc;position: relative;
+        box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.1);
+        @media (min-width: @min-width-md) {
+            transition: all 0.3s ease-out;
+            &:hover, &:focus, &:active {
+                box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+                transform: translate(0, -4px);
+            }
+        }
+    }
+    a.no-opacity {position: relative;display: block;overflow: hidden}
+    .shortloc {
+        text-transform: uppercase;
+        color: @black_light;
+        opacity: 1;
+        font-size: 0.9em;
+        font-weight: 600;
+        line-height: initial;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-bottom: 5px;
+        display:inherit;
+        @media (min-width: 1500px){
+            font-size: 1.2em;
+        }
+    }
+    .auctionThumbTitle {
+        margin-bottom: 0;color: @black_light;font-size: 0.87em;
+        @media (min-width: 375px) {
+            min-height: 34px;
+        }
+        @media (min-width: @min-width-md) {
+            min-height: 44px;
+        }
+        @media (min-width: 1500px) {
+            font-size: 1.06em;
+        }
+    }
+    picture {display: list-item} // Used for lazy-loading cross-browser compatibility, do not remove :)
+    @media (max-width: @max-width-xs) {
+        .auction:nth-child(odd) {
+            clear: left;
+        }
+        .auction:last-child:nth-child(even) {
+            clear: none;
+        }
+    }
+    .texte {
+        @media (min-width: 320px) and (max-width: 991px){
+            height: auto !important;
+            line-height: normal;
+        }
+        @media (min-width: @min-width-md) {
+            height: auto !important;
+        }
+    }
+    .planned_alert_row {
+        i {
+            font-size: 24px;
+        }
+    }
+    .auction {
+        &.col-s-6 {
+            @media (min-width: 375px) and (max-width: 559px) {
+                .planned_alert_txt.with-icon {
+                    padding-right: 8px;
+                    padding-left: 8px;
+                    font-size: 13px;
+                }
+            }
+            @media (min-width: 375px) and (max-width: 479px) {
+                .planned_alert_txt.with-icon i {
+                    display: none;
+                }
+            }
+        }
+        &.col-md-3 {
+            @media (min-width: @min-width-md) and (max-width: @max-width-md) {
+                .planned_alert_txt.with-icon {
+                    padding-left: 8px;
+                    i {
+                        right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.auction .enchere {
+    .loader:not(.heart) {
+        position: absolute;z-index: 10001;top: 0;left: 0;
+        background: @white;width: 100%;height: 100%;
+        img {
+            position: absolute;
+            top: 50%;.prefixed(transform, translateY(-50%));
+            left: 50%;.prefixed(transform, translateX(-50%));
+        }
+    }
+}
+
+.row.auctions .auction {
+    &.inactive .enchere{
+        .prefixed(filter, opacity(50%));
+        .prefixed(transition, 'all 800ms ease-in-out');
+    }
+}
+
+.feedbackContainer {
+    position: absolute;bottom: 0;width: 100%;padding: 3px;color: @white;z-index: 2;
+    .nouveautePictoContainer {
+        min-height: 0;position: absolute;bottom: 2px;left: 0;
+        img {width: 60%}
+    }
+}
+
+@media (max-width: 374px) {
+    .thumbContent.fullpage {
+        width: 136px;
+        height: 101px; // overload the size of .col-xs
+        float: left;
+        margin-right: 10px;
+
+        .lazy-wrapper {
+            padding-top: 111px
+        }
+
+        .lazy-wrapper__picture {
+            margin-top: -111px
+        }
+
+        + .moduleTexte {
+            .time {
+                float: left;
+                padding-left: 0
+            }
+
+            .price, .col-xs-12 {
+                float: right
+            }
+
+            .col-xs-12, .time, .price {
+                width: auto
+            }
+        }
+    }
+}
+
+@media (min-width: @min-width-sm) {
+    div .moduleEnchere:first-child {
+        margin-top: 10px
+    }
+    .enchere.container {width: auto}
+}
+
+.moreAuctions {
+    .btn
+    {
+        border: none;
+        font-weight: bold;
+        @media (min-width: 344px) {
+            height: 47px;
+            text-transform: uppercase;
+            font-size: 1.14em;
+        }
+        &.btn-primary {
+            background: @blue;
+            width: 100%;
+        }
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+/**********************************************************************************************************************/
+/****************************************************** FILTERS *******************************************************/
+/**********************************************************************************************************************/
+#filters {
+    margin-bottom: 1em;
+    @media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+        margin-top: 0.5em;
+    }
+    @media (min-width: @min-width-md) {
+        border-top: 2px solid @beige_fonce;
+        padding-top: 0.5em;
+    }
+}
+
+.formfilters {
+    form {
+        padding: 1em 1em 90px;
+        position: relative;
+        z-index: 1;
+        @media (max-width: @max-width-sm) {
+            background-color: @white;
+        }
+        @media (min-width: @min-width-md) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+    }
+    input[type=checkbox], input[type=radio] {
+        margin: 4px 0 0;
+    }
+}
+
+#filters form, .formfilters form, #sort form {
+    .title {color: @black_light;font-size: 18px;margin-bottom: 5px}
+    .reset {cursor: pointer}
+    fieldset {margin-bottom: 1em}
+    .checkbox {
+        margin: 0;
+        input {margin-right: 1em;position: relative}
+    }
+    legend {
+        border: none;margin-bottom: 0;font-size: 1.1em;color: @black_light;
+        &.title {margin-bottom: 0}
+        label {font-weight: bold}
+        .checkbox input {margin-right: 0}
+    }
+}
+
+#sort, #sortMobile {
+    margin-top: 0.5em;
+    .btn-link {
+        color: @black_light;
+        padding-top: 0;
+        padding-bottom: 0;
+        font-weight: normal
+    }
+    .dropdown-menu > .active >a,
+    .dropdown-menu > .active > a:focus,
+    .dropdown-menu > .active > a:hover {
+        background-color: transparent;
+        color: @black_light;
+        font-weight: bold
+    }
+}
+
+@media (max-width: @max-width-sm) {
+    #sortMobile {
+        background-color: @white;
+        margin-top: 0;
+        .btn-group {
+            width: 100%
+        }
+        .dropdown-menu {
+            display: block;
+            position: initial;
+            float: none;
+            border: 0;
+            box-shadow: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            & > li {
+                & > a {
+                    padding: 10px 0;
+                }
+            }
+        }
+    }
+}
+
+/**********************************************************************************************************************/
+/************************************************* Upcoming auction ***************************************************/
+/**********************************************************************************************************************/
+.enchere .upcoming {
+    .picture {
+        .coming-soon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            color: @white;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+}

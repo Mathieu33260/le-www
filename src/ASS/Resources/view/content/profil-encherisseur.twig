@@ -1,0 +1,189 @@
+{% extends 'layout/html.twig' %}
+{% block title %}Les profils des enchérisseurs{% endblock %}
+{% block metaDesc %}Quelle techniques pour remporter les bonnes affaires ? Êtes vous plutôt un sniper ou un flambeur ? Découvrez le sondage sur les différents profils des clients Loisirs Enchères!{% endblock %}
+{% block background %}background-gris{% endblock %}
+{% block main_content %}
+    {% set personas = [
+        {
+            'id'   : '1',
+            'slug' : 'shy',
+            'name' : 'timide',
+            'img' : '//img.loisirsencheres.fr/loisirs/image/upload/v1490627043/ressource/timide-color.png',
+            'summary' : 'Il tente une petite mise et active le rappel sms pour être averti juste avant la fin de l\'enchère ! Il ne réapparaît qu’aux dernières minutes pour surenchérir sur les autres membres.'
+        },
+        {
+            'id'   : '2',
+            'slug' : 'spender',
+            'name' : 'flambeur',
+            'img' : '//img.loisirsencheres.fr/loisirs/image/upload/v1490627043/ressource/bluffer-color.png',
+            'summary' : 'Il n’a pas de temps à perdre, il sait quel prix maximum il est prêt à mettre et il s\'y tient. Il essaie de décourager les autres enchérisseurs en misant vite et fort.'
+        },
+        {
+            'id'   : '3',
+            'slug' : 'warrior',
+            'name' : 'warrior',
+            'img' : '//img.loisirsencheres.fr/loisirs/image/upload/v1490715051/ressource/warrior-color.png',
+            'summary' : 'S\'il doit surenchérir sur lui-même ou sur des dizaines de concurrents pour être premier il n’hésitera pas : aucune enchère ne peut lui échapper, le combat est dans ses veines !'
+        },
+        {
+            'id'   : '4',
+            'slug' : 'sniper',
+            'name' : 'sniper',
+            'img' : '//img.loisirsencheres.fr/loisirs/image/upload/v1490627382/ressource/sniper-color.png',
+            'summary' : 'Il attend souvent le dernier moment pour dégainer et rafler la mise à la dernière seconde, habituellement invisible dans la liste des mises précédentes !'
+        },
+        {
+            'id'   : '5',
+            'slug' : 'connected',
+            'name' : 'connecté',
+            'img' : '//img.loisirsencheres.fr/loisirs/image/upload/v1490716109/ressource/connecte-color.png',
+            'summary' : 'Il passe du site web à l\'application en un temps record, il peut aussi bien enchérir dans le bus que depuis chez lui. Bref, il ne loupe jamais une enchère !'
+        }
+    ]
+    %}
+    <div class="text-center block-separ-bottom block-separ-top">
+        <h1>Quel type d'enchérisseur êtes-vous ?</h1>
+        <p>Cliquez sur le type d'enchérisseur qui vous ressemble le plus et découvrez ce que nos autres membres ont répondu !</p>
+        <div class="alert alert-danger hide">
+            <p>Pour pouvoir choisir un profil, connectez-vous.</p>
+        </div>
+        {% if userChoice %}
+            <p id="choice">Votre choix : <b>{% if userChoice == "shy" %}timide{% elseif userChoice == "spender" %}flambeur{% elseif userChoice == "connected"%}connecté{% else %}{{userChoice}}{% endif %}</b></p>
+        {% endif %}
+    </div>
+    <div class="row">
+    {% for persona in personas %}
+        <div class="col-xs-12 col-sm-6 col-md-4{% if persona.id == 4 %} col-md-offset-2{% elseif persona.id == 5 %} col-sm-offset-3 col-md-offset-0{% endif %} text-center persona block-separ-bottom">
+            <div class="carddiv-profil-encherisseur">
+                <div class="frontofcard-person background-blanc{% if persona.slug == userChoice %} activated{% endif %}">
+                    <img src="{{ persona.img }}" alt="Le {{ persona.name }}" />
+                    <h3>{{ persona.id }}. L'enchérisseur <strong>{{ persona.name }}</strong></h3>
+                    <p>{{ persona.summary }}</p>
+                    {% if user %}
+                    <button class="btn btn-warning btn-block" data-persona-choice="{{ persona.slug }}" data-persona-name="{{ persona.name }}">Je suis plutôt un {{ persona.name }}</button>
+                    {% else %}
+                        <authentification-buttons
+                            :hide-register-button="true"
+                            class-css-login-btn-default="btn btn-warning btn-block login"
+                            login-text="Connectez-vous pour choisir"
+                            :force-button-version="true"
+                        ></authentification-buttons>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    {% if userChoice %}
+    <p class="text-center" style="padding-top: 15px">
+        <button class="btn btn-warning see-results">Voir les résultats</button>
+    </p>
+    <div class="text-center" style="padding: 15px 0px 40px 0px">
+        Ce profil ne vous convient plus ? Vous pouvez cliquer à nouveau sur un personnage pour choisir votre nouveau profil !<br />
+
+        Vous vous êtes reconnu dans un des profils et vous voulez parler de votre expérience sur Loisirs Enchères ?<br />
+        Venez laisser votre commentaire et participer à <a href="https://blog.loisirsencheres.com/quel-encherisseur-etes-vous/" target="_blank">la discussion sur notre blog !</a>
+    </div>
+    {% else %}
+
+    <p class="text-center block-separ-bottom block-separ-top">
+        Vous vous êtes reconnu dans un des profils et vous voulez parler de votre expérience sur Loisirs Enchères ?<br />
+        Venez laisser votre commentaire et participer à <a href="https://blog.loisirsencheres.com/quel-encherisseur-etes-vous/" target="_blank">la discussion sur notre blog !</a>
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block modal %}
+    {{parent()}}
+    {% include 'modals/ResultatProfilEncherisseur.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script>
+
+$(document).ready(function () {
+    var choiceFr = $("#choice").find('b');
+    var choice;
+
+    $('[data-persona-choice]').on('click', function(){
+        var $btn = $(this);
+        choiceFr = $btn.data('persona-name');
+        choice = $btn.data('persona-choice');
+        var previousText = $btn.text();
+
+        $("#choice").find('b').text(choiceFr);
+        $(".modal-title").find('span').text(choiceFr);
+        $(".frontofcard-person").removeClass("activated");
+        $btn.parent().addClass("activated");
+        $.ajax({
+            url: '{{ path('survey.personaPost') }}',
+            type: "POST",
+            data: {choice: choice}
+        }).success(function(data){
+            ajaxCall();
+        }).error(function(data){
+            if(data.status == 401) {
+              $('.alert-danger').removeClass('hide');
+            }
+            else {
+                alert('Une erreur s\'est produite');
+            }
+        }).complete(function(){
+            $btn.find('b').text(previousText);
+            hideGeneralLoader();
+        })
+    });
+
+    $('.see-results').on('click', ajaxCall);
+
+    // Call for data charts
+    function ajaxCall() {
+        showGeneralLoader();
+        $.ajax({
+            url: '{{ path('survey.personaHome', {ajax:'getResults'}) }}',
+            type: "GET"
+        }).success(function(data){
+            for (i = 0; i < data['length']; i++) {
+                if(data[i]['value'] == "spender") {
+                    var spenderPc = data[i]['pc'];
+                }
+                else if (data[i]['value'] == "connected") {
+                    var connectedPc = data[i]['pc'];
+                }
+                else if (data[i]['value'] == "warrior") {
+                    var warriorPc = data[i]['pc'];
+                }
+                else if (data[i]['value'] == "shy") {
+                    var shyPc = data[i]['pc'];
+                }
+                else if (data[i]['value'] == "sniper") {
+                    var sniperPc = data[i]['pc'];
+                }
+            }
+
+            $(".progress").css("width", "0%");
+            $("#connected").css("width", connectedPc+'%');
+            $("#connected").find('b').text(connectedPc+'%');
+            $("#spender").css("width", spenderPc+'%');
+            $("#spender").find('b').text(spenderPc+'%');
+            $("#sniper").css("width", sniperPc+'%');
+            $("#sniper").find('b').text(sniperPc+'%');
+            $("#warrior").css("width", warriorPc+'%');
+            $("#warrior").find('b').text(warriorPc+'%');
+            $("#shy").css("width", shyPc+'%');
+            $("#shy").find('b').text(shyPc+'%');
+
+            $('#ResultatVoteModal').modal('show');
+        }).error(function(){
+            $('.alert-danger').removeClass('hide');
+        }).complete(function(){
+          hideGeneralLoader();
+        });
+    }
+});
+</script>
+{% endblock %}

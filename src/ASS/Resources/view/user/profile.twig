@@ -1,0 +1,307 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-12 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8{% if app.request.get('onlycontent') is not null %} paddingtop1{% endif %}{% if isApp(app.request) %} col-xs-10 col-xs-offset-1{% endif %}" id="userProfile">
+            {% if app.request.get('onlycontent') is null %}
+            {% include 'user/template/mobileMenu.twig' %}
+            <h1>Mon profil</h1>
+            {% endif %}
+            <user-register-status
+                :disabled-scroll="true"
+                item-class="col-xs-12 col-sm-6"
+                :show-step-one="false"
+                phone-content="Renseignez votre numéro de téléphone et assurez-vous de ne rater aucune infos concernant vos enchères !"
+            ></user-register-status>
+            <hr />
+            {{ form_start(profileForm, {'attr':{'class':'form-horizontal row'}}) }}
+            <div class="col-xs-12">
+                {% if user.num is not null %}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label required">Numéro membre <i class="icon-faq small-tooltip"
+                                                                          data-toggle="tooltip"
+                                                                          data-placement="bottom"
+                                                                          title="Vous pouvez communiquer ce numéro lors de vos contacts avec le SAV afin d'être pris en charge plus rapidement.">
+                            </i></label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly value="{{ user.num|number_format(0,',',' ') }}" class="form-control">
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form_label(profileForm.gender,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.gender) }}</div>
+                    <div class="col-sm-9">
+                        {%- for child in profileForm.gender %}
+                            <div class="radio-inline">
+                            {{- form_widget(child) -}}
+                            {{- form_label(child) -}}
+                            </div>
+                        {% endfor -%}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.firstName,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.firstName) }}</div>
+                    <div class="col-sm-9 ">
+                        {{ form_widget(profileForm.firstName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.lastName,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.lastName) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(profileForm.lastName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.birthday,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.birthday) }}</div>
+                    <div class="col-sm-9">
+                        {{- form_widget(profileForm.birthday, {'attr': {'class': 'form-control', 'placeholder':'jj/mm/aaaa'}}) -}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="text" disabled="" name="email" placeholder="Email" class="form-control" value="{{ user.email }}" title="email" />
+                        <p><a href="{{path('user.email')}}{{app.request.get('onlycontent')?"?onlycontent=1" : "" }}">Modifier mon email</a></p>
+                    </div>
+                </div>
+                {{ form_widget(profileForm.housenumber) }}
+                <div class="form-group">
+                    {{ form_label(profileForm.street,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.street) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(profileForm.street, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.zipcode,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.zipcode) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(profileForm.zipcode, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="field-errors">{{ form_errors(profileForm.showZipcode) }}</div>
+                    <div class="col-xs-12 col-sm-9 col-sm-offset-3">
+                    {{ form_widget(profileForm.showZipcode) }}
+                    {{ form_label(profileForm.showZipcode) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.city,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.city) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(profileForm.city, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(profileForm.country,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(profileForm.country) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(profileForm.country, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="text-center">
+                    {{ form_widget(profileForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(profileForm) }}
+            {{ form_end(profileForm) }}
+            {% if isApp(app.request) == false %}
+            <hr />
+            <h2>Préfèrences de contact</h2>
+            <div class="row">
+                {{ form_start(preferencesForm, {'attr':{'class':'form-horizontal'}}) }}
+                    <div class="col-sm-12">
+                        {% for child in preferencesForm.mail_settings %}
+                            <div>
+                                {% if child.vars.value == 'email_allow_auction_overbid' and allowOverbid == 1 %}
+                                    {{ form_widget(child, {'attr': {'class': 'mail_settings', 'value_user_id' : user.id, 'checked' : 'checked' }}) }}
+                                {% else %}
+                                    {{ form_widget(child, {'attr': {'class': 'mail_settings', 'value_user_id' : user.id }}) }}
+                                {% endif %}
+                                {{ form_label(child,'', {'label_attr': {'class': 'mail_settings_label'}}) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </form>{# No submit button #}
+            </div>
+            {% endif %}
+            <hr />
+            {% if bookableVouchers is defined and bookableVouchers|length > 0 %}
+                <div class="row">
+                <table class="table-bordered table-striped table-condensed col-xs-12">
+                    <thead class="cf">
+                        <tr>
+                            <th class="text-center">Ench&egrave;re</th>
+                            <th class="numeric text-center">Prix</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Etat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bookableVoucher in bookableVouchers %}
+                            <tr>
+                                <td data-title="Ench&egrave;re">{{ bookableVoucher.name|length > 80 ? bookableVoucher.name|slice(0, 80)|raw |striptags ~ '...' : bookableVoucher.name|raw  }}</td>
+                                <td data-title="Prix">{{ bookableVoucher.amount/100 }} &euro;</td>
+                                <td data-title="Date" class="numeric" title="{{ bookableVoucher.payment_created|date("d/m/Y H:i:s") }}">{{ bookableVoucher.payment_created|date("d/m/Y") }}</td>
+                                <td data-title="Etat">
+                                    {% if bookableVoucher.reservationButton %}
+                                        <a class="btn btn-sm btn-warning" href="{{ path('user.voucher.book',{'userId':bookableVoucher.user_id, 'voucherId':bookableVoucher.voucherId}) }}" target="_blank">Réserver</a>
+                                    {% endif %}
+
+                                    {% if bookableVoucher.reservationText %}
+                                        <em style="color: #20b9e4;">{{ bookableVoucher.reservationText }}</em>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <hr/>
+            {% endif %}
+            <div class="row">
+                <h2 align="center" class="col-xs-12">
+                    Mes cartes enregistrées
+                    <i class="icon-faq small-tooltip" data-toggle="popover" data-placement="top" data-placement="top"
+                       data-content="À aucun moment Loisirs Enchères n'enregistre votre carte, les données sont validées par notre partenaire bancaire (Crédit Agricole) et ne sont réutilisables que par vous et uniquement pour des achats sur notre site. Aucune information bancaire vous concernant ne transite via le site Loisirs Enchères.">
+                    </i>
+                </h2>
+                <div class="col-xs-12">
+                    {% for creditcard in creditcards %}
+                        <div class="cardLine row">
+                          <div class="col-xs-3 text-center"><img style="width: 30px;" class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/{{ creditcard.type }}.png" alt="{{ creditcard.name }}" /></div>
+                          <div class="col-xs-4 nopadding-only text-center">Expire le {{ creditcard.expiredate|date('m/y') }}</div>
+                          <div class="col-xs-4 text-right"><a href="{{ path('user.creditcard.delete',{'id': creditcard.id}) }}" class="texte-gris">Supprimer</a></div>
+                        </div>
+                    {% else %}
+                        <p class="text-center">Vous n'avez pas encore de carte de paiement enregistrée.</p>
+                    {% endfor %}
+                    <div class="text-center" id="addCreditCard">
+                      <a class="btn btn-primary" href="#">Ajouter une carte de paiement</a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h2>Profil type d'enchérisseur</h2>
+            <div class="row">
+                <div class="col-sm-12">
+                    Plutôt warrior ou timide ?<br>
+                    <a href="{{ path('survey.personaHome') }}">Choisissez votre profil type d'enchérisseur</a> et regardez les choix des autres utilisateurs !<br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% include 'modals/user/userCreditcard.twig' %}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#userProfile').find('.mail_settings').on('click',function() {
+            var $_that = $(this);
+            var $_isChecked = $_that.is(":checked");
+            $_that.hide();
+            $($_that).siblings('label').append('<img class="loading_gif_preferences" src="{{assetCdn}}/assets/gfx/loader-small-bleu.gif" alt="chargement" />');
+            $($_that).attr('disabled','');
+            $.ajax({
+                url: '/user/setting',
+                dataType: 'json',
+                async: false,
+                data: {id: $(this).attr('value_user_id'), setting: $(this).attr('value'), checked: $_isChecked },
+                complete: function(){
+                    $('#userProfile').find('.loading_gif_preferences').remove();
+                    $($_that).siblings('label').find('.icon-error-code').remove();
+                    $($_that).siblings('label').append(' <i class="icon-correct-code text-success"></i>');
+                    $_that.show();
+                },
+                error: function(){
+                    $('#userProfile').find('.loading_gif_preferences').remove();
+                    $($_that).siblings('label').find('.icon-correct-code').remove();
+                    $($_that).removeAttr('disabled','');
+                    $($_that).siblings('label').append(' <i class="icon-error-code text-danger"></i>');
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#addCreditCard').on('click', function() {
+            if ($('#creditCardIframe').length > 0) {
+                $('#creditCardIframe').remove();
+            }
+            $('#userCreditcardModal').find('.modal-body').empty();
+            $('#userCreditcardModalTitle').html('Ajouter une carte de paiement');
+            $('<iframe/>', {
+                id : 'creditCardIframe',
+                src : '{{ path('user.creditcard.add',{'userId': user.id}) }}',
+                width : "96%",
+                height: "300px",
+                scrolling : "no",
+                frameborder : "0"
+            }).appendTo('#userCreditcardModal .modal-body');
+            $('#userCreditcardModal').appendTo("body").modal('show');
+
+        });
+
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+        // Listen to message from child window
+        eventer(messageEvent,function(e) {
+            if (e.data == 'BidOk') {
+                $('#userCreditcardModal').modal('hide');
+                $('#userCreditcardModal').on('hidden.bs.modal', function (e) {
+                    $('#userCreditcardModal').find('.modal-body').empty();
+                    $('#userCreditcardModalTitle').html('Succés!');
+                    $('#userCreditcardModal').find('.modal-body').html('Carte ajoutée avec succès !');
+                    $('#userCreditcardModal').appendTo("body").modal('show');
+                    location.reload();
+                });
+            }
+        },false);
+    </script>
+    <script src="{{assetCdn}}/assets/js/languages/datepicker-fr.js"></script>
+    <script>
+        $(function() {
+            var today = new Date();
+            $("#profile_birthday").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: String(today.getFullYear()-115)+':'+String(today.getFullYear()-17),
+                minDate: new Date(today.getFullYear()-115, 00, 01),
+                maxDate: new Date(today.getFullYear()-17, 11, 31)
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Comment ça marche ?{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Loisirs Enchères, comment ça marche ?</h1>
+
+    {% include './content/_comment-ca-marche.twig' %}
+
+    <div class="text-center padding-text-mobile">
+        <h2><small><b>Pas encore de compte ?<br>Enchérissez gratuitement et fixez votre prix !</b></small></h2>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+                <a href="{{ path('user.register') }}" rel="nofollow" class="btn btn-warning btn-block">S'inscrire</a>
+            </div>
+        </div>
+        <div>OU</div>
+    </div>
+    <div class="padding-text-mobile">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+                <a href="{{ path('user.login') }}" class="btn btn-primary btn-block">Se connecter</a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center padding-text-mobile block-separ-bottom">
+        <h2><b><small>Les conditions d’utilisation</small></b></h2>
+        <p>En qualité de membre de Loisirs Enchères, vous vous engagez à n’avoir qu’un seul profil. Néanmoins, le site Loisirs Enchères accepte que chaque membre d’un même foyer puisse détenir un profil, sous condition d’avoir 18 ans révolus.</p>
+        <p>De plus, vous devez attentivement lire et accepter les conditions générales d’utilisation de Loisirs Enchères.</p>
+        <p class="text-center">Vous avez d'autres questions ? Consultez notre <a href="{% if isApp(app.request) %}{{ 'comloisirsencheres://tutorial' }}{% else %}{{ path('faq') }}{% endif %}">FAQ</a>.</p>
+    </div>
+{% endblock %}
+{% block footer %}
+    {% include 'module/comment-ca-marche.twig' %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,192 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*Appel de polices*/
+@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
+
+body {
+    font-family:'Lato';
+    font-size:13px;
+}
+
+.main {
+    width:595px;
+    margin:20px auto;
+}
+
+
+/*Header*/
+
+.row-1 {
+    display:block;
+    height:120px;
+    margin-bottom:20px;
+}
+
+header img {
+    display: inline-block;
+    float: left;
+}
+
+.user {
+    font-weight:700;
+    float:right;
+    width:280px;
+    height:40px;
+    margin:20px 0px 0px 0px;
+    text-transform:uppercase;
+    color:#666667;
+    text-align:right;
+}
+
+.bandeau {
+    background-image:url(//www.loisirsencheres.com/assets/gfx/pdf/bandeau.png);
+    float:right;
+    height:42px;
+    width:270px;
+    margin:30px 0px 0px 0px;
+}
+
+/*Séparation*/
+
+.separation {
+    height:5px;
+    width:100%;
+    background-color:#666667;
+    margin:10px 0px;
+    float:left;
+}
+
+/*Titres*/
+
+h2 {
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:20px;
+    color:#4DACDF;
+}
+
+h3 {
+    text-transform:uppercase;
+    margin: 10px 0px;
+}
+
+
+/*Tableau*/
+
+td {
+
+}
+
+/*Offre*/
+.importantproduct {
+    color:#FF0000;
+    font-size: 13px;
+}
+
+.imgproduct {
+    width:120px;
+    margin-top:10px;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.offre {
+    float:left;
+}
+
+.titreenchere {
+    font-weight:700;
+    padding: 10px;
+    width:150px;
+    display:inline-block;
+    vertical-align:top;
+}
+
+.descripenchere {
+    padding: 10px;
+    width:255px;
+    display:inline-block;
+    vertical-align:top;
+}
+
+/*Coupon*/
+
+.colonne-2 {
+    width:260px;
+    height:100px;
+    display:inline-block;
+    background-color: #4EADE1;
+    color: white;
+    text-transform: uppercase;
+    padding: 10px;
+    text-align:center;
+    margin: 0px 10px 10px 0px;
+}
+
+.code {
+    font-size: 20px;
+    font-weight: 700;
+    line-height:30px;
+}
+
+/*Prestataire*/
+
+.prestataire {
+    width:280px;
+    float:right;
+    margin:0px 0px 0px 10px;
+}
+
+
+/*Récapitulatif*/
+
+.colonne {
+    margin: 0px 10px 0px 0px;
+    width: 280px;
+    float: left;
+}
+
+.colonne img {
+    width: 280px;
+}
+
+span {
+    font-size:10px;
+    float:right;
+}
+
+/*Utilisation*/
+
+.etape {
+    float:left;
+    width: 139px;
+    margin-top:10px;
+}
+
+.etape img {
+    width:25px;
+    vertical-align:middle;
+}
+
+.etape p {
+    display:inline-block;
+    font-weight:700;
+}
+
+.utilisation {
+    float:left;
+}
+
+.modalites {
+    margin-top: 10px;
+    float: left;
+    font-size:12px;
+    text-align: justify;
+}
+
+footer span {
+    font-size:10px;
+    text-align:center;
+    margin-top:10px;
+}

@@ -1,0 +1,157 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}{{ title }} {{ parent() }}{% endblock %}
+
+{% if isApp(app.request) %}
+    {% block body_class %}isapp ispayement{% endblock %}
+{% else %}
+    {% block background %}hidenavbar ispayement{% endblock %}
+{% endif %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% include './paiement/module/breadcrumb-step.twig' %}
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-3{% else %} col-md-4{% endif %}">
+            {% include './paiement/module/resume.twig' %}
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="visible-md visible-lg promocode">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeDesktop'} %}</div>
+        {% endif %}
+            <div id="didyouknownxcb"{% if not useNxcb or not useCasino %} class="hide"{% endif %}>
+                <div class="nxcb visible-md visible-lg">
+                    <div class="row"{% if useCasino %} data-toggle="modal" data-target="#casinoModal"{% endif %}>
+                    {% include './paiement/include/3xcb.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} productDescription">{% include './paiement/module/productDescription.twig' %}</div>
+        {% if productType != 'giftcard' and (confirmation == false and (reduc is not defined or reduc != 'false')) %}
+            <div class="col-xs-12 visible-xs visible-sm promocode background-blanc">{% include './paiement/module/promocode.twig' with {'promocodeId': 'promocodeMobile'} %}</div>
+        {% endif %}
+        <div class="col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right background-blanc" id="deliveryAddress">
+            <form method="post" id="formain">
+                {% if checkoutFlow['hasDelivery'] == true %}
+                    <div class="address row">
+                        <div class="col-xs-12">
+                            {% include './paiement/module/address.twig' %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% include './paiement/module/submitBlock.twig' %}
+            </form>
+        </div>
+        <div class="background-gris cgv col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right">
+            <p class="text-center text-muted"><small>En validant cette commande vous acceptez nos <a href="#" data-toggle="modal" data-target="#cgvModal">CGV</a>.</small></p>
+        </div>
+        <div class="garantie col-xs-12{% if productType == 'giftcard' %} col-md-9{% else %} col-md-8{% endif %} right background-gris">
+            {% include './paiement/module/garanties.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal %}
+    {{ parent() }}
+    {% include './modals/cgv.twig' %}
+    {% include './modals/paiement/casino.twig' %}
+    {% include './modals/paiement/casinoRgpd.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include './paiement/include/script.twig' %}
+    {% include './paiement/include/track-checkout.twig' %}
+    <script src="{{assetCdn}}/assets/js/intlTelInput.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.min.js"></script>
+    <script src="{{assetCdn}}/assets/js/jquery.validate.messages_fr.js"></script>
+    <script>
+        $.validator.addMethod(
+            "phoneNumber",
+            function(value, element) {
+                var telInput = $("#" + element.id);
+
+                var isRequired = telInput.prop('required')
+                var value = telInput.val()
+                if (isRequired == false && (value == null || value == '')) {
+                    return true;
+                }
+
+                return telInput.intlTelInput("isValidNumber");
+            },
+            "Numéro de téléphone invalide"
+        );
+
+        $.validator.addMethod("zipCodeValidation", function() {
+            var zipCode = $('#zipCode').val();
+            return (/(^\d{5}$)/).test(zipCode); // returns boolean
+        }, "Entrez un code postal à 5 chiffres");
+
+        $("#formain").validate({
+            rules: {
+                "gender": {
+                    required: true
+                },
+                "firstName": {
+                    required: true
+                },
+                "lastName": {
+                    required: true
+                },
+                "phone": {
+                    phoneNumber: true
+                },
+                "mobile": {
+                    required: true,
+                    phoneNumber: true
+                },
+                "email": {
+                    required: true,
+                    email: true
+                },
+                "zipCode": {
+                    zipCodeValidation: true
+                }
+            },
+            errorElement: "span",
+            errorPlacement: function ( error, element ) {
+                if($(element).parents('.form-group').find('.help-block').length){
+                    $(element).parents('.form-group').find('.help-block').remove();
+                }
+                error.addClass( "help-block" ).removeClass('error');
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.parent( "label" ) );
+                } else if(element.prop('type') === 'radio') {
+                    error.insertAfter( element.parents( ".radio " ) );
+                } else {
+                    $(element).parents('.form-group').append(error);
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).parents( ".form-group" ).removeClass( "has-error" );
+                $(element).parents('.form-group').find('.help-block').remove();
+            },
+            invalidHandler: function(event, validator) {
+                $('#general-loader').addClass('hide');
+            }
+        });
+    </script>
+    <script>
+        $('.input-tel').intlTelInput({
+            initialCountry: "fr",
+            utilsScript: "{{assetCdn}}/assets/js/phone/utils.js",
+            formatOnDisplay: false,
+            nationalMode: false,
+            allowDropdown: false,
+            autoHideDialCode: false,
+            separateDialCode: true,
+            autoPlaceholder: false,
+        });
+    </script>
+{% endblock%}

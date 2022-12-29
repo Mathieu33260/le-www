@@ -1,0 +1,121 @@
+{{ form_start(casinoForm) }}
+<div class="row">
+    <div class="form-group col-xs-12">
+        <div class="row">
+            {{ form_label(casinoForm.userGender,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userGender) }}</div>
+                {%- for child in casinoForm.userGender %}
+                    <div class="radio-inline">
+                        {{- form_widget(child) -}}
+                        {{- form_label(child) -}}
+                    </div>
+                {% endfor -%}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userFirstName,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userFirstName) }}</div>
+                {{ form_widget(casinoForm.userFirstName, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userLastName,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userLastName) }}</div>
+                {{ form_widget(casinoForm.userLastName, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group hide col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userMaidenName,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userMaidenName) }}</div>
+                {{ form_widget(casinoForm.userMaidenName, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.location,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.location) }}</div>
+                {{ form_widget(casinoForm.location, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.street,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.street) }}</div>
+                {{ form_widget(casinoForm.street, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.city,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.city) }}</div>
+                {{ form_widget(casinoForm.city, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.zipcode,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.zipcode) }}</div>
+                {{ form_widget(casinoForm.zipcode, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group hide col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.country,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.country) }}</div>
+                {{ form_widget(casinoForm.country, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userPhone,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userPhone) }}</div>
+                {{ form_widget(casinoForm.userPhone, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userDateOfBirth,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userDateOfBirth) }}</div>
+                {{ form_widget(casinoForm.userDateOfBirth, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+        <div class="row">
+            {{ form_label(casinoForm.userBirthZipcode,'', {'label_attr': {'class': 'col-xs-12 control-label'}}) }}
+            <div class="col-xs-12">
+                <div class="field-errors">{{ form_errors(casinoForm.userBirthZipcode) }}</div>
+                {{ form_widget(casinoForm.userBirthZipcode, {'attr': {'class': 'form-control', 'autocomplete': 'off'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        {{ form_widget(casinoForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+</div>
+{{ form_rest(casinoForm) }}
+{{ form_end(casinoForm) }}

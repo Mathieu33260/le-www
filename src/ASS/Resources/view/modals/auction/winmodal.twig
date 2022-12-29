@@ -1,0 +1,48 @@
+<div class="modal fade" id="winmodal" tabindex="-1" role="dialog" aria-labelledby="winmodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="auction-img">
+                <img src="" alt="#" class="img-responsive" />
+            </div>
+            <div class="modal-body">
+                <p class="modal-title text-center">FÉLICITATIONS</p>
+                <p class="text-center text-black"><span class="firstname"></span>, vous avez remporté cette enchère !</p>
+                <p><span class='auction-name'></span> à <span class="total"></span> au lieu de <span class="publicPrice"></span>.</p>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Enchère :</td>
+                            <td class="amount text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Frais de dossier :</td>
+                            <td class="charges text-right"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total :</th>
+                            <th class="total text-right"></th>
+                        </tr>
+                    </tfoot>
+                </table>
+                {% if product is defined and product.flow != 'no_auction_payment' %}
+                <div class="text-center"><a href="" class="btn btn-primary">Continuer</a></div>
+                {% endif %}
+                <div class="text-center timerredirect hide">
+                    <em>Vous allez être redirigé(e) vers votre commande dans <b><span class="seconds">6</span> secondes</b></em>
+                </div>
+                <div class="text-center paymentLogos">
+                    <img src="{{assetCdn}}/assets/img/logo-mastercard.png" alt="mastercard" />
+                    <img src="{{assetCdn}}/assets/img/logo-visa.png" alt="visa" />
+                    <img src="{{assetCdn}}/assets/img/logo-cb.png" alt="CB" />
+                    <img src="{{assetCdn}}/assets/img/logo-ancv.png" alt="ancv" />
+                    <img src="{{assetCdn}}/assets/img/cb4x.png" alt="cb4x" class="3xcb" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

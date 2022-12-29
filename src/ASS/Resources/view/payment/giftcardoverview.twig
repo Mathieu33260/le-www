@@ -1,0 +1,63 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block main_content %}
+    <h3 class="blue-bg">Paiement</h3>
+    <div id="paiementtext">
+        <div style="width:100%; margin-bottom:10px;">
+            <div id="i2">
+                <table style="float:left; width:45%">
+                    <span><strong>Date de la commande : </strong> {{ "now"|date("d/m/Y") }}</span><br>
+                    <span><strong>Montant de la commande : </strong> {{ "%.2f"|format(giftcardpayment.amount/100) }} &euro; </span><br><br>
+                </table>
+                <div style="float:right; width:45%">
+                    <span>{{ user.gender|capitalize }} {{ user.lastName|capitalize }} {{ user.firstName|capitalize }}</span><br>
+                    <span>{{ user.location.housenumber|default('')|capitalize }}&nbsp;{{ user.location.street|default('')|capitalize }}</span><br>
+                    <span>{{ user.location.zipcode|default('') }}&nbsp;{{ user.location.city|default('')|upper }}</span><br>
+                    <span>{{ user.location.country|default('')?country[user.location.country]|upper:''}}</span>
+                </div>
+
+                <table style="margin-top:20px; border-collapse:collapse; width:100%; border:0;" cellspacing="5" cellpadding="0">
+                    <tr>
+                        <th align="left" style="padding:0; margin:0; width:500px;">Articles</th>
+                        <th align="left" style="padding:0; margin:0; width:80px;"></th>
+                        <th align="right" style="text-align:right; padding:0; margin:0; width:80px;">Prix TTC</th>
+                    </tr>
+                    <tr>
+                        <td align="left">Carte cadeau</td>
+                        <td></td>
+                        <td align="right">{{ "%.2f"|format(giftcardpayment.amount/100) }} &euro;</td>
+                    </tr>
+                    <tr>
+                        <th align="left" style="padding-top:10px; border-top: 1px solid black;"></th>
+                        <td align="left" style="padding-top:10px; border-top: 1px solid black;"></td>
+                        <td align="right" style="padding-top:10px; border-top: 1px solid black;"></td>
+                    </tr>
+                    <tr>
+                        <td align="left"></td>
+                        <th align="left">Total TTC :</th>
+                        <td align="right">{{ "%.2f"|format(giftcardpayment.amount/100) }} &euro;</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="paiementmode">
+            <h3 style="text-align: center; font-weight: bold;">Veuillez s&eacute;lectionner le mode de paiement de votre choix</h3>
+            <div id="Sogenactif" class="paiementleft" title="Payer par eTransaction">
+                <div align="center">
+                    <a href="{{ path('payment.giftcardpayment', {'method':'cb', 'id':giftcardpayment.id}) }}"><img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/cb.png" alt="logo cb" /></a>
+                    <a href="{{ path('payment.giftcardpayment', {'method':'visa', 'id':giftcardpayment.id}) }}"><img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/visa.png" alt="logo visa" /></a>
+                    <a href="{{ path('payment.giftcardpayment', {'method':'mastercard', 'id':giftcardpayment.id}) }}"><img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/master_card.png" alt="logo master card" /></a>
+                    <a href="{{ path('payment.giftcardpayment', {'method':'ecarte', 'id':giftcardpayment.id}) }}"><img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/ecarte.png" alt="logo ecart" /></a>
+                    {#<a href="{{ path('payment.giftcardpayment', {'method':'paypal', 'id':giftcardpayment.id}) }}"><img class="logo_paiement" src="{{assetCdn}}/assets/gfx/logopayment/paypal.png" alt="logo paypal" /></a>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

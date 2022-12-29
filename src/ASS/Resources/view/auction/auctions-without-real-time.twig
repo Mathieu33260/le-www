@@ -1,0 +1,58 @@
+<div class="row auctions without-real-time">
+{% for auction in auctions %}
+    <div class="col-xs-6 module">
+        <div class="enchere container">
+            <div class="row">
+                <div class="thumbContent nopadding-only default col-xs-12">
+                    <a href="{{ path("product.auction", {"id": auction.id}) }}" class="no-opacity" data-id="{{ auction.id }}">
+                        <div class="lazy-wrapper">
+                            <lazy-picture
+                                :sources="{{ [
+                                    {
+                                        media: "(min-width: 1200px)",
+                                        srcset: auction.image|transf('c_scale,h_249')|transf('c_crop,w_409,h_249,g_north_east')|cdnUrl ~ ' 1x, ' ~ auction.image|transf('c_scale,h_273')|transf('c_crop,w_446,h_273,g_north_east')|cdnUrl ~ ' 2x',
+                                    },
+                                    {
+                                        media: "(min-width: 768px)",
+                                        srcset: auction.image|transf('c_fit,w_345,g_north_east')|cdnUrl ~ ' 1x, ' ~ auction.image|transf('c_fit,w_470,g_north_east')|cdnUrl ~ ' 2x',
+                                    },
+                                    {
+                                        media: "(min-width: 320px) and (max-width: 767px)",
+                                        srcset: auction.image|transf('c_fit,w_354,g_north_east')|cdnUrl ~ ' 1x, ' ~ auction.image|transf('c_fit,w_735,g_north_east')|cdnUrl ~ ' 2x',
+                                    },
+                                    {
+                                        media: "(min-width: 320px)",
+                                        srcset: auction.image|transf('c_scale,h_117')|transf('c_crop,w_137,h_117,g_north_east')|cdnUrl ~ ' 1x',
+                                    },
+                                ]|json_encode()|raw|e('html_attr') }}"
+                                alt="{{ auction.name }}"
+                                title="{{ auction.name }}"
+                                fallback-url="{{ auction.image|cdnUrl }}"
+                            ></lazy-picture>
+                        </div>
+                        {% if auction.new == '1' %}
+                        <div class="feedbackContainer">
+                            <div class="nouveautePictoContainer">
+                                <img src="//www.loisirsencheres.com/assets/gfx/picto-nouveautes-orange.png" title="nouveauté" alt="nouveauté">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="moduleTexte moduleTexteAuction col-xs-12">
+                    <a href="{{ path("product.auction", {"id": auction.id}) }}" data-id="{{ auction.id }}">
+                        <div class="texte">
+                            <p class="auctionThumbInfo shortloc vue-line-clamp" style="-webkit-line-clamp: 1;">{{ auction.shortLoc }}</p>
+                            <p class="auctionThumbTitle vue-line-clamp" style="-webkit-line-clamp: 2;">{{ auction.name }}</p>
+                        </div>
+                        <div class="prix price-row">
+                            <p class="price">{{ auction.shortPrice }}</p>
+                        </div>
+                        <button class="btn btn-warning btn-block margintop1">{{ auction.linkText }}</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

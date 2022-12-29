@@ -1,0 +1,177 @@
+<script src="{{assetCdn}}/assets/js/intlTelInput.js"></script>
+<script src="{{assetCdn}}/assets/js/places.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('change', "form input[name='method']",function(){
+            var $this = $(this);
+            var val = $this.val();
+            $('#methods').find('.col-xs-4').removeClass('notchecked');
+            $('#methods').find('.col-xs-4').not($this.parent()).addClass('notchecked');
+            $('.paiementmode .descripion').addClass('hide');
+            $('.paiementmode .descripion.'+val).removeClass('hide');
+            if(val === 'tel'{% if product is defined %} || ('{{ product.category }}' == 'TO' && val === 'ancv'){% endif %}){
+                desabled_submit();
+            }
+            else {
+                var nxcbChoice = $this.data('nxcb');
+                if(val === 'nxcb'){
+                    if($('#nxcbForm_'+nxcbChoice).find('.form-group').length === 0){
+                        getLocationForm(nxcbChoice);
+                        getCasinoSchedule(nxcbChoice);
+                    }
+                    $('#nxcbForm_'+nxcbChoice).removeClass('hide');
+                }else{
+                    removeAttrRequired('#nxcbForm_'+nxcbChoice);
+                }
+                enabled_submit();
+            }
+            positioning_submit();
+        });
+        $('#formain').find('button[type=submit]').html('VALIDER LA COMMANDE');
+
+        $('#formain').on('submit', function () {
+            var $this = $(this);
+            if (validator.numberOfInvalids() == 0 && typeof $("input[name='method']:checked").val() !== "undefined") {
+                $this.find('button[type=submit]').html('<i class="icon icon-spinner-solid icon-pulse" aria-hidden="true"></i>');
+                $this.find('button[type=submit]').attr('disabled', 'disabled');
+                $this.find('button[type=submit]').addClass('disabled');
+                //reset the button if the customer come back on the page
+                setTimeout(function () {
+                    $this.find('button[type=submit]').html('VALIDER LA COMMANDE');
+                    $this.find('button[type=submit]').removeClass('disabled');
+                    $this.find('button[type=submit]').removeAttr('disabled', 'disabled');
+                }, 8000)
+            }
+        });
+    })
+</script>
+{% if product is defined %}
+<script>
+    function getLocationForm(nxcbChoice){
+        $('#general-loader').removeClass('hide');
+        $.ajax({
+            method: "GET",
+            url: "{{ path('paiement.location', {paymentId: payment.id})}}",
+            dataType: 'json',
+            data: {token: '{{token}}'{% if useCasino %}, casino: 1{% endif %}, choice: nxcbChoice}
+        }).done(function( result ) {
+            var form = $(result.form).html();
+            formatLocationForm(form,nxcbChoice);
+            $('#general-loader').addClass('hide');
+        });
+    }
+
+    function getCasinoSchedule(nxcbChoice){
+        $.ajax({
+            method: "GET",
+            url: "{{ path('paiement.casinoSchedule', {paymentId: payment.id}) }}",
+            dataType: "json",
+            data: {method: nxcbChoice, token: '{{ token }}'},
+            timeout: 3000,
+        }).done(function (result) {
+            var schedule = $(result.casinoSchedule).html();
+            $('#nxcbBlock_'+nxcbChoice).find('.casino-schedule').html(schedule);
+        }).fail(function (error) {
+          if (typeof _errs !== 'undefined') {
+            _errs.push(new Error(error));
+          }
+        })
+    }
+
+    function formatLocationForm(form,nxcbChoice){
+        var idPrefix = '{% if useCasino %}casino{% else %}location{% endif %}';
+        $('#nxcbForm_'+nxcbChoice).html(form)
+            .find('[required="required"]').attr('data-required','required');
+        $('#submitblock').find('.btn').before($(form).find('#'+idPrefix+'__token'));
+        $('#'+idPrefix+'_country').attr('readonly','readonly');
+        $('#'+idPrefix+'_country').val('FR');
+        $('#'+idPrefix+'_country').after("<span class='help-block'><em>option disponible uniquement pour les résidents de la France métropolitaine</em></span>");
+        $('#'+idPrefix+'_save').remove();
+        if($('#casino_city').parents('.form-group').find('.field-errors').html() == ''){
+            $('#casino_city').parents('.form-group').addClass('hide');
+        }
+        if($('#casino_street').parents('.form-group').find('.field-errors').html() == ''){
+            $('#casino_street').parents('.form-group').addClass('hide');
+        }
+        if($('#casino_zipcode').parents('.form-group').find('.field-errors').html() == ''){
+            $('#casino_zipcode').parents('.form-group').addClass('hide');
+        }
+        {% if useCasino %}
+            // Phone script
+        $('#casino_userPhone').attr('type','tel');
+        $('#casino_userPhone').intlTelInput({
+            initialCountry: "fr",
+            onlyCountries: ['fr'],
+            utilsScript: "{{assetCdn}}/assets/js/phone/utils.js",
+            autoPlaceholder: false,
+            formatOnDisplay: true,
+            nationalMode: false
+        });
+        $.fn.intlTelInput.loadUtils("{{assetCdn}}/assets/js/phone/utils.js");
+        $('#casino_userPhone').on('change', function(){
+            var type = (intlTelInputUtils.numberType.MOBILE === $("#casino_userPhone").intlTelInput("getNumberType")) ? 'mobile' : 'fixe';
+            $('#casino_userPhoneType').val(type);
+        });
+        // End phone script
+        // Location autocomplete
+        placesAutocomplete = places({
+            container: document.querySelector('#casino_location'),
+            countries: ['fr'],
+            language: 'fr',
+            type: 'address',
+        });
+        placesAutocomplete.on('change', function resultSelected(e) {
+            $('#casino_city').val(e.suggestion.city);
+            $('#casino_zipcode').val(e.suggestion.postcode);
+            $('#casino_street').val(e.suggestion.name);
+        });
+        // End location autocomplete
+        // Birthday
+        $('#casino_userDateOfBirth').keyup(function(e) {
+            var val = $(this).val();
+            var nb_car = val.length;
+            if (e.which != 8 && e.which != 46) {
+                if(nb_car == 2 || nb_car == 5) {
+                    $(this).val(val+'-');
+                }
+            } else {
+                if(nb_car == 2 || nb_car == 5) {
+                    $(this).val(val.substr(0, val.length -1));
+                }
+            }
+        });
+        $('#casino_userDateOfBirth').keypress(function(e) {
+            if (e.which == 47 || ($(this).val().length == 10 && $(this).prop('selectionEnd') == $(this).prop('selectionStart'))) {
+                e.preventDefault();
+            }
+        });
+        // end birthday
+        {% endif %}
+        $('#nxcbBlock_'+nxcbChoice).removeClass('hide');
+        if($('#casino_userMaidenName').parents('.form-group').find('.field-errors').html() != '' || $('input[name="casino[userGender]"]:checked').val() == '2'){
+            $('#casino_userMaidenName').attr('required','required');
+            $('#casino_userMaidenName').parents('.form-group').removeClass('hide');
+        };
+        $('#casino_userPhone').val($('#casino_userPhone').intlTelInput('getNumber'));
+    }
+
+    {% if useCasino %}
+    $(document).on('change', 'input[name="casino[userGender]"]', function(){
+        if($(this).val() === '2'){
+            $('#casino_userMaidenName').attr('required','required');
+            $('#casino_userMaidenName').parents('.form-group').removeClass('hide');
+        }else{
+            $('#casino_userMaidenName').removeAttr('required');
+            $('#casino_userMaidenName').parents('.form-group').addClass('hide');
+        }
+    });
+    {% endif %}
+
+    {% if locationFormTemplate is defined %}
+    // edit style and show form
+    var locationFormTemplate = '{{locationFormTemplate|raw}}';
+    var form = $(locationFormTemplate).html();
+    formatLocationForm(form);
+    {% endif %}
+</script>
+{% endif %}

@@ -1,0 +1,15 @@
+<label for="remember-me">
+    <input type="checkbox" id="remember-me" name="rememberme" title="se souvenir de moi" />Se souvenir de moi
+</label>
+<span data-toggle="collapse" data-target=".infoRememberMe" class="icon-faq"></span>
+<div class="infoRememberMe collapse alert alert-info">
+    <button type="button" class="close" data-toggle="collapse" data-target=".infoRememberMe">
+        <span>&times;</span>
+    </button>
+    Pour des raisons de sécurité vous êtes déconnecté de Loisirs Enchères sur cet ordinateur ou téléphone au bout d'un certain moment.<br />
+    Vous pouvez étendre la durée de vie de votre connexion avec l'option se souvenir de moi.
+    <ul>
+        <li>Durée session normale : {{(app['session.storage.options']['cookie_lifetime']/(60*60*24))|round() }} jours</li>
+        <li>Durée du "se souvenir de moi" : {{(app['rememberme.expire']/(60*60*24))|round() }} jours</li>
+    </ul>
+</div>

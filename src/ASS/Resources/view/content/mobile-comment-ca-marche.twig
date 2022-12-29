@@ -1,0 +1,9 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block title %}Comment ça marche ?{% endblock %}
+
+{% block main_content %}
+    <h1 class="blue-bg h3">Comment ça marche ?</h1>
+    {% include './content/_comment-ca-marche.twig' with {'forMobile': true} %}
+    <p class="text-center" style="padding-top:10px">Vous avez d'autres questions ? Consultez notre <a href="{% if isApp(app.request) %}{{ 'comloisirsencheres://tutorial' }}{% else %}{{ path('faq') }}{% endif %}">FAQ</a>.</p>
+{% endblock %}

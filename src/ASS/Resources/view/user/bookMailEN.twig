@@ -1,0 +1,51 @@
+Bonjour,<br />
+Nous vous invitons à trouver ci-dessous une demande de réservation pour {{ productName }}.<br /><br />
+
+Informations client:<br />
+ID Product : {{ productCode }}<br />
+Code unique : {{ voucherCode }}<br />
+Nom, prénom du client : {{ lastName0 }} {{ firstName0 }}<br />
+ID Client : <a href="https://admin.loisirsencheres.com/user/{{ userId }}" target="_blank">{{ userId }}</a><br />
+Date de gain : {{ dateAuctionWin }}<br /><br />
+
+Réservation:<br />
+Date d'arrivée : {{ bookDate }}<br /><br />
+
+Occupants:<br />
+Nombre maximum: {{ nbMax }}<br />
+{% for i in 0..nbPassenger %}
+    {{ attribute(_context,'civilite'~i) }} {{ attribute(_context,'lastName'~i) }} {{ attribute(_context,'firstName'~i) }} {{ attribute(_context,'birthDate'~i) }}<br />
+{% endfor %}
+<br />
+Contact :<br />
+{{ phoneNumber }}<br />
+{{ userMail }}<br /><br />
+
+Demande(s) particulière(s) :<br />
+{% if supplementsOption %}
+    {{ supplementsOption }}<br /><br />
+{% else %}
+    ---<br /><br />
+{% endif %}
+
+En vous remerciant.<br />
+Bien cordialement,<br /><br />
+
+Le Service Réservation de Loisirs Enchères<br />
+<img src="https://img.loisirsencheres.fr/loisirs/image/upload/v1484922058/ressource/mail-signature.png" alt="Loisirs Encheres" /><br /><br />
+
+-- English part --<br /><br />
+
+{% for i in 0..nbPassenger %}
+    {{ attribute(_context,'civilite'~i) }} {{ attribute(_context,'lastName'~i) }} {{ attribute(_context,'firstName'~i) }} {{ attribute(_context,'birthDate'~i) }}<br /><br />
+{% endfor %}
+
+Book Date : {{ bookDate }}<br /><br />
+
+Product Name : {{ productName }}<br />
+Voucher Code: {{ voucherCode }}<br />
+Product ID: {{ productCode }}<br /><br />
+
+Phone Number: {{ phoneNumber }}<br /><br />
+
+Email: {{ userMail }}<br /><br />

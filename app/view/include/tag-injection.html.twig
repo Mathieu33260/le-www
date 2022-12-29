@@ -1,0 +1,6 @@
+{# Tags injection #}
+{% if injectTags is defined %}
+    {% for tag in injectTags %}
+        {{ tag | raw  }}
+    {% endfor %}
+{% endif %}

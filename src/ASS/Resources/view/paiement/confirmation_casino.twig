@@ -1,0 +1,50 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Paiement validé{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>Votre paiement en plusieurs fois a été validé.</strong></h1>
+            <div class="block-separ-bottom block-separ-top">
+                <p class="text-center">Vous recevrez un mail sur votre adresse d'inscription : {{ user.email }} avec votre bon dès que la première transaction est validée. Vous pourrez aussi trouver votre bon sur votre compte Loisirs Enchères et en profiter !<br />
+                N'oubliez pas de regarder vos spams !</p>
+                <p class="text-center"><small>Si jamais vous ne recevez pas de message dans les prochains jours n'hésitez pas à nous contacter à info@loisirsencheres.com</small></p>
+            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/logopayment/illustration-validation.png" alt="#" width="375" /></div>
+            <div class="text-center block-separ-top block-separ-bottom">
+                <p><em>Loisirs Enchères vous remercie de votre confiance !</em></p>
+            </div>
+            {% if not isApp(app.request) %}
+            <p class="text-center text-info">Bravo encore pour cette belle enchère.<br />
+                Partagez la bonne nouvelle avec vos amis sur Facebook<br />et gagnez jusqu'à 200€* !</p>
+            <div class="text-center">
+                <div class="fb-share-button" data-href="{{ path('auction.winnershare', {'title': auction.name|e('sanitize'), 'auctionId16': auction.id|baseConvert(10, 16) } ) }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{path('auction.winnershare', {'title': auction.name|e('sanitize'), 'auctionId16': auction.id|baseConvert(10, 16)})|url_encode}}&amp;src=sdkpreparse">Partager</a></div>
+            </div>
+            <div class="text-center block-separ-topbottom">
+                <a href="{{ path('all.page') }}">Voir les prochaines enchères ></a>
+            </div>
+            <p><small><a href="#" data-toggle="modal" data-target="#modalparrainage"><u>* Voir conditions.</u></a></small></p>
+            {% else %}
+            <div class="text-center block-separ-topbottom">
+                <a href="comloisirsencheres://all">Voir les prochaines enchères ></a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include './paiement/include/track-purchase.twig' %}
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    <!-- Modal parrainage -->
+    {% include 'modals/modalparrainage.twig' %}
+{% endblock %}

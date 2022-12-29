@@ -1,0 +1,208 @@
+// Mix-ins
+.borderRadius(@radius) {
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.boxShadow(@boxShadow) {
+    -moz-box-shadow: @boxShadow;
+    -webkit-box-shadow: @boxShadow;
+    box-shadow: @boxShadow;
+}
+
+.opacity(@opacity) {
+    @opacityPercent: (@opacity * 100);
+    opacity: @opacity;
+    -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opacityPercent})";
+    filter: ~"alpha(opacity=@{opacityPercent})";
+}
+
+.wordWrap(@wordWrap: break-word) {
+    -ms-word-wrap: @wordWrap;
+    word-wrap: @wordWrap;
+}
+
+// Variables
+@light-grey: #CCCCCC;
+@near-black: #030303;
+@default-container-opacity: .95;
+
+// Styles
+
+.toast-message {
+    .wordWrap();
+    a,label {color: @white}
+    a:hover {color: @light-grey;text-decoration: none}
+}
+
+.toast-close-button {
+    position: relative;
+    right: -0.3em;
+    top: -0.3em;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: @white;
+    -webkit-text-shadow: 0 1px 0 rgba(255,255,255,1);
+    text-shadow: 0 1px 0 rgba(255,255,255,1);
+    .opacity(0.8);
+    line-height: 1;
+    &:hover, &:focus {
+        color: @black_light;
+        text-decoration: none;
+        cursor: pointer;
+        .opacity(0.4);
+    }
+}
+
+.rtl .toast-close-button {
+    left: -0.3em;
+    float: left;
+    right: 0.3em;
+}
+
+/*Additional properties for button version
+ iOS requires the button element instead of an anchor tag.
+ If you want the anchor version, it requires `href="#"`.*/
+button.toast-close-button {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+
+
+.toast-top-right {
+    top: 12px;
+    right: 12px;
+}
+
+.toast-bottom-right {
+    right: 12px;
+    bottom: 12px;
+}
+
+#toast-container {
+    position: fixed;
+    z-index: 999999;
+    // The container should not be clickable.
+    pointer-events: none;
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    > div {
+        position: relative;
+        // The toast itself should be clickable.
+        pointer-events: auto;
+        overflow: hidden;
+        margin: 0 0 6px;
+        padding: 15px;
+        width: 450px;
+        .borderRadius(3px 3px 3px 3px);
+        background-position: 15px center;
+        background-repeat: no-repeat;
+        .boxShadow(0 0 6px @beige);
+        color: @white;
+        .opacity(@default-container-opacity);
+    }
+    > div.rtl {
+        direction: rtl;
+        padding: 15px;
+        background-position: right 15px center;
+    }
+
+    > div:hover {
+        .boxShadow(0 0 6px @black_light);
+        .opacity(1);
+        cursor: pointer;
+    }
+
+}
+
+.toast {
+    background-color: @near-black;
+}
+
+.toast-success {
+    background-color: @green_valid;
+}
+
+.toast-error {
+    background-color: @red_error;
+}
+
+.toast-info {
+    background-color: @blue;
+}
+
+.toast-warning {
+    background-color: @orange;
+}
+
+.toast-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: @black_light;
+    .opacity(0.4);
+}
+
+/*Responsive Design*/
+
+@media all and (max-width: 240px) {
+    #toast-container {
+        > div {
+            padding: 8px;
+            width: 11em;
+        }
+        > div.rtl {
+            padding: 8px;
+        }
+        & .toast-close-button {
+            right: -0.2em;
+            top: -0.2em;
+        }
+        & .rtl .toast-close-button {
+            left: -0.2em;
+            right: 0.2em;
+        }
+    }
+}
+
+@media all and (min-width: 241px) and (max-width: 480px) {
+    #toast-container {
+        > div {
+            padding: 8px;
+            width: 18em;
+        }
+        > div.rtl {
+            padding: 8px;
+        }
+        & .toast-close-button {
+            right: -0.2em;
+            top: -0.2em;
+        }
+        & .rtl .toast-close-button {
+            left: -0.2em;
+            right: 0.2em;
+        }
+    }
+}
+
+@media all and (min-width: 481px) and (max-width: 768px) {
+    #toast-container {
+        > div {
+            padding: 50px;
+            width: 25em;
+        }
+        > div.rtl {
+            padding: 15px;
+        }
+    }
+}

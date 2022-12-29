@@ -1,0 +1,25 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Confirmation de paiement par virement{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>VOTRE PAIEMENT EST EN COURS DE TRAITEMENT</strong></h1>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/pictos/horloge.png" alt="#" width="187" /></div>
+            <div class="text-center block-separ-top block-separ-bottom">
+                <p><b>Votre paiement est en cours de traitement. Nous sommes en attente d'une réponse du service de paiement. Le traitement du paiement peut durer plusieurs jours.</b></p>
+            </div>
+            {% if not isApp(app.request) %}
+            <div class="text-center block-separ-topbottom">
+                <a href="{{ path('user.purchase') }}"><b>Voir mes achats</b></a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

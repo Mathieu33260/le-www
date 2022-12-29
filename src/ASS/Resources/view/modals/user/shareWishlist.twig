@@ -1,0 +1,36 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalUserShareWishlist" id="modalUserShareWishlist">
+    <div class="modal-dialog modal-md" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <p class="modal-title">MA LISTE D'<span>envies !</span></p>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <a onClick="window.open('https://www.facebook.com/sharer/sharer.php?app_id={{ app['facebook.appid'] }}&display=popup&u={{ url('user.wishlist', {'cryptdata': wishListId}, false)|url_encode }}%3Fgfid%3D{{ user.id }}&amp;src=sdkpreparse', 'Partager ma liste sur facebook', 'top=' + (screen.height / 2) - (350 / 2)+',left=' + (screen.width / 2) - (520 / 2)+',toolbar=0,status=0,width=520,height=350')" href="#" class="thumbnail text-center">
+                            <i class="icon-facebook"></i><br />
+                            <b>Partager ma liste sur facebook</b>
+                        </a>
+                    </div>
+                            <br class="visible-xs" />
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="#collapseUrl" class="thumbnail text-center" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseUrl">
+                            <i class="icon-share-link"></i><br />
+                            <b>Récupérer mon lien pour partager ma liste où je veux !</b>
+                        </a>
+                    </div>
+                </div>
+                <div class="collapse" id="collapseUrl">
+                    <div class="form-group">
+                        <div class="input-group" id="copiedContainer">
+                            <span class="copiedtext" aria-hidden="true">Copié</span>
+                            <input type="url" name="wishlisturl" id="to-copy" class="form-control" value="{{ url('user.wishlist', {'cryptdata': wishListId}, false) }}?gfid={{ user.id }}" readonly>
+                            <a class="input-group-addon background-blanc" href="#" id="copy"><i class="icon-ccm-inscription"></i> Copier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

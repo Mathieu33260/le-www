@@ -1,0 +1,24 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Semaine digitale Bordeaux 2016{% endblock %}
+{% block metaDesc %}L'équipe de Loisirs Enchères sera presente à la semaine digitale 2016 à Bordeaux !{% endblock %}
+
+{% block main_content %}
+    <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1458917221/ressource/tw-cover.jpg" alt="#"/>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Événement : Semaine digitale</h1>
+            <p>
+                L'équipe de Loisirs Enchères sera presente à la semaine digitale 2016 à Bordeaux !<br />Nous vous réservons quelques surprises...
+            </p>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <p>
+                <a href="{{ path('content.page', {'page': 'merchant', 'typePage': 'sdbx'}) }}" class="btn btn-xlg" style="background-color: #FC9133; color: white;">Devenir partenaire</a>
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}

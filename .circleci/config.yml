@@ -1,0 +1,166 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.1-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Setup composer token
+          command: composer config -g github-oauth.github.com 752a8bfd81b4b942a560fed7f9df28f157b07fe8
+
+      - run:
+          name: Install composer dependencies
+          command: composer -o install -n --prefer-dist
+
+      - run:
+          name: Create log dirs
+          command: sudo -E mkdir /var/log/loisirsencheres && sudo -E chmod 777 -R /var/log/loisirsencheres
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run:
+          name: Downloading PHP Code Sniffer
+          command: curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+
+      - run:
+          name: Executing Phing for phpLint
+          command: ./vendor/bin/phing phplint
+
+      - run:
+          name: Executing Phing for twigLint
+          command: ./vendor/bin/phing twiglint
+
+      - run:
+          name: Executing PHP Code Sniffer
+          command: sudo ./app/bin/phpcs.sh
+
+  codeception:
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: false
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+         name: clone api
+         command: git clone git@github.com:Loisirsencheres/ASS-Api.git api
+
+      - run:
+          name: Checkout on the same api branch if it exist
+          command: cd api && if [ "git ls-remote --heads git@github.com:Loisirsencheres/ASS-Api.git ${CIRCLE_BRANCH} | wc -l" == "1" ]; then git checkout ${CIRCLE_BRANCH}; else git checkout develop; fi
+
+      - run:
+          name: dco up api
+          command: cd api/ci && docker-compose up -d
+
+      - run:
+          name: dco up web
+          command: cd ci && docker-compose up -d
+
+      - run:
+          name:
+          command: echo "127.0.0.1       local-www.loisirsentest.com local-api.loisirsentest.com" | sudo tee -a /etc/hosts
+
+      - run:
+          name: Wait Nginx
+          command: timeout 300 bash -c 'while [[ "$(curl --insecure -s -o /dev/null -w ''%{http_code}'' https://local-www.loisirsentest.com)" != "200" ]]; do sleep 5; done'
+
+      - run:
+          name: Run Functionnal Test with Codecption and BrowserStack on local-www
+          command: docker exec web_ci vendor/bin/codecept run acceptance tests/acceptance/StaticPages/HomeCest.php --env windows10-chrome78 --debug
+
+      - run:
+          name: Kill instance of BrowserStack Local driver to launch a new one
+          command: ps axf | grep BrowserStackLocal | grep -v grep | awk '{print "kill -9 " $1}' | sudo sh
+
+      - run:
+          name: Run Functionnal Test with Codecption and BrowserStack on local-www
+          command: docker exec web_ci vendor/bin/codecept run acceptance tests/acceptance/Login/LoginCest.php --env windows10-chrome78 --debug
+
+      - run:
+          name: Kill instance of BrowserStack Local driver to launch a new one
+          command: ps axf | grep BrowserStackLocal | grep -v grep | awk '{print "kill -9 " $1}' | sudo sh
+
+      - run:
+          name: Run Functionnal Test with Codecption and BrowserStack on local-www
+          command: docker exec web_ci vendor/bin/codecept run acceptance tests/acceptance/Register/RegistrationCest.php --env windows10-chrome78 --debug
+
+      - run:
+          name: Kill instance of BrowserStack Local driver to launch a new one
+          command: ps axf | grep BrowserStackLocal | grep -v grep | awk '{print "kill -9 " $1}' | sudo sh
+
+      - run:
+          name: Run Functionnal Test with Codecption and BrowserStack on local-www
+          command: docker exec web_ci vendor/bin/codecept run acceptance tests/acceptance/StaticPages/Layout/ToutVoirCest.php --env windows10-chrome78 --debug
+
+      - store_artifacts:
+          path: tests/_output/
+
+  eslint:
+    docker:
+      - image: maloubobola/circleci-gcloud-node
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install Dependencies
+          command: sudo yarn install --frozen-lockfile
+
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Run Eslint
+          command: yarn run eslint
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - eslint
+      - codeception:
+          filters:
+            tags:
+              only: /^qa.*/
+            branches:
+              only:
+                - develop
+                - /^qa/.*/

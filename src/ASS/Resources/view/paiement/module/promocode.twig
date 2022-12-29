@@ -1,0 +1,36 @@
+<div class="panel-group" id="{{ promocodeId }}" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="{{ promocodeId }}HeadingOne">
+            <div class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#{{ promocodeId }}" href="#{{ promocodeId }}Reduc" aria-expanded="true" aria-controls="reduc">
+                    <span>Vous avez un code promo / une carte cadeau ? </span>
+                </a>
+            </div>
+        </div>
+        <div id="{{ promocodeId }}Reduc" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{ promocodeId }}HeadingOne">
+            <div class="panel-body">
+                <form class="form-inline{% if promocode != null or coupon != null %} active{% endif %}" method="post" data-type="code">
+                    <div class="form-group">
+                        <label for="{{ promocodeId }}Codepromo" class="sr-only">Code promo</label>
+                        <input autocomplete="off" type="text" name="codepromo" class="form-control" id="{{ promocodeId }}Codepromo" placeholder="code promo"{% if payment.amount == 0 or (promocode != null or coupon != null) %} disabled="disabled"{% endif %}{% if promocode != null or coupon != null %} value="{% if promocode != null %}{{ promocode.code|upper }}{% elseif coupon != null %}{{ coupon.code|upper }}{% endif %}"{% endif %} title="code promo" required="" />
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-default"{% if payment.amount == 0 or (promocode != null or coupon != null) %} disabled=""{% endif %}>OK</button>
+                    <p class="text-danger hide left promocode-status"><img src="{{assetCdn}}/assets/gfx/error.png" alt="#" /> <span>Le code saisie est d'un montant superieur au montant de votre paiement</span></p>
+                    <p class="text-success hide left promocode-status"><img src="{{assetCdn}}/assets/gfx/valide.png" alt="#" /> <span>Votre code est valide</span></p>
+                </form>
+                {% if giftcardsMax > 0 %}
+                <form class="form-inline{% if cartecadeau > 0 %} active{% endif %}" method="post" data-type="debit">
+                    <div class="form-group">
+                        <label for="{{ promocodeId }}Cartecadeau" class="sr-only">Carte cadeau</label>
+                        <input autocomplete="off" type="number" name="cartecadeau" class="form-control" id="{{ promocodeId }}Cartecadeau" placeholder="carte cadeau" min="0" max="{{ (giftcardsMax/100) }}"{% if payment.amount == 0 or cartecadeau > 0 %} disabled=""{% endif %} value="{% if cartecadeau > 0 %}{{ (cartecadeau/100) }}{% endif %}" title="carte cadeau" required="" />
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-default"{% if payment.amount == 0 or cartecadeau > 0 %} disabled=""{% endif %}>OK</button>
+                    <span class="text-info small"><strong>restant : <span class="giftcardLeft">{{ (giftcardsMax/100) }}</span>&euro;</strong></span>
+                    <p class="text-danger hide left"><img src="{{assetCdn}}/assets/gfx/error.png" alt="#" /> <span>Une erreur est survenue</span></p>
+                    <p class="text-success hide left"><img src="{{assetCdn}}/assets/gfx/valide.png" alt="#" /> <span>Votre carte cadeau est validé</span></p>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

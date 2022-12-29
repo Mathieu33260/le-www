@@ -1,0 +1,118 @@
+@import (reference) "../variables";
+@import "../modules/Fullpage";
+
+#register {
+    header {
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-size: 16px;
+        transition: all 0.5s ease;
+        z-index: initial;
+        position: relative;
+        width: auto;
+        min-height: 554px;
+
+        form {
+            margin: 0 0 15px;
+            @media (min-width: @min-width-sm) {
+                margin: 0 0 100px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    section {
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    h1 {
+        color: @white;
+        font-size: 29px;
+        margin-top: 2em;
+        text-shadow: 0 0 5px @black;
+        font-family: 'proxima_nova_bold',Arial,Helvetica,sans-serif;
+    }
+
+    @media (min-width: @min-width-sm) {
+        h1, h1 + div {
+            margin-top: 4em;
+            font-size: 36px;
+        }
+
+        &.christmas {
+            h1 {
+                background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/v1572456565/boutique%20noel/red-cadre-christmas-768.png");
+                background-repeat: no-repeat;
+                background-position: center top;
+                background-size: 100% auto;
+                margin-top: 2.5em;
+                padding-top: 1.6em;
+                padding-bottom: 1.3em;
+                padding-left: 1em;
+                @media (min-width: @min-width-md) {
+                    background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/v1572514754/boutique%20noel/red-cadre-christmas-992.png");
+                    padding-left: 2em;
+                    padding-top: 0.9em;
+                }
+                @media (min-width: @min-width-lg) {
+                    background-image: url("//img.loisirsencheres.fr/loisirs/image/upload/v1572515398/boutique%20noel/red-cadre-christmas-1200.png");
+                    padding-top: 0.8em;
+                }
+            }
+
+            .confirmation {
+                margin: 0 0 100px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    h2 {
+        color: @black;
+        font-size: 1.125em;
+        text-transform: uppercase;
+        margin: 50px 0 30px;
+        font-weight: 700;
+    }
+
+    h3 {
+        color: @black;
+        font-size: 1.125em;
+        font-weight: 600;
+        margin: 7px 0 4px;
+    }
+
+    .form-control {
+        font-size: 1.1em;
+    }
+
+    .category {
+        img {
+            display: block;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 0.875em;
+            margin-bottom: 0;
+        }
+    }
+
+    .videoBlock {
+        background: #E8EDF3;
+        background: linear-gradient(-225deg, #FFFFFF 0%, @beige 100%);
+        @media (min-width: @min-width-md) {
+            background: url(//img.loisirsencheres.fr/loisirs/image/upload/v1536582899/content/Background_video.png) bottom right no-repeat;
+            background-size: auto 100%;
+        }
+        p {
+            font-size: 0.875em;
+        }
+    }
+
+    .videoBlockIframe {
+        margin: 40px 0;
+    }
+}

@@ -1,0 +1,20 @@
+.btn-pink {
+  background: @pink_enfoires;
+  color: @white;
+  border-color: @white;
+  &:not(.disabled):not([disabled]):hover {
+    border-color: @pink_enfoires;
+  }
+  &.btn-default {
+    &:not(.disabled):not([disabled]){
+      border-color: @pink_enfoires;
+      color: @pink_enfoires;
+      background: none;
+      &:hover, &:active, &:focus {
+        background: @pink_enfoires;
+        color: @white;
+        border-color: @pink_enfoires;
+      }
+    }
+  }
+}

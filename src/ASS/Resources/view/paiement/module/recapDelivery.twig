@@ -1,0 +1,23 @@
+<p class="section-title">Récapitulatif de votre commande</p>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <span class="recap-title">Numéro de commande : {{ order.num }}</span>
+        <p>
+            {{ order.gender|capitalize }} {{ order.firstName|capitalize }} {{ order.lastName|capitalize }}<br>
+            <strong>Email</strong> {{ order.email|nl2br }}<br>
+            <strong>Téléphone</strong> {% if order.phone is not empty %}{{ order.phone|nl2br }}{% else %}Non renseigné{% endif %}<br>
+            <strong>Mobile</strong> {{ order.mobile|nl2br }}<br>
+            <br>
+            <strong>Adresse de livraison :</strong><br>
+            {{ order.location.houseNumber|nl2br }} {{ order.location.street }}<br>
+            {% if order.location.addressSupplement is defined and order.location.addressSupplement is not empty %}
+                {{ order.location.addressSupplement }}<br>
+            {% endif %}
+            {% if order.location.mailbox is defined and order.location.mailbox is not empty %}
+                Boîte postale {{ order.location.mailbox }}<br>
+            {% endif %}
+            {{ order.location.zipCode }} {{ order.location.city|capitalize }}<br>
+            France
+        </p>
+    </div>
+</div>

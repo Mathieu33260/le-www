@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ass-www" default="default" basedir=".">
+    <property name="www.root" value="${phing.dir}" />
+    <property name="project.root" value="${phing.dir}/.." />
+
+    <property name="project.environment" value="dev" />
+
+    <!-- Adding global properties of API -->
+    <property file="${www.root}/app/config/phing/global.properties" />
+    <if>
+        <not><available file="${www.root}/app/config/phing/${project.environment}.properties" property="envFile"/></not>
+        <then>
+            <fail message="environment specific file not found: ${project.environment}"/>
+        </then>
+    </if>
+    <property file="${www.root}/app/config/phing/${project.environment}.properties" override="true" />
+    <!-- Build specific config -->
+    <if>
+        <available file="${www.root}/app/config/phing/build.properties" property="buildFile"/>
+        <then>
+            <property file="${www.root}/app/config/phing/build.properties" override="true" />
+        </then>
+    </if>
+
+    <!-- Custom build targets -->
+    <target name="generate-config" description="generate configuration file based on .properties">
+        <copy file="${www.root}/app/config/config.yml-dist" tofile="${www.root}/app/config/config.yml" overwrite="true">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+        <exec command="php ${www.root}/app/bin/makeconfig.php -p ${www.root}" checkreturn="true" passthru="true"/>
+        <!-- Todo use a new app config like robots.allow -->
+        <copy file="${www.root}/app/config/phing/robots-${app.env}.txt" tofile="${www.root}/web/robots.txt" overwrite="true" />
+    </target>
+
+    <target name="generate-css" description="generate css file from less file">
+        <exec command="yarn encore dev --config-name cssConfig" checkreturn="true" passthru="true" />
+    </target>
+
+    <target name="generate-js" description="generate JS modern bundle">
+        <exec command="yarn encore dev --config-name jsConfig" checkreturn="true" passthru="true" />
+    </target>
+
+    <target name="generate-js-legacy" description="generate JS legacy bundle">
+        <exec command="yarn encore dev --config-name jsConfigLegacy" checkreturn="true" passthru="true" />
+    </target>
+
+    <target name="chown-dirs">
+        <mkdir dir="${cache.dir}" />
+        <chmod file="${cache.dir}" mode="0777" />
+        <mkdir dir="${cache.dir}/twig" />
+        <chmod file="${cache.dir}/twig" mode="0777" />
+        <touch file="${www.log.file}" />
+        <chmod file="${www.log.file}" mode="0666" />
+    </target>
+
+    <!-- Clean cache Opcode PHP -->
+    <target name="opcache-reset">
+        <exec command="curl -v -k ${api.url}/nooauth/technical/opcache-reset/" passthru="true" checkreturn="true" />
+    </target>
+
+    <target name="yarn-dev">
+        <exec command="yarn &amp;&amp; LEGACY_BUNDLE=true yarn encore dev" passthru="true" checkreturn="true" />
+    </target>
+
+    <target name="yarn-prod">
+        <exec command="yarn &amp;&amp; yarn encore production" passthru="true" checkreturn="true" />
+        <phingcall target="cache-webpack-manifest" />
+    </target>
+
+    <target name="cache-webpack-manifest">
+        <exec command="php ${www.root}/app/bin/makewebpack.manifestjson.cache.php -p ${www.root}" checkreturn="true" passthru="true"/>
+    </target>
+
+    <target name="phplint">
+        <phplint haltonfailure="true">
+            <fileset dir="src">
+                <include name="**/*.php"/>
+            </fileset>
+            <fileset dir="web">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
+
+    <target name="bumpassets">
+        <exec command="sh ${www.root}/app/bin/bump-assets.sh" passthru="true" checkreturn="true" />
+    </target>
+
+    <target name="twiglint">
+        <exec command="./vendor/bin/twig-lint lint src/ASS/Resources" passthru="true" checkreturn="true" />
+    </target>
+
+    <target name="default"    depends="generate-config, chown-dirs, opcache-reset, yarn-dev" />
+    <target name="server0"    depends="generate-config, chown-dirs, opcache-reset, yarn-dev, bumpassets" />
+    <target name="aws-jenkins"  depends="generate-config, yarn-prod, bumpassets" />
+    <target name="aws-server"   depends="generate-config, chown-dirs" />
+    <target name="circleci"   depends="generate-config, chown-dirs, yarn-prod, bumpassets, cache-webpack-manifest" />
+</project>

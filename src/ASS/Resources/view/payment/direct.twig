@@ -1,0 +1,172 @@
+{% extends 'layout/html-app.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block main_content %}
+    <div class="text-center">
+        {% include './payment/warning.html.twig' %}
+        {% if not alreadyPaid and not paypalAlreadyPaid %}
+            <h3 class="blue-bg">Paiement</h3>
+
+                <div id="paiementtext">
+                    {# <div id="i1">
+                       <h1>{{ auction.name }}</h1>
+                    </div> #}
+                    <div style="width:100%; margin-bottom:10px;">
+                        <div id="i2">
+                            <div style="float:left; width:45%">
+                                <span><strong>Date de la commande : </strong> {{ payment.created|date("d/m/Y") }}</span><br />
+                                <span><strong>Num&eacute;ro de la commande : </strong> {{ transid }}</span><br />
+                                <span><strong>Montant de la commande : </strong> {{ "%.2f"|format(payment.amount/100) }} &euro; </span><br /><br />
+                            </div>
+
+                            <table style="margin-top:20px; border-collapse:collapse; width:100%; border:0;" cellspacing="5" cellpadding="0">
+                                <tr>
+                                    <th align="left" style="padding:0; margin:0; width:500px;">Articles</th>
+                                    <th align="left" style="padding:0; margin:0; width:80px;"></th>
+                                    <th align="right" style="text-align:right; padding:0; margin:0; width:80px;">Prix TTC</th>
+                                </tr>
+                                <tr>
+                                    <td align="left">{{ auction.name }}</td>
+                                    <td></td>
+                                    <td align="right">{{ "%.2f"|format((payment.amount - auction.cost - sumdebit - sumExtra)/100) }} &euro;</td>
+                                </tr>
+                                {% for paymentExtra in paymentExtras %}
+                                    <tr>
+                                        <td align="left">{{ paymentExtra.name|capitalize }} (<a href="{{ path('payment.extra.delete',{'paymentId':payment.id,'extraId':paymentExtra.id, 'verificationToken' : verifToken}) }}">supprimer</a>)</td>
+                                        <td></td>
+                                        <td align="right">{{ "%.2f"|format(paymentExtra.price/100) }} &euro;</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td align="left">Frais de dossier</td>
+                                    <td></td>
+                                    <td align="right">{{ "%.2f"|format(auction.cost/100) }} &euro;</td>
+                                </tr>
+                                {% if promocode %}
+                                    <tr>
+                                    <td align="left">Remise exceptionnelle, code promo {{ promocode.code }} (<a href="?remove_promocode&token={{ verifToken }}">supprimer</a>)</td>
+                                    <td></td>
+                                    <td align="right">-{{ "%.2f"|format(promocode.amount/100) }} &euro;</td>
+                                    </tr>
+                                {% endif %}
+                                {% if sumdebit > 0 %}
+                                    <tr>
+                                        <td align="left">
+                                            Debit de carte cadeaux (<a href="{{ path('payment.debit.delete',{'paymentId': payment.id,'type': 'direct','token' : verifToken}) }}">supprimer</a>)</td>
+                                        </td>
+                                        <td></td>
+                                        <td align="right">-{{ "%.2f"|format(sumdebit/100) }} &euro;</td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th align="left" style="padding-top:10px; border-top: 1px solid black;"></th>
+                                    <td align="left" style="padding-top:10px; border-top: 1px solid black;"></td>
+                                    <td align="right" style="padding-top:10px; border-top: 1px solid black;"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left"></td>
+                                    <th align="left">Total TTC :</th>
+                                    <td align="right">{{ "%.2f"|format(payment.amount/100) }} &euro;</td>
+                                </tr>
+                            </table>
+                            <div class="text-center">
+                                <form method="post">
+                                    <br />
+                                    <div id="promocode-form">
+                                        Si vous bénéficiez d’un code promotionnel, saisissez le ici :
+                                        <input type="text" id="promocode_input" name="promocode" value="{{ promocode?promocode.code:'' }}" size="10" class=form-control" title="promocode" />
+                                        <button type="submit" class="btn btn-sm btn-primary">Valider</button>
+                                        {% if errorPromocode != '' %}<div class="field-errors"><ul><li>{{ errorPromocode }}</li></ul></div>{% endif %}
+                                    </div>
+                                    <br />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% include './payment/include/productExtraList.twig' %}
+                    {% include './payment/include/cardSelect.twig' %}
+                </div>
+            </div>
+
+        {% elseif paypalAlreadyPaid %}
+                <h3 class="blue-bg">Paiement</h3>
+                <div id="i1">
+                    <h2>Ce paiement est en cours de traitement par notre partenaire. Merci de reconsulter vos enchères dans quelques minutes.</h2>
+                </div>
+                <a href="comloisirsencheres://home" class="btn btn-primary">Revenir dans l'application</a>
+                <br/>
+                <br/>
+                <a href="{{ path('homepage') }}" class="btn btn-primary">Revenir sur le site</a>
+        {% elseif alreadyPaid %}
+                <h3 class="blue-bg">Paiement</h3>
+                <div id="paiementtext">Ce paiement a déjà été traité par notre système. Rendez vous dans votre onglet "Vos bons" dans la séction "Mes enchères".</div>
+                <a href="comloisirsencheres://home" class="btn btn-primary">Revenir dans l'application</a>
+        {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.productExtraRadio').on('change',function(ev){
+            window.location.href =$(this).data('href');
+        });
+    </script>
+    {% if not alreadyPaid and not paypalAlreadyPaid %}
+        <script type="application/javascript">
+            document.forms["cardSelectForm"].reset(); // This make sure that the form is in a fresh state if the user hit the back button.
+            $('input:radio[name="method"]').change(function(){
+                var valideMethodArr = ['cb','visa','mastercard'];
+                if ($(this).is(':checked') && $.inArray($(this).val(),valideMethodArr) !== -1) {
+                    if(!$('#cardSaveBlock').is(':visible')){
+                        $('#cardSaveBlock').show();
+                    }
+                } else {
+                    $('#cardSaveBlock').hide();
+                }
+            });
+            $("#saveCard").change(function() {
+                $('#cardNameBlock').toggle(this.checked);
+            });
+            $('input:radio[name="useSavedCard"]').change(function() {
+                if($(this).val() === 'yes'){
+                    $('#savedCardBlock').show();
+                    $('#cardSelectBlock').hide();
+                    $('#saveCard').prop('checked',false);
+                    $('#cardNameBlock').hide();
+
+                } else {
+                    $('#cardSelectBlock').show();
+                    $('#savedCardBlock').hide();
+                }
+            });
+            $('#cardSelectSubmit').on('click',function(){
+                var that = $(this);
+                $(this).prop('disabled',true);
+                $(this).prop('value','Chargement');
+                $('form[name="cardSelectForm"]').submit();
+                setInterval(function() {
+                    if(that.val().length == 13) {
+                        that.val("Chargement");
+                    } else {
+                        that.val(that.val() + ".");
+                    }
+                }, 250);
+            });
+        </script>
+        <script>
+            ga('ec:addProduct', {
+                'id': 'P{{ product.id }}',
+                'name': '{{ product.name|trim("'") }}',
+                'category': 'auction',
+                'price': '{{ payment.amount/100 }}',
+                'quantity': 1
+            });
+
+            ga('ec:setAction','checkout', {
+                'step': 1
+            });
+
+            ga('send', 'event', 'ecommerce', 'product_checkout', 'auction', {'nonInteraction': 1});
+        </script>
+    {% endif %}
+{% endblock %}

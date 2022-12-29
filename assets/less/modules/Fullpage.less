@@ -1,0 +1,68 @@
+@import "../mixins";
+
+.fullpage {
+    header{
+        position: absolute;width: 100%;z-index: 999;backface-visibility: hidden;z-index: 2;
+        &.fixed {
+            position: fixed;background-color: @white;
+            #enteteMobile .btn-transparent {color: @grey}
+            #enteteMobile i {color: @black}
+            .smartbanner {display: none}
+        }
+    }
+    #topDIV {
+        background: transparent;
+        border: none;
+    }
+    #enteteMobile {
+        box-shadow: none;
+        .barre:not(.background-bleu) {background: transparent}
+        .btn-transparent, i {color: @white}
+    }
+    #header.fixed{
+        .icon-menu-hamburger, i{.text-grey-fonce}
+        .rechercheMobile i {color: @white}
+    }
+    .surtitle { // This css class is declared in tags table
+        text-align: center;
+        font-size: 20px;
+        padding-top: 20px;
+        margin-bottom: 0;
+    }
+    h1:not(.slogan), h2 {font-size: 24px}
+    .title {
+        text-align: center;
+        padding-top: 5px;
+        padding-bottom: 15px;
+    }
+    .formfilters .title {text-align: left;padding: 0}
+
+    @media (min-width: @min-width-sm) {
+        #headerRightSide {
+            .recherche {
+                ::-webkit-input-placeholder {color: @white}
+                :-moz-placeholder {color: @white}
+                ::-moz-placeholder {color: @white}
+                :-ms-input-placeholder {color: @white}
+                .tagsSearch {background: transparent;border-color: @white;color: @white}
+                .input-group-addon {background-color: transparent;border: 1px solid @white}
+                .icon-loupe {color: @white}
+                .tagsSearch {border-color: @white}
+            }
+            .col-user {
+                .btn-sm, i {color: @white}
+                .parrainage, .favorites, .account {border-color: @white}
+            }
+        }
+        #header .help {
+            color: @white;
+            i {color: @white}
+        }
+    }
+
+    @media (min-width: @min-width-lg) {
+        .slogan, .slogan .text-warning {
+            color: @white
+        }
+    }
+}

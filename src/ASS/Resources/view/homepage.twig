@@ -1,0 +1,339 @@
+{% set headerRegisterButtonTransparent = true %}
+{% set headerLoginButtonTransparent = true %}
+
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d’offres de voyages, d’hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+{% block moremeta %}
+    <link rel="canonical" href="https://{{app.request.host}}{{path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))}}" />
+{% endblock %}
+
+{% set defaultSlide = "https://img.loisirsencheres.fr/loisirs/image/upload/q_70/v1517492413/slider/slide_default.jpg" %}
+
+{% block facebook_image %}
+    {% if slides %}
+        {{ slides|default([])[0].imageUrl|cdnUrl|noprotocol|replace({"//":""})|trim }}
+    {% else %}
+        {{ defaultSlide|noprotocol|replace({"//":""}) }}
+    {% endif %}
+{% endblock %}
+
+{% block background %}background-gris{% endblock %}
+
+{% block prependContainter %}
+    <div id="homeslider">
+        <homepage-slider
+            :slides="{{ slides|default([])|json_encode }}"
+            ea-site="{{ eulerianSite }}"
+        ></homepage-slider>
+    </div>
+    {% include './module/navbar/desktop.twig' %}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+    {# Early download and use later #}
+    <link rel="preload" href="{{ asset(buildDir ~ '/AuctionList.js') }}" as="script">
+    <link rel="preload" href="{{ asset(buildDir ~ '/Homepage.js') }}" as="script">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        {% for slide in slides|default([]) %}
+        #homeslider {{ '.item.slide-'~slide.id }} {
+            background-image: url('{% if slide.imageUrlMobile != '' %}{{ slide.imageUrlMobile|cdnUrl|noprotocol|transf('q_70')}}{% else %}{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_scale,w_767,q_70')}}{% endif %}');
+            background-position-y: {{ slide.imgPosition }};
+        }
+        {%- if slide.template == 'fullpage' -%}
+        #homeslider {{ '.item.slide-'~slide.id }} .content {
+            background-image: url('{{ slide.imageTextUrlMobile|cdnUrl|noprotocol}}');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        {%- endif -%}
+        @media screen and (min-width: 768px) {
+            #homeslider {{ '.item.slide-'~slide.id }} {
+                {% if slide.template == 'fullpage' %}
+                 background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_mpad,w_992,h_376,q_70') }}');
+                {% else %}
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_thumb,w_991,h_376/q_70') }}');
+                {% endif %}
+            }
+        {%- if slide.template == 'fullpage' -%}
+            #homeslider {{ '.item.slide-'~slide.id }} .content {
+                background-image: url('{{ slide.imageTextUrl|cdnUrl|noprotocol}}');
+            }
+        {%- endif -%}
+        }
+        @media screen and (min-width: 992px) {
+            #homeslider {{ '.item.slide-'~slide.id }} {
+            {% if slide.template == 'fullpage' %}
+                background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_mpad,w_1200,h_376,q_70') }}');
+            {% else %}
+                background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_thumb,w_1199,h_376/q_70') }}');
+            {% endif %}
+            }
+        }
+        @media screen and (min-width: 1200px) {
+            #homeslider {{ '.item.slide-'~slide.id }} {
+            {% if slide.template == 'fullpage' %}
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_scale,w_1800,q_70') }}');
+            {% else %}
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_thumb,w_1199,h_376/q_70') }}');
+            {% endif %}
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            #homeslider {{ '.item.slide-'~slide.id }} {
+            {% if slide.template == 'fullpage' %}
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_scale,w_1920/q_70') }}');
+            {% else %}
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('c_thumb,w_1920,h_376/q_70') }}');
+            {% endif %}
+            }
+        }
+        @media (-webkit-min-device-pixel-ratio: 2) and (min-width: 1500px),
+               (min-resolution: 192dpi) and (min-width: 1500px) {
+            #homeslider {{ '.item.slide-'~slide.id }} {
+                  background-image: url('{{ slide.imageUrl|cdnUrl|noprotocol|transf('q_70') }}');
+            }
+        }
+        {% else %}
+        #homeslider .item-default {
+            background-image: url('{{ defaultSlide|transf('c_scale,w_768') }}');
+            background-position-y: center;
+        }
+        @media screen and (min-width: 768px) {
+            #homeslider .item-default {
+                background-image: url('{{ defaultSlide|transf('c_mpad,w_992,h_376') }}');
+            }
+        }
+        @media screen and (min-width: 992px) {
+            #homeslider .item-default {
+                background-image: url('{{ defaultSlide|transf('c_mpad,w_1200,h_376') }}');
+            }
+        }
+        @media screen and (min-width: 1200px) {
+            #homeslider .item-default {
+                background-image: url('{{ defaultSlide|transf('c_scale,w_1800') }}');
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            #homeslider .item-default {
+                background-image: url('{{ defaultSlide }}');
+            }
+        }
+        @media  only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1200px),
+        only screen and (   min--moz-device-pixel-ratio: 2) and (min-width: 1200px),
+        only screen and (     -o-min-device-pixel-ratio: 2/1) and (min-width: 1200px),
+        only screen and (        min-device-pixel-ratio: 2) and (min-width: 1200px),
+        only screen and (                min-resolution: 192dpi) and (min-width: 1200px),
+        only screen and (                min-resolution: 2dppx) and (min-width: 1200px) {
+            #homeslider .item-default {
+                background-image: url('{{ defaultSlide }}');
+            }
+        }
+        {% endfor %}
+    </style>
+{% endblock %}
+{% block container %}container-fluid{% endblock %}
+
+{% block main_content %}
+    {% if app.request.query.get("debug") != 'auctionoff' %}
+        <div class="moduleEnchere">
+            <p class="h2 text-left">NOUVEAUTÉS</p>
+            <auction-list
+                    url="/auction/auctionsnew"
+                    v-bind:use-sort="true"
+                    v-bind:nb-auctions-default="12"
+                    class-css="col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2"
+                    list-name="Homepage : new auctions"
+                    request-uri="{{ app.request.requesturi }}"
+                    v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                    auction-type="new"
+                    v-bind:tab-index="2"
+                    list-id="newAuctions"
+                    v-bind:nb-auctions-increment-default="8"
+                    template-page-type="fullpage"
+                    thumb-content-class="col-s-12"
+                    module-texte-class="col-s-12"
+                    v-bind:use-no-auction-found-mess="false"
+                    v-bind:use-placeholder="true"
+                    v-bind:use-more-auctions-btn="false"
+            ></auction-list>
+            <div class="row auctions_placeholder">
+                {% set nbPlaceholder = 11 %}
+                {% for auctions in 0..nbPlaceholder %}
+                    {% include './module/auction-placeholder.twig' with {'colClass': 'col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2'} %}
+                {% endfor %}
+            </div>
+            <div class="block-separ-bottom block-separ-top">
+                <a class="btn btn-default background-none btn-sm" href="{{ path('category.name', {'name': 'nouveautes'}) }}">Découvrir nos nouveautés </a>
+            </div>
+        </div>
+        <div class="row homeblock" data-ga-action="bloc">
+            {% if promotions.home01 is not empty %}
+            <div class="col-xs-12 col-sm-6" data-ga-value="1">
+                <block-promotion :advert="{{ promotions.home01|json_encode }}" ea-site="{{ eulerianSite }}"></block-promotion>
+            </div>
+            {% endif %}
+            {% if promotions.home02 is not empty %}
+            <div class="col-xs-12 col-sm-6" data-ga-value="2">
+                <block-promotion :advert="{{ promotions.home02|json_encode }}" ea-site="{{ eulerianSite }}"></block-promotion>
+            </div>
+            {% endif %}
+        </div>
+        <div class="moduleEnchere">
+            <p class="h2 text-left">NOS COUPS DE COEUR</p>
+            <auction-list
+                    url="/auction/auctionhomerefresh"
+                    v-bind:use-sort="true"
+                    v-bind:nb-auctions-default="12"
+                    class-css="col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2"
+                    list-name="Homepage : favorite auctions"
+                    request-uri="{{ app.request.requesturi }}"
+                    v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                    auction-type="list"
+                    v-bind:tab-index="1"
+                    list-id="ourFavoritesAuctions"
+                    v-bind:nb-auctions-increment-default="8"
+                    template-page-type="fullpage"
+                    thumb-content-class="col-s-12"
+                    module-texte-class="col-s-12"
+                    v-bind:use-no-auction-found-mess="false"
+                    v-bind:use-placeholder="true"
+                    v-bind:use-more-auctions-btn="false"
+                    tag="coup-de-coeur"
+            ></auction-list>
+            <div class="row auctions_placeholder">
+                {% set nbPlaceholder = 11 %}
+                {% for auctions in 0..nbPlaceholder %}
+                    {% include './module/auction-placeholder.twig' with {'colClass': 'col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2'} %}
+                {% endfor %}
+            </div>
+            <div class="block-separ-bottom block-separ-top">
+                <a class="btn btn-default background-none btn-sm" href="{{ path('category.name', {'name': 'coup-de-coeur'}) }}">Découvrir nos coups de coeur >> </a>
+            </div>
+        </div>
+        <div class="row homeblock" data-ga-action="bloc">
+            {% if promotions.home03 is not empty %}
+            <div class="col-xs-12 col-sm-6" data-ga-value="3">
+                <block-promotion :advert="{{ promotions.home03|json_encode }}" ea-site="{{ eulerianSite }}"></block-promotion>
+            </div>
+            {% endif %}
+            {% if promotions.home04 is not empty %}
+            <div class="col-xs-12 col-sm-6" data-ga-value="4">
+                <block-promotion :advert="{{ promotions.home04|json_encode }}" ea-site="{{ eulerianSite }}"></block-promotion>
+            </div>
+            {% endif %}
+        </div>
+        <div class="moduleEnchere">
+            <p class="h2 text-left">Top des enchères</p>
+            <auction-list
+                url="/auction/auctionhomerefresh"
+                v-bind:use-sort="true"
+                v-bind:nb-auctions-default="12"
+                class-css="col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2"
+                list-name="Homepage : Top des enchères"
+                request-uri="{{ app.request.requesturi }}"
+                v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                auction-type="next"
+                v-bind:tab-index="3"
+                list-id="topAuctions"
+                v-bind:nb-auctions-increment-default="8"
+                tag="top-des-ventes"
+                template-page-type="fullpage"
+                thumb-content-class="col-s-12"
+                module-texte-class="col-s-12"
+                v-bind:use-no-auction-found-mess="false"
+                v-bind:use-placeholder="true"
+                v-bind:use-more-auctions-btn="false"
+            ></auction-list>
+            <div class="row auctions_placeholder">
+                {% set nbPlaceholder = 11 %}
+                {% for auctions in 0..nbPlaceholder %}
+                    {% include './module/auction-placeholder.twig' with {'colClass': 'col-xs-12 col-s-6 col-sm-3 col-md-3 col-lg-3 col-xl-2'} %}
+                {% endfor %}
+            </div>
+            <div class="block-separ-bottom block-separ-top">
+                <a class="btn btn-default background-none btn-sm" href="{{ path('category.name', {'name': 'top-des-ventes'}) }}">Découvrir le top des ventes</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+{% endblock %}
+{% block footer %}
+    {% include './include/avis-verifies.html.twig' %}
+    {% if not user.preferences.hasPaid is defined or not user.preferences.hasPaid %}
+        {% include 'module/comment-ca-marche.twig' %}
+    {% endif %}
+    <section class="seotext background-blanc">
+        <div class="container">
+            <h1 class="text-center block-separ-top">Loisirs Enchères, des expériences au meilleur prix : le vôtre!</h1>
+            <div class="row block-separ-top">
+                <div class="col-xs-12 col-sm-6">
+                    <p>Vous raffolez des expériences inédites et votre plus grand plaisir est de surprendre ceux que vous aimez ? Faites le choix de participer à des enchères en ligne pour décrocher vos tickets loisirs et sorties à des prix canon ! Offrez à vos proches des échappées originales : voyage, hôtel, gastronomie, bien-être… Et aussi des super plans loisirs à deux, en famille ou entre amis. Réalisez vos rêves et découvrez le plaisir de gagner sans cesse renouvelé en participant au jeu des enchères : une réelle occasion de pimenter votre quotidien et de partir pour des ailleurs inspirants.</p>
+                    <p>Succombez à la magie des enchères en ligne et pénétrez dans l’univers Loisirs Enchères. Guettez vos concurrents sur l’offre que vous convoitez tant. Misez la somme que vous souhaitez, soyez malin et surenchérissez au meilleur moment jusqu’à l’emporter ! Séjours, massages, bons plans restos et bien d’autres offres encore vous attendent, alors n’hésitez plus et lancez-vous dans la surenchère. Laissez-vous gagner par le frisson de la gagne après des heures, des minutes, des secondes d’attente intense sur Loisirs Enchères, le site incontournable des loisirs, weekends et vacances aux enchères à prix mini en France (Paris, Lyon, Bordeaux, Toulouse, Marseille, Lille, Nantes, Montpellier, Rennes, Rouen, Caen, Tours, Orléans, Strasbourg, Nancy…), comme à l’international.</p>
+                    <h2 class="block-separ-top">Loisirs Enchères, une expérience insolite en quelques clics</h2>
+                    <p>Parce que nous aimons l’insolite, nous avons conçu le site Loisirs Enchères pour vous offrir des heures de découvertes, de détente, d’émotions intenses au meilleur prix : le vôtre. Vacances en famille, sorties entre amis ou weekends en amoureux, tout ce que vous aimez offrir est accessible grâce aux enchères en ligne.</p>
+                    <h3>Comment remporter une enchère en ligne ?</h3>
+                    <p>Étape 1 : Créez votre compte sans aucun frais ou dépôt de garantie : Loisirs Enchères est entièrement gratuit.</p>
+                    <p>Étape 2 : Recherchez les expériences que vous aimeriez vivre en appliquant les filtres de votre choix : Lieu ? Envie ? Nombre de personnes ?</p>
+                    <p>Étape 3 : Découvrez la large sélection de loisirs, weekends, voyages, restaurants mis aux enchères en ligne : un massage pour deux, un vol au-dessus de Paris en réalité virtuelle, un repas 100% tibétain, un match de basket, un spectacle de magie…</p>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <p>Étape 4 : Misez sur l’expérience ou les découvertes que vous aimeriez faire : plusieurs enchères à mener rondement en simultané sont possibles !</p>
+                    <p>Étape 5 : Vivez l’adrénaline de l’attente de l’adjudication ;</p>
+                    <p>Étape 6 : Remportez la mise et profitez pleinement de votre expérience.</p>
+                    <p>En quelques clics, transportez-vous des enchères à un escape game palpitant, ou offrez-vous une parenthèse enchantée à Marrakech, la ville ocre aux portes du désert marocain. Quelles que soient vos envies, notre équipe œuvre chaque jour à vous proposer des aventures et des expériences originales sur fond d’enchères en ligne captivantes. Alors, n’attendez plus pour créer gratuitement votre compte. Les enchères commencent à 1 euro et n’attendent plus que vous pour débuter.</p>
+                    <h3>Comment gagner une enchère sur Loisirs Enchères ?</h3>
+                    <p>Il n’y a pas une méthode, mais plutôt des méthodes pour remporter une enchère en ligne. Vous pouvez choisir d’attendre l’ultime seconde pour surenchérir et faire tapis comme dans une vraie partie de poker pour couper l’herbe sous le pied de tout concurrent qui aurait voulu adopter la même stratégie que la vôtre. Vous pouvez aussi rester devant votre écran pour suivre tranquillement vos enchères en cours et obtenir la victoire à force de persévérance. Vous pouvez enfin décider d’utiliser gratuitement notre outil d’enchères automatiques : il suit pour vous l’évolution des enchères de vos concurrents et se positionne automatiquement à votre place sans dépasser le montant maximal que vous lui avez fixé. En plus, votre curiosité paye puisque, petite astuce, votre première médaille d’enchérisseur novice, obtenue après votre gain, vous débloquera un bon d’achat de 5 euros valable sur le site.</p>
+                    <h2 class="block-separ-top">Loisirs Enchères, une offre riche en découvertes</h2>
+                    <p>Que vous aimiez les voyages en Europe, les petites escapades en amoureux, les activités ludiques comme la fabrication d’un parfum, Loisirs Enchères vous propose une très large variété d’offres : de la plus classique, comme un resto, à la plus originale comme un vol en montgolfière. Faites vous plaisir sans attendre : misez, enchérissez et remportez votre première enchère en ligne !</p>
+                </div>
+            </div>
+            <div class="block-separ-bottom">
+                <div class="h2">Notre sélection d'enchères en France</div>
+                {% include './module/city/cities.html.twig' %}
+            </div>
+        </div>
+    </section>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function checkHomepage() {
+            if (typeof homepage !== 'undefined') {
+                homepage.init();
+
+                /*var closestCluster = getCookie('closestCluster');
+                if(closestCluster){
+                    homepage.getClusterData(closestCluster);
+                }else{
+                    homepage.getCityUser();
+                }*/
+
+                {% if user %}
+                    homepage.dataLayer('2', '{{ user['trackingUId'] }}');
+                    {% if userProducts is defined and not isApp(app.request) %}
+                        definedProductIsFavorite();
+                    {% endif %}
+                {% else %}
+                    homepage.dataLayer('1', '');
+                {% endif %}
+            }else{
+                setTimeout(checkHomepage, 500);
+            }
+        }
+        loadJs('{{assetCdn}}/assets/js/homepage.js?v=homepagejsv', function() {
+            checkHomepage();
+        }, true);
+    </script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'layout/html.twig' %}
+
+{% block metaDesc %}Des centaines d’offres de voyages, d’hôtels, de week-end et de sorties aux enchères. Fixez gratuitement le prix de vos spectacles ou de vos séjours.{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('build-css/hunkemoller.css') }}" />
+{% endblock %}
+
+{% block main_content %}
+    <div class="row block-separ-bottom">
+        <div class="col-lg-12">
+            <div class="col-md-6 col-sm-6 col-xs-12 hunkemoller_header_left">&nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-xs-12 hunkemoller_header_right">
+                <h4>Chère cliente, cher client,</h4>
+                <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1448357756/hunkemoller_logo_hoj6hm.jpg" alt='hunkemoller' />
+                <div class="hunkemoller_bienvenu">
+                    <h3>Bienvenue sur Loisirs Enchères !</h3>
+                </div>
+                <div>
+                    Découvrez dès maintenant notre sélection d'hôtels, de sorties, de vacances, d'activités bien-être... à vous d'en déterminer le prix !
+                </div>
+                <div class="hunkemoller_texte">
+                    1. Choisissez une activité<br>
+                    2. Enchérissez gratuitement<br>
+                    3. Ne réglez que si vous gagnez !
+                </div>
+                 <a href="{{ path('user.register') }}" rel="nofollow" class="btn btn-primary" style="padding:0px 22px 0px 22px;font-size:24px;">J'enchéris ! </a>
+            </div>
+        </div>
+    </div>
+    <div id="see_all_btn" class="block-separ-bottom">
+        <a href="{{ path('all.page') }}" class="btn btn-primary text-uppercase with-icon" id="see_all_btn">Voir toutes nos enchères <i class="icon-arrow-right" aria-hidden="true"></i></a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+        var tag = "{{ tag }}";
+        var fourAuctionsByCol = 1;
+    </script>
+{% endblock %}

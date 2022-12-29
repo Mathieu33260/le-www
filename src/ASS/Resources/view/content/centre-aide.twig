@@ -1,0 +1,122 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Centre d'aide{% endblock %}
+
+{% block main_content %}
+    {% if app.request.get('onlycontent') is null %}
+        <h1>Centre d'aide</h1>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1{% if app.request.get('onlycontent') is not null %} paddingtop1{% endif %}">
+            <div id="zendesk">
+                <div class="row">
+                {% for categorie in categories %}
+                    <div class="col-xs-12 col-md-4 col-sm-6{% if loop.index == 3 %} col-sm-offset-3 col-md-offset-0 {% endif %} categories">
+                        <button class="btn btn-default btn-block" data-id="{{ categorie.id }}">
+                            <span>{{ categorie.name }}</span>
+                        </button><br class="visible-xs{% if loop.index == 2 %} visible-sm{% endif %}" />
+                    </div>
+                {% endfor %}
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group sections hide">
+                        <label for="sections" class="col-sm-5 col-md-4 control-label">J'ai besoin d'aide concernant...</label>
+                        <div class="col-sm-7 col-md-6">
+                            <select class="form-control" id="sections"></select>
+                        </div>
+                    </div>
+                    <div class="form-group articles hide">
+                        <label for="articles" class="col-sm-5 col-md-4 control-label"></label>
+                        <div class="col-sm-7 col-md-6">
+                            <select class="form-control" id="articles"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-12 article"></div>
+                    <div class="col-xs-12 other hide text-center">Vous ne trouvez pas la réponse à votre question dans notre centre d'aide ? Rendez-vous sur <a href="{{ path('content.page', {'page': 'contact'}) }}" rel="nofollow">notre page contact</a>.<br /><br /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    <script>
+        urls['centre-aide.categorie'] = '{{ path("centre-aide.categorie", {categorieId: 'categorieId'})}}';
+        urls['centre-aide.articles'] = '{{ path("centre-aide.articles", {sectionId: 'sectionId'})}}';
+    </script>
+    <script>
+        var articles = {};
+        $('#zendesk').find('.categories button').on('click',function(){
+            showGeneralLoader();
+            $('#zendesk').find('.categories button').removeClass('active');
+            var categorie = $(this).data('id');
+            if(typeof _errs !== 'undefined'){
+                _errs.meta['categorie'] = categorie;
+            }
+            $(this).addClass('active');
+            // Get sections
+            $.ajax({
+                type: "GET",
+                url: urls['centre-aide.categorie'].replace('categorieId',categorie),
+                dataType: 'json'
+            }).success(function (data) {
+                $('#sections').html('');
+                $('#sections').append('<option value="">Choisissez une section</option>');
+                $.each(data.sections, function( index,value ) {
+                    $('#sections').append('<option value="'+value.id+'">'+value.name+'</option>');
+                });
+                $('#zendesk').find('.sections').removeClass('hide');
+                if(window.innerWidth < 768){
+                    $(document).scrollTo($("#zendesk .sections").position().top,800);
+                }
+                hideGeneralLoader();
+            }).error(function(){
+                hideGeneralLoader();
+            });
+        });
+        $(document).on('change','#sections',function(){
+            var section = $(this).val();
+            if(section !== ''){
+                showGeneralLoader();
+                if(typeof _errs !== 'undefined'){
+                    _errs.meta['section'] = section;
+                }
+                // Get sections
+                $.ajax({
+                    type: "GET",
+                    url: urls['centre-aide.articles'].replace('sectionId',section),
+                    dataType: 'json'
+                }).success(function (data) {
+                    $('#articles').html('');
+                    $('#articles').append('<option value="">Choisissez une section</option>');
+                    articles = {};
+                    $.each(data.articles, function( index,value ) {
+                        articles[value.id] = value;
+                        $('#articles').append('<option value="'+value.id+'">'+value.name+'</option>');
+                    });
+                    $('#zendesk').find('.articles').removeClass('hide');
+                    if(window.innerWidth < 768){
+                        $(document).scrollTo($("#zendesk .articles").position().top,800);
+                    }
+                  hideGeneralLoader();
+                }).error(function(){
+                  hideGeneralLoader();
+                });
+            }
+        });
+        $(document).on('change','#articles',function(){
+            var article = $(this).val();
+            if(article !== ''){
+                if(typeof _errs !== 'undefined'){
+                    _errs.meta['article'] = article;
+                }
+                // Get sections
+                $('#zendesk').find('.article').html(articles[article]['body']);
+                $('#zendesk').find('.other').removeClass('hide');
+            }
+        });
+    </script>
+{% endblock %}

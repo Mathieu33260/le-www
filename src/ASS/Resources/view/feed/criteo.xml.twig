@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<products>
+{% for auction in auctions %}
+    <product id="{{ auction['auction_product_id'] }}">
+        <name>{% if auction['product_shortName'] != '' %}{{ auction['product_shortName'] }}{% else %}{{ auction['product_name'] }}{% endif %}</name>
+        <producturl>http://www.loisirsencheres.com/product/{{ auction['auction_product_id'] }}</producturl>
+        <smallimage>{{ auction['images']|imgForList|transf('c_fill,h_300,w_300') }}</smallimage>
+        <bigimage>{{ auction['images']|imgForList|transf('c_fill,h_400,w_400') }}</bigimage>
+        <description>{{ auction['product_description']|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 250) }}</description>
+        <price>1</price>
+        <recommendable>1</recommendable>
+        <instock>1</instock>
+        {% for tag in auction['tags'] %}
+        <categoryid{{ loop.index }}>{{ tag }}</categoryid{{ loop.index }}>
+        {% endfor %}
+        <zipcode>{{ auction.location_zipcode }}</zipcode>
+        <internalcategories>{{ auction.category_code }}</internalcategories>
+    </product>  
+{% endfor %}
+</products>

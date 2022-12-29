@@ -1,0 +1,33 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Techos{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">Techos</h1>
+    <div class="padding-text-mobile">
+        sessionCounter is : <span id="sessionCounter">{{sessionCounter}}</span><br />
+        <a href="?ajaxGet=1" data-method="GET" class="sessionCounterAjax">Increment Ajax GET</a><br />
+        <a href="?ajaxPost=1" data-method="POST" class="sessionCounterAjax">Increment Ajax POST</a><br />
+        <a href="?ajaxGet=1&doNotIncrement=1" data-method="GET" class="sessionCounterAjax">Do not increment Ajax GET</a><br />
+        <a href="">Increment via page refresh</a><br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </div> 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.sessionCounterAjax').on('click', function(event){
+            event.preventDefault();
+            $.ajax({
+                method: $(this).data('method'),
+                url: $(this).attr('href'),
+                dataType: 'json'
+            }).success(function( result ) {
+                $('#sessionCounter').text(result.sessionCounter);
+            }).error(function (data) {
+                alert('Error');
+            });
+        });
+     </script>
+{% endblock %}

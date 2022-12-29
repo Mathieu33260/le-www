@@ -1,0 +1,44 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}Paiement confirmé{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'paiement.css.twig' %}
+{% endblock %}
+{% block main_content %}
+    {% include './paiement/warning.html.twig' %}
+    {% if not isPostPaymentReservation %}
+        {% set purchaseMessage = 'VOIR MES ACHATS' %}
+    {% else %}
+        {% set purchaseMessage = 'JE RÉSERVE' %}
+    {% endif %}
+    <div class="row content" id="confirmation">
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            <h1 class="text-center nopadding"><strong>PAIEMENT CONFIRMÉ</strong></h1>
+            <div class="block-separ-bottom block-separ-top">
+                <p class="text-center">Retrouvez les informations concernant votre achat sur votre boîte mail d'inscription et dans l'onglet 'Mes achats' d'ici quelques minutes.</p>
+            </div>
+            <div class="text-center block-separ-top"><img src="{{assetCdn}}/assets/gfx/logopayment/illustration-validation.png" alt="#" width="375" /></div>
+        </div>
+        {% if not isApp(app.request) %}
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only block-separ-top block-separ-bottom">
+            <a href="{{ path('user.purchase')}}" class="btn btn-primary btn-block">{{ purchaseMessage }}</a>
+        </div>
+        {% else %}
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only block-separ-top block-separ-bottom">
+            <a href="comloisirsencheres://myAuctions" class="btn btn-primary btn-block">VOIR MES ACHATS</a>
+        </div>
+        {% endif %}
+        <div class="col-xs-10 col-xs-offset-1 nopadding-only">
+            {% if not isApp(app.request) %}
+            <p class="text-center"><a href="{{ path('user.parrainage')}}">Parrainez vos ami(e)s et gagnez jusqu'à 200€ !</a></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include './paiement/include/track-purchase.twig' %}
+{% endblock %}

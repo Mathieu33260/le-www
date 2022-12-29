@@ -1,0 +1,421 @@
+<a type="button" data-toggle="collapse" data-target="#wing" aria-expanded="false" aria-controls="wing">
+    <span>Vous souhaitez offrir votre bon ?</span>
+</a>
+<div class="collapse{% if option.send is not null %} in{% endif %}" id="wing" data-name="offrir un bon">
+    <div class="panel-body">
+        <div class="option-item {% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %}active{% elseif option.send is not null and option.send.cardType is defined and option.send.cardType != 'sendDirectly' %}no-active no-select{% else %}no-active{% endif %}" data-amount="6">
+            <div class="row">
+                <h2 class="col-xs-12 col-lg-8"><i class="icon icon-arrow-right"></i> <b>Je veux directement envoyer mon bon dans une enveloppe de qualité à l'heureux(se) élu(e).</b></h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing.png" alt="#" /></div>
+                        <div class="col-xs-8 col-sm-10 descripion"><p class="text-muted small">- Envoyé directement au bénéficiaire en 3 jours ouvrés<sup>1</sup> en France métropolitaine.<br />
+                            - Bon glissé dans une enveloppe cadeau de qualité (11x22cm) avec fermeture japonaise.<span class="hidden-lg">...</span>
+                            <span class="visible-lg">- Cachet exclusif Loisirs Enchères.<br />- Options "Ne pas ouvrir avant le xx/xx/xxxx", "Pour..." et "De la part de..." écrites à la main.<br />- Message personnalisé sur le bon.<br />- Suremballage cartonné avec étiquette.</span></p></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-12 text-center price">6,00 €</div>
+                        <div class="col-xs-8 col-sm-12"><button class="text-center btn {% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %}btn-register{% else %}btn-primary{% endif %} btn-block addoption" data-option="send" data-value="0">{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %}RETIRER{% else %}AJOUTER{% endif %}</button></div>
+                    </div>
+                </div>
+                <div class="col-xs-12"><small><sup>1</sup>Délai moyen constaté.</small></div>
+            </div>
+            <div class="row form{% if option.send.cardType is not defined or (option.send is null or option.send.cardType != 'sendDirectly') %} hide{% endif %}">
+                <hr class="col-xs-8 col-xs-offset-2 nopadding-only" />
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 nopadding-right-only-lg nopadding-right-only-md">
+                            <h3 class="text-center"><b>COORDONNÉES DE L'HEUREUX(SE) ÉLU(E)</b></h3>
+                            <div class='row'>
+                                <div class="col-xs-12 text-right">
+                                    <div class="field-errors"></div>
+                                    <div class="form-group{% if error != false and option.send.cardType == 'sendDirectly' and error.destCivilite is defined %} has-error{% endif %}">
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="sendDirectlydestCivilite_0" name="sendDirectly[destCivilite]" data-required="required" value="M"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.destCivilite is defined and option.send.destCivilite == 'M' %} checked=""{% endif %}>
+                                            <label for="sendDirectlydestCivilite_0" data-required="required" class="radiolabel">Monsieur</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="sendDirectlydestCivilite_1" name="sendDirectly[destCivilite]" data-required="required" value="Mme"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.destCivilite is defined and option.send.destCivilite == 'Mme' %} checked=""{% endif %}>
+                                            <label for="sendDirectlydestCivilite_1" data-required="required" class="radiolabel">Madame</label>
+                                        </div>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destCivilite is defined %}
+                                            <span class="help-block">{{ error.destCivilite }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendDirectly' and error.destLastName is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendDirectly_destLastName">Nom du destinataire *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destLastName" name="sendDirectly[destLastName]" placeholder="Nom du destinataire *" data-required="required"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{{option.send.destLastName}}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destLastName is defined %}
+                                            <span class="help-block">{{ error.destLastName }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendDirectly' and error.destFirstName is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="_sendDirectlydestFirstName">Prénom du destinataire *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destFirstName" name="sendDirectly[destFirstName]" placeholder="Prénom du destinataire *" data-required="required"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{{option.send.destFirstName}}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destFirstName is defined %}
+                                            <span class="help-block">{{ error.destFirstName }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-4">
+                                    <div class="form-group{% if error != false and option.send.cardType == 'sendDirectly' and error.destHousenumber is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendDirectly_destHousenumber">N°</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destHousenumber" data-required="required" name="sendDirectly[destHousenumber]" placeholder="N°"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.destLocation.housenumber is defined %}{{option.send.destLocation.housenumber}}{% elseif option.send.destHousenumber is defined %}{{ option.send.destHousenumber }}{% endif %}"{% endif %}>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destHousenumber is defined %}
+                                            <span class="help-block">{{ error.destHousenumber }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-7 col-sm-8">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendDirectly' and error.destStreet is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendDirectly_destStreet">Rue, Avenue, Cours...*</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destStreet" name="sendDirectly[destStreet]" placeholder="Rue, Avenue, Cours...*" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.destLocation.street is defined %}{{option.send.destLocation.street}}{% elseif option.send.destStreet is defined %}{{ option.send.destStreet }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destStreet is defined %}
+                                            <span class="help-block">{{ error.destStreet }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendDirectly_destAdressSupplement">Compléments d'adresse</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destAdressSupplement" name="sendDirectly[destAdressSupplement]" placeholder="Compléments d'adresse"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.destLocation.adressSupplement is defined %}{{option.send.destLocation.adressSupplement}}{% elseif option.send.destAdressSupplement is defined %}{{ option.send.destAdressSupplement }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendDirectly' and error.destZipcode is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendDirectly_destZipcode">Code postal *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destZipcode" name="sendDirectly[destZipcode]" placeholder="Code postal *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.destLocation.zipcode is defined %}{{option.send.destLocation.zipcode}}{% elseif option.send.destZipcode is defined %}{{ option.send.destZipcode }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destZipcode is defined %}
+                                            <span class="help-block">{{ error.destZipcode }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendDirectly' and error.destCity is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendDirectly_destCity">Ville *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectly_destCity" name="sendDirectly[destCity]" placeholder="Ville *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.destLocation.zipcode is defined %}{{option.send.destLocation.city}}{% elseif option.send.destCity is defined %}{{ option.send.destCity }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendDirectly' and error.destCity is defined %}
+                                            <span class="help-block">{{ error.destCity }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <p class="text-muted"><small><sup>*</sup> Champs obligatoires, ces informations apparaîtront sur le suremballage cartonné.</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <h3 class="text-center"><b>INFORMATIONS OPTIONNELLES</b></h3>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendDirectlyForText">Pour</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectlyForText" name="sendDirectly[forText]" placeholder="Pour"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.forText is not null %} value="{{option.send.forText}}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendDirectlyFromText">De la part de</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendDirectlyFromText" name="sendDirectly[fromText]" placeholder="De la part de"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.fromText is not null %} value="{{option.send.fromText}}"{% else %} value="{{ userData.firstName }} {{ userData.lastName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback row">
+                                        <label for="openDate" class="col-xs-6 col-md-12">Ne pas ouvrir avant le</label>
+                                        <div class="col-xs-6 col-md-12">
+                                            <input autocomplete="off" type="text" class="form-control" id="openDate" name="sendDirectly[openDate]" placeholder="AAAA-MM-DD"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.openDate is not null %} value="{{option.send.openDate|date('Y-m-d')}}"{% endif %}>
+                                            <span class="icon-clock form-control-feedback" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendDirectlyCustomMessage">Message personnalisé</label>
+                                        <textarea class="form-control" rows="3" placeholder="Message personnalisé" id="sendDirectlyCustomMessage" name="sendDirectly[customMessage]">{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.customMessage is not null %}{{option.send.customMessage}}{% endif %}</textarea>
+                                        <span class="icon-comment form-control-feedback" aria-hidden="true"></span>
+                                        <span class="counter form-control-feedback"><span>80</span> caractères restants</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="text-center"><b>COORDONNÉES DE L'EXPÉDITEUR</b></h3>
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <div class="form-group">
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="expCivilite_0" name="sendDirectly[expCivilite]" data-required="required" value="M"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.expCivilite is defined and option.send.expCivilite is not null and option.send.expCivilite == 'M' %} checked=""{% endif %}>
+                                            <label for="expCivilite_0" class="radiolabel">Monsieur</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="expCivilite_1" name="sendDirectly[expCivilite]" data-required="required" value="Mme"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.expCivilite is defined and option.send.expCivilite is not null and option.send.expCivilite == 'Mme' %} checked=""{% endif %}>
+                                            <label for="expCivilite_1" class="radiolabel">Madame</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expLastName">Nom de l'expéditeur</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expLastName" name="sendDirectly[expLastName]" data-required="required" placeholder="Nom de l'expéditeur"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.expLastName is not null %} value="{{option.send.expLastName}}"{% else %} value="{{ userData.lastName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expFirstName">Prénom de l'expéditeur</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expFirstName" name="sendDirectly[expFirstName]" data-required="required" placeholder="Prénom de l'expéditeur"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' and option.send.expFirstName is not null %} value="{{option.send.expFirstName}}"{% else %} value="{{ userData.firstName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-4">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="expHousenumber">N°</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expHousenumber" name="sendDirectly[expHousenumber]" data-required="required" placeholder="N°"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.expLocation is defined and option.send.expLocation.housenumber is defined %}{{option.send.expLocation.housenumber}}{% elseif option.send.expHousenumber is defined %}{{ option.send.expHousenumber }}{% endif %}"{% elseif userData.location.housenumber is defined and userData.location.housenumber != '' %}value="{{ userData.location.housenumber|trim }}"{% endif %}>
+                                    </div>
+                                </div>
+                                <div class="col-xs-7 col-sm-8">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expStreet">Rue, Avenue, Cours...</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expStreet" name="sendDirectly[expStreet]" data-required="required" placeholder="Rue, Avenue, Cours..."{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.expLocation is defined and option.send.expLocation.street is defined %}{{option.send.expLocation.street}}{% elseif option.send.expStreet is defined %}{{ option.send.expStreet }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expAdressSupplement">Compléments d'adresse</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expAdressSupplement" name="sendDirectly[expAdressSupplement]" placeholder="Compléments d'adresse"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.expLocation is defined and option.send.expLocation.adressSupplement is defined %}{{option.send.expLocation.adressSupplement}}{% elseif option.send.expAdressSupplement is defined %}{{ option.send.expAdressSupplement }}{% endif %}"{% elseif userData.location.adressSupplement is defined %} value="{{ userData.location.adressSupplement }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expZipcode">Code postal</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expZipcode" name="sendDirectly[expZipcode]" data-required="required" placeholder="Code postal"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.expLocation is defined and option.send.expLocation.zipcode is defined %}{{option.send.expLocation.zipcode}}{% elseif option.send.expZipcode is defined %}{{ option.send.expZipcode }}{% endif %}"{% elseif userData.location.zipcode is defined %} value="{{ userData.location.zipcode }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="expCity">Ville</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="expCity" name="sendDirectly[expCity]" data-required="required" placeholder="Ville" {% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendDirectly' %} value="{% if option.send.expLocation is defined and option.send.expLocation.city is defined %}{{option.send.expLocation.city}}{% elseif option.send.expCity is defined %}{{ option.send.expCity }}{% endif %}"{% elseif userData.location.city is defined %}value="{{ userData.location.city }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option-item {% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %}active{% elseif  option.send is not null and option.send.cardType is defined and option.send.cardType != 'sendSelf' %}no-active no-select{% else %}no-active{% endif %}" data-amount="5">
+            <div class="row">
+                <h2 class="col-xs-12 col-lg-8"><i class="icon icon-arrow-right"></i> <b>Je veux recevoir mon bon dans une enveloppe de qualité pour l'offrir en main propre à l'heureux(se) élu(e).</b></h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing2.png" alt="#" /></div>
+                        <div class="col-xs-8 col-sm-10 descripion"><p class="text-muted small">- Envoyé directement chez vous en 3 jours ouvrés<sup>1</sup> en France métropolitaine.<br />
+                            - Bon glissé dans une enveloppe cadeau de qualité (11x22cm) avec fermeture japonaise.<span class="hidden-lg">..</span>
+                            <span class="visible-lg">- Cachet exclusif Loisirs Enchères.<br />- Options "Pour..." et "De la part de..." écrites à la main.<br />- Message personnalisé sur le bon.<br />- Suremballage cartonné avec étiquette.</span></p></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-12 text-center price">5,00 €</div>
+                        <div class="col-xs-8 col-sm-12"><button class="text-center btn {% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf'  %}btn-register{% else %}btn-primary{% endif %} btn-block addoption" data-option="send" data-value="1">{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf'  %}RETIRER{% else %}AJOUTER{% endif %}</button></div>
+                    </div>
+                </div>
+                <div class="col-xs-12"><small><sup>1</sup>Délai moyen constaté.</small></div>
+            </div>
+            <div class="row form{% if option.send.cardType is not defined or (option.send is null or option.send.cardType != 'sendSelf') %} hide{% endif %}">
+                <hr class="col-xs-8 col-xs-offset-2 nopadding-only" />
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 nopadding-right-only-lg nopadding-right-only-md">
+                            <h3 class="text-center"><b>VOS COORDONNÉES</b></h3>
+                            <div class='row'>
+                                <div class="col-xs-12 text-right">
+                                    <div class="form-group{% if error != false and option.send.cardType == 'sendSelf' and error.destCivilite is defined %} has-error{% endif %}">
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="sendSelfdestCivilite_0" name="sendSelf[destCivilite]" data-required="required" value="M"{% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' and option.send.destCivilite is defined and option.send.destCivilite == 'M' %} checked=""{% endif %}>
+                                            <label for="sendSelfdestCivilite_0" data-required="required" class="radiolabel">Monsieur</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input autocomplete="off" type="radio" id="sendSelfdestCivilite_1" name="sendSelf[destCivilite]" data-required="required" value="Mme"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' and option.send.destCivilite is defined and option.send.destCivilite == 'Mme' %} checked=""{% endif %}>
+                                            <label for="sendSelfdestCivilite_1" data-required="required" class="radiolabel">Madame</label>
+                                        </div>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destCivilite is defined %}
+                                            <span class="help-block">{{ error.destCivilite }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendSelf' and error.destLastName is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destLastName">Votre nom *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destLastName" name="sendSelf[destLastName]" placeholder="Votre nom *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{{option.send.destLastName}}"{% elseif userData.lastName is defined %} value="{{ userData.lastName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destLastName is defined %}
+                                            <span class="help-block">{{ error.destLastName }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendSelf' and error.destFirstName is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destFirstName">Votre prénom *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destFirstName" name="sendSelf[destFirstName]" placeholder="Votre prénom *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{{option.send.destFirstName}}"{% elseif userData.firstName is defined %} value="{{ userData.firstName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destFirstName is defined %}
+                                            <span class="help-block">{{ error.destFirstName }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-4">
+                                    <div class="form-group{% if error != false and option.send.cardType == 'sendSelf' and error.destHousenumber is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destHousenumber">N°</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destHousenumber" name="sendSelf[destHousenumber]" data-required="required" placeholder="N°"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{% if option.send.destLocation.housenumber is defined %}{{option.send.destLocation.housenumber}}{% elseif option.send.destHousenumber is defined %}{{ option.send.destHousenumber }}{% endif %}"{% elseif userData.location.housenumber is defined and userData.location.housenumber != '' %}value="{{ userData.location.housenumber|trim }}"{% endif %}>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destHousenumber is defined %}
+                                            <span class="help-block">{{ error.destHousenumber }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-7 col-sm-8">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendSelf' and error.destStreet is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destStreet">Rue, Avenue, Cours...*</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destStreet" name="sendSelf[destStreet]" placeholder="Rue, Avenue, Cours...*" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{% if option.send.destLocation.street is defined %}{{option.send.destLocation.street}}{% elseif option.send.destStreet is defined %}{{ option.send.destStreet }}{% endif %}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destStreet is defined %}
+                                            <span class="help-block">{{ error.destStreet }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendSelf_destAdressSupplement">Compléments d'adresse</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destAdressSupplement" name="sendSelf[destAdressSupplement]" placeholder="Compléments d'adresse"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{% if option.send.destLocation.adressSupplement is defined %}{{option.send.destLocation.adressSupplement}}{% elseif option.send.destAdressSupplement is defined %}{{ option.send.destAdressSupplement }}{% endif %}"{% elseif userData.location.adressSupplement is defined %} value="{{ userData.location.adressSupplement }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendSelf' and error.destZipcode is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destZipcode">Code postal *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destZipcode" name="sendSelf[destZipcode]" placeholder="Code postal *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{% if option.send.destLocation.zipcode is defined %}{{option.send.destLocation.zipcode}}{% elseif option.send.destZipcode is defined %}{{ option.send.destZipcode }}{% endif %}"{% elseif userData.location.zipcode is defined %} value="{{ userData.location.zipcode }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destZipcode is defined %}
+                                            <span class="help-block">{{ error.destLastName }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'sendSelf' and error.destCity is defined %} has-error{% endif %}">
+                                        <label class="sr-only" for="sendSelf_destCity">Ville *</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelf_destCity" name="sendSelf[destCity]" placeholder="Ville *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' %} value="{% if option.send.destLocation.zipcode is defined %}{{option.send.destLocation.city}}{% elseif option.send.destCity is defined %}{{ option.send.destCity }}{% endif %}"{% elseif userData.location.city is defined %} value="{{ userData.location.city }}"{% endif %}>
+                                        <span class="icon-location form-control-feedback" aria-hidden="true"></span>
+                                        {% if error != false and option.send.cardType == 'sendSelf' and error.destCity is defined %}
+                                            <span class="help-block">{{ error.destCity }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <h3 class="text-center"><b>VOTRE MESSAGE PERSONNALISÉ</b></h3>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendSelfForText">Pour</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelfForText" name="sendSelf[forText]" placeholder="Pour *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' and option.send.forText is not null %} value="{{option.send.forText}}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendSelfFromText">De la part de</label>
+                                        <input autocomplete="off" type="text" class="form-control" id="sendSelfFromText" name="sendSelf[fromText]" placeholder="De la part de"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' and option.send.fromText is not null %} value="{{option.send.fromText}}"{% else %} value="{{ userData.firstName }} {{ userData.lastName }}"{% endif %}>
+                                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group has-feedback">
+                                        <label class="sr-only" for="sendSelfCustomMessage">Message personnalisé</label>
+                                        <textarea class="form-control" rows="3" placeholder="Message personnalisé" id="sendSelfCustomMessage" name="sendSelf[customMessage]">{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'sendSelf' and option.send.customMessage is not null %}{{option.send.customMessage}}{% endif %}</textarea>
+                                        <span class="icon-comment form-control-feedback" aria-hidden="true"></span>
+                                        <span class="counter form-control-feedback"><span>80</span> caractères restants</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <small>* Champs obligatoires, ces informations apparaîtront sur le suremballage cartonné.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option-item {% if option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' %}active{% elseif  option.send is not null and option.send.cardType is defined and option.send.cardType != 'freeCard' %}no-active no-select{% else %}no-active{% endif %}" data-amount="0">
+            <h2><i class="icon icon-arrow-right"></i> <b>Je me débrouille avec mon imprimante, j'espère juste qu'il reste de l'encre.</b></h2>
+            <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2 text-right nopadding-right"><img src="{{assetCdn}}/assets/img/paiement/option/wing3.png" alt="#" /></div>
+                        <div class="col-xs-8 col-sm-10 descripion"><p class="text-muted small">- Option "De la part de...".<br />- Message personnalisé.</p></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-12 text-center price">Gratuit</div>
+                        <div class="col-xs-8 col-sm-12"><button class="text-center btn {% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' %}btn-register{% else %}btn-primary{% endif %} btn-block addoption" data-option="send" data-value="2">{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard'  %}RETIRER{% else %}AJOUTER{% endif %}</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form {% if option.send.cardType is not defined or (option.send is null or option.send.cardType != 'freeCard') %} hide{% endif %}">
+                <hr class="col-xs-8 col-xs-offset-2 nopadding-only" />
+                <div class="col-xs-12 col-sm-6 nopadding-right-only-md nopadding-right-only-lg">
+                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'freeCard' and error.destLastName is defined %} has-error{% endif %}">
+                        <label class="sr-only" for="freeCard_destLastName">Nom du bénéficiaire</label>
+                        <input autocomplete="off" type="text" class="form-control" id="freeCard_destLastName" name="freeCard[destLastName]" placeholder="Nom du bénéficiaire *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' and option.send.destLastName is not null %} value="{{option.send.destLastName}}"{% endif %}>
+                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                        {% if error != false and option.send.cardType == 'freeCard' and error.destLastName is defined %}
+                        <span class="help-block">{{ error.destLastName }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group has-feedback{% if error != false and option.send.cardType == 'freeCard' and error.destLastName is defined %} has-error{% endif %}">
+                        <label class="sr-only" for="freeCard_destFirstName">Prénom du bénéficiaire</label>
+                        <input autocomplete="off" type="text" class="form-control" id="freeCard_destFirstName" name="freeCard[destFirstName]" placeholder="Prénom du bénéficiaire *" data-required="required"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' and option.send.destFirstName is not null %} value="{{option.send.destFirstName}}"{% endif %}>
+                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                        {% if error != false and option.send.cardType == 'freeCard' and error.destLastName is defined %}
+                        <span class="help-block">{{ error.destLastName }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="freeCardFromText">De la part de</label>
+                        <input autocomplete="off" type="text" class="form-control" id="freeCardFromText" name="freeCard[fromText]" placeholder="De la part de"{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' and option.send.fromText is not null %} value="{{option.send.fromText}}"{% else %} value="{{ userData.firstName }} {{ userData.lastName }}"{% endif %}>
+                        <span class="icon-mon-profil form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="sr-only" for="freeCardCustomMessage">Message personnalisé</label>
+                        <textarea class="form-control" rows="3" placeholder="Message personnalisé" id="freeCardCustomMessage" name="freeCard[customMessage]">{% if  option.send is not null and option.send.cardType is defined and option.send.cardType == 'freeCard' and option.send.customMessage is not null %}{{option.send.customMessage}}{% endif %}</textarea>
+                        <span class="icon-comment form-control-feedback" aria-hidden="true"></span>
+                        <span class="counter form-control-feedback"><span>80</span> caractères restants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

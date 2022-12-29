@@ -1,0 +1,10 @@
+{# Eulerian Analytics - Tag #}
+<script>
+  /*<![CDATA[*/
+  var EA_data = {{ EAData | raw }};
+  (function(){var td='{{ url }}',d=document,l=d.location;if(!l.protocol.indexOf('http')){var o=d.createElement('script'),a=d.getElementsByTagName('script')[0],cn=parseInt((new Date()).getTime()/3600000),cj='',cdh=(l.host+td).replace(/[^a-z]/g,''),cdr=cdh+cdh.toUpperCase(),acdr=cdr.split('');for(var i=-1;i<cn%7;i++){cj+=acdr[(cn+i)%acdr.length];}o.type='text/javascript';o.async='async';o.defer='defer';o.src='//'+td+'/'+cj+(cn%8760)+'.js';a.parentNode.insertBefore(o,a);}})();
+  /*]]>*/
+</script>
+<noscript>
+    <iframe width="2" height="2" src="{{ urlIframe | raw }}"></iframe>
+</noscript>

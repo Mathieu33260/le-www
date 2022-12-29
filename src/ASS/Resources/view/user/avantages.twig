@@ -1,0 +1,230 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-10 col-xs-offset-1 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8 nopadding-only-xs{% if app.request.get('onlycontent') is not null %} paddingtop1{% endif %}" id="userProfile">
+            {% if app.request.get('onlycontent') is null %}
+            {% include 'user/template/mobileMenu.twig' %}
+            <h1>Mes avantages</h1>
+            {% endif %}
+            <div class="text-center">
+                <table class="table-bordered table-condensed cf" style="width:100%;">
+                    <tr>
+                        <td colspan="4"><h2 class="text-center">Ma cagnotte*</h2></td>
+                    </tr>
+                    <tr>
+                        <td>Provenance</td>
+                        <td>Valeur de départ</td>
+                        <td>Fin de validité</td>
+                        <td>Solde restant</td>
+                    </tr>
+                    <tbody>
+                        {% if giftcards|length > 0 %}
+                            {% for giftcard in giftcards %}
+                                <tr>
+                                    <td>{% if giftcard.fromSponsorchip %}Parrainage{% else %}Carte Cadeau ({{ giftcard.code }}){% endif %}</td>
+                                    <td>{{ giftcard.original_amount/100 }} €</td>
+                                    <td>{{ giftcard.expire_date|date('d/m/Y') }}</td>
+                                    <td>
+                                        {{ giftcard.amount_left/100 }} €
+                                        {% if giftcard.debit|length > 0 %}
+                                            <a class="accordion-toggle" role="button" data-toggle="collapse" href="#giftcard{{ giftcard.id }}Debit" aria-expanded="false" aria-controls="giftcard{{ giftcard.id }}Debit">
+                                                &nbsp;[Voir détails]
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% if giftcard.debit|length > 0 %}
+                                    <tr>
+                                    <td colspan="4" class="nopadding-only">
+                                        <div class="accordion-body collapse" id="giftcard{{ giftcard.id }}Debit">
+                                            <table class="table-bordered table-condensed cf" style="width: 100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Valeur de départ</th>
+                                                    <th>Montant de la transaction</th>
+                                                    <th>Date de la transaction</th>
+                                                    <th>Solde</th>
+                                                </tr>
+                                                </thead>
+                                                {% for debit in giftcard.debit %}
+                                                    <tr>
+                                                        <td>{{ debit.solde_before/100 }} €</td>
+                                                        <td>{{ debit.amount /100 }} €{% if debit.status == 'refund' %}(Remboursement){% endif %}</td>
+                                                        <td>{{ debit.created|date('d/m/Y') }}</td>
+                                                        <td>{{ debit.solde_after/100 }} €</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            <tr style="background-color: rgb(77, 173, 226); color: white">
+                                <td colspan="3"><b>Total</b></td>
+                                <td><b>{{ available/100 }} €</b></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Votre cagnotte est vide, pas de problème !<br />Parrainez vos amis et achetez des cartes cadeaux pour la remplir !</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br />
+                <form method="POST" name="giftcardform" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="giftcardcode" class="control-label col-xs-12 col-sm-5 required">Vous bénéficiez d'un bon cadeau ? </label>
+                        <div class="col-xs-6 col-sm-4">
+                            <input type="text" max="6" name="giftcardcode" class="form-control" placeholder="Veuillez le saisir ici" required="" title="bon cadeau" />
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input type="submit" value="Valider" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xs-12 nopadding-only">
+                    <p class="text-left"><small>*Votre cagnotte comprend vos récompenses du programme de parrainage et vos cartes cadeaux, vous pouvez utiliser n'importe quel montant sur le paiement de n'importe quelle enchère de votre choix</small></p>
+                </div>
+                <div class="light-bg content page col-xs-12 nopadding-only">
+                    <table class="table-bordered table-striped table-condensed cf" style="width:100%;">
+                        <tr>
+                            <th colspan="5"><h2 class="text-center">Mon programme fidélité</h2></th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                {% set msgNbpaid = "Vous avez remporté et payé "~user.nbAuctionPaid~" enchère(s)" %}
+                                {% if user.nbAuctionPaid  == 0 %}
+                                    <td>
+                                        <p>Enchérissez et rejoignez la communauté Loisirs Enchères
+                                            pour gagner des codes promo grâce à notre <a href='{{ path('content.page', {'page': 'programme-fidelite'}) }}'>programme fidélité</a> et notre programme de parrainage !</p>
+                                    </td>
+                                {% elseif user.nbAuctionPaid > 0 and user.nbAuctionPaid < 5%}
+                                <td>
+                                    <p><img src='{{assetCdn}}/assets/gfx/rank1_50px.png' alt="rank1" /></p>
+                                    <p>Vous avez atteint le statut <b>Enchérisseur novice</b> !</p>
+                                    <p>Il ne vous reste plus que <b title="{{msgNbpaid}}">{{ 5 - user.nbAuctionPaid }} enchère(s) </b> pour atteindre le niveau Enchérisseur confirmé et bénéficier d'<b>un bon d'achat de 10€ !</b></p>
+                                    <p class="text-right">Retrouvez plus d'information sur la page <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">programme fidélité</a>.</p>
+                                </td>
+                                {% elseif user.nbAuctionPaid >= 5 and user.nbAuctionPaid < 10%}
+                                <td>
+                                    <p><img src='{{assetCdn}}/assets/gfx/rank2_50px.png' alt="rank2" /></p>
+                                    <p>Vous avez atteint le statut <b>Enchérisseur confirmé</b> !</p>
+                                    <p>Il ne vous reste plus que <b title="{{msgNbpaid}}">{{ 10 - user.nbAuctionPaid }} enchère(s) </b> pour atteindre le niveau Enchérisseur aguerri et bénéficier d'<b>un bon d'achat de 20€ !</b></p>
+                                    <p class="text-right">Retrouvez plus d'information sur la page <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">programme fidélité</a>.</p>
+                                </td>
+                                {% elseif user.nbAuctionPaid >= 10 and user.nbAuctionPaid < 20%}
+                                <td>
+                                    <p><img src='{{assetCdn}}/assets/gfx/rank3_50px.png' alt="rank3" /></p>
+                                    <p>Vous avez atteint le statut <b title="{{msgNbpaid}}">Enchérisseur aguerri</b> !</p>
+                                    <p>Il ne vous reste plus que <b>{{ 20 - user.nbAuctionPaid }} enchère(s) </b> pour atteindre le niveau Enchérisseur expert et bénéficier d'<b>un bon d'achat de 40€ !</b></p>
+                                    <p class="text-right">Retrouvez plus d'information sur la page <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">programme fidélité</a>.</p>
+                                </td>
+                                {% elseif user.nbAuctionPaid >= 20 and user.nbAuctionPaid < 50%}
+                                <td>
+                                    <p><img src='{{assetCdn}}/assets/gfx/rank4_50px.png' alt="rank4"  /></p>
+                                    <p>Vous avez atteint le statut <b title="{{msgNbpaid}}">Enchérisseur expert</b> !</p>
+                                    <p>Il ne vous reste plus que <b>{{ 50 - user.nbAuctionPaid }} enchère(s) </b> pour atteindre le niveau Commisaire priseur et bénéficier d'<b>un bon d'achat de 100€ !</b></p>
+                                    <p class="text-right">Retrouvez plus d'information sur la page <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">programme fidélité</a>.</p>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <p><img src='{{assetCdn}}/assets/gfx/rank5_50px.png'  alt="rank5"  /></p>
+                                    <p>Vous avez atteint le statut de <b title="{{msgNbpaid}}">Maître Enchérisseur</b>,<br />
+                                        C'est le plus haut statut de la communauté Loisirs Enchères.<br />
+                                        Vous remportez un bon d'une valeur de <b>100€</b> à valoir sur toutes les offres du site. <br />
+                                        Toute l'équipe vous remercie pour votre fidélité et vous invite à venir boire un verre avec elle lors d'un prochain passage à Bordeaux !</p>
+                                    <p class="text-right">Retrouvez plus d'information sur la page <a href="{{ path('content.page', {'page': 'programme-fidelite'}) }}">programme fidélité</a>.</p>
+                                   </p>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <table class="table-bordered table-striped table-condensed cf" style="width:100%;">
+                        <thead class="cf">
+                            <tr>
+                                <th colspan="5"><h2 class="text-center">Mes codes promos</h2></th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Valeur</th>
+                                <th class="text-center">Date validité</th>
+                                <th class="text-center">Actif</th>
+                                <th class="text-center">Provenance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set hasPromocode = false %}
+                        {% for promocode in promocodes%}
+                            {% if promocode.valid_until|date('Y-m-d') >= "now"|date('Y-m-d')%}
+                                {% set hasPromocode = true %}
+                                <tr>
+                                    <td>{{promocode.code}}</td>
+                                    <td>{{promocode.amount / 100}}€</td>
+                                    <td>{{promocode.valid_until|date('d-m-Y')}}</td>
+                                    {% if promocode.status == 'complete' %}
+                                    <td>Déjà utilisé</td>
+                                    {% else %}
+                                    <td>Oui</td>
+                                    {% endif %}
+                                    {% if promocode.campaign == 'programme-fidelite' %}
+                                    <td>Programme fidélité</td>
+                                    {% elseif promocode.campaign == 'programme-parrainage' %}
+                                    <td>Programme parrainage</td>
+                                    {% elseif 'Anniversaire' in promocode.campaign %}
+                                    <td>Anniversaire</td>
+                                    {% else %}
+                                    <td>Bon d'achat</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% if hasPromocode == false %}
+                            <tr>
+                                <td colspan="5"> Vous n'avez actuellement aucun code promo disponible. </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5"><small>Pour utiliser un bon d'achat il vous suffit de remplir la case 'code promo' lors du paiement de votre enchère. Attention le montant de votre enchère doit-être supérieur ou égal au montant de votre code promo. Vos bons issus du programme de fidélité sont valables 60 jours et ne sont pas cumulables.<br /><br />
+                                    Code anniversaire : code valable 30 jours à compter de sa date d'émission, une fois par compte et pour un montant d'achat minimum de 50€</small></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,117 @@
+.placeholder-container {
+    background: white;
+    height: 193px;
+    position: relative;
+    margin-bottom: 12px;
+    @media (min-width: 375px) {
+        .placeholder-container {
+            height: 195px;
+        }
+    }
+    .placeholder-animated {
+        background: #f6f7f8;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        background-size: 800px 104px;
+        height: 100%;
+        position: relative;
+        & > div {
+            &:nth-child(1) {
+                .position_placeholder(0, 0, 0, 100%, 5em);
+            }
+
+            &:nth-child(2) {
+                .position_placeholder(5em, 0, 0, 100%, 15px);
+            }
+
+            &:nth-child(3) {
+                .position_placeholder(6em, initial, 0, 20px, 15px);
+            }
+
+            &:nth-child(4) {
+                .position_placeholder(6em, initial, 20px, calc(100% - 200px), 15px);
+            }
+
+            &:nth-child(5) {
+                .position_placeholder(6em, 0, initial, 180px, 15px);
+                @media (min-width: 375px) {
+                    width: 20px;
+                }
+            }
+
+            &:nth-child(6) {
+                .position_placeholder(7em, 0, 0, 100%, 15px);
+            }
+
+            &:nth-child(7) {
+                .position_placeholder(8em, initial, 0, 20px, 15px);
+            }
+
+            &:nth-child(8) {
+                .position_placeholder(8em, initial, 20px, calc(100% - 100px), 15px);
+            }
+
+            &:nth-child(9) {
+                .position_placeholder(8em, 0, initial, 80px, 15px);
+                @media (min-width: 375px) {
+                    width: 40px;
+                }
+            }
+
+            &:nth-child(10) {
+                .position_placeholder(9em, 0, 0, 100%, 5px);
+            }
+
+            &:nth-child(11) {
+                .position_placeholder(9.3em, initial, 0, 20px, 15px);
+            }
+
+            &:nth-child(12) {
+                .position_placeholder(9.3em, initial, 20px, calc(100% - 180px), 15px);
+            }
+
+            &:nth-child(13) {
+                .position_placeholder(9.3em, 0, initial, 200px, 15px);
+                @media (min-width: 375px) {
+                    width: 80px;
+                }
+            }
+
+            &:nth-child(14) {
+                .position_placeholder(10.12em, 0, 0, 100%, 15px);
+            }
+
+            &:nth-child(15) {
+                .position_placeholder(11em, initial, 0, 20px, 15px);
+            }
+
+            &:nth-child(16) {
+                .position_placeholder(11em, initial, 20px, 80px, 15px);
+            }
+
+            &:nth-child(17) {
+                .position_placeholder(11em, 100px, 60px, initial, 15px);
+            }
+
+            &:nth-child(18) {
+                .position_placeholder(11em, 20px, initial, 40px, 15px);
+            }
+
+            &:nth-child(19) {
+                .position_placeholder(11em, 0, initial, 20px, 15px);
+            }
+
+            &:nth-child(20) {
+                .position_placeholder(12em, 0, 0, initial, 15px);
+            }
+        }
+
+        .masker {
+            background: white;
+            position: absolute;
+
+            &.load {
+                background: transparent;
+            }
+        }
+    }
+}

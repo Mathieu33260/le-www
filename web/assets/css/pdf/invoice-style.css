@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family:'Lato';
+	font-size:13px;
+}
+
+.main {
+	width:595px;
+	margin:20px auto;
+}
+
+.info-bold {
+    font-weight: bold;
+}
+
+.info-right {
+    text-align: right;
+}
+
+
+/*Header*/
+
+#row-1 {
+	display:block;
+	height:250px;
+	margin-bottom:20px;
+}
+
+#left {
+	display: inline-block;
+	float: left;
+    width: 45%;
+}
+
+#right {
+    display: inline-block;
+    float: right;
+    width: 45%;
+}
+
+.info-user {
+    float:right;
+    width:270px;
+    height:50px;
+    margin:50px 0px 0px 0px;
+    text-align:right;
+}
+
+.info-invoice {
+	float:right;
+	width:270px;
+	height:40px;
+	margin:100px 0px 0px 0px;
+	text-align:right;
+}
+
+.info-title {
+    font-size: 16px;
+    font-weight: bold;
+    color:#4DACDF;
+}
+
+/*Séparation*/
+
+.separation {
+	height:2px;
+	width:100%;
+	background-color:#666667;
+	margin:20px 0px;
+}
+
+/* Tableau */
+.row-2 {
+    height:300px;
+}
+
+table {
+    width:100%;
+}
+
+th.description, td.description {
+    width: 80%;
+    padding: 5px;
+    text-align: left;
+}
+
+th.description, th.price {
+    border-top: 1px solid #666667;
+    border-bottom: 1px solid #666667;
+}
+
+th.price, td.price {
+    width: 20%;
+    padding: 5px;
+    text-align: right;
+}
+
+th {
+    font-weight: bold;
+}
+
+/* footer */
+footer span {
+	font-size:10px;
+	text-align:center;
+}
+
+.info {
+	margin:130px 0px;
+	text-align:center;
+}

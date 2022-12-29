@@ -1,0 +1,75 @@
+Gender is required: Votre civilité est requise
+Firstname is required: Votre prénom est requis
+Lastname is required: Votre nom est requis
+Email is required: Votre e-mail est requis
+Password is required: Votre mot de passe est requis
+Birthdate is required: Votre date de naissance est requise
+Your passwords do not match: Vos mots de passe ne sont pas identiques
+You need to accept the terms and conditions: Vous devez accepter le règlement
+is invalid: n'est pas valide
+Unable to register: Complétez les champs manquants
+Our: Votre
+Your password has been reset, you can now: Votre mot de passe a bien été changé, vous pouvez maintenant vous
+log in: connecter
+with your new password: avec votre nouveau mot de passe
+Could not change password... Make sure you copied the link from the email exactly!: Nous n'avons pas pu changer votre mot de passe... Assurez-vous d'avoir recopié correctement le lien contenu dans le mail et que votre mot de passe soit assez long.
+Unable to change password: Impossible de changer le mot de passe.
+A link has been sent: Un lien vous a été envoyé par mail. Cliquez sur celui-ci afin de réinitialiser votre mot de passe. N'oubliez pas de vérifier dans vos courriers indésirables, on ne sait jamais !
+User not found: Aucun profil n'a été créé avec cet email.
+Unable to save profile: Impossible de sauvegarder votre profil
+Your changes have been saved: Vos changements ont bien été pris en compte
+Your old password is incorrect: Votre ancien mot de passe n'est pas bon
+Your new passwords do not match: Vos nouveaux mot de passe ne correspondent pas
+Your password has been changed: Votre mot de passe a été changé avec succès
+your email address: votre adresse mail
+Congratulations: Félicitations !
+You can now login with your credentials Quick: Votre inscription à bien été prise en compte, il ne vous reste plus qu'à visiter le site et peut-être trouver l'enchère de vos rêves !<br /><br /><button type="button" class="btn btn-warning btn-block" data-dismiss="modal" aria-label="Close">Découvrir Loisirs Enchères</button>
+Your email has been changed. You must use to connect: Votre email a été changé. Vous devrez maintenant l'utiliser pour votre prochaine connexion
+Could not confirm your account: Nous n'avons pas pu confirmer votre profil
+account already active: Votre profil est déjà actif, vous pouvez vous connecter
+facebook_register_ok: Félicitations, vous pouvez désormais enchérir !
+Forgot password: Mot de passe oublié
+This email is already used: Cette adresse mail est déjà utilisée. Si vous avez oublié votre mot de passe cliquez ici
+User not active: Vous n'avez pas encore validé votre adresse email. Merci de regarder dans votre boîte mail. <a href="/user/mail">Renvoyer l'email</a>.
+form.error1000: Champ obligatoire.
+form.error1001: Votre mot de passe est trop court
+form.error1003: Code postal non valide
+form.error1004: Numéro de telephone non valide
+form.error1005: Format non conforme
+form.error1013: Email invalide
+form.error1100: Cet e-mail est déjà associé à un compte, veuillez vous connecter pour continuer
+form.error1101: Cet email est déjà confirmé.
+form.error1200: Vos mots de passe ne sont pas identiques
+form.error1201: Votre ancien mot de passe n'est pas bon
+Bad credentials: Adresse mail ou/et mot de passe incorrect(s)
+Bad credentials.: Adresse mail ou/et mot de passe incorrect(s)
+facebook.no_email_found: Nous n'avons pas pu récupérer votre email depuis votre Facebook. Merci de le rendre visible puis réessayer. Vous pouvez aussi vous inscrire par l'intermédiaire de notre formulaire.
+
+Contact of Loisirs Encheres.com: Contact de Loisirs Encheres.com
+Email: Email
+Name: Nom
+Message: Message
+Invalid email address: Adresse mail invalide
+Please check the reCaptcha box: Merci de cocher la case de reCaptcha
+Thank you, your message has been sent: Merci, votre message a bien été envoyé.
+Could not send email: Nous n'avons pas pu envoyer le mail. Merci de nous contacter directement à info@loisirsencheres.com
+Mail not send: Le mail n'a pas été envoyé.
+street: adresse
+zipcode: code postal
+city: ville
+
+send: Envoyer
+category: Catégorie
+
+cat.wellness: Bien-être
+cat.culture: Culture
+cat.food: Restaurant
+cat.hotel: Hôtel
+cat.sportAdventure: Sport-Aventure
+cat.other: Autre
+
+location.form.error1000: Ce champs ne peut pas être vide
+location.form.error1001: Ce champ doit faire au moins 2 caractères
+location.form.error1002: Ce champ ne peut pas faire plus de 255 caractères
+see.nb_product_by_city: >-
+ {0} Aucune offre |{1} Voir l'offre|[2,Inf] Voir les %count% offres

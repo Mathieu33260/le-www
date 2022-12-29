@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+{% if basic is defined %}
+  <url>
+    <loc>https://www.loisirsencheres.com/</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/contact</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/faq</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/comment-ca-marche</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/parrainage</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/presse-tv-recompenses</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/merchant</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/c/vous-avez-aime</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com{{path('app.mobile')}}</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/content/programme-fidelite</loc>
+  </url>
+  {# Listings #}
+  <url>
+    <loc>https://www.loisirsencheres.com/all/</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/carte-cadeau</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/carte-cadeau-recevoir</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com/carte-cadeau-offrir-recevoir</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com{{path('feedback.home')}}</loc>
+  </url>
+  <url>
+    <loc>https://www.loisirsencheres.com{{path('content.sitemaphtml')}}</loc>
+  </url>
+{% endif %}
+{% if tags is defined %}
+  {% for tag in tags %}
+  <url>
+    <loc>https://www.loisirsencheres.com{{ path('category.name', {'name': tag.name}) }}</loc>
+  </url>
+  {% endfor %}
+{% endif %}
+{% if auctions is defined %}
+  {% for auction in auctions %}
+  <url>
+    <loc>https://www.loisirsencheres.com/product/{{ auction['auction_product_id'] }}</loc>
+  </url>
+  {% endfor %}
+{% endif %}
+{% if cities is defined %}
+  <url>
+    <loc>https://www.loisirsencheres.com/ville/</loc>
+  </url>
+  {% for city in cities %}
+  <url>
+    <loc>https://www.loisirsencheres.com/ville/{{ city.name|lower }}</loc>
+  </url>
+  {% endfor %}
+{% endif %}
+{% if landingpages is defined %}
+  {% for landingpage in landingpages %}
+  <url>
+    <loc>https://www.loisirsencheres.com/{{ landingpageUri(landingpage.type) }}/{{ landingpage.alias }}</loc>
+  </url>
+  {% endfor %}
+{% endif %}
+</urlset>

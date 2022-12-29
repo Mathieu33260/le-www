@@ -1,0 +1,17 @@
+{%- if user and user.godfatherLink is not null -%}
+    <div class="parrainage col-sm-12 col-md-5">
+        <form class="form-inline text-left" id="form_parrainage" method="post" action="{{ path('user.parrainage') }}">
+            <h4>Envoyez un mail d'invitation à vos proches</h4>
+            <fieldset>
+               <legend>Invitez vos amis et gagnez jusqu'à 200€, <a href="{{ path('user.parrainage') }}" title="En savoir plus">en savoir plus...</a></legend>
+               <div class="input-group">
+                    <input type="hidden" name="parrainage[message]" value="" />
+                    <input type="hidden" name="parrainage[lastName]" value="{{ user.lastName }}" />
+                    <input type="hidden" name="parrainage[firstName]" value="{{ user.firstName }}" />
+                    <input name="parrainage[godson]" class="form-control" id="parrainageemail" type="email" placeholder="exemple@mail.com" title="Adresse email de votre proche" />
+               </div>
+               <button type="submit" class="btn btn-md btn-warning"{%- if not is_granted('IS_AUTHENTICATED_FULLY') -%} disabled=""{% endif %}>Envoyer</button>
+            </fieldset>
+       </form>
+    </div>
+{%- endif -%}

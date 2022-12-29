@@ -1,0 +1,14 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.trema.encheres.dev",
+            "sha256_cert_fingerprints":
+            [
+                "56:6A:16:E2:C3:20:EE:A2:8C:EA:3F:01:BA:CA:CF:4E:5B:C7:79:84:80:E3:B2:5C:CE:56:31:89:50:CD:E3:4D",
+                "D4:47:E1:F5:EA:BC:BB:3B:0C:3D:4E:D0:62:C5:93:03:D6:59:1C:34:D0:CB:31:F7:37:E5:C8:08:65:17:7D:D0"
+            ]
+        }
+    }
+]

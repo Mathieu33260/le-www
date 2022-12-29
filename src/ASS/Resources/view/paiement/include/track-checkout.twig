@@ -1,0 +1,31 @@
+<script>
+    ga('ec:addProduct', {
+        'id': {% if productType == 'giftcard' %}'G{{ payment.id }}'{% else %}'P{{ product.id }}'{% endif %},
+        'name': '{% if productType == 'giftcard' %}giftcard {{ payment.amount/100 }} euro{% else %}{{ product.name|trim("'") }}{% endif %}',
+        'category': 'giftcard', {# todo fix category #}
+        'price': '{{ payment.amount/100 }}',
+        'quantity': 1
+    });
+
+    ga('ec:setAction','checkout', {
+        'step': {{currentStep}}{% if productType == 'auction' %},'option': '{% if product.bookable == true %}TO{% else %}NOTO{% endif %}'{% endif %}
+    });
+
+    ga('send', 'event', 'ecommerce', 'product_checkout', 'auction', {'nonInteraction': 1});
+</script>
+{% if isApp(app.request) %}
+    <script>
+        {% if currentStep == 1 %}
+        firebase_logEvent('begin_checkout', {
+            value: {{ payment.amount/100 }}.00,
+            currency: 'EUR',
+            transaction_id: {% if productType == 'giftcard' %}'G{{ payment.id }}'{% else %}'P{{ product.id }}'{% endif %},
+        });
+        {% endif %}
+        {% if currentStep is defined %}
+        firebase_logEvent('flow_Step_{{currentStep}}', {
+            paymentType: '{% if checkoutFlow.hasConfirmationTO == true %}TO{% else %}classic{% endif %}',
+        });
+        {% endif %}
+    </script>
+{% endif %}

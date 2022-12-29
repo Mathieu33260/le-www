@@ -1,0 +1,47 @@
+@import (reference) "../variables";
+
+#cookie-consent {
+    padding: 5px 15px 15px;
+    max-width: 100%;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    display: none;
+    position: fixed;
+    z-index: 999998;
+    background-color: @orange;
+    color: @white;
+    @media (min-width: @min-width-sm) {
+        max-width: 400px;
+        padding: 30px;
+        bottom: 25px;
+        right: 100px;
+    }
+    p {
+        text-align: justify;
+        margin: 0;
+        font-size: 0.875em;
+        line-height: 1em;
+        color: @white;
+        @media (min-width: @min-width-sm) {
+            margin-bottom: 1em;
+        }
+        a {color: @white;text-decoration: underline}
+    }
+    & > span {
+        position: initial;
+        @media (min-width: @min-width-sm) {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+        .close-cookie-content {
+            padding: 0;
+            color: @white;
+            font-size: 2em;
+            text-decoration: none;
+            span {font-size: 0.5em}
+        }
+        i {position: relative;top: 7px;color: @white}
+    }
+}

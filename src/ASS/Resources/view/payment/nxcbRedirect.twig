@@ -1,0 +1,21 @@
+<html>
+<head>
+    <style>
+        #nxcbButton {
+            background: none;
+            border: none;
+            color: #0066ff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+    <body onload="document.form.submit()">
+        <form method="POST" action="{{ app['casino']['action'] }}" name="form">
+            {% for input in nxcbFormElements %}
+                <input type="hidden" name="{{ input.input }}" value="{{ input.value }}"/>
+            {% endfor %}
+            <input type="submit" id="nxcbButton" value="Vous allez être redirigé dans quelque instant. Sinon, cliquez ici...">
+        </form>
+    </body>
+</html>

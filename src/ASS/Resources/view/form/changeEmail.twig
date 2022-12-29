@@ -1,0 +1,16 @@
+{{ form_start(emailForm, {'action': path(action), 'attr':{'class':formClass is defined ? formClass:''}}) }}
+    {{ form_row(emailForm._token) }}
+        {{ form_label(emailForm.email,'', {'label_attr': {'class': labelClass is defined ? labelClass:''}}) }}
+        <div class="field-errors">{{ form_errors(emailForm.email) }}</div>
+        <div class="{{ inputContainerClass is defined ? inputContainerClass:'' }}">
+            {{ form_widget(emailForm.email, {'attr': {'class': 'form-control', 'placeholder': placeholder is defined ? placeholder:'Votre email...'}}) }}
+        </div>
+        <div class="{{ submitContainerClass is defined ? submitContainerClass:'' }}">
+            <div class="text-center">
+                {{ form_widget(emailForm.submit, {
+                    'label': submitLabel is defined ? submitLabel:'Envoyer le mail de confirmation',
+                    'attr': {'class': submitClass is defined ? submitClass:'btn btn-primary btn-sm'}
+                }) }}
+            </div>
+        </div>
+{{ form_end(emailForm) }}

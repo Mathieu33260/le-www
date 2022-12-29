@@ -1,0 +1,15 @@
+<div class="modal fade modal-success">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title">Compte bloqué</p>
+            </div>
+            <div class="modal-body">
+                {% for msg in app.session.getFlashBag.get('userblocked') %}
+                    Votre compte a été bloqué ou supprimé suite à une demande de votre part ou a un non-respect des conditions d'utilisation.
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

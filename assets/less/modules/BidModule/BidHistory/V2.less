@@ -1,0 +1,94 @@
+#bid-history {
+    [data-target="#bidisauto"]{color: @orange;cursor: pointer}
+    [data-target="#bidisautoandequal"]{color: @blue;cursor: pointer}
+    .prix {
+        font-size: 17px;
+        font-weight: normal;
+        margin-top: 0;
+        @media (min-width: @min-width-sm) and (max-width: @max-width-sm) {
+            padding-right: 0;
+            + span {
+                padding-left: 0;
+            }
+        }
+    }
+    .background-blanc;border-top: 10px solid @beige;
+    .bids-list {
+        margin-bottom: 0;
+        @media (max-width: @max-width-sm) {
+            max-height: 260px;
+            overflow: hidden;
+        }
+    }
+    li {
+        margin-right: 0;
+        min-height: 52px;
+        line-height: 52px;
+        @media (min-width: @min-width-sm) and (max-width: @max-width-md) {
+            height: 71px;
+            line-height: 71px;
+        }
+        > span {
+            &:not([data-target="#bidisauto"]) {
+                @media (max-width: @max-width-sm) {
+                    padding-left: 20px;
+                }
+                height: 46px;
+                line-height: 46px;
+                padding-top: 6px
+            }
+            &:last-child {
+                @media (max-width: 992px) {
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
+    .username {color: @black_light}
+    .me .username {color: @blue}
+    .username, .date {text-align: right;display: block;line-height: normal}
+    h3 {
+        border-top: 1px solid #dbdbdb;
+        border-bottom: 0.9px solid #dbdbdb;
+        height: 39px;
+        line-height: 39px;
+        cursor: pointer;
+        .text-grey-fonce;
+        text-align: center;
+        font-size: 0.9em;
+        margin-top: 0;
+        span {
+            line-height: normal;
+            position: relative;
+            text-align: center;
+        }
+        .icon-flash-up {
+            position: absolute;
+            top: 0;
+            font-size: 1.3em;
+        }
+    }
+    &.abtest {
+        ul {
+            &.scroll {
+                overflow-y: scroll;max-height: 255px;
+                &::-webkit-scrollbar-button{ display: block; height: 13px; border-radius: 0px; background-color: @grey_light; }
+                &::-webkit-scrollbar-button:hover{ background-color: @grey_light; }
+                &::-webkit-scrollbar-thumb{ background-color: @grey_light; }
+                &::-webkit-scrollbar-thumb:hover{ background-color: #CCC; border-radius: 0px; }
+                &::-webkit-scrollbar-track{ background-color: @beige_fonce; }
+                &::-webkit-scrollbar-track:hover{ background-color: #CCC; }
+                &::-webkit-scrollbar{ width: 4px; }
+            }
+        }
+        li {
+            @media (min-width: @min-width-sm) and (max-width: @max-width-md) {
+                height: auto;
+            }
+            > span > span {height: auto;line-height: normal;display: inline-block;vertical-align: middle}
+            > span:not([data-target="#bidisauto"]){
+                padding-left: 0
+            }
+        }
+    }
+}

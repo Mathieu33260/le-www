@@ -1,0 +1,54 @@
+{% if stylesheets is defined %}
+	{% if 'style' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/style.css') }}" />
+	{% endif %}
+	{% if 'auctionsList' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/auctionsList.css') }}" />
+	{% endif %}
+	{% if 'homepage' in stylesheets %}
+			<link rel="stylesheet" href="{{ asset('build-css/pages/homepage.css') }}" />
+	{% endif %}
+	{% if 'content' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/content.css') }}" />
+	{% endif %}
+	{% if 'product' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/product.css') }}" />
+	{% endif %}
+	{% if 'faq' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/faq.css') }}" />
+	{% endif %}
+	{% if 'bidderProfiles' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/bidderProfiles.css') }}" />
+	{% endif %}
+	{% if 'giftCard' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/giftCard.css') }}" />
+	{% endif %}
+	{% if 'helpCenter' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/helpCenter.css') }}" />
+	{% endif %}
+	{% if 'enfoires' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/themes/enfoires.css') }}" />
+	{% endif %}
+	{% if 'clubmed' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/themes/clubmed.css') }}" />
+	{% endif %}
+	{% if 'boutiqueNoel' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/boutiqueNoel.css') }}" />
+	{% endif %}
+	{% if 'city' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/city.css') }}" />
+	{% endif %}
+	{% if 'register' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/register.css') }}" />
+	{% endif %}
+	{% if 'user/profile' in stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build-css/pages/user/profile.css') }}" />
+	{% endif %}
+	{% if user %}
+		<link rel="stylesheet" href="{{ asset('build-css/user/logged.css') }}" />
+	{% else %}
+		<link rel="stylesheet" href="{{ asset('build-css/user/anonymous.css') }}" />
+	{% endif %}
+{% else %}
+	{% include 'main.css.twig' %}
+{% endif %}

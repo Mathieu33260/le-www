@@ -1,0 +1,157 @@
+@chooseDateHeight: 82px;
+.chooseDate {
+    height: @chooseDateHeight;
+    background: rgba(24, 140, 255, 0.05);
+    border: 1px solid rgba(24, 140, 255, 0.2);
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &.warning {
+        background: rgba(255, 116, 0, 0.05);
+        border: 1px solid rgba(255, 116, 0, 0.2);
+        .dateInformations > div .icon-arrow-right-sytle-lineal {color: @orange}
+    }
+    strong {
+        font-size: 14px;
+        &.small {font-size: 12px}
+    }
+    button.edit {
+        color: @blue_dark2;
+        & + *{
+            min-height: 34px;display: inline-block;padding: 6px 0;line-height: 1.5;border: 1px solid transparent;width: 64%;
+            strong {vertical-align: middle}
+        }
+    }
+    .dateInformations {
+        position: relative;height: @chooseDateHeight;
+        > div {
+            position: absolute;top: 50%;transform: translateY(-50%);line-height: normal;
+            &.right {right: 4px}
+            .icon-arrow-right-sytle-lineal {color: @blue}
+        }
+    }
+    .title-edit {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+#chooseDateModal {
+    .v--modal-box {top: 0 !important} // For a fixed position on top
+    .modal-title {font-size: 20px;margin-bottom: 20px}
+    .btn {font-size: 14px}
+    .btn-default {color: @dark_grey;border-color: @light-grey-le}
+    strong {color: @blue_dark2}
+    .selectADate {
+        button {
+            box-shadow: -6px 8px 19px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            margin: 10px 7px;
+            &.active {
+                background: @blue_dark2;
+                color: @white;
+            }
+            &:first-child {margin-left: 0}
+            &:last-child {margin-right: 0}
+        }
+    }
+    .availability .list {
+        .chosenCity, .return {padding: 0 15px}
+        .chosenCity {
+            display: block
+        }
+        .return {margin-bottom: 10px}
+        hr {margin: 6.5px 0}
+        button {
+            border-radius: 0;
+            box-shadow: -6px 8px 19px 0px rgba(0, 0, 0, 0.1);
+        }
+        &.active {
+            .day {background: @orange;color: @white}
+        }
+    }
+    .availability .list, .confirmDay .info {
+        border-radius: 2px;
+        border: 1px solid rgb(210, 212, 214);
+        box-shadow: -6px 8px 19px 0px rgba(0, 0, 0, 0.1);
+        font-size: 12px;
+        margin-bottom: 10px;
+        padding: 4px;
+        .row {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            /*flex-flow: row wrap;*/
+        }
+        .chosenCity {font-size: 14px;display: block}
+        .day {
+            background: rgba(24, 140, 255, 0.3);
+            border-radius: 1px;
+            font-family: 'proxima_nova_bold';
+            color: @blue_dark2;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .action {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            button {padding-left: 0;padding-right: 0}
+        }
+        .return {
+            .icon-info {float: left}
+            span {display: inline-block}
+        }
+    }
+    .confirmDay {
+        .title {font-size: 20px}
+        .text-muted {font-size: 16px}
+        .length {padding-left: 12px}
+        .btn-link {color: @dark_grey}
+        .info {
+            border-color: rgba(24, 140, 255, 0.3);
+        }
+    }
+}
+
+@media (max-width: 374px) {
+    #chooseDateModal {
+        .availability .list, .confirmDay .info {
+            .row {
+                flex-flow: row wrap
+            }
+        }
+    }
+}
+@media (min-width: 375px) and (max-width: @max-width-xs) {
+    .chooseDate button.edit + * {width: 71%}
+}
+@media (min-width: @min-width-sm) {
+    .chooseDate {
+        .dateInformations {
+            > div {padding: 0}
+        }
+    }
+    #chooseDateModal .modal-header {
+        padding: 0;
+        .close.hidden-xs {
+            margin-right: 7px;margin-top: 0;
+        }
+    }
+}
+@media (min-width: @min-width-md) {
+    .chooseDate {
+        .dateInformations > div.right {right: 6px}
+        button.edit + * {width: 69%}
+    }
+
+}
+@media (min-width: @min-width-lg) {
+    .chooseDate button.edit + * {width: 75%}
+}

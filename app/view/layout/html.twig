@@ -1,0 +1,12 @@
+{% if isIE(app.request) or isEdge(app.request) %}
+    {% set buildDir = "build-legacy" %}
+{% else %}
+    {% set buildDir = "build" %}
+{% endif %}
+
+{% if isApp(app.request) or (forceApp is defined and forceApp) %}
+    {% set layout_parent = 'layout/html-app.twig' %}
+{% else %}
+    {% set layout_parent = 'layout/html-desktop.twig' %}
+{% endif %}
+{% extends layout_parent %}

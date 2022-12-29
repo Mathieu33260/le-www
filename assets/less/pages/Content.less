@@ -1,0 +1,177 @@
+@import (reference) "../variables";
+
+/**********************************************************************************************************************/
+/****************************************************** CSS STYLE *****************************************************/
+/**********************************************************************************************************************/
+@import "../modules/Btns/Christmas";
+@import "../modules/Btns/Pink";
+
+@media (max-width: 767px) {
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+    }
+}
+
+#le-wrap {
+    margin-top: 42px;
+}
+
+.page-title-h1 {
+    color: @black;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: "proxima_nova_bold";
+    > a {
+        text-decoration: underline;
+        color: @black;
+    }
+}
+
+.title-h2-page-quality {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+.price {
+    color: @orange;
+    font-weight: bold;
+    text-align: center;
+    font-size: 21px;
+}
+
+.description > h2 {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
+    color: @dark_blue;
+    height: 3em;
+    overflow: hidden;
+}
+
+.quality-number {
+    font-size:1.2em;
+    color:@white;
+    background-color:@grey_light;
+    padding:3px 9px;
+    border-radius:100%;
+    margin-right:5px;
+    float: left;
+}
+
+/**********************************************************************************************************************/
+/****************************************************** TOP PAYERS ****************************************************/
+/**********************************************************************************************************************/
+.encherisseurs {
+    margin-bottom: 1em;
+    .border-grey {
+        padding: 1em;
+    }
+    ul {
+        @media (max-width: 480px) {
+            width: 100%;
+            margin-bottom: 0;
+        }
+    }
+    li {
+        line-height: 1.8em;
+        text-align: right;
+    }
+    span.number {
+        text-align: left;
+        display: block;
+        float: left;
+        font-weight: bold;
+        font-style: italic;
+    }
+    img {
+        margin-left: 8px;
+        margin-top: -5px;
+    }
+    h3 {
+        font-weight: bold;
+        margin-bottom: 24px;
+        margin-top: 11px;
+    }
+}
+/**********************************************************************************************************************/
+/***************************************************** APPLICATION ****************************************************/
+/**********************************************************************************************************************/
+#application {
+    // /content/application-mobile-bon-plan-voyage-sejour-vacances-weekend
+    color: @black;
+    header {
+        background-repeat: no-repeat;background-size: 100% auto;background-position: top center;
+        position: relative;top: initial;left: initial;right: initial;z-index: initial;
+        background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/c_crop,w_768,h_775,g_center/v1533563985/content/background.png');
+        height: 79vw;
+        @media (min-width: @min-width-sm) {
+            background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/c_crop,w_992,h_1012,g_center/v1533563985/content/background.png');
+            height: 63vw;
+        }
+        @media (min-width: @min-width-md) {
+            background-image: url('//img.loisirsencheres.fr/loisirs/image/upload/v1533745771/slider/img-app-header-fond-4.jpg');
+            height: 28vw;
+            margin-bottom: 1em;
+        }
+    }
+    h1 {
+        font-size: 1.6em;font-weight: 600;padding-bottom: 1em;color: @black;
+        @media (min-width: 375px) and (max-width: 767px) {
+            padding-bottom: 15vw;padding-top: 5vw;
+        }
+        @media (min-width: @min-width-sm) {
+            font-size: 2.4em;max-width: 525px;padding-bottom: 0.5em;
+        }
+        @media (min-width: @min-width-md) {
+            max-width: 801px;margin-top: 35px;
+        }
+    }
+    h2 {font-size: 1.2em;font-weight: 600;color: @black}
+    .store a {color: @black;font-size: 0.95em;font-weight: bold}
+    .introduction {
+        font-size: 1.07em;line-height: 1.5;margin-top: 15px;
+        @media (min-width: @min-width-sm) {
+            margin-bottom: 40px;
+        }
+        @media (min-width: @min-width-md) {
+            max-width: 939px;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+    }
+    .caption {margin-top: 0.8em}
+
+    .media-body {
+        font-size: 0.95em;font-weight: 600;vertical-align: middle;
+        @media (min-width: @min-width-sm) {
+            font-size: 1.21em
+        }
+    }
+    .media {
+        padding-bottom: 1px;
+        @media (min-width: 375px) {
+            margin-top: 1.5em;
+        }
+        @media (min-width: @min-width-sm) {
+            margin-top: 6em;
+        }
+    }
+    .app-notation {
+        margin-bottom: 1.5em;
+        @media (min-width: @min-width-sm) {
+            margin-bottom: 0;
+            margin-top: 0.8em
+        }
+    }
+    .media-object {
+        max-width: 40px;
+        @media (min-width: 375px) {
+            max-width: 77px;
+        }
+    }
+}

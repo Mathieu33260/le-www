@@ -1,0 +1,76 @@
+<div id="confirmBid" class="modal fade">
+    <div class="modal-dialog modal-sm6">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title">{% if limitPerPersonStatus != 2 %}Confirmation de l'enchère{% else %}Erreur{% endif %}</p>
+            </div>
+            <div class="modal-body">
+                <div class="loader hide">
+                    <p class="text-center"><img src="{{assetCdn}}/assets/gfx/loader.gif?v=20170307" alt="Chargement..." width="64" /></p>
+                </div>
+                <div class="form">
+                    {% if limitPerPersonStatus != 2 %}
+                        <p class="text-center"><b class="text-warning">Votre enchère <span class="moment">actuelle</span> est de <span id="newBidAmount" class="newbid"></span>&nbsp;&euro;</b><br />
+                            {% if product.nbPassenger is defined and product.nbPassenger > 1 %}
+                                <small>Soit <span class="text-warning pricePerUser"></span> par personne</small></p>
+                            {% elseif auction['cost'] != 0 %}
+                                <small>(+{{ auction['cost']/100 }}€ de frais de dossier soit <span class="totalBidCost">0</span>€ au total)</small></p>
+                            {% endif %}
+                        {% if limitPerPersonStatus == 1 %}
+                            <p class="text-center">Attention, vous avez déjà acheté cette offre. Cette enchère est limitée à {{ limitPerPerson }} bon{{ limitPerPerson > 1 ? 's' :'' }} par personne cependant vous pouvez l'offrir à un proche si vous la remportez.</p>
+                        {% endif %}
+                        <div class="panel panel-default">
+                            <div class="panel-body">{{ user.firstName|capitalize }}, en enchérissant à hauteur de <span class="newbid"></span>&euro;, vous vous engagez à régler cette somme {% if auction['cost'] != 0 %}(+ les frais de dossier de {{ auction['cost']/100 }}&euro;){% endif %} si vous remportez l'enchère</div>
+                        </div>
+                        <form method="post" action="#" id="confirmBidSteps" class='formConfirmBid'>
+                            {% if product.flow != 'no_auction_payment' %}
+                            <div class="checkbox engagement">
+                                <label for="engagement">
+                                    <input type="checkbox" id="engagement" name="engagement" required="" /> {% if product.category == 'TO' %}j'ai bien pris connaissance des dates de disponibilités et je m'engage à régler mon enchère si je la remporte{% else %}Je m'engage à régler mon enchère si je la remporte{% endif %}
+                                </label>
+                                <span class="help-block hide"><small>Vous devez cocher la case "<em>{% if product.category == 'TO' %}j'ai bien pris connaissance des dates de disponibilités et je m'engage à régler mon enchère si je la remporte{% else %}Je m'engage à régler mon enchère si je la remporte{% endif %}</em>" pour confirmer votre enchère</small></span>
+                            </div>
+                            <div class="checkbox content hide">
+                                <label for="content">
+                                    <input type="checkbox" id="content" name="content" {% if app.request.cookies.has('auction_'~auction.id~'_content') %} checked=""{% endif %} /> J'ai pris connaissance du contenu et des dates de validité de cette offre
+                                </label>
+                                <span class="help-block hide"><small>Vous devez cocher la case "<em>J'ai pris connaissance du contenu et des dates de validité de cette offre</em>" pour confirmer votre enchère</small></span>
+                            </div>
+                            {% endif %}
+                            {% if app['sms.endauction.enabled'] %}
+                            <div class="checkbox sendsms">
+                                <label for="sendsms">
+                                    <input type="checkbox" id="sendsms" name="sms" /> <p>Être alerté par SMS 5 minutes avant la fin de l'enchère <em>(facultatif)</em></p>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% if user and (user.telephone is null or user.telephone == '') %}
+                                <div id="labelPhone" class="form-group hide">
+                                    <label for="firstname" class="control-label">Votre téléphone mobile</label>
+                                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Téléphone mobile" title="numéro de téléphone" />
+                                </div>
+                            {% endif %}
+                            {% if product['cgvUrl'] %}
+                                <div class="checkbox">
+                                    <label for="sms">
+                                        <input type="checkbox" id="cgv" name="cgv" required="" /> J'accepte les <a href="{{product['cgvUrl']}}" target="_blank">CGV pour cette offre</a>.
+                                    </label>
+                                </div>
+                            {% endif %}
+                            <br />
+                            <button type="submit" class="btn btn-warning center-block">JE CONFIRME MON ENCHÈRE</button>
+                        </form>
+                    {% else %}
+                        <p class="text-center">Attention, vous avez déjà acheté cette offre. Cette enchère est limitée à {{ limitPerPerson }} bon{{ limitPerPerson > 1 ? 's' :'' }} par personne.</p>
+                    {% endif %}
+                    {% if app.security.getToken() is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <img id="bidLogoCB" src="{{assetCdn}}/assets/gfx/logoCB.png" alt="cb" style="display: none;"/>
+                    {% endif %}
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="hide confirm"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<script src="{{ assetCdn }}/assets/js/google-analytics-bottom.js?v=googleanalyticsbottom" crossorigin="anonymous" defer></script>
+{% if app.request.query.get('newsletterConfirmed') == '1' %}
+    <script>ga('send', 'event', 'newsletter', 'confirmed', {'nonInteraction': 1});</script>
+{% endif %}
+{% if app.session.getFlashBag.has('notconfirmed') %}
+    <script>ga('send', 'event', 'Form', 'Submit_invalid', 'login_unconfirmed', 0);</script>
+{% endif %}

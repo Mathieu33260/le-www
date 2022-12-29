@@ -1,0 +1,218 @@
+<script>
+    function calendar_add_maxDate(calendar, objDate){
+        $( calendar ).datepicker('option','maxDate',new Date(objDate.getFullYear(), objDate.getMonth(),objDate.getDate()));
+    }
+
+    function calendar_add_minDate(calendar, objDate){
+        var date = new Date(objDate);
+        date.setDate(objDate.getDate() - 1);
+        $( calendar ).datepicker('option', 'minDate', new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+        return date;
+    }
+
+    function generateDateToAvailabilities(departureCities){
+        var objDateTrip;
+        var objDateFarther = new Date();
+        var objDateStart = departureCities.availabilities.length ? getDateFromString(departureCities.availabilities[0]['dateTrip']) : 0;
+        var dateToAvailabilitie = [];
+        var datesAvailable = [];
+        $.each(departureCities.availabilities, function(i, val){
+            if(val.status !== ''){
+                objDateTrip = getDateFromString(val.dateTrip);
+                if(objDateFarther < objDateTrip){
+                    objDateFarther = objDateTrip;
+                }
+                if((objDateStart > objDateTrip || objDateStart === 0) && val.status !== 'soldout'){
+                    objDateStart = objDateTrip;
+                }
+
+                var dateFormated = objDateTrip.getFullYear()+'-'+("0" + parseInt(objDateTrip.getMonth()+1)).slice(-2)+'-'+("0" + objDateTrip.getDate()).slice(-2);
+                dateToAvailabilitie.push({
+                    availabilitie: val.id,
+                    dateTrip: dateFormated,
+                    status: val.status
+                });
+                datesAvailable.push(dateFormated)
+            }
+        });
+
+        if(objDateStart === 0){
+            objDateStart = new Date();
+        }
+
+        return {
+            dateToAvailabilitie: dateToAvailabilitie,
+            objDateStart:objDateStart,
+            objDateFarther:objDateFarther,
+            datesAvailable: datesAvailable,
+        };
+    }
+    function calendar_add_availabilities(calendar, obj_dateToAvailabilitie, dateClassCSS){
+        var dateToAvailabilitie = obj_dateToAvailabilitie.dateToAvailabilitie;
+        $(calendar).datepicker('option','beforeShowDay',function(date){
+            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            for(var i=0; dateToAvailabilitie.length > i; i++){
+                if(dateToAvailabilitie[i] !== 'undefined'){
+                    if(dateToAvailabilitie[i].dateTrip == string){
+                        {% if checkoutFlow['hasDetailedAvailabilities'] %}
+                            if(dateClassCSS !== null && typeof dateClassCSS !== 'undefined'){
+                                var classCSS = dateClassCSS+' '+dateToAvailabilitie[i].status;
+                            }
+                            else {
+                                var classCSS = dateToAvailabilitie[i].status;
+                            }
+                            if(classCSS && classCSS.indexOf("soldout") != -1){
+                                classCSS+= ' ui-datepicker-unselectable ui-state-disabled';
+                            }
+                            {% if checkoutFlow['hasSeclectableDate'] == false %}
+                            else{
+                                classCSS+= ' ui-datepicker-unselectable ui-state-disabled';
+                            }
+                            {% endif %}
+                            return [true, classCSS];
+                        {% else %}
+                            if('soldout' !== dateToAvailabilitie[i].status){
+                                var classCSS = 'less-available ui-datepicker-unselectable ui-state-disabled';
+                                return [true, classCSS];
+                            }
+                        {% endif %}
+                    }
+                }
+            }
+            return [false];
+        });
+    }
+
+    function calendargotodate(calendar, month, year) {
+        var inst = $.datepicker._getInst(calendar);
+        inst.drawMonth = inst.selectedMonth = month;
+        inst.drawYear = inst.selectedYear = year;
+        $.datepicker._notifyChange(inst);
+        $.datepicker._adjustDate(calendar);
+    }
+
+    /**
+    * Returns a table containing the months with availability
+    **/
+    function getmonthsavailable(dateStart, dateEnd, datesAvailable) {
+        var months = new Array();
+
+        for (var d = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate()); d <= dateEnd; d.setDate(d.getDate() + 1)) {
+            var currentDate = d.getFullYear()+'-'+("0" + parseInt(d.getMonth()+1)).slice(-2)+'-'+("0" + d.getDate()).slice(-2);
+            var currentMonth = d.getFullYear()+'-'+("0" + parseInt(d.getMonth()+1)).slice(-2);
+            if(datesAvailable.indexOf(currentDate) !== -1 && months.indexOf(currentMonth) == -1){
+                months.push(currentMonth);
+            }
+        }
+
+        return months;
+    }
+
+    function createCalendars(departureCities, activedate) {
+        // Create calendar container
+        var classcss = '';
+        if(!activedate){
+            classcss = 'ui-datepicker-unselectable ui-state-disabled';
+        }
+        $('#calendars').html('');
+        var html = '';
+        $.each(departureCities, function( index, value ) {
+            html = '<div>';
+            if(typeof(value.name) != 'undefined' && value.name != ''){
+                html+= "<h2><span>"+value.name+"</span></h2>";
+            }
+            html+= '<div id="calendar'+value.id+'" data-key="'+index+'"></div></div>';
+            $('#calendars').append(html);
+        });
+
+        $( "#calendars").find("> div > div").datepicker({
+            option: 'fr',
+            minDate: '0',
+            defaultDate: null,
+            onSelect: function (dateText, obj) {
+                if(typeof calendarsOnSelect === 'function'){
+                    calendarsOnSelect(dateText, obj);
+                }
+            },
+            onChangeMonthYear: function(year, month, inst) {
+                // Check if it is necessary to skip the month 
+                var minDate = $(this).datepicker( "option", "minDate" );
+                var maxDate = $(this).datepicker( "option", "maxDate" );
+                var currentDay = new Date(year,month).getDate() - 1;
+                var currentDate = new Date(year,month,currentDay);
+                if(minDate < currentDate && maxDate > currentDate){
+                    var key = $(this).data('key');
+                    var changeType = $(this).find('.ui-corner-all.ui-state-hover').data('handler');
+                    if(month > 12){ // Fix a jQuery bug
+                        month = 1;
+                        year++;
+                    }
+                    if(typeof monthsAvailable[key] !== 'undefined'){ // This test is necessary for the init calendar
+                        var currentMonth = year+'-'+("0" + parseInt(month)).slice(-2);
+                        if(monthsAvailable[key].indexOf(currentMonth) == -1){
+                            // If month is not available, go to next/prev
+                            var date = new Date(year, month-1);
+                            if(changeType == 'prev') {
+                                var changeDate = new Date(date.setMonth(date.getMonth()-1));
+                            } else {
+                                var changeDate = new Date(date.setMonth(date.getMonth()+1));
+                            }
+                            calendargotodate(this, changeDate.getMonth(), changeDate.getFullYear());
+                        }
+                    }
+                    cleanActiveDate(this);
+                }
+                // End - Check if it is necessary to skip the month
+            },
+        });
+        var key;
+        var monthsAvailable = {};
+        $("#calendars").find("> div > div").each(function(){
+            key = $(this).attr('data-key');
+            if(departureCities[key].hasAvailable === false){
+                $(this).parent().addClass('noAvailabilities');
+                $(this).append( '<div class="overlay"><div data-toggle="popover" data-placement="top" data-container="body" data-content="Réessayez plus tard, de nouvelles disponibilités auront peut-être été ajoutées pour ce calendrier.">Plus de disponibilités <i class="icon-attention"></i></div></div>');
+            }
+            var obj_dateToAvailabilities = generateDateToAvailabilities(departureCities[key]);
+            var dateFirstAvailabilitieJson = JSON.parse(JSON.stringify(obj_dateToAvailabilities.objDateStart));
+            var dateFirstAvailabilitie = Date.fromISO(dateFirstAvailabilitieJson);
+            calendar_add_availabilities(this, obj_dateToAvailabilities, classcss);
+            calendar_add_maxDate(this, obj_dateToAvailabilities.objDateFarther);
+            var minDate = calendar_add_minDate(this, obj_dateToAvailabilities.objDateStart);
+            $(this).datepicker("setDate", minDate);
+            $(this).datepicker( "option", "defaultDate", null );
+            calendargotodate(this, dateFirstAvailabilitie.getMonth(), dateFirstAvailabilitie.getFullYear());
+            if(!activedate){
+                cleanActiveDate(this);
+            }
+            monthsAvailable[key] = getmonthsavailable(obj_dateToAvailabilities.objDateStart, obj_dateToAvailabilities.objDateFarther, obj_dateToAvailabilities.datesAvailable);
+        });
+    }
+
+    function cleanActiveDate(calendar){
+        $(calendar).find('a.ui-state-default').removeClass('ui-state-active ui-state-hover');
+    }
+
+    Date.fromISO = function(s){
+        var day, tz,
+        rx=/^(\d{4}\-\d\d\-\d\d([tT ][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/,
+        p= rx.exec(s) || [];
+        if(p[1]){
+            day= p[1].split(/\D/);
+            for(var i= 0, L= day.length; i<L; i++){
+                day[i]= parseInt(day[i], 10) || 0;
+            };
+            day[1]-= 1;
+            day= new Date(Date.UTC.apply(Date, day));
+            if(!day.getDate()) return NaN;
+            if(p[5]){
+                tz= (parseInt(p[5], 10)*60);
+                if(p[6]) tz+= parseInt(p[6], 10);
+                if(p[4]== '+') tz*= -1;
+                if(tz) day.setUTCMinutes(day.getUTCMinutes()+ tz);
+            }
+            return day;
+        }
+        return NaN;
+    };
+</script>

@@ -1,0 +1,36 @@
+{{ form_start(locationForm) }}
+<div class="form-horizontal">
+    <div class="form-group">
+        {{ form_label(locationForm.street,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="field-errors col-sm-9">{{ form_errors(locationForm.street) }}</div>
+        <div class="col-sm-9">
+            {{ form_widget(locationForm.street, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(locationForm.zipcode,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="field-errors col-sm-9">{{ form_errors(locationForm.zipcode) }}</div>
+        <div class="col-sm-9">
+            {{ form_widget(locationForm.zipcode, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(locationForm.city,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="field-errors col-sm-9">{{ form_errors(locationForm.city) }}</div>
+        <div class="col-sm-9">
+            {{ form_widget(locationForm.city, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(locationForm.country,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        <div class="field-errors col-sm-9">{{ form_errors(locationForm.country) }}</div>
+        <div class="col-sm-9">
+            {{ form_widget(locationForm.country, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="text-center">
+        {{ form_widget(locationForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    </div>
+</div>
+{{ form_rest(locationForm) }}
+{{ form_end(locationForm) }}

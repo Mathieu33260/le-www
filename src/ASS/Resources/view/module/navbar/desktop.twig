@@ -1,0 +1,79 @@
+<nav id="{% if navBarId is defined %}{{ navBarId }}{% else %}menu{% endif %}" class="navbar navbar-default{% if hideNavbar is defined %} hide{% endif %}">
+    <div class="container">
+        <div id="navbar" data-ga-action="navbar">{# TODO supprimer #navbar #}
+            <ul class="nav navbar-nav">
+                <li class="visible-xs bt{% if app.request.get('_route') == 'homepage' %} active{% endif %}">
+                    <a href="{{ path('homepage') }}" title="Accueil" data-ga-value="auto">ACCUEIL</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('all.page') %} active{% endif %}">
+                    <a href="{{ path('all.page') }}" title="Toutes les enchères" data-ga-value="auto">TOUT VOIR</a>
+                </li>
+                {% if date() < date('2019-12-26') %}
+                    <li class="christmas bt{% if app.request.requesturi == path('christmaspage') %} active{% endif %}">
+                        <a href="{{ path('christmaspage') }}" title="Idées de cadeau pour noël" data-ga-value="auto">NOËL <i class="icon-noel-cadeau-plein"></i></a>
+                    </li>
+                {% endif %}
+                <li class="bt{% if app.request.requesturi == path('category.name', {'name': 'vacances'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'vacances'}) }}" title="Enchères vacances" data-ga-value="auto">VACANCES</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('category.name', {'name': 'hotels'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'hotels'}) }}" title="Enchères hotels" data-ga-value="auto">HÔTELS</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('category.name', {'name': 'marrakech'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'marrakech'}) }}" title="Enchères hotels" data-ga-value="auto">MARRAKECH</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('landing.event', {'alias': 'ski'}) %} active{% endif %}">
+                    <a href="{{ path('landing.event', {'alias': 'ski'}) }}" title="Offres ski" data-ga-value="auto">SKI</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('category.name', {'name': 'gastronomie'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'gastronomie'}) }}" title="Enchères gastronomie" data-ga-value="auto">GASTRONOMIE</a>
+                </li>
+                <li class="bt{% if app.request.requesturi == path('category.name', {'name': 'bien-etre'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'bien-etre'}) }}" title="Enchères bien être" data-ga-value="auto">BIEN ÊTRE</a>
+                </li>
+                <li class="hidden-sm bt{% if app.request.requesturi == path('category.name', {'name': 'activite'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'activite'}) }}" title="Enchères activités" data-ga-value="auto">ACTIVITÉS</a>
+                </li>
+                <li class="hidden-sm bt{% if app.request.requesturi == path('category.name', {'name': 'box'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'box'}) }}" title="Box" data-ga-value="auto">BOX</a>
+                </li>
+                <li class="hidden-sm bt{% if app.request.requesturi == path('category.name', {'name': 'shopping'}) %} active{% endif %}">
+                    <a href="{{ path('category.name', {'name': 'shopping'}) }}" title="Shopping" data-ga-value="auto">SHOPPING</a>
+                </li>
+                <li class="hidden-sm bt{% if app.request.requesturi == path('geoloc.cities') %} active{% endif %}">
+                    <a href="{{ path('geoloc.cities') }}" title="Les enchères par ville" data-ga-value="auto">MA VILLE</a>
+                </li>
+                {# For tablet #}
+                <li id="submenu" class="hidden-xs hidden-md hidden-lg icon">
+                    <a href="#"><i class="icon-menu-hamburger"></i></a>
+                    <ul>
+                        <li class="visible-sm bt{% if app.request.requesturi == path('category.name', {'name': 'activite'}) %} active{% endif %}">
+                            <a href="{{ path('category.name', {'name': 'activite'}) }}" title="Enchères activités" data-ga-value="auto">ACTIVITÉS</a>
+                        </li>
+                        <li class="visible-sm bt{% if app.request.requesturi == path('category.name', {'name': 'box'}) %} active{% endif %}">
+                            <a href="{{ path('category.name', {'name': 'box'}) }}" title="Les box" data-ga-value="auto">LES BOX</a>
+                        </li>
+                        <li class="visible-sm bt{% if app.request.requesturi == path('category.name', {'name': 'shopping'}) %} active{% endif %}">
+                            <a href="{{ path('category.name', {'name': 'shopping'}) }}" title="Shopping" data-ga-value="auto">SHOPPING</a>
+                        </li>
+                        <li class="visible-sm bt{% if app.request.requesturi == path('geoloc.cities') %} active{% endif %}">
+                            <a href="{{ path('geoloc.cities') }}" title="Les enchères par ville" data-ga-value="auto">MA VILLE</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="icon map{% if app.request.requesturi == path('auctions.map') %} active{% endif %}">
+                    <a href="{{ path('auctions.map') }}" title="Carte aux enchères" data-ga-value="auto" data-ga-label="carte-image">
+                        <span class="visible-xs">CARTE <img src="{{assetCdn}}/assets/gfx/map/carte-icon-mobile.png" alt="La carte" width="30"></span>
+                        <img src="{{assetCdn}}/assets/gfx/map/carte-icon.svg" alt="La carte" width="50" height="50" class="hidden-xs">
+                    </a>
+                </li>
+                <li class="visible-xs bt help{% if app.request.requesturi == path('centre-aide') %} active{% endif %}">
+                    <a href="{{ path('centre-aide') }}" data-ga-value="auto">BESOIN D'AIDE ?</a>
+                </li>
+                <li class="visible-xs bt contact{% if app.request.requesturi == path('content.page', {'page': 'contact'}) %} active{% endif %}">
+                    <a href="{{ path('content.page', {'page': 'contact'}) }}" rel="nofollow" data-ga-value="auto">CONTACTEZ-NOUS</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

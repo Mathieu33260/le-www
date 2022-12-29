@@ -1,0 +1,79 @@
+{% extends 'layout/html-user.twig' %}
+
+{% block title %}Mes coordonnées{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        {% if not isApp(app.request) %}
+            <div class="col-lg-3 hidden-xs col-sm-12 col-md-4"><user-nav current-route="{{ app.request.get('_route') }}"></user-nav></div>
+        {% endif %}
+        <div class="col-lg-9 col-xs-10 col-xs-offset-1 col-lg-offset-0 col-sm-12 col-sm-offset-0 col-md-8" id="userProfile">
+            {% if isApp(app.request) %}
+                <button type="button" id="modalUserNav" data-state="closed" data-toggle="modal" data-target="#myModalUserNav" class="center-block btn btn-block">
+                    <i class="icon-mon-profil text-right"></i> <span class="text-right">Mon compte <span style="font-size: 12px;">▼</span></span>
+                </button>
+            {% endif %}
+            <h1>Mes coordonnées</h1>
+            {{ form_start(locationForm, {'attr':{'class':'form-horizontal row'}}) }}
+            <div class="col-xs-12">
+                <div class="form-group">
+                    {{ form_label(locationForm.street,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(locationForm.street) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(locationForm.street, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(locationForm.zipcode,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(locationForm.zipcode) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(locationForm.zipcode, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(locationForm.city,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(locationForm.city) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(locationForm.city, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(locationForm.country,'', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                    <div class="field-errors">{{ form_errors(locationForm.country) }}</div>
+                    <div class="col-sm-9">
+                        {{ form_widget(locationForm.country, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="text-center">
+                    {{ form_widget(locationForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+            </div>
+            {{ form_rest(locationForm) }}
+            {{ form_end(locationForm) }}
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    {{ parent() }}
+    {% if isApp(app.request) %}
+    {% include 'user/modules/menu_app.twig' %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+        });
+        window.onresize = function(){
+            if(document.body.clientWidth >= 768 && document.body.clientWidth <= 991){
+                hauteurs_deux_colonnes($('#usernav').find('li'));
+            }
+            else {
+                $('#usernav').find('li').css('height','auto');
+            }
+        };
+    </script>
+{% endblock %}

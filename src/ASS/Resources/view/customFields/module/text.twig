@@ -1,0 +1,22 @@
+{% if field.properties.mandatory is defined and field.properties.mandatory == true %}
+    {% set required = 'required=required' %}
+{% else %}
+    {% set required = '' %}
+{% endif %}
+
+{% if field.properties.information is defined and field.properties.information is not empty %}
+    {% set information = field.properties.information~"<br>" %}
+{% else %}
+    {% set information = '' %}
+{% endif %}
+
+<label>{{ field.label }} {% if required is not empty %}*{% endif %}</label>
+<em>{{ information|raw }}</em>
+<div class="row">
+    <div class="form-group col-lg-12 col-sm-12  {% if error != false and error.customField[field.id] is defined %}has-error{% endif %}">
+        <textarea class="form-control" name="customField[{{ field.id }}]" {{ required }} placeholder="{{ field.properties.placeholder|default('') }}" title="Ce champs est obligatoire.">{{ value }}</textarea>
+        {% if error != false and error.customField[field.id] is defined %}
+            <span class="help-block">{{ error.customField[field.id] }}</span>
+        {% endif %}
+    </div>
+</div>

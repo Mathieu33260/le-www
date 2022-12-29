@@ -1,0 +1,636 @@
+{% if onlytabs == 0 and onlyview == 0 %}{% set layout = 'layout/html.twig' %}{% else %}{% set layout = 'layout/html-app.twig' %}{% endif %}
+{% extends layout %}
+
+{% block head %}
+    {{ parent() }}
+
+    {# Early download and use later #}
+    {% if isRunning and user and product.category == 'TO' %}
+    {# <link rel="preload" href="{{ asset(buildDir ~ '/ProductChooseDate.js') }}" as="script"> #}
+    {% endif %}
+    {% if not isApp(app.request) %}
+    <link rel="preload" href="{{ asset(buildDir ~ '/BidModule.js') }}" as="script">
+    {% endif %}
+{% endblock %}
+
+{# TODO refactor isRunning #}
+{%- block title -%}
+    {%- if winnerShare is defined and winnerShare == 1 -%}
+    {{ winner.firstName }} vient de remporter {{ product['name'] }}
+    {%- else -%}
+    {{ product['name'] }}{{ isRunning? '':' - Terminé'}}
+    {%- endif -%}
+{%- endblock -%}
+{%- block facebook_description -%}
+    {%- if winnerShare is defined and winnerShare == 1 -%}
+    Rejoignez {{ winner.firstName }} sur Loisirs Encheres, le premier site français qui vous permet de choisir le prix de vos vacances et de vos loisirs aux enchères.
+    {%- else -%}
+    {{ metaDescFb }}
+    {%- endif -%}
+{%- endblock -%}
+{%- block facebook_title -%}
+    {%- if winnerShare is defined and winnerShare == 1 -%}
+    Je viens de remporter {{ product['name'] }} aux enchères{% if auction.reduction is not null %} en réalisant une économie de {{auction.reduction}}€{% endif %}
+    {%- else -%}
+    {{ product['name'] }}
+    {%- endif -%}
+{%- endblock -%}
+{%- block facebook_image -%}
+    {% set break = false %}
+    {%- for image in images if not break -%}
+        {%- if image.type == 'img' -%}
+            {{ image['url']|cdnUrl|noprotocol|replace({'//': ''}) }}
+            {%- set break = true -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock -%}
+{% block metaDesc %}{{ metaDesc }}{% endblock %}
+{% block moremeta %}
+    {% if app.request.attributes.get('_route') != 'product.auction' %}
+        <link rel="canonical" href="https://{{app.request.host}}{{path('product.auction', {id:product['id']} )}}" />
+    {% elseif newProductId %}
+        <link rel="canonical" href="https://{{app.request.host}}{{path('product.auction', {id:newProductId} )}}" />
+    {% endif %}
+    {% if onlytabs or onlyview == 1 %}
+        <meta name="robots" content="noindex">
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if user %}
+    {% include 'user.css.twig' %}
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('all.page') }}"><span property="name">Toutes les enchères</span></a>
+        <meta content="2" property="position">
+    </li>
+    {% if masterTagId is defined and masterTagId is not null %}
+        <li typeof="ListItem" property="itemListElement">
+            <a typeof="WebPage" property="item" href="{{ path('category.name', {'name': masterTagId.name}) }}">
+                <span property="name">{{ masterTagId.title|capitalize }}</span>
+            </a>
+            <meta content="3" property="position">
+        </li>
+    {% elseif tags is defined and tags is not empty and tags[0] != '' %}
+        <li typeof="ListItem" property="itemListElement">
+            <a typeof="WebPage" property="item" href="{{ path('category.name', {'name': tags[0]}) }}">
+                <span property="name">{{ tags[0]|capitalize }}</span>
+            </a>
+            <meta content="3" property="position">
+        </li>
+    {% endif %}
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">{{ product['name'] }}</span>
+        <meta content="4" property="position">
+    </li>
+{% endblock %}
+
+{% block background %}background-gris{% endblock %}
+
+{% block main_content %}
+    {% if not isApp(app.request) %}
+        {% set sharefb = 'href="https://www.facebook.com/sharer/sharer.php?u='~app.request.uri|url_encode~'" onclick="return !window.open(this.href, \'Partager\', \'width=500,height=500\')" target="_blank"' %}
+        {% set sharetw = 'href="https://twitter.com/intent/tweet?url='~app.request.uri|url_encode~'" target="popup"' %}
+        {% set sharews = 'href="whatsapp://send?text='~app.request.uri|url_encode~'"' %}
+    {% endif %}
+    <div class="push-auction" id="detailAuctionBids" data-auction-uuid="auction_{{ auction['uuid'] }}" data-time-start="{{ auction['start'] }}" data-time-end="{{ auction['end'] }}" data-noupdateamount="1">
+        <div class="pageDetailProduit">
+            <div{% if schema.product %} itemscope itemtype="http://schema.org/Product"{% endif %} class="row row-product">
+                {% if schema.product %}
+                <meta itemprop="sku" content="{{ product.sku }}">
+                <meta itemprop="mpn" content="{{ product.id }}">
+                {% endif %}
+                {% if onlytabs == 0 %}
+                <div class="col-xs-12{% if for == 'availability' %} col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8{% endif %}" v-pre>
+                    <h1{% if schema.product %} itemprop="name"{% endif %}>{% if for == 'availability' and (payment is not defined or (payment is defined and payment is not null)) and user %}{{ user.firstName}} {{ user.lastName}}, vous allez adorer : {% endif %}{{ product['name'] }}</h1>
+                </div>
+                <div class="{% if for == 'availability' %}col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8{% else %}col-lg-8 col-md-8 col-sm-8{% endif %} col-xs-12" v-pre>
+                    <div class="visuel row">
+                        {% include './auction/partials/photos.twig' %}
+                    </div>
+                </div>
+                {% endif %}
+                {% if for != 'availability' and onlytabs == 0 %}
+                <div class="col-xs-12 col-sm-4 col-md-4 partieDroite pull-right" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
+                    <meta itemprop="priceCurrency" content="EUR">
+                    <meta itemprop="offerCount" content="1">
+                    <meta itemprop="lowPrice" content="1">
+                    <meta itemprop="highPrice" content="{{ product.publicPrice }}">
+                    {#
+                    {% if chooseDateVariation is defined and chooseDateVariation == '1' %}
+                    <product-choose-date
+                        :product-id="{{ product.id }}"
+                        :auction-id="{{ auction.id }}"
+                        :length-of-day="{% if product.nbDays is not null and product.nbDays != '0' and product.nbDays != '' %}{{ product.nbDays }}{% else %}0{% endif %}"
+                        :length-of-night="{% if product.nbNight is not null and product.nbNight != '0' and product.nbNight != '' %}{{ product.nbNight }}{% else %}0{% endif %}"
+                        auction-uuid="{{ auction.uuid }}"
+                    ></product-choose-date>
+                    {% endif %} #}
+
+                    {#
+                    {% if product.buyNow %}
+                    <bid-and-purchase
+                        pane-active-default="bid"
+                        :auction-id="{{ auction.id }}"
+                    ></bid-and-purchase>
+                    <purchase
+                        :public-price="{{ product.publicPrice }}"
+                        :buy-now-price="{{ product.buyNowPrice }}"
+                        :cost="{{ auction.cost|json_encode|raw }}"
+                        :auction-id="{{ auction.id }}"
+                        :product-id="{{ product.id }}"
+                        :only-view="{{ onlyview ? 'true' : 'false' }}"
+                    ></purchase>
+                    {% endif %}#}
+                    <bid-module
+                        {% if user %}
+                            user-hash="{{ user.userHash }}"
+                        {% endif %}
+                        version="{{ app.request.get('version') }}"
+                        :schema="{{ schema|json_encode()|raw|e('html_attr') }}"
+                        :product="{{ product|json_encode()|raw|e('html_attr') }}"
+                        :auction="{{ auction|json_encode()|raw|e('html_attr') }}"
+                        :running="{{ isRunning|json_encode }}"
+                        :finished="{{ isFinished|json_encode }}"
+                        :planned="{{ isPlanned|json_encode }}"
+                        :week="{{ week|json_encode|e('html_attr') }}"
+                        hours="{{ hours|default(0) }}"
+                        minutes="{{ minutes|default(0) }}"
+                        seconds="{{ seconds|default(0) }}"
+                        {% if bids[0] is defined %}
+                            current-bid="{{ bids[0]|json_encode()|raw|e('html_attr') }}"
+                        {% endif %}
+                        :cost="{{ auction.cost|json_encode|raw }}"
+                        :over-bid-variation="{{ overBidVariation|json_encode|raw }}"
+                        {% if auction.hiddenBidInput is defined %}
+                            :classic-bid="{{ (auction.hiddenBidInput == false)|json_encode|raw|e('html_attr') }}"
+                        {% endif %}
+                        :is-banner-displayed="{{ (isBannerDisplayed is defined and isBannerDisplayed == true)|json_encode }}"
+                        :has-next-auction="{{ hasNextAuction|json_encode|raw|e('html_attr') }}"
+                        {% if nbUsersHaveNotificationNextAuction is defined %}
+                            :nb-users-notification-next-auction="{{ nbUsersHaveNotificationNextAuction }}"
+                        {% endif %}
+                        {% if payment is defined and payment is not null %}
+                            :payment-data="{{ payment|json_encode|raw|e('html_attr') }}"
+                        {%  endif %}
+                        {% if newProductId is not null %}
+                            new-product-id="{{ newProductId }}"
+                        {%  endif %}
+                        {% if isFinished and winner %}
+                            :winner-data="{{ winner|json_encode|raw|e('html_attr') }}"
+                            :finalization-in-progress-status="true"
+                        {% endif %}
+                        {% if overBidVariation != 0 %}
+                            :over-bid-default="{{ quickOverbidData|json_encode|raw|e('html_attr') }}"
+                        {% endif %}
+                        :is-app="{{ isApp(app.request) | json_encode }}"
+                        {% if isFinished %}
+                            :bids-history="{{ bids|json_encode|raw|e('html_attr') }}"
+                        {% endif %}
+                        {% if userCanBeAlerted is defined %}
+                            :user-can-be-alerted="{{ userCanBeAlerted ? 'true' : 'false' }}"
+                        {% endif %}
+                        :phone-mandatory="{{ phoneMandatory|json_encode|raw|e('html_attr') }}"
+                        :reserve-price-passed-status="{{ reservePricePassed | default(false) | json_encode | raw }}"
+                        :required-confirmation="{{ auction.needMailValidation | default(false) | json_encode | raw }}"
+                        {% if auction.needCreditCard is defined and auction.needPhoneValidation is defined %}
+                            :active-serious-flow="{{ (auction.needCreditCard and auction.needPhoneValidation) | json_encode|raw|e('html_attr') }}"
+                        {% endif %}
+                        {% if auction.bypassConfirmFee is defined %}
+                            :bypass-confirm-fee-default="{{ auction.bypassConfirmFee | json_encode|raw|e('html_attr') }}"
+                        {% endif %}
+                        {% if abTestVariation is defined %}
+                            ab-test-variation="{{ abTestVariation }}"
+                        {% endif %}
+                        :encart-bidmodule="{{ encartBidmodule|json_encode|raw|e('html_attr') }}"
+                        ea-site="{{ eulerianSite }}"
+                        see-all-path="{{ seeAllPath }}"
+                    ></bid-module>
+
+                    {#<div class="hidden-xs encard">
+                        {% include './auction/partials/enveloppe.twig' %}
+                    </div>#}
+                    {% if not isApp(app.request) and (not user.preferences.hasPaid is defined or not user.preferences.hasPaid) and isFinished == false %}
+                    <div class="procedure hidden-xs encard" v-pre>
+                        {% include './auction/partials/procedure.twig' %}
+                    </div>
+                    {% endif %}
+
+                    {% if isApp(app.request) == false and isFinished == false %}
+                    <div class="social-link" v-pre>
+                        <div class="row">
+                            <div class="col-xs-6 facebook-link">
+                                <a {{sharefb|raw}} title="Partager sur Facebook" class="btn btn-primary with-icon" rel="nofollow">Partager sur <i class="icon icon-facebook icon-inverse"></i></a>
+                            </div>
+                            <div class="col-xs-6 twitter-link">
+                                <a {{sharetw|raw}} title="Partager sur Twitter" class="btn btn-primary twitter with-icon" rel="nofollow">Partager sur <i class="icon icon-twitter icon-inverse"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if (not user.preferences.loggedOnApp is defined or not user.preferences.loggedOnApp) and not onlyview and isFinished == false %}
+                    <div class="suivezNous" v-pre>
+                        <a href="{{path('app.mobile')}}">
+                            <img src="{{assetCdn}}/assets/gfx/pictos/pictosAppl.png" title="Appli Loisirs" alt="Appli Loisirs" class="left">
+                        </a>
+                        <p>Suivez cette enchère partout avec<br />
+                        {% set deepLink =  'comloisirsencheres://product/'~product['id'] %}
+                        {% set urlAdjust =  'https://app.adjust.com/od6b1r?campaign=product-page&adgroup=product-'~product['id']~'&redirect=' %}
+                        {% set urlRedirect = 'https://itunes.apple.com/app/apple-store/id987860898?pt=110416813&ct=le-www-product-page&mt=8' %}
+                        <a href="{{urlAdjust}}{{urlRedirect|url_encode}}&deep_link={{deepLink|url_encode}}" target="_blank" title="Ouvrir cette enchère dans l'appli Iphone">l'appli iPhone</a>
+                        ou
+                        {% set urlAdjust =  'https://app.adjust.com/3t5swz?campaign=product-page&adgroup=product-'~product['id']~'&redirect=' %}
+                        {% set urlRedirect = 'https://play.google.com/store/apps/details?id=net.sharewire.loisirsencheres&referrer=' %}
+                        {% set urlReferrer = 'utm_source=le-www&utm_campaign=product-page&utm_medium=logo-googleplay-produc'~product['id'] %}
+                        <a href="{{urlAdjust}}{{urlRedirect|url_encode}}{{urlReferrer|url_encode|url_encode}}&deep_link={{deepLink|url_encode}}" target="_blank" title="Ouvrir cette enchère dans l'appli Android">l'appli Android</a>.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="col-xs-12 {% if for != 'availability' %} col-sm-8 col-md-8 pull-left{% endif %}" v-pre>
+                    <!-- onglets -->
+                    <div>
+                        <ul class="nav nav-tabs row" id="myTab" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <meta itemprop="priceValidUntil" content="{{ auction['end'] }}">
+                            <meta itemprop="priceCurrency" content="EUR">
+                            <meta itemprop="price" content="1">
+                            <meta itemprop="url" content="{{ path('product.auction', { id: product.id }) }}">
+                            <link itemprop="availability" href="http://schema.org/InStock" />
+                            {% set showDescription = product.description != null and 'description' in product.tabs %}
+                            {% set showMoreInfo = product.moreInfo != null and 'moreInfo' in product.tabs %}
+                            {% set showAddress = 'goThere' in product.tabs and product.flowSpec.showAddress == true and ((product['goThere'] != null or location != null) and onlytabs != 1) %}
+                            {% set showFeedBack = for != 'availability' and 'feedback' in product.tabs %}
+
+                            {% if showDescription %}
+                                <li class="active first {% if showAddress %}col-xs-3{% else %}col-xs-4{% endif %} col-sm-4">
+                                    <a data-toggle="tab" href="#description">
+                                        Description
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if showMoreInfo %}
+                                <li class="{% if showAddress %}col-xs-3 col-sm-3{% else %}col-xs-4 col-sm-4{% endif %}">
+                                    <a data-toggle="tab" href="#moreinfo">
+                                        + infos
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if showAddress %}
+                                <li class="col-xs-3 col-sm-3 text-nowrap">
+                                    <a data-toggle="tab" href="#gettingthere">
+                                        S'y rendre
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if showFeedBack %}
+                                <li class="{% if showAddress %}col-xs-3 col-sm-2{% else %}col-xs-4 col-sm-4{% endif %} last">
+                                    <a data-toggle="tab" href="#feedback">Avis</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <div class="tab-content">
+                            {% if showDescription %}
+                                <div id="description" class="tab-pane fade active in row">
+                                <div class="col-xs-12{% if onlytabs == 0 %} col-md-7{% endif %}">
+                                    {% if checkoutFlow.calendarType is not null and onlytabs != 2 %}
+                                        <div class="visible-xs visible-sm">
+                                            <a href='#calendars' class="btn btn-link with-icon nopadding-left">
+                                                <span>Pensez à vérifier les dates de validité avant d'enchérir</span><i class="icon-calendar"></i>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    {% if for != 'availability' %}
+                                        <div{% if schema.product %} itemprop="description"{% endif %}>
+                                        {% if onlytabs != 2 %}
+                                        {{ product['description']|default('')|shortpriceoverride(product,onlytabs)|replace({'&amp;nbsp;':' '})|raw }}
+                                        {% else %}
+                                        {{ product['description']|default('')|replace({'&amp;nbsp;':' '})|raw }}
+                                        {% endif %}
+                                        </div>
+                                    {% else %}
+                                    <h2>Contenu de l'offre</h2>
+                                    <div{% if schema.product %} itemprop="description"{% endif %}>
+                                    {{ product['description']|split("<h2>Contenu de l'offre</h2>")[1]|default('')|replace({'&amp;nbsp;':' '})|raw }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-xs-12 col-md-5">
+                                    {% if for != 'availability' %}
+                                        {% if auction['cost'] != 0 %}
+                                        <div data-container="body" data-toggle="popover" data-placement="top" data-content="Frais s'ajoutant au montant de l'enchère lors du paiement. Ils permettent de nous rémunérer et vous proposer toujours plus d'offres."><b>Frais de dossier : {{ auction['cost']/100 }} €</b></div><br />
+                                        {% endif %}
+                                    {% if product.blogLink is not null %}
+                                        <a target="_blank" href="{{ product.blogLink }}" title="Je découvre son article">
+                                            <img alt="Approuvé par notre testeur Tristan"  src="//img.loisirsencheres.fr/loisirs/image/upload/v1501597663/ressource/vignette-tristan.png" class="img-responsive"/>
+                                        </a>
+                                    {% endif %}
+                                    {% if 'journal_sudouest' in tags %}
+                                        {% include './auction/partials/sudouestoffer.twig' %}
+                                    {% endif %}
+                                    {% endif %}{# for != 'availability' #}
+                                    {% if checkoutFlow.calendarType is not null %}
+                                        {% if availabilitiesHTML is defined %}
+                                            <div style="page-break-after: always">
+                                            {{availabilitiesHTML|raw}}
+                                            </div>
+                                        {% else %}
+                                            {% include './auction/partials/calendar.twig' %}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if for != 'availability' %}
+                                    <span title="{{auction['start']}}">Début de l'enchère : {{ auction['start']|date('d/m/Y H:i:s') }}</span><br />
+                                    <span title="{{auction['end']}}">Fin de l'enchère : {{ auction['end']|date('d/m/Y H:i:s') }}</span>
+                                    {% endif %}
+                                    {% if product['cgvUrl'] %}
+                                        <br />Consulter les <a href="{{product['cgvUrl']}}" target="_blank">CGV pour cette offre</a>
+                                    {% endif %}
+                                    {% if for != 'availability' %}
+                                        <br/><br/>
+                                        <div{% if schema.product %} itemprop="brand" itemscope itemtype="http://schema.org/Brand"{% endif %}>
+                                            {% if logo|default(null) != null %}
+                                            <img{% if schema.product %} itemprop="logo"{% endif %} src="{{ logo['url']|noprotocol|cdnUrl }}" alt="{{ merchant.name }}" title="{{ merchant.name }}">
+                                            {% endif %}
+                                            <span class="hide"{% if schema.product %} itemprop="name"{% endif %}>{{ merchant.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if app.request.query.has('withReturnBtn') %}
+                                        <a href="comloisirsencheres://product/{{ product['id'] }}" class="btn btn-primary" style="width: 100%;">Revenir à l'enchère</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if showMoreInfo %}
+                                <div id="moreinfo" class="tab-pane fade row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        {{ product['moreInfo']|raw }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if showAddress %}
+                                <div id="gettingthere" class="fade tab-pane row">
+                                    <div class="col-xs-12 col-extra-padding">
+                                        {{ product['goThere']|raw }}
+                                    </div>
+                                    {% if location is defined and location != null %}
+                                        <div class="col-xs-12 col-extra-padding">
+                                            <img id="staticmap" class="img-responsive" src="//img.loisirsencheres.fr/maps/api/staticmap?center={{location.lat}},{{location.lng}}&zoom=8&scale=2&size=688x598&maptype=roadmap&markers={{location.lat}},{{location.lng}}&key={{ app['google.config'].mapApiKey }}" alt="{{location.name}}" />
+                                            <img src="//img.loisirsencheres.fr/loisirs/image/upload/c_scale,w_440/v1536739725/ressource/bouton-naviger_2x.png" alt="Naviguer sur la carte" class="openMap" width="220">
+                                            <div class="gmap hide" id="map"></div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if showFeedBack %}
+                                <div id="feedback" class="tab-pane fade row">
+                                    {% include './auction/partials/feedback.twig' %}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <p class="small col-xs-12">Les photographies et textes de présentation sont non contractuels ; ils permettent d'illustrer l'offre présentée et peuvent par nature différer des prestations fournies et de l’expérience vécue. L'ensemble des prestations fournies contractuellement est détaillé dans la section "Contenu de l'offre" (onglet Description).</p>
+                            </div>
+                        </div>
+                        <!-- FINonglets -->
+                    </div>
+                    {% if onlytabs == 0 %}
+                    {# <div class="visible-xs encard">
+                        {% include './auction/partials/enveloppe.twig' %}
+                    </div> #}
+                    {% if not isApp(app.request) and (not user.preferences.hasPaid is defined or not user.preferences.hasPaid and for != 'availability') %}
+                    <div class="procedure visible-xs encard">
+                        {% include './auction/partials/procedure.twig' %}
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <!-- FINpartieGauche -->
+            </div>
+        </div>
+        {% if for == 'availability' and (payment is not defined or (payment is defined and payment is not null)) %}
+        <div class="cta-fixed" v-pre>
+            <div class="container">
+                <div class="row">
+                    {% if user %}
+                    <div class="col-xs-12 col-sm-4 col-md-6">
+                        <div class="row rowtotal">
+                            <div class="col-xs-6 col-md-3">
+                                <div class="label">TOTAL <small>(TTC) :</small></div>
+                            </div>
+                            <div class="col-xs-6 col-md-4 col-lg-3 text-right text-warning">
+                                <b><span class="total">{{ (payment.amount/100) }}</span>€</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-7 col-md-6 col-sm-offset-1 col-md-offset-0 col-lg-5 col-lg-offset-1">
+                        <a class="btn btn-primary btn-block center-block" href="{{ path('paiement.page', {id:payment.id }) }}?token={{ payment.verification_token }}">Valider</a>
+                    </div>
+                    {% else %}
+                    <authentification-buttons
+                        class-css-login-btn-default="btn btn-primary col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4"
+                        hide-register-button="true"
+                        login-text="Se connecter"
+                    ></authentification-buttons>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <!-- CrossSelling -->
+    {% if useCrossSelling %}
+        <cross-selling
+            request-uri="{{ app.request.requesturi }}"
+            :is-app="{{ isApp(app.request) | json_encode }}"
+            product-id="{{ product.id }}"
+            {% if isWithPayCrossSelling is defined %}
+                :is-with-pay="{{ (isWithPayCrossSelling)|json_encode|raw|e('html_attr') }}"
+            {% endif %}
+        ></cross-selling>
+    {% endif %}
+{% endblock %}
+{% block onceTime %}
+    {{ parent() }}
+    {# {% if chooseDateVariation is defined and chooseDateVariation == '1' %}
+    <product-choose-date-modal
+        :product-id="{{ product.id }}"
+        :length-of-day="{% if product.nbDays is not null and product.nbDays != '0' and product.nbDays != '' %}{{ product.nbDays }}{% else %}0{% endif %}"
+        :length-of-night="{% if product.nbNight is not null and product.nbNight != '0' and product.nbNight != '' %}{{ product.nbNight }}{% else %}0{% endif %}"
+        auction-uuid="{{ auction.uuid }}"
+    ></product-choose-date-modal>
+    {% endif %} #}
+{% endblock %}
+
+{# Flushes the flashbag #}
+{% set error = app.session.getFlashBag.get('error') %}
+
+{% block modal %}
+    {% if auction.useAutobid is defined and auction.useAutobid and for != 'availability' %}
+    {% include 'modals/auction/bidisautoandequal.twig' %}
+    {% include 'modals/auction/bidisauto.twig' %}
+    {% include 'modals/auction/whatisautoauction.twig' %}
+    {% endif %}
+    {% if auction.useAutobid is defined and auction.useAutobid and user and for != 'availability' %}
+    {% include 'modals/auction/confirmBidAuto.twig' %}
+    {% endif %}
+    {% if isRunning and not user and for != 'availability' %}
+        {% include 'modals/auction/register.twig' %}
+    {% endif %}
+    {% if not isRunning %}
+        {% include 'modals/auction/ended.twig' %}
+    {% endif %}
+    {% if (auction.hasReservePrice is defined and auction.hasReservePrice) or (auction.reservePrice is defined and auction.reservePrice) and for != 'availability' %}
+        {% include 'modals/auction/reserveprice.twig' %}
+    {% endif %}
+    {% if onlytabs == 0 %}
+        {{ parent() }}
+        {% if ((auction.hasReservePrice is defined and auction.hasReservePrice) or (auction.reservePrice is defined and auction.reservePrice)) and for != 'availability' %}
+            {% include 'modals/auction/reserveprice.twig' %}
+        {% endif %}
+        {% if user and for != 'availability' %}
+            {% include 'modals/auction/winmodal.twig' %}
+            {% include 'modals/auction/losemodal.twig' %}
+        {% endif %}
+        {% if winnerShare is defined and winnerShare == 1 and for != 'availability' %}
+        {% include 'modals/auction/winnerShare.twig' %}
+        {% endif %}
+        {% if isPrivate and not canAccess and for != 'availability' %}
+        {% include 'modals/auction/privateAuction.twig' %}
+        {% endif %}
+        {% if for != 'availability' %}
+            {% if user %}{% include 'modals/auction/confirmBid.twig' %}{% endif %}
+            {% include 'modals/auction/error-bid.twig' %}
+            <!-- modal when add godchild with godchild form footer -->
+            {% include 'modals/auction/commentSuccess.twig' %}
+            {% include 'modals/auction/commentError.twig' %}
+        {% else %}
+            {% if (auction.hasReservePrice is defined and auction.hasReservePrice != null) or (auction.reservePrice is defined and auction.reservePrice != null) %}
+                {% include 'modals/auction/reserveprice.twig' %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>onlytabs = {{ onlytabs }};</script>
+    {% if onlyview and for != 'availability' %}
+        {% include 'default.js.twig' %}
+    {% endif %}
+    <script>
+        productId = '{{ product.id }}';
+    </script>
+    {% if not onlytabs %}
+    <script src="{{assetCdn}}/assets/js/jquery.scrollTo.min.js"></script>
+    {% endif %}
+    {% if isRunning and not onlytabs %}
+        <script src="{{assetCdn}}/assets/js/confetti.js?v=20180528"></script>
+    {% endif %}
+    {% if checkoutFlow.calendarType is not null %}
+        {% include 'auction/partials/calendar.js.twig' %}
+        <script src="{{assetCdn}}/assets/js/languages/datepicker-fr.js"></script>
+    {% endif %}
+
+    {% include 'productDetail.js.twig' %}
+
+    <script>
+        auctionDetail = new auction();
+        auctionDetail.onlyview = {{ onlyview }};
+        auctionDetail.onlytabs = onlytabs;
+        auctionDetail.now = '{{ ("now"|date("U")) }}';
+        auctionDetail.auctionId = '{{ auction.id }}';
+        auctionDetail.cost = '{{ auction.cost }}';
+        auctionDetail.productId = productId;
+        auctionDetail.isRunning = {{ isRunning|json_encode }};
+        auctionDetail.uuid = {{ auction.uuid|json_encode|raw }};
+        auctionDetail.checkoutFlow = {{ checkoutFlow|json_encode|raw }};
+        auctionDetail.hasReservePrice = {{auction.reservePrice|default(false)?true:false|json_encode|raw}};
+        auctionDetail.productData = {
+            id: {{product.id}},
+            name: {{ product.name|json_encode|raw }},
+            shortName: {{ product.shortName|json_encode|raw }},
+            publicPrice: {{ product.publicPrice|json_encode|raw }},
+            flow: '{{ product.flow }}',
+        };
+        auctionDetail.auctionData = {
+            id: {{auction.id}},
+            uuid: {{auction.uuid|json_encode|raw}},
+            end: '{{auction.end}}',
+        };
+        auctionDetail.feedbackInfo = {{ feedbackInfo|json_encode|raw }};
+        auctionDetail.userProducts = {{userProducts|json_encode|raw}};
+        auctionDetail.isPrivate = {{(isPrivate is defined and canAccess is defined and isPrivate == '1' and canAccess == false)?'true':'false'}};
+        auctionDetail.hadUserMobilePhone = {{(hadUserMobilePhone is defined)?hadUserMobilePhone|json_encode:'false'}};
+        auctionDetail.alertUserPhone = {{(alertUserPhone is defined)?alertUserPhone|json_encode:'false'}};
+        auctionDetail.winnerShare = {{(winnerShare is defined and winnerShare == 1)?'true':'false'}};
+        auctionDetail.tags = {{tags|json_encode|raw}};
+        auctionDetail.hasYoutube = {{hasYoutube|json_encode|raw}};
+        urls['user.login'] = '{{ path('user.login') }}';
+        urls['user.mail'] = '{{ path('user.mail') }}';
+        urls['auction.bid'] = '{{ path('auction.bid', {id: "auctionId"}) }}';
+        urls['auction.add.comment'] = '{{ path('auction.add.comment', {id: "productId"}) }}';
+        urls['product.auction'] = '{{ path('product.auction', {id: "productId"}) }}';
+        urls['content.experiment'] = '{{ path('content.experiment') }}';
+        urls['payment.page'] = '{{ path('payment.page', {id: 'paymentId'}) }}';
+        auctionDetail.init();
+    </script>
+    {% if not onlytabs %}
+    <!-- ouvrir et refermer un bloc -->
+        <script src="{{assetCdn}}/assets/js/pgwslideshow.min.js"></script>
+    {% endif %}
+
+    {% if location != null  %}
+        {% include './auction/partials/geoloc.js.twig' %}
+    {% endif %}
+
+    {% if for == 'availability' %}
+    <script>
+    function positioning_submit(){
+        var height = $('.cta-fixed').outerHeight(true);
+        $('#le-wrap').css('padding-bottom',height);
+    }
+    positioning_submit();
+    window.onresize = positioning_submit;
+    </script>
+    {% endif %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') and not onlytabs and not onlyview and userVouchers|length > 0 %}
+    <script>
+        $(document).on('keyup', '#comment', function(){
+            formLimitsCharacters({
+                input: $(this),
+                limit: 1000,
+                substr: false,
+                callbackExceeded: function(){
+                    if($('.comment-form .alert').hasClass('hide')){
+                        $('.comment-form .alert').removeClass('hide');
+                    }
+                    if(!$('#comment').find('.counter').hasClass('text-danger')){
+                        $('.comment-form .counter').addClass('text-danger');
+                    }
+                    if(!$('#commentSubmit').prop('disabled')){
+                        $('#commentSubmit').prop('disabled', true);
+                    }
+                },
+                callbackCorrect: function(){
+                    if(!$('.comment-form .alert').hasClass('hide')){
+                        $('.comment-form .alert').addClass('hide');
+                    }
+                    if($('.comment-form .counter').hasClass('text-danger')){
+                        $('.comment-form .counter').removeClass('text-danger');
+                    }
+                    if($('#commentSubmit').prop('disabled')){
+                        $('#commentSubmit').prop('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'layout/html.twig' %}
+
+{%- block title -%}
+    {%- if title is defined and title -%}{{- title|replace({'Featured':'Top 10'}) }}{%- elseif searchTerm -%}Résultat(s) pour '{{ searchTerm }}'{%- endif -%}
+{%- endblock -%}
+{% block metaDesc %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"')|slice(0, 200) }}{% endblock %}
+
+{% block moremeta %}
+    {% if (searchTerm is defined and searchTerm) or app.request.query.has('sort') %}
+    <meta name="robots" content="noindex">
+    {% endif %}
+    {% if app.request.query.all|length %}
+    <link rel="canonical" href="https://{{app.request.host}}{{path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))}}" />
+    {% endif %}
+{% endblock %}
+
+{% block facebook_description %}{{ tagDesc|default()|replace({"\r": '', "\n": ''})|raw|striptags|trim|trim('"') }}{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    {% if path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) != path('all.page') %}
+        <li typeof="ListItem" property="itemListElement">
+            <a typeof="WebPage" property="item" href="{{ path('all.page') }}"><span property="name">Toutes les enchères</span></a>
+            <meta content="2" property="position">
+        </li>
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span itemprop="item.name">{%- if tagTitle is empty -%}Résultat(s) pour votre recherche '{{ searchTerm }}'{%- else -%}{{tag|capitalize}}{%- endif -%}</span>
+            <meta content="3" property="position">
+        </li>
+    {% else %}
+        <li typeof="ListItem" property="itemListElement" class="active">
+            <span itemprop="item.name">{{ tagTitle }}</span>
+            <meta content="2" property="position">
+        </li>
+    {% endif %}
+{% endblock %}
+{% block containerBreadcrumb %}{% if isChristmasCategory is defined and  isChristmasCategory == true %}container background-blanc{% endif %}{% endblock %}
+{% block background %}
+    {%- if isChristmasCategory is defined and isChristmasCategory == true -%}
+        background-christmas list
+    {%- else -%}
+        background-gris list
+    {%- endif -%}
+{% endblock %}
+{% block slideOutContents %}
+    <div id="formfiltersMobile" class="formfilters hide">
+        <auction-filters :filters="{{ filters|json_encode() }}" :for-screens-up-to="992"></auction-filters>
+    </div>
+    {% if noSort is not defined %}
+        <div id="sortMobile" class="hide">
+            <auction-sort sort="{{ sort }}"></auction-sort>
+        </div>
+    {% endif %}
+{{ parent() }}
+{% endblock %}
+{% block container %}
+    {%- if containerFluid -%}container-fluid nopadding{%- else -%}container{%- endif -%}
+{% endblock %}
+{% block main_content %}
+    {% set breadcrumbContent = block('breadcrumb') %}
+    {% embed 'module/container-header.twig' %}
+        {% block breadcrumb_content %}
+            {% block breadcrumb %}{{breadcrumbContent|raw}}{% endblock %}
+        {% endblock %}
+    {% endembed %}
+    <div class="fullpage{% if contentClass is not empty %} {{contentClass}}{% endif %}">
+        {{ description|raw }}
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <div id="filters" class="noBorder">
+                    <div class="visible-xs visible-sm row">
+                        <div class="col-xs-5 col-xs-offset-1 nopadding-only-xs col-sm-3 col-sm-offset-0">
+                            <button class="btn btn-sm btn-default" id="le-filter-button">FILTRER PAR <i class="icon-filtre"></i></button>
+                        </div>
+                        {% if noSort is not defined %}
+                            <div class="col-xs-5 nopadding-right-only-xs col-sm-3 col-sm-offset-6 text-right">
+                                <button class="btn btn-sm btn-default" id="le-sort-button">TRIER PAR <i class="icon-tri"></i></button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="formfilters">
+                        <auction-filters :filters="{{ filters|json_encode() }}" :for-screens-from="992"></auction-filters>
+                    </div>
+                </div>
+            </div>
+            <div class="moduleEnchere block-separ-bottom col-xs-12 col-md-9">
+                {%- if noSort is not defined -%}
+                    <div class="text-right">
+                        <div class="btn-group">
+                            <div class="hidden-xs hidden-sm">
+                                <div id="sort">
+                                    <auction-sort sort="{{ sort }}"></auction-sort>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <auction-list
+                    list-name="{{ listName is defined and listName ? listName : (tag is defined and tag ? tag : 'All') }}"
+                    {% if city is defined and city -%}
+                        clust-name="{{ city.name|lower }}"
+                    {% endif %}
+                    {% if searchTerm is defined and searchTerm -%}
+                        search-terms="{{ searchTerm }}"
+                    {% endif %}
+                    v-bind:use-filters="{{ (noFilters is not defined and filters is defined) | json_encode }}"
+                    v-bind:use-sort="{{ (noSort is not defined) | json_encode }}"
+                    {% if sort is defined %}
+                        sort="{{ sort }}"
+                    {% endif %}
+                    {% if tag|default() -%}
+                        tag="{{ tag|e('html_attr') }}"
+                    {% endif %}
+                    request-uri="{{ app.request.requesturi }}"
+                    v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                    v-bind:tab-index="1"
+                    template-page-type="{{ template }}"
+                ></auction-list>
+                {%- if description_footer is defined and description_footer is not empty -%}
+                <div class="row">
+                    <div class="col-xs-12">{{description_footer|raw}}</div>
+                </div>
+                {%- endif -%}
+                {%- if app.request.requesturi != path('all.page') -%}
+                <a href="{{ path('all.page') }}" class="btn btn-primary hide text-uppercase with-icon" id="see_all_btn">Voir toutes nos enchères <i class="icon-arrow-right" aria-hidden="true"></i></a>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+    {{end|default('')|raw}}
+{% endblock %}
+{% block footer %}
+    {% include './include/avis-verifies.html.twig' %}
+    {% include 'module/comment-ca-marche.twig' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.headerPromo').removeClass('paddingbottom1');
+    </script>
+    {% include './auction/list/scripts.twig' %}
+{% endblock %}

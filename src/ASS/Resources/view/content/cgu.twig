@@ -1,0 +1,1113 @@
+{% set bodyclass = 'no-header-print' %}
+
+{% extends 'layout/html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetCdn }}/assets/build-css/print.css" />
+{% endblock %}
+
+{% block title %}Conditions générales de vente{% endblock %}
+
+{% block breadcrumb %}
+    <li typeof="ListItem" property="itemListElement">
+        <a typeof="WebPage" property="item" href="{{ path('homepage') }}" title="loisirs encheres"><span property="name">Accueil</span></a>
+        <meta content="1" property="position">
+    </li>
+    <li typeof="ListItem" property="itemListElement" class="active">
+        <span property="item.name">Conditions générales de vente et conditions particulières de vente</span>
+        <meta content="2" property="position">
+    </li>
+{% endblock %}
+
+{% block main_content %}
+    <div id="cgu">
+        <h1 class="page-title-h1">CONDITIONS GENERALES ET <a href="#cpv"> PARTICULIÈRES DE PRESTATION DE SERVICES</a> (actualisées le 06/12/2019)</h1>
+        <div class="hidden-print text-right">
+            <a class="btn btn-sm btn-link" href="#cgu-historique">Historique des CGU</a>
+        </div>
+        <div class="padding-text-mobile">
+            <h2 class="title-h2-page-quality"><b>Préambule</b></h2>
+            <p>Les prestations, figurant sur le site Internet https://www.loisirsencheres.com, sont proposées par la société Loisirs Enchères SAS (ci-après « Loisirs Enchères SAS ») qui édite ce site.</p>
+            <p>Sur l'ensemble du site susvisé qu'elle édite, la société Loisirs Enchères SAS propose à la vente, au nom et pour le compte de ses prestataires, les prestations suivantes :<br />
+                • des prestations d'hébergement,<br />
+                • des forfaits touristiques,<br />
+                • des billets pour des spectacles, des parcs de loisirs ou animaliers et des manifestations sportives,<br />
+                • des repas,<br />
+                • des croisières fluviales avec ou sans repas,<br />
+                • des prestations de bien être,<br />
+                • et plus généralement, des prestations de services dans le domaine des loisirs et de la culture.</p>
+            <p>Loisirs Enchères SAS propose également la vente de biens neufs ou d'occasions, dans le cadre d'un courtage aux enchères réalisés à distance par voie électronique dont les conditions particulières sont définies ci-après.</p>
+            <p>Loisirs Enchères SAS est une Société par Actions Simplifiée au capital de 90.016 Euros, dont le siège social se situe au 18 rue de la Porte Dijeaux - 33000 Bordeaux France, immatriculée au Registre du Commerce et des Sociétés de BORDEAUX sous le numéro 801 270 612 00048, code APE 4791B, dont le numéro de TVA intracommunautaire est FR43801270612.</p>
+            <p>Numéro de téléphone : 09 73 72 91 92</p>
+            <p>Adresse électronique : info@loisirsencheres.com</p>
+            <p>Assurance responsabilité professionnelle : HISCOX EUROPE UNDERWRITING LIMITED, 19 rue Louis Le Grand, 75002 Paris</p>
+            <p>Garantie financière : APST, 15 avenue Carnot, 75017 Paris</p>
+            <p>Numéro d'immatriculation en qualité d'opérateur de voyages et de séjours, délivré par ATOUT FRANCE AGCE FR DEVEL TOURISTIQUE, 79,81 rue de Clichy, 75009 PARIS : IM033150009</p>
+            <p>Représentant légal : Arobase BV, en sa qualité de Président de Loisirs Enchères</p>
+            <p>Responsable de la publication : Arobase BV</p>
+            <p>Hébergeur : Amazon Web Services LLC,P.O. Box 81226,Seattle, WA 98108-1226 ;<br />
+                Site internet : <a href="http://aws.amazon.com" target="_blank">http://aws.amazon.com</a>;<br />
+                Téléphone : (206) 266-4064 ;<br />
+                Fax : (206) 266-701</p><br />
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 1 - DEFINITIONS</b></h2>
+            <p>Pour les besoins des présentes conditions générales de prestation de services, les mots et expressions suivants sont entendus comme suit :</p>
+            <p><b>« CGPS »</b> désigne les présentes conditions générales de prestation de services de Loisirs Enchères SAS.</p>
+            <p><b>« DESCRIPTIF »</b> désigne une page du Site ou un document téléchargeable sur le Site présentant les caractéristiques d'une Prestation donnée.</p>
+            <p><b>« ENCHERE »</b> désigne toute offre d'achat chiffrée en vue de l'obtention d'une Prestation proposée par l'Utilisateur sur le Site lors du processus de vente.</p>
+            <p><b>« PRESTATAIRE »</b> désigne le tiers qui fournit la Prestation à l'Utilisateur qui a remporté la vente.</p>
+            <p><b>« PRESTATION »</b> désigne une prestation de service telle que la fourniture d'hébergement, de prestation de bien-être, de forfait touristiques ou de toute autre prestation de services dans le domaine des loisirs et de la culture, proposée à la vente sur le Site, au nom et pour le compte du PRESTATAIRE.</p>
+            <p><b>« SITE »</b> désigne le site Internet https://www.loisirsencheres.com édité par Loisirs Enchères SAS.</p>
+            <p><b>« VOUCHER »</b> désigne le document muni d'un code de confirmation, émis par Loisirs Enchères SAS permettant à l'Utilisateur ayant remporté la Vente de bénéficier de la Prestation auprès du Prestataire.</p>
+            <p><b>« L'UTILISATEUR »</b> désigne tout consommateur utilisant le Site afin d'enchérir sur une Prestation proposée sur le Site, à l'exclusion de tout professionnel.</p>
+            <p><b>« PRIX DE RESERVE »</b> désigne un prix minimum non communiqué à l'Utilisateur qui doit être atteint pour l'obtention de la Prestation.</p><br />
+            <p><b>« VENTE »</b> désigne la vente de la PRESTATION proposée sur le SITE, au profit de l'UTILISATEUR qui aura placé l'ENCHERE la plus élevée en vue de l'obtention de ladite PRESTATION, sous réserve de l'atteinte d'un éventuel PRIX DE RESERVE.</p><br />
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 2 – CHAMP D'APPLICATION</b></h2>
+            <p>Les CGPS sont valables à compter du 06/09/2017. Cette édition annule et remplace les versions précédentes des CGPS.</p>
+            <p>Il est impératif que l'Utilisateur lise attentivement les CGPS qui sont accessibles depuis la page « Conditions Générales de Prestation de Services » du Site. Loisirs Enchères SAS recommande à l'Utilisateur de télécharger les CGPS et/ou de les imprimer et d'en conserver une copie préalablement à sa commande.</p>
+            <p>Les CGPS sont susceptibles d'être modifiées, sachant que de telles modifications seront inapplicables aux commandes de Prestations effectuées antérieurement à la date d'entrée en vigueur de telles modifications telle que cette date figure au présent article.</p>
+            <p>Les CGPS peuvent être complétées par des conditions particulières de prestation de services figurant sur le Descriptif de la Prestation et par les conditions générales de prestation de services des Prestataires, accessibles soit sur leur propre site Internet, soit sur le lieu de réalisation de la Prestation.</p>
+            <p>Le fait pour l'Utilisateur de passer commande sur le Site implique qu'il ait pris connaissance et qu'il ait accepté lesdites CGPS de Loisirs Enchères SAS ainsi que le cas échéant, les conditions générales et particulières de prestation de services du Prestataire, avant la passation de sa commande.</p>
+            <p>Le fait que Loisirs Enchères SAS ne fasse pas application à un moment donné d'un quelconque article des CGPS ne peut être interprété comme valant renonciation de Loisirs Enchères SAS à se prévaloir ultérieurement desdites CGPS.</p><br />
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 3 - DECLARATIONS DE L'UTILISATEUR</b></h2>
+            <p>L'UTILISATEUR déclare avoir la capacité juridique de contracter avec Loisirs Enchères SAS - à savoir posséder la majorité légale - et ne pas être placé sous un régime juridique de protection des majeurs.</p>
+            <p>L'UTILISATEUR déclare également utiliser le Site conformément aux CGPS, en son nom et pour son compte ou pour le compte de tous les bénéficiaires des PRESTATIONS commandées par ses soins sur le SITE dont il reconnaît être le mandataire (ci-après « les BENEFICIAIRES ») et auxquels les CGPS seront opposables.</p>
+            <p>L'UTILISATEUR est responsable de l'utilisation du SITE faite tant en son nom que pour le compte des BENEFICIAIRES, sauf à démontrer une utilisation frauduleuse ne résultant d'aucune faute ou négligence de sa part.</p>
+            <p>L'UTILISATEUR garantit la véracité et l'exactitude des informations fournies par lui en son nom et pour le compte de tous les BENEFICIAIRES utilisant ses données sur le SITE.</p>
+            <p>Loisirs Enchères SAS se réserve le droit à tout moment de ne pas contracter avec un UTILISATEUR qui ferait une utilisation frauduleuse du SITE ou qui contreviendrait aux CGPS.</p>
+            <p>L'UTILISATEUR s'engage à ne pas laisser d'avis diffamatoire, injurieux, à caractère haineux ou dont le contenu serait sans lien avec la consommation de l'offre à laquelle il est relié.</p>
+            <p>Loisirs Enchères se réserve le droit de ne pas publier un avis qui ne respecterait pas les présentes conditions d'utilisation.</p>
+            <p><strong><u>L'UTILISATEUR déclare être informé et accepte qu'en cas de comportements illicites, inappropriés ou contraires à l'ordre public et aux bonnes mœurs de sa part dans le cadre de l'exécution d'une PRESTATION ou de l'utilisation du SITE, Loisirs Enchères se réserve le droit de désactiver temporairement ou de façon définitive, unilatéralement et sans indemnité, son accès au SITE et aux ENCHERES, et que toute tentative de contournement de cette suspension, notamment par la création d'un nouveau compte utilisateur, fera l'objet de poursuites.</u></strong></p><br />
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 4 - MODALITES DES ENCHERES / PASSATION D'UNE COMMANDE</b></h2>
+            <h3>4.1 – Identification du compte utilisateur</h3>
+            <p>Pour toute première ENCHERE, l'Utilisateur devra au préalable créer un compte utilisateur et
+                renseigner à cet effet le formulaire d'inscription prévu à cet effet sur la page « S'inscrire » du
+                Site. Il est également possible de s'inscrire directement via son compte Facebook sur cette
+                même page.</p>
+            <p>L'ouverture d'un compte utilisateur via le formulaire comprend notamment la saisie de deux
+                (2) identifiants : une adresse électronique et un mot de passe.</p>
+            <p>L'Utilisateur s'engage à remplir le formulaire d'inscription en veillant à donner les
+                informations nécessaires complètes et exactes et, le cas échéant, à procéder à leur mise à
+                jour en cas de modifications ultérieures.</p>
+            <p>Les identifiants de l'Utilisateur sont personnels et devront être tenus confidentiels.
+                L'Utilisateur s'interdit de les divulguer à un tiers ou de les céder.</p>
+            <p>L'Utilisateur est responsable de l'utilisation de ses identifiants et, le cas échéant, il lui
+                appartient d'informer immédiatement par écrit Loisirs Enchères SAS de toute utilisation de
+                ses identifiants faite à son insu afin que Loisirs Enchères SAS procède à la désactivation
+                desdits identifiants.</p>
+            <p>Au titre de sa demande, l'Utilisateur doit communiquer à Loisirs Enchères SAS son identité
+                complète ainsi que son identifiant.</p>
+            <h3>4.2 – ENCHERES</h3>
+            <p>Toute ENCHERE sur le Site implique la possession d'une adresse électronique valide.</p>
+            <p>L'ensemble des étapes nécessaires à la réalisation d'une ENCHERES via le Site sont les suivantes :</p>
+            <p>1. L'Utilisateur effectue une recherche sur le Site qui donnera lieu à la présentation d'une ou plusieurs offres de Prestations correspondant à sa requête.</p>
+            <p>2. L'Utilisateur clique sur la Prestation de son choix afin d'accéder à son Descriptif.</p>
+            <p>3. L'Utilisateur place une ENCHERE sur la Prestation après avoir pris connaissance des CGPS et du Descriptif de la Prestation dans les conditions précitées et après les avoir acceptées.
+                Au titre de ce placement d'ENCHERE, L'UTILISATEUR reconnaît explicitement son obligation de paiement dans l'hypothèse où son ENCHERE serait la plus élevée pour la PRESTATION considérée, sous réserve de l'atteinte d'un éventuel PRIX DE RESERVE.<br>
+                L'ENCHERE peut s'effectuer de deux manières :<br>
+                <ul>
+                    <li class="list-unstyled">- ENCHERE Manuelle : l'Utilisateur enchérit d'un montant unique, supérieur - le cas échéant - à la dernière ENCHERE effectuée. Il est possible d'effectuer autant d'ENCHERES Manuelles que souhaité pour une Prestation, dans la limite d'un montant de surENCHERE maximum de 55% de la valeur publique de la Prestation.</li><br>
+                    <li class="list-unstyled">- ENCHERE Automatique : l'Utilisateur définit un montant maximum, supérieur - le cas échéant - à la dernière ENCHERE effectuée. Une ENCHERE du montant minimum nécessaire est alors effectuée en son nom. Si nécessaire, des ENCHERES Automatiques sont par la suite effectuées en son nom afin de permettre à l'Utilisateur de conserver le montant de l'ENCHERE le plus élevé, jusqu'à atteinte du montant maximum défini.</li>
+                </ul>
+                <br>
+
+                Le montant de l'ENCHERE peut être soit déterminé librement par l'UTILISATEUR, soit encadré par un montant minimum et/ou un montant maximum. Dans le cas où aucune règle d'encadrement ne s'applique, les ENCHERES automatiques effectuées suivent le système de palier détaillé dans le tableau ci-dessous :</p>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                    {% include 'auction/partials/tablePaliers.twig' %}
+                </div>
+            </div>
+            <h3>4.3 – Obtention de la Prestation / Gain de la vente</h3>
+            <p>Les modalités d'obtention de la Prestation sont fonction de la présence d'un Prix de réserve.</p>
+            <p><b>4.3.1. Prestation avec Prix de réserve déterminé</b></p>
+            <p>Un Prix de réserve peut être déterminé pour toute Prestation.</p>
+            <p>L'Utilisateur est averti de la présence de ce Prix de réserve dans le Descriptif de ladite
+                Prestation, qui mentionne également si le montant de la dernière ENCHERE effectuée est
+                inférieur ou a atteint le montant du Prix de réserve.</p>
+            <p>Au terme d'un délai fixé par Loisirs Enchères pour placer une ou plusieurs ENCHERES, l'Utilisateur ayant
+                proposé le montant de l'ENCHERE le plus élevé pour la Prestation considérée remporte la VENTE, sous
+                réserve que le Prix de Réserve ait été atteint. La VENTE est alors considérée comme REMPORTEE.</p>
+            <p>L'obligation de paiement de l'UTILISATEUR naît dès que celui-ci remporte la VENTE.</p>
+            <p>Dans le cas où le Prix de réserve n'est pas atteint, l'Utilisateur ne peut prétendre bénéficier
+                de la Prestation, même dans le cas où sa dernière ENCHERE serait l'ENCHERE dont le montant est le plus élevé
+                pour la Prestation considérée. La VENTE, qui n'est alors pas remportée, est remise en jeu.</p>
+            <p><b>4.3.1. Prestation sans Prix de réserve déterminé</b></p>
+            <p>Au terme d'un délai fixé par Loisirs Enchères pour placer une ou plusieurs ENCHERES, l'Utilisateur ayant
+                proposé le montant de l'ENCHERE le plus élevé pour la Prestation considérée remporte la VENTE. La VENTE est alors considérée comme Remportée.</p>
+            <p>L'obligation de paiement de l'UTILISATEUR naît dès que celui-ci remporte la VENTE.</p>
+            <h3>4.4 – Paiement de la commande</h3>
+            <p>1. Une fois la VENTE REMPORTEE, Loisirs Enchères adresse à l'Utilisateur concerné un courriel
+            de confirmation reprenant la Prestation choisie dans les conditions de l'article 4.2 des CGPS
+            et le prix total de la Prestation égal à la somme du montant de sa dernière ENCHERE et des
+            frais de dossiers définis à l'article 7.1, lui permettant ainsi de vérifier le détail de sa
+            commande. L'Utilisateur doit alors s'assurer que toutes les informations affichées sont
+            conformes à celles qu'il a fournies car elles ne pourront plus être modifiées après paiement de la commande.</p>
+
+            <p>2. L'Utilisateur procèdera ensuite au paiement de sa commande au moment du paiement, dans les meilleurs
+            délais et au plus tard dans un délai de quatorze (14) jours calendaires après avoir remporté
+            l'ENCHERE afférente à la commande, après avoir accepté les CGPS, Loisirs Enchères SAS
+            rappelant à l'Utilisateur qu'à défaut d'avoir accepté les CGPS, tout règlement de commande est impossible. La mention « Commande avec obligation de paiement » est rappelée sur le Site.</p>
+
+            <p>3. L'Utilisateur paye sa commande en ligne, dans les conditions prévues à l'article 7.2 des
+            CGPS.</p>
+
+            <p>4. A réception de cette commande, Loisirs Enchères SAS s'assure de la conformité de celle-ci
+            et effectue les contrôles préalables nécessaires à la validation définitive de la commande.
+            Conformément aux dispositions de l'article L.121-1 du Code de la consommation, il est
+            précisé que Loisirs Enchères SAS se réserve le droit de ne pas donner suite à la commande
+            passée par l'Utilisateur :
+            • en cas de commandes excédant par leur fréquence les besoins d'un non-professionnel et
+            plus généralement en cas de demande anormale ou de mauvaise foi de l'Utilisateur, 
+            • en cas d'informations en provenance de l'organisme bancaire en charge par Loisirs
+            ENCHERES SAS de la gestion du règlement de la commande faisant état de l'impossibilité de
+            mettre en œuvre le moyen de paiement de l'Utilisateur, 
+            • et plus généralement en cas de motif légitime, notamment au sens de l'article L.121-1 du
+            Code de la Consommation.
+            Une fois les vérifications préalables nécessaires effectuées par Loisirs Enchères SAS, un
+            courriel sera adressé à l'Utilisateur à l'adresse électronique fournie par celui-ci l'informant :
+            • soit du refus motivé de la commande, 
+            • soit de l'acceptation de la commande.</p>
+
+            <p>5. En cas d'acceptation de la commande, Loisirs Enchères SAS transmet par courrier
+            électronique un Voucher reprenant les éléments essentiels du contrat tel que l'identification
+            de la Prestation, le nom et les coordonnées de l'Utilisateur, le nom des Bénéficiaires de la ou
+            des Prestations achetées. Toutes les informations figurant dans le Voucher seront réputées
+            constituer l'accord entre l'Utilisateur et Loisirs Enchères SAS.</p>
+
+            <p>6. Une facture est adressée par Loisirs Enchères SAS à l'Utilisateur.</p>
+
+            <p>7. Conformément à l'article 8 des CGPS, l'Utilisateur présente au Prestataire le Voucher afin
+            de pouvoir bénéficier de la Prestation.</p>
+            <h2 class="title-h2-page-quality"><b>ARTICLE 5 - FOURNITURE DES PRESTATIONS</b></h2>
+            <p>Le Descriptif précise pour chaque Prestation les éléments qu'elle inclut et les éventuelles conditions particulières.</p>
+            <p>Le Descriptif précise également la durée de validité du Voucher pendant laquelle l'Utilisateur devra impérativement bénéficier de la Prestation.</p>
+            <p>Si l'Utilisateur ne peut pas bénéficier de la Prestation pendant la durée de validité du Voucher, pour toute autre cause que la force majeure ou le fait de l'Utilisateur, la vente pourra être résolue à la demande écrite de l'Utilisateur et dans les conditions prévues aux articles L.216-2 et L.216-3 du Code de la Consommation.</p>
+            <p>Les sommes versées par l'Utilisateur lui seront alors restituées au plus tard dans les quatorze (14) jours qui suivent la date de dénonciation du contrat par l'Utilisateur, à l'exclusion de toute indemnisation ou retenue.</p>
+            <p>L'hypothèse où l'Utilisateur ne pourrait bénéficier de la Prestation lors d'une date en particulier durant la durée de validité du Voucher, alors que la Prestation serait par ailleurs disponible à d'autres dates, n'entre pas dans le cadre de cette résolution, dans la mesure où la validité du Voucher est limitée au nombre de places quotidiennes disponibles pour la Prestation.</p>
+
+            <br />
+            <h2 class="title-h2-page-quality"><b>ARTICLE 6 - CONDITIONS PROPRES AUX VOYAGES ET AUX SEJOURS</b></h2>
+            <p><b>6.1 Extraits du Code du Tourisme</b></p>
+            <p>Conformément à l'article R.211-12 du Code du Tourisme, les extraits suivants du Code du Tourisme sont intégralement reproduits :</p>
+            <p><b><u>Article R. 211-3 du Code du Tourisme :</u></b></p>
+            <p><i>« Sous réserve des exclusions prévues aux troisième et quatrième alinéas de l'article L.211-7 du Code du Tourisme, toute offre et toute vente de prestations de voyages ou de séjours donnent lieu à la remise de documents appropriés qui répondent aux règles définies par la présente section.
+                    <br /><br />En cas de vente de titres de transport aérien ou de titres de transport sur ligne régulière non accompagnée de prestations liées à ces transports, le VENDEUR délivre à l'ACHETEUR un ou plusieurs billets de passage pour la totalité du voyage, émis par le transporteur ou sous sa responsabilité. Dans le cas de transport à la demande, le nom et l'adresse du transporteur, pour le compte duquel les billets sont émis, doivent être mentionnés.
+                    <br /><br />La facturation séparée des divers éléments d'un même forfait touristique ne soustrait pas le VENDEUR aux obligations qui lui sont faites par les dispositions réglementaires de la présente section. »</i></p>
+            <p><b><u>Article R.211-3-1 du Code du Tourisme :</u></b></p>
+            <p><i>« L'échange d'informations précontractuelles ou la mise à disposition des conditions contractuelles est effectué par écrit. Ils peuvent se faire par voie électronique dans les conditions de validité et d'exercice prévues aux articles 1369-1 à 1369-11 du Code Civil. Sont mentionnés le nom ou la raison sociale et l'adresse du VENDEUR ainsi que l'indication de son immatriculation au registre prévu au a) de l'article L.141-3 du Code du Tourisme ou, le cas échéant, le nom, l'adresse et l'indication de l'immatriculation de la fédération ou de l'union mentionnées au deuxième alinéa de l'article R. 211-2 du Code du Tourisme. »</i></p>
+            <p><b><u>Article R.211-4 du Code du Tourisme :</u></b></p>
+            <p><i>« Préalablement à la conclusion du contrat, le VENDEUR doit communiquer au consommateur les informations sur les prix, les dates et les autres éléments constitutifs des prestations fournies à l'occasion du voyage ou du séjour tels que :<br /><br />
+                    1° La destination, les moyens, les caractéristiques et les catégories de transports utilisés ;<br /><br />
+                    2° Le mode d'hébergement, sa situation, son niveau de confort et ses principales caractéristiques, son homologation et son classement touristique correspondant à la réglementation ou aux usages du pays d'accueil ;<br /><br />
+                    3° Les prestations de restauration proposées ;<br /><br />
+                    4° La description de l'itinéraire lorsqu'il s'agit d'un circuit ;<br /><br />
+                    5° Les formalités administratives et sanitaires à accomplir par les nationaux ou par les ressortissants d'un autre Etat membre de l'Union européenne ou d'un Etat partie à l'accord sur l'Espace économique européen en cas, notamment, de franchissement des frontières ainsi que leurs délais d'accomplissement ;<br /><br />
+                    6° Les visites, excursions et les autres services inclus dans le forfait ou éventuellement disponibles moyennant un supplément de prix ;<br /><br />
+                    7° La taille minimale ou maximale du groupe permettant la réalisation du voyage ou du séjour ainsi que, si la réalisation du voyage ou du séjour est subordonnée à un nombre minimal de participants, la date limite d'information du consommateur en cas d'annulation du voyage ou du séjour ; cette date ne peut être fixée à moins de vingt et un jours avant le départ ;<br /><br />
+                    8° Le montant ou le pourcentage du prix à verser à titre d'acompte à la conclusion du contrat ainsi que le calendrier de paiement du solde ; <br /><br />
+                    9° Les modalités de révision des prix telles que prévues par le contrat en application de l'article R.211-8 du Code du Tourisme ;<br /><br />
+                    10° Les conditions d'annulation de nature contractuelle ;<br /><br />
+                    11° Les conditions d'annulation définies aux articles R.211-9, R.211-10 et R.211-11 du Code du Tourisme ;<br /><br />
+                    12° L'information concernant la souscription facultative d'un contrat d'assurance couvrant les conséquences de certains cas d'annulation ou d'un contrat d'assistance couvrant certains risques particuliers, notamment les frais de rapatriement en cas d'accident ou de maladie ;<br /><br />
+                    13° Lorsque le contrat comporte des prestations de transport aérien, l'information, pour chaque tronçon de vol, prévue aux articles R.211-15 à R.211-18 du Code du Tourisme. »</i></p>
+            <p><b><u>Article R.211-5 du Code du Tourisme :</u></b></p>
+            <p><i>« L'information préalable faite au consommateur engage le VENDEUR, à moins que dans celle-ci le VENDEUR ne se soit réservé expressément le droit d'en modifier certains éléments. Le VENDEUR doit, dans ce cas, indiquer clairement dans quelle mesure cette modification peut intervenir et sur quels éléments.<br /><br />
+                    En tout état de cause, les modifications apportées à l'information préalable doivent être communiquées au consommateur avant la conclusion du contrat.</i></p>
+            <p><b><u>Article R.211-6 du Code du Tourisme :</u></b></p>
+            <p><i>« Le contrat conclu entre le VENDEUR et l'ACHETEUR doit être écrit, établi en double exemplaire dont l'un est remis à l'ACHETEUR, et signé par les deux parties. Lorsque le contrat est conclu par voie électronique, il est fait application des articles 1369-1 à 1369-11 du Code Civil. Le contrat doit comporter les clauses suivantes :<br /><br />
+                    1° Le nom et l'adresse du VENDEUR, de son garant et de son assureur ainsi que le nom et l'adresse de l'organisateur ;<br /><br />
+                    2° La destination ou les destinations du voyage et, en cas de séjour fractionné, les différentes périodes et leurs dates ;<br /><br />
+                    3° Les moyens, les caractéristiques et les catégories des transports utilisés, les dates et lieux de départ et de retour ;<br /><br />
+                    4° Le mode d'hébergement, sa situation, son niveau de confort et ses principales caractéristiques et son classement touristique en vertu des réglementations ou des usages du pays d'accueil ;<br /><br />
+                    5° Les prestations de restauration proposées ;<br /><br />
+                    6° L'itinéraire lorsqu'il s'agit d'un circuit ;<br /><br />
+                    7° Les visites, les excursions ou autres services inclus dans le prix total du voyage ou du séjour ;<br /><br />
+                    8° Le prix total des prestations facturées ainsi que l'indication de toute révision éventuelle de cette facturation en vertu des dispositions de l'article R.211-8 du Code du Tourisme ;<br /><br />
+                    9° L'indication, s'il y a lieu, des redevances ou taxes afférentes à certains services telles que taxes d'atterrissage, de débarquement ou d'embarquement dans les ports et aéroports, taxes de séjour lorsqu'elles ne sont pas incluses dans le prix de la ou des prestations fournies ;<br /><br />
+                    10° Le calendrier et les modalités de paiement du prix ; le dernier versement effectué par l'ACHETEUR ne peut être inférieur à 30 % du prix du voyage ou du séjour et doit être effectué lors de la remise des documents permettant de réaliser le voyage ou le séjour ;<br />
+                    11° Les conditions particulières demandées par l'ACHETEUR et acceptées par le VENDEUR ;<br /><br />
+                    12° Les modalités selon lesquelles l'ACHETEUR peut saisir le VENDEUR d'une réclamation pour inexécution ou mauvaise exécution du contrat, réclamation qui doit être adressée dans les meilleurs délais, par tout moyen permettant d'en obtenir un accusé de réception au VENDEUR, et, le cas échéant, signalée par écrit, à l'organisateur du voyage et au prestataire de services concernés ;<br /><br />
+                    13° La date limite d'information de l'ACHETEUR en cas d'annulation du voyage ou du séjour par le VENDEUR dans le cas où la réalisation du voyage ou du séjour est liée à un nombre minimal de participants, conformément aux dispositions du 7° de l'article R.211-4 du Code du Tourisme ;<br /><br />
+                    14° Les conditions d'annulation de nature contractuelle ;<br /><br />
+                    15° Les conditions d'annulation prévues aux articles R.211-9, R. 211-10 et R. 211-11 du Code du Tourisme ;<br /><br />
+                    16° Les précisions concernant les risques couverts et le montant des garanties au titre du contrat d'assurance couvrant les conséquences de la responsabilité civile professionnelle du VENDEUR ;<br /><br />
+                    17° Les indications concernant le contrat d'assurance couvrant les conséquences de certains cas d'annulation souscrit par l'ACHETEUR (numéro de police et nom de l'assureur) ainsi que celles concernant le contrat d'assistance couvrant certains risques particuliers, notamment les frais de rapatriement en cas d'accident ou de maladie ; dans ce cas, le VENDEUR doit remettre à l'ACHETEUR un document précisant au minimum les risques couverts et les risques exclus ;<br /><br />
+                    18° La date limite d'information du VENDEUR en cas de cession du contrat par l'ACHETEUR ;<br /><br />
+                    19° L'engagement de fournir à l'ACHETEUR, au moins dix jours avant la date prévue pour son départ, les informations suivantes :<br /><br />
+                    a) Le nom, l'adresse et le numéro de téléphone de la représentation locale du VENDEUR ou, à défaut, les noms, adresses et numéros de téléphone des organismes locaux susceptibles d'aider le consommateur en cas de difficulté ou, à défaut, le numéro d'appel permettant d'établir de toute urgence un contact avec le VENDEUR ;<br /><br />
+                    b) Pour les voyages et séjours de mineurs à l'étranger, un numéro de téléphone et une adresse permettant d'établir un contact direct avec l'enfant ou le responsable sur place de son séjour ;<br /><br />
+                    20° La clause de résiliation et de remboursement sans pénalités des sommes versées par l'ACHETEUR en cas de non-respect de l'obligation d'information prévue au 13° de l'article R. 211-4 ;<br /><br />
+                    21° L'engagement de fournir à l'ACHETEUR, en temps voulu avant le début du voyage ou du séjour, les heures de départ et d'arrivée. »</i></p>
+            <p><b><u>Article R.211-7 du Code du Tourisme :</u></b></p>
+            <p><i>« L'ACHETEUR peut céder son contrat à un cessionnaire qui remplit les mêmes conditions que lui pour effectuer le voyage ou le séjour, tant que ce contrat n'a produit aucun effet.<br /><br />
+                    Sauf stipulation plus favorable au VENDEUR, celui-ci est tenu d'informer le VENDEUR de sa décision par tout moyen permettant d'en obtenir un accusé de réception au plus tard sept jours avant le début du voyage. Lorsqu'il s'agit d'une croisière, ce délai est porté à quinze jours. Cette cession n'est soumise, en aucun cas, à une autorisation préalable du VENDEUR. »</i></p>
+            <p><b><u>Article R.211-8 du Code du Tourisme :</u></b></p>
+            <p><i>« Lorsque le contrat comporte une possibilité expresse de révision du prix, dans les limites prévues à l'article L.211-12 du Code du Tourisme, il doit mentionner les modalités précises de calcul, tant à la hausse qu'à la baisse, des variations des prix, et notamment le montant des frais de transport et taxes y afférentes, la ou les devises qui peuvent avoir une incidence sur le prix du voyage ou du séjour, la part du prix à laquelle s'applique la variation, le cours de la ou des devises retenu comme référence lors de l'établissement du prix figurant au contrat. »</i></p>
+            <p><b><u>Article R.211-9 du Code du Tourisme :</u></b></p>
+            <p><i>« Lorsque, avant le départ de l'ACHETEUR, le VENDEUR se trouve contraint d'apporter une modification à l'un des éléments essentiels du contrat telle qu'une hausse significative du prix et lorsqu'il méconnaît l'obligation d'information mentionnée au 13° de l'article R. 211-4 du Code du Tourisme, l'ACHETEUR peut, sans préjuger des recours en réparation pour dommages éventuellement subis, et après en avoir été informé par le VENDEUR par tout moyen permettant d'en obtenir un accusé de réception :<br /><br />
+                    -soit résilier son contrat et obtenir sans pénalité le remboursement immédiat des sommes versées ;<br /><br />
+                    -soit accepter la modification ou le voyage de substitution proposé par le VENDEUR ; un avenant au contrat précisant les modifications apportées est alors signé par les parties ; toute diminution de prix vient en déduction des sommes restant éventuellement dues par l'ACHETEUR et, si le paiement déjà effectué par ce dernier excède le prix de la prestation modifiée, le trop-perçu doit lui être restitué avant la date de son départ. »</i></p>
+
+            <p><b><u>Article R. 211-10 du Code du Tourisme :</u></b></p>
+            <p><i>« Dans le cas prévu à l'article L.211-14 du Code du Tourisme, lorsque, avant le départ de l'ACHETEUR, le VENDEUR annule le voyage ou le séjour, il doit informer l'ACHETEUR par tout moyen permettant d'en obtenir un accusé de réception ; l'ACHETEUR, sans préjuger des recours en réparation des dommages éventuellement subis, obtient auprès du VENDEUR le remboursement immédiat et sans pénalité des sommes versées ; l'ACHETEUR reçoit, dans ce cas, une indemnité au moins égale à la pénalité qu'il aurait supportée si l'annulation était intervenue de son fait à cette date.<br /><br />
+                    Les dispositions du présent article ne font en aucun cas obstacle à la conclusion d'un accord amiable ayant pour objet l'acceptation, par l'ACHETEUR, d'un voyage ou séjour de substitution proposé par le VENDEUR. »</i></p>
+            <p><b><u>Article R.211-11 du Code du Tourisme :</u></b></p>
+            <p><i>« Lorsque, après le départ de l'ACHETEUR, le VENDEUR se trouve dans l'impossibilité de fournir une part prépondérante des services prévus au contrat représentant un pourcentage non négligeable du prix honoré par l'ACHETEUR, le VENDEUR doit immédiatement prendre les dispositions suivantes sans préjuger des recours en réparation pour dommages éventuellement subis :<br /><br />
+                    -soit proposer des prestations en remplacement des prestations prévues en supportant éventuellement tout supplément de prix et, si les prestations acceptées par l'ACHETEUR sont de qualité inférieure, le VENDEUR doit lui rembourser, dès son retour, la différence de prix ;<br /><br />
+                    -soit, s'il ne peut proposer aucune prestation de remplacement ou si celles-ci sont refusées par l'ACHETEUR pour des motifs valables, fournir à l'ACHETEUR, sans supplément de prix, des titres de transport pour assurer son retour dans des conditions pouvant être jugées équivalentes vers le lieu de départ ou vers un autre lieu accepté par les deux parties.<br /><br />
+                    Les dispositions du présent article sont applicables en cas de non-respect de l'obligation prévue au 13° de l'article R. 211-4 du Code du Tourisme ».</i></p>
+
+            <h3>6.2 – Information de l'Utilisateur</h3>
+            <p>Conformément à l'article L. 211-8 du Code du Tourisme, le Descriptif figurant sur le Site a vocation à informer l'Utilisateur, préalablement à la passation de sa commande, du contenu des prestations proposées relatives au transport et au séjour, du prix et des modalités de paiement, des conditions d'annulation et de modification du voyage. L'Utilisateur est invité à se reporter au Descriptif du voyage ou du séjour choisi.</p>
+
+            <h3>6.3 – Transport aérien</h3>
+            <p>Les conséquences des accidents ou incidents pouvant survenir à l'occasion de l'exécution du transport aérien sont régies par les Conventions de Varsovie du 12 octobre 1929 amendée et de Montréal du 28 mai 1999, dont les limitations de responsabilités pourraient profiter à Loisirs Enchères SAS, en cas de mise en jeu de sa responsabilité et selon l'article L. 211-16 du Code du Tourisme.</p>
+            <p>Les conditions de transport sont rappelées au dos des billets ou communiquées en même temps que son émission.</p>
+            <p>Tous les horaires sont donnés à titre indicatif dès qu'ils sont disponibles et peuvent être modifiés, même après confirmation à l'initiative de la compagnie aérienne. Toute place non utilisée à l'aller ou au retour ne pourra faire l'objet d'un remboursement.</p>
+            <p>Compte tenu de l'intensification du trafic aérien, des événements indépendants de la volonté de Loisirs Enchères SAS (grèves, incidents techniques, retards aériens) peuvent avoir lieu et sont régis notamment par le Règlement n° 261/2004 du 11 février 2004 relatif au refus d'embarquement, aux annulations et aux retards importants de vol, dont les limitations peuvent bénéficier à Loisirs Enchères SAS. Par ailleurs, un changement d'aéroport peut se produire dans n'importe quelle ville. Une escale technique ou supplémentaire peut être prévue par la compagnie aérienne sans que Loisirs Enchères SAS ait le temps d'en informer les Utilisateurs.</p>
+            <p>La liste des compagnies aériennes utilisées dans les voyages proposés, est communiquée conformément aux dispositions des articles R. 211-15 et suivants du Code du Tourisme. Une confirmation de l'identité de la compagnie aérienne sera communiquée à l'Utilisateur lors de l'inscription et au plus tard huit (8) jours calendaires avant le départ. Une modification pourra intervenir avant le départ et l'Utilisateur en sera informé au plus tard lors de l'embarquement.</p>
+
+            <h3>6.4 - Hébergement</h3>
+            <h4>6.4.1. Classification</h4>
+            <p>Le nombre d'étoiles attribuées à l'établissement hôtelier figurant dans le Descriptif correspond à une classification établie en référence à des normes locales dans la majorité des pays d'accueil. Il se peut toutefois que dans certains pays il n'existe aucun organisme officiel de tourisme pour établir et valider cette classification. Dans cette dernière hypothèse, les informations figurant dans le Descriptif sont fonction de l'appréciation du Prestataire.</p>
+            <p>En tout état de cause, elles peuvent donc différer des normes françaises et européennes. Loisirs Enchères SAS s'efforce d'informer l'Utilisateur le plus précisément possible sur les conditions de votre hébergement.</p>
+
+            <h4>6.4.2. Type de chambres</h4>
+            <h5>6.4.2.1 Chambres individuelles</h5>
+            <p>Elles disposent d'un lit d'une personne. Elles font l'objet d'un supplément, sont proposées en quantité limitée et sont souvent moins spacieuses, moins confortables, et moins bien situées que les autres chambres.</p>
+
+            <h5>6.4.2.2 Chambres doubles</h5>
+            <p>Elles disposent de deux lits simples ou plus rarement d'un lit double.</p>
+
+            <h5>6.4.2.3 Chambres triples</h5>
+            <p>Elles se présentent, dans la plupart des cas, comme une chambre double à laquelle est ajouté un lit d'appoint (attention : ce lit peut être inférieur à la taille standard).</p>
+
+            <h5>6.4.2.4 Chambres quadruples</h5>
+            <p>Elles se présentent, dans la plupart des cas, comme une chambre double à laquelle sont ajoutés deux lits d'appoints (attention : ces lits peuvent être inférieurs à la taille standard).</p>
+
+            <h5>6.4.2.5 Chambres communicantes</h5>
+            <p>Les demandes de chambres communicantes seront prises en compte et satisfaites sous réserves de disponibilité du Prestataire, ce dont Loisirs Enchères SAS informera l'Utilisateur.</p>
+
+            <h4>6.4.3. Possession et libération des chambres</h4>
+            <p>Loisirs Enchères SAS informe que les règles applicables en matière d'hôtellerie internationale imposent généralement que les clients prennent possession des chambres à partir de 14 heures quelle que soit l'heure d'arrivée du vol et les libèrent avant 10 heures au plus tôt quel que soit l'horaire du vol de retour. Il ne sera malheureusement pas possible à l'Utilisateur de déroger à cette règle. Dans le cas où les horaires d'occupation et de libération de la chambre seraient différents, les dispositions spécifiques seront précisées sur le Descriptif.</p>
+            <p>Pour toute réservation d'un hôtel, votre arrivée sur place est prévue en début d'après-midi (à partir de 14h30) sauf mention contraire présente sur vos futurs documents de voyage. La chambre devra être libérée avant 10h00 au plus tôt, le jour de votre départ.</p>
+            <p>De ce fait, si l'Utilisateur décide d'entrer en possession de sa chambre ou la rendre en dehors des horaires stipulés ci-dessus, une nuitée supplémentaire pourra lui être facturée, sans qu'aucun remboursement ne puisse avoir lieu.</p>
+
+            <h4>6.4.4 Âge requis pour les prestations d'hébergement</h4>
+            <p>Les prestations d'hébergement mises aux ENCHERES sur le SITE ne sont pas accessibles aux mineurs, à moins qu'ils soient accompagnés d'au moins une personne majeure.</p>
+
+            <h3>6.5 - Repas</h3>
+            <p>Ils dépendent de la formule choisie.</p>
+            <p><b>6.5.1</b> All inclusive : comprend outre l'hébergement, les petits déjeuners, déjeuners, dîners et les boissons usuelles (eau minérale, jus de fruits, sodas, vins, alcool locaux) généralement de 10h à 22h. Certains alcools peuvent ne pas être compris dans la formule et faire l'objet d'une facturation par le Prestataire.</p>
+            <p><b>6.5.2</b> Pension complète : comprend outre l'hébergement, les petits déjeuners, déjeuners et dîners, sans les boissons.</p>
+            <p><b>6.5.3</b> Demi-pension : comprend outre l'hébergement, les petits déjeuners et dîners ou déjeuners selon le cas, sans les boissons.</p>
+            <p><b>6.5.4</b> Dans le cadre de la pension complète ou de la demi-pension, les boissons ne sont pas comprises, sauf exception dûment mentionnée dans le Descriptif.</p>
+
+            <h3>6.6 – Formalités administratives et sanitaires</h3>
+            <p>Seuls une carte nationale d'identité ou un passeport en cours de validité permet de voyager. Aucun autre document ne peut servir à voyager, aussi bien pour un adulte, qu'un enfant ou un bébé.</p>
+            <p>En règle générale, un passeport en cours de validité est indispensable pour les destinations étrangères hors Union Européenne proposées par Loisirs Enchères SAS. Certains pays exigent que la validité du passeport soit supérieure à six (6) mois après la date de retour et également que l'Utilisateur soit en possession d'un billet aller-retour ou d'un billet de sortie et de fonds suffisants.</p>
+            <p>Les enfants mineurs doivent être en possession de papier d'identité à leur nom. Les inscriptions de mineurs sur les passeports des parents sont désormais impossibles. Les mineurs doivent être titulaires d'un passeport individuel. Pour les mineurs accompagnés d'un seul parent de ou vers l'étranger en plus des formalités ordinaires, le parent accompagnant devra se munir du livret de famille ainsi que d'une autorisation de sortie du territoire donnée par le parent ne voyageant pas. Il en va de même pour les mineurs accompagnés d'un tiers.</p>
+            <p>Loisirs Enchères SAS ne saurait en aucun cas accepter l'inscription d'un mineur non accompagné. En conséquence, Loisirs Enchères SAS ne saurait être tenue pour responsable dans le cas où, malgré cet interdit, un mineur non accompagné serait inscrit, à son insu, sur un voyage.</p>
+            <p>De même, Loisirs Enchères SAS signale aux Utilisateurs que certains pays exigent que le passager justifie d'une souscription à une assurance assistance/rapatriement pour délivrer le visa.</p>
+            <p>Les formalités administratives et/ou sanitaires nécessaires à l'exécution du voyage sont communiquées à l'Utilisateur, à titre d'information, avant sa commande, dans le Descriptif.</p>
+            <p>Loisirs Enchères SAS entend attirer l'attention de l'Utilisateur sur le fait qu'il lui incombe obligatoirement de prendre connaissance des formalités à accomplir éventuellement pour se rendre dans le pays de destination et le cas échéant de transit.</p>
+            <p>Loisirs Enchères SAS attire également l'attention de l'Utilisateur sur la nécessité de prendre connaissance des informations relatives aux risques sanitaires constatés par les autorités sanitaires dans les lieux de destination et de transit ainsi que des recommandations et des mesures sanitaires mises en place contre ces risques, avant le départ et lors de ce séjour. Pour ce faire, l'Utilisateur et les Bénéficiaires devront consulter le lien hypertexte figurant à cet effet sur <a href="http://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs_909/index.html" target="_blank">http://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs_909/index.html</a>.</p>
+            <p>En outre, pour bien préparer votre voyage, et quelque soit votre nationalité, Loisirs Enchères SAS conseille vivement de consulter toutes les informations sur les pays à visiter et sur les démarches administratives et sanitaires à accomplir sur les sites Internet suivants <a href="http://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs_909/index.html" target="_blank">http://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs_909/index.html</a>, sans oublier les pays éventuellement traversés à l'occasion d'escales ou de transits.</p>
+            <p>L'accomplissement de ces formalités ainsi que les frais en résultant incombent à l'Utilisateur.</p>
+            <p>Les formalités mentionnées sur le site s'adressent à des ressortissants français. Par conséquent, les ressortissants des pays étrangers doivent impérativement se renseigner préalablement à leur inscription auprès des autorités compétentes de leur pays d'origine, ainsi que du ou des pays de destination et/ou de transit.</p>
+            <p>Entre la parution des informations sur le site et la date du départ de l'Utilisateur, certaines modifications sont susceptibles d'intervenir. Loisirs Enchères SAS conseille donc à l'Utilisateur de consulter le site juste avant son départ.</p>
+            <p>Enfin, il appartient à l'Utilisateur de respecter scrupuleusement ces formalités et de s'assurer que les noms et prénoms qui figurent sur ses documents de voyages (réservations, titres de transport, bons d'échange...) correspondent exactement à ceux qui figurent sur leur pièce d'identité, passeport, visas, etc.</p>
+            <p>Si du fait du non-respect de ces formalités administratives ou sanitaires, l'Utilisateur se trouvait dans l'impossibilité d'embarquer ou de débarquer, le prix payé ne pourrait en aucun être remboursé. De même, Loisirs Enchères SAS ne saurait supporter les frais d'amende et/ou de droits résultant de l'inobservation des règlements douaniers ou sanitaires de pays visités.</p>
+
+            <h3>6.7 – Modification ou annulation du fait de Loisirs Enchères SAS</h3>
+            <h4>6.7.1. Modification du fait de Loisirs Enchères SAS avant le départ</h4>
+            <p>Si, avant le départ, un événement extérieur, s'imposant à Loisirs Enchères au sens de l'article L. 211-13 du Code du Tourisme, contraint Loisirs Enchères SAS à modifier un élément essentiel du contrat conclu avec l'Utilisateur, Loisirs Enchères SAS avertira l'Utilisateur par tout moyen permettant d'en obtenir un accusé de réception, le plus rapidement possible, et lui proposera soit une modification du voyage, soit un voyage de substitution. L'Utilisateur pourra alors, soit accepter la modification proposée, soit résilier le contrat. L'Utilisateur qui opte pour la résiliation pourra obtenir le remboursement intégral des sommes versées. L'Utilisateur devra faire part de sa décision (acceptation de la modification ou résiliation) dans un délai maximal de sept (7) jours calendaires à compter de réception de l'information précitée. A défaut de réponse dans ce délai, l'Utilisateur sera réputé avoir accepté la modification proposée.</p>
+            <p>Lorsqu'un nombre minimal de participants est requis pour la réalisation d'un circuit ou d'un voyage et que ce nombre n'est pas atteint, Loisirs Enchères SAS en informe l'Utilisateur au moins vingt-un (21) jours calendaires avant la date de départ. Loisirs Enchères SAS propose alors à l'Utilisateur une (des) solution(s) de remplacement au tarif en vigueur ou le remboursement intégral des sommes payées, sans pour autant être tenu à une quelconque compensation ou indemnité au profit de l'Utilisateur.</p>
+
+            <h4>6.7.2. Modification du fait de Loisirs Enchères SAS après le départ</h4>
+            <p>Si, après le départ, Loisirs Enchères SAS se trouve dans l'impossibilité de fournir une part prépondérante des prestations prévues, représentant un pourcentage non négligeable du prix payé par l'Utilisateur, Loisirs Enchères SAS fera ses meilleurs efforts pour les remplacer par des prestations équivalentes dans les conditions prévues à l'article R. 211-11 du Code du Tourisme. Si Loisirs Enchères SAS ne peut proposer aucune prestation de remplacement ou si les prestations de remplacement sont refusées par l'Utilisateur pour des motifs valables, Loisirs Enchères SAS devra assurer le retour de l'Utilisateur, sans supplément de prix et dans des conditions équivalentes, vers le lieu de départ ou vers un autre lieu convenu entre Loisirs Enchères SAS et l'Utilisateur.</p>
+
+            <h4>6.7.3. Annulation du fait de Loisirs Enchères SAS avant le départ</h4>
+            <p>Si Loisirs Enchères SAS décide d'annuler le voyage ou le séjour avant le départ, Loisirs Enchères SAS en avertira l'Utilisateur par tout moyen permettant d'en obtenir un accusé de réception. Si les parties ne parviennent pas à un accord amiable sur un voyage ou séjour de substitution, Loisirs Enchères SAS remboursera à l'Utilisateur l'intégralité des sommes versées et lui versera une indemnité au moins égale à la pénalité que celui-ci aurait supportée si l'annulation était intervenue de son fait à cette date. Ces dispositions ne s'appliquent pas dans les cas visés à l'article 16.2 ci-après et à l'article L. 211-16 du Code du Tourisme.</p>
+
+            <h3>6.8 – Cession du contrat</h3>
+            <p>L'Utilisateur  peut céder son contrat à un tiers qui remplit les mêmes conditions que lui, tant que ce contrat n'a produit aucun effet. L'Utilisateur ne peut pas céder son (ses) contrat(s) d'assurance. L'Utilisateur est tenu d'informer Loisirs Enchères de sa décision par tout moyen permettant d'en obtenir un accusé de réception au plus tard quatorze (14) jours calendaires avant la date de début du voyage ou du séjour.</p>
+            <p>Il est précisé qu'une Prestation incluant un vol n'entre pas dans le cadre de cet article, dans la mesure où le contrat est associé à une identité précise.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 7 - CONDITIONS FINANCIERES</b></h2>
+            <h3>7.1 – Prix et taxes</h3>
+            <p>Pendant toute la durée de la vente, les prix des Prestations affichés sur le Site sont exprimés en Euros, Taxe sur la Valeur Ajoutée incluse mais hors frais de dossier.</p>
+            <p>Conformément au régime de Taxe sur la Valeur Ajoutée sur la marge des agents de voyages, les factures relatives aux voyages et aux séjours émises par Loisirs Enchères SAS à l'attention de l'Utilisateur ne mentionnent toutefois pas la Taxe sur la Valeur Ajoutée collectée sur ce type de Prestations.</p>
+            <p>En sus du prix de la Prestation, Loisirs Enchères SAS facturera à l'Utilisateur une somme forfaitaire, intitulée « frais de dossier », non comprise dans le prix de la Prestation, liée aux coûts et frais nécessaires au traitement des commandes et fixée entre cinq (5) et cent (100) Euros, Taxe sur la Valeur Ajoutée incluse.</p>
+            <p>Il convient, par ailleurs, de préciser que certaines taxes ou frais supplémentaires (taxe de séjour, taxe touristique, frais de visa et/ou de carte de tourisme…) peuvent être imposés par les autorités étatiques. Ces taxes ou frais supplémentaires ne sont pas compris dans le prix des Prestations affiché sur le Site et lorsqu'ils existent, sont à la charge de l'Utilisateur et peuvent devoir être réglées lorsque l'Utilisateur fait usage de son Voucher.</p>
+            <p>En outre de manière générale, et sauf mention expresse contraire, ne sont pas compris dans le prix des Prestations affiché sur le Site, l'ensemble des dépenses à caractère personnel ou accessoire à la Prestation, telles que le coût des assurances, les frais de livraison des titres de transport et carnets de voyages, les frais d'excédent de bagages, les frais de parking aéroport, les frais de vaccination, de blanchissage, de téléphone, de boissons, de room-service, les pourboires, les cautions et plus généralement de tout élément non expressément inclus dans le Descriptif de la Prestation.</p>
+            <p>Enfin, lorsque la Prestation comprend une prestation d'hébergement, les Prix sont calculés en fonction du nombre de nuitées et non du nombre de journées entières.</p>
+
+            <h3>7.2 - Paiement</h3>
+            <p>Toutes les commandes sont payables en Euros.</p>
+            <p>La commande doit être réglée au plus tard dans un délai de quatorze (14) jours calendaires à compter de la date et de l'heure à laquelle la VENTE a été remportée par l'Utilisateur, sauf délais particuliers précisés par Loisirs Enchères SAS avant le placement de l'ENCHERE.</p>
+            <p>Le paiement de toute commande peut être effectué par les moyens suivants :<br />
+                • par carte bancaire : sont acceptées la carte bleue nationale, les cartes VISA qui portent à droite le bandeau à trois couleurs VISA (bleu, blanc, ocre) et la colombe en hologramme, les cartes EuroCard/MasterCard reconnaissables à leur hologramme MC.<br />
+                Attention, les cartes bancaires étrangères et toutes les cartes ne correspondant pas à la description ci-dessus ne sont donc pas acceptées.<br />
+                • Par téléphone du lundi au vendredi de 9h30 à 12h30 et de 14h à 18h00 (hors jours fériés)<br />
+                • Par chèque ou virement<br />
+                • Par chèque ANCV pour nos séjours et nos hôtels
+            <p>Le règlement de la commande s'effectue par paiement comptant dans les conditions de l'article 4.4 -2° ci-dessus.</p>
+            <p>La commande de l'Utilisateur sera définitivement validée par Loisirs Enchères SAS dès la transmission par le partenaire bancaire de Loisirs Enchères SAS de la confirmation du règlement intégral de la commande considérée.</p>
+            <p>Afin d'optimiser la sécurité des transactions sur Internet, un système de paiement en ligne sécurisé est mis en œuvre par Loisirs Enchères SAS qui permet de crypter la saisie et la transmission de toutes les données relatives aux commandes (en ce compris les noms, adresses, numéros de carte crédit) afin que les informations communiquées soient protégées lors de leur transmission.</p>
+            <p>Ainsi la transaction est sécurisée et le cryptage SSL (Secure Socket Layer) est assuré par la société Crédit Agricole{# et Paypa#}, conformément aux réglementations interbancaires françaises.</p>
+            <p>Pour une sécurité optimale, en cas de paiement en ligne, l'Utilisateur est automatiquement redirigé vers le site du partenaire bancaire de Loisirs Enchères SAS et y saisit ses données de carte bancaire (numéro de carte bancaire, date d'expiration ainsi que le cryptogramme visuel). Loisirs Enchères SAS n'a de ce fait jamais accès aux données bancaires de l'Utilisateur : Loisirs Enchères SAS est uniquement informé par son partenaire bancaire de la bonne transaction du règlement.</p>
+            <p>Un refus d'autorisation par le partenaire bancaire de Loisirs Enchères SAS emporte l'annulation de plein droit et sans indemnité de la commande de l'Utilisateur.</p>
+            <p>En cas de règlement par carte bancaire, l'Utilisateur garantit qu'il est pleinement habilité à utiliser la carte de paiement qu'il utilisera et que cette dernière donne accès à des fonds suffisants pour couvrir tous les coûts nécessaires au règlement de la commande. L'engagement de payer donné au moyen d'une carte de paiement est irrévocable. Il ne peut être fait opposition au paiement qu'en cas de perte, de vol ou d'utilisation frauduleuse de la carte. En dehors de ces cas limitativement admis par le législateur, le porteur de la carte se rend coupable de fraude à la carte bancaire. Le droit d'opposition au paiement ne saurait notamment être utilisé pour pallier l'absence de droit de rétractation.</p>
+            <h4>Règlement par chèque ANCV</h4>
+            <p>Il est possible de régler votre enchère par chèques vacances.<br />
+                Attention, vous ne pouvez pas nous envoyer un montant en chèques vacances supérieur au montant total de votre enchère.<br />
+                Afin de compléter le paiement, vous pouvez nous envoyer un chèque bancaire.<br />
+                Vous aurez accès à votre bon de réservation une fois le chèque encaissé (10 jours de délai environ).</p>
+            <p>Pour envoyer vos chèques, voici les coordonnées de la société :<br />
+                À l'adresse : 18 rue de la Porte Dijeaux, 33000 BORDEAUX<br />
+                Chèque bancaire à l'ordre de : Loisirs Enchères SA<br />
+                Merci d'indiquer dans votre courrier votre nom, prénom et l'enchère que vous voulez régler.<br />
+            <p>ATTENTION : LES OFFRES HORS SÉJOURS (HÔTELS / VACANCES) NE SONT PAS ÉLIGIBLES AU PAIEMENT PAR CHÈQUES VACANCES</p>
+
+            <h3>7.3 – Défaut de paiement de l'ENCHERE par l'Utilisateur</h3>
+            <p>Loisirs Enchères SAS se réserve le droit de remettre à la vente aux ENCHERES la Prestation non-réglée par l'Utilisateur à l'expiration du délai visé à l'article 7.2 des CGPS.</p>
+            <p>L'Utilisateur du Site qui aurait un ou plusieurs paiement(s) en attente sur son profil d'Utilisateur ne peut faire une nouvelle ENCHERE sur une autre Prestation proposée sur le Site tant qu'il n'a pas effectué les règlements de ses encours. Son compte est dit «bloqué».</p>
+            <p>Si l'Utilisateur n'a pas effectué son règlement dans le délai de quatorze (14) jours calendaires qui lui est imparti, son compte reste bloqué pendant un délai de seize (16) jours calendaires. A la fin de ce second délai, le compte Utilisateur est débloqué.</p>
+            <p>A partir de trois (3) Prestations non réglées par un même UTILISATEUR dans le délai imparti, et afin de garantir une situation équitable vis-à-vis des autres UTILISATEURS qui n'ont pas remporté les VENTES concernées, Loisirs Enchères SAS se réserve le droit de désactiver le profil dudit UTILISATEUR.</p>
+
+            <h3>7.4 Dépôt de garantie</h3>
+            <p>Au cours d'une VENTE, Loisirs Enchères peut exiger un dépôt de garantie à hauteur des frais de dossier de ladite VENTE. Ce dépôt étant pris en compte en tant que caution, aucun prélèvement ne sera donc effectué en cas de paiement de l'ENCHERE dans le délai prévu. En cas de défaut de paiement, Loisirs Enchères prélèvera le montant de la caution.<br />
+                Les données bancaires ne seront pas enregistrées par Loisirs Enchères, sauf dans le cas où l'utilisateur en émet le souhait.</p>
+
+            <h3>7.5 Paiement en plusieurs fois (Casino)</h3>
+            <p>Cette option est disponible pour le paiement d'ENCHERE compris entre 50€ et 3000€ et pour des paiements en 3 ou 4 fois, si vous détenez une Visa ou Mastercard. Des frais "négligeables" sont prélevés auprès du client qui souhaite utiliser ce service. Pour accéder aux conditions générales de vente complètes de la solution "Paiement en 3 ou 4 X", rendez-vous sur <a href="https://www.banque-casino.fr/images/pdf/CB4X/Conditions-Gnrales-Vente-CB3X-CB4X.pdf" target="_blank">https://www.banque-casino.fr/images/pdf/CB4X/Conditions-Gnrales-Vente-CB3X-CB4X.pdf</a></p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 8 - REMISE DU VOUCHER</b></h2>
+            <h3>8.1 – Dispositions générales</h3>
+            <p>Le Voucher est disponible sur le Site, sur le compte Utilisateur, dans la rubrique intitulée « Mes ENCHERES », une fois l'utilisateur connecté.</p>
+            <p>La remise du Voucher s'effectue également par courrier électronique à l'adresse renseignée par l'Utilisateur lors de l'ouverture de son compte utilisateur dans les conditions de l'article 4.1 des CGPS.</p>
+            <p>L'Utilisateur devra donc communiquer à Loisirs Enchères SAS une adresse électronique permettant à Loisirs Enchères SAS de lui adresser les documents relatifs à la Prestation.</p>
+            <p>Par précaution, dans le cas où cinq (5) jours ouvrés avant la date envisagée d'utilisation du Voucher (à condition d'avoir effectivement passé votre commande plus de cinq (5) jours ouvrés avant cette date), l'Utilisateur n'avait pas reçu, pour quelque raison que ce soit, le Voucher, Loisirs Enchères SAS l'invite à le lui signaler.</p>
+
+            <h3>8.2 – Contenu du Voucher</h3>
+            <p>Loisirs Enchères indique sur le Voucher les informations utiles à la bonne utilisation de la Prestation par l'Utilisateur, le Voucher ne constituant pas la description intégrale de la Prestation, laquelle est effectuée au sein du Descriptif de la Prestation.</p>
+
+            <h3>8.3 – Présentation et gestion du voucher</h3>
+            <p>Le Voucher possède un numéro confidentiel à usage unique. Celui-ci doit être communiqué lors de toute réservation (si nécessaire) au Prestataire afin de valider sa réservation.</p>
+            <p>Dans le cas d'une non-présentation du Voucher par l'Utilisateur après la date limite de validité dudit Voucher, l'Utilisateur perd le bénéfice du Voucher et ne pourra pas bénéficier de la Prestation, sans remboursement possible de la part de Loisirs Enchères SAS.</p>
+            <p>Pour certaines Prestations (conformément aux dispositions de leur Descriptif), dans le cas où l'Utilisateur effectue une réservation qu'il annule auprès du Prestataire dans les 24 à 72 heures avant la date effective de sa venue, l'Utilisateur pourra perdre le bénéfice du Voucher et ne pourra pas bénéficier de la Prestation, sans remboursement possible de la part de Loisirs Enchères SAS.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 9 – FORCE MAJEURE</b></h2>
+            <p>Loisirs Enchères SAS ne saurait être tenue pour responsable de l'inexécution de tout ou partie de ses obligations, due à la survenance d'un événement de force majeure.</p>
+
+            <p>Ainsi, en cas de survenance d'un cas fortuit, d'un fait imprévisible et insurmontable d'un tiers ou d'un cas de force majeure, qui gênerait ou retarderait l'exécution des obligations de Loisirs Enchères SAS en tout ou partie, l'exécution par Loisirs Enchères SAS desdites obligations sera suspendue.</p>
+            <p>Sont considérés comme tels, notamment sans que cette liste soit limitative :<br /><br />
+                • la destruction affectant tout ou partie des installations et de moyens de commercialisation de Loisirs Enchères SAS,<br />
+                • les désordres publics graves, guerres, grèves, émeutes, actions gouvernementales, épidémie, blocage des moyens de transport et de communication, interruption de la fourniture d'énergie,<br />
+                • les catastrophes naturelles, incendies, vagues de froid, sécheresse ou tous autres faits analogues,<br />
+                • et plus généralement, tous événements ou causes extérieurs à la volonté de Loisirs Enchères SAS, et empêchant de bonne foi Loisirs Enchères SAS d'exécuter ses obligations.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 10 - PREUVE</b></h2>
+            <p>En application des dispositions de l'article 1316-2 du Code Civil, il est expressément convenu que sauf erreur manifeste de Loisirs Enchères SAS, les données conservées dans le système d'information de Loisirs Enchères SAS et/ou de ses partenaires et/ou des Prestataires, notamment dans les outils de messagerie électroniques utilisés ont force probante quant aux commandes passées et à l'exécution des obligations des parties. Les données sur support informatique ou électronique ainsi conservées constituent des preuves, et si elles sont produites comme moyen de preuve par Loisirs Enchères SAS dans toute procédure contentieuse ou autre, elles seront recevables, valables et opposables entre les parties de la même manière, dans les mêmes conditions et avec la même force probante que tout document qui serait établi, reçu ou conservé par écrit.<span id="art11"></span></p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 11 – ABSENCE DE DROIT DE RETRACTATION</b></h2>
+            <p>Conformément à l'article L.221-28, 12e du Code de la Consommation, le droit de rétractation ne peut être exercé pour des prestations de services d'hébergement, autres que d'hébergement résidentiel, de services de transport de biens, de locations de voitures, de restauration ou d'activités de loisirs qui doivent être fournis à une date ou à une période déterminée.</p>
+            <p>Il en résulte que le contrat est conclu de façon définitive dès que L'UTILISATEUR remporte la VENTE selon les modalités précisées aux CGPS.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 12 - ANNULATION OU MODIFICATION PAR LA SOCIETE LOISIRS ENCHERES SAS ET/OU SES PRESTATAIRES</b></h2>
+            <p>L'annulation ou la modification entraînera le remboursement à l'UTILISATEUR, dans les meilleurs délais, compte tenu des délais imposés à Loisirs Enchères SAS par le Prestataire, de toutes les sommes payées, sans que la responsabilité de Loisirs Enchères SAS puisse être par ailleurs engagée aux fins d'obtenir quelque indemnisation que ce soit.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 13 - ASSURANCES</b></h2>
+            <p>Loisirs Enchères vous propose de souscrire diverses assurances pour vos voyages. Ces dernières sont proposées lors du paiement du séjour et calculées sur la base du prix de la VENTE hors frais de dossier, réductions et options (un remboursement des frais de dossier et/ou des options ne sera donc pas possible.).   Il n'est pas possible d'ajouter une assurance ultérieurement. Le paiement d'une assurance ne peut se faire au moyens de codes promo e/ou de cartes cadeaux.<br />
+                Si une assurance a été souscrite, vous retrouverez le détail des garanties en suivant le lien sur votre facture et dans votre récapitulatif de voyage.</p>
+            <p>Si ce n'est pas déjà le cas, Loisirs Enchères SAS recommande à l'Utilisateur de souscrire au moment de sa commande un contrat d'assurance couvrant les conséquences de certains cas d'annulation et prévoyant un contrat d'assistance couvrant certains risques particuliers notamment les frais de rapatriement en cas d'accident ou de maladie.</p>
+            <p>Pour les voyages et séjours, l'Utilisateur sera en outre tenu de fournir au Prestataire à son arrivée sur le lieu de la Prestation, une attestation garantie responsabilité civile de type "occupant séjour voyage" fournie en principe gracieusement par sa compagnie d'assurances.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 14 - RECLAMATIONS</b></h2>
+            <p>Toute réclamation de nature commerciale ou tenant à la qualité des Prestations doit être obligatoirement signalée par écrit le plus tôt possible, à compter de la date d'utilisation du Voucher :par courrier avec accusé de réception à l'adresse suivante : 18 rue de la Porte Dijeaux - 33000 Bordeaux France.<p>
+            <p>Dès réception du courrier, la réclamation sera prise en charge par Loisirs Enchères et un retour vous sera fait dans les meilleurs délais.
+            <p>Les réclamations ne seront admises que dans la mesure où les difficultés dont elles font l'objet auront été préalablement signalées au cours de l'exécution de la Prestation, directement sur place auprès du Prestataire et par écrit (courrier simple, télécopie ou courrier électronique) adressé à Loisirs Enchères SAS afin que Loisirs Enchères SAS et/ou ses Prestataires tentent d'y remédier afin de limiter les préjudices que l'utilisateur estimerait subir et limiter également les préjudices de la société Loisirs Enchères SAS, dans le cas où la faute serait imputable à l'un de ses Prestataires.<br />
+                Toute réclamation doit être formulée en détaillant précisément l'objet de la réclamation et la Prestation concernée.</p>
+            <p>Courriel : <a href="mailto:info@loisirsencheres.com" target="_blank">info@loisirsencheres.com</a></p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 15 - MEDIATION</b></h2>
+            <p>En cas de litige, l'Utilisateur a la possibilité, avant toute action en justice, de recourir gratuitement à une procédure de médiation conventionnelle ou à tout autre mode alternatif de règlement des différends afin de rechercher une solution amiable.</p>
+            <p>L'Utilisateur peut notamment contacter le médiateur de la consommation dont Loisirs Enchères SAS dépend depuis le site internet de la commission d'évaluation et de contrôle de la médiation.</p>
+            <p>Il s'agit de la Médiation Tourisme et Voyage (MTV, Médiation Tourisme Voyage, BP 80 303, 75823 PARIS Cedex 17, <a href="http://www.mtv.travel" target="_blank">www.mtv.travel</a>).</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 16 – RESPONSABILITE DE LOISIRS ENCHERES SAS</b></h2>
+            <h3>16.1 – Au titre de l'utilisation du Site</h3>
+            <p>Le Site est accessible 24 heures sur 24 et 7 jours sur 7, sauf cas de force majeure, pannes éventuelles ou interventions de maintenance nécessaires pour assurer le bon fonctionnement du Site.</p>
+            <p>Loisirs Enchères SAS s'engage à faire ses meilleurs efforts pour assurer aux Utilisateurs une accessibilité du Site à tout moment. Toutefois, Loisirs Enchères SAS ne fournit aucune garantie concernant tant la disponibilité ou l'accessibilité du Site, que l'absence de virus.</p>
+            <p>Loisirs Enchères SAS ne saurait être tenue responsable des difficultés d'accès ou impossibilité momentanée d'accès au Site dues aux perturbations du réseau de télécommunication, l'Utilisateur  étant informé de la complexité des réseaux mondiaux, et de l'afflux, à certaines heures, des utilisateurs d'Internet. Il en est de même des éventuels piratages ou intrusions de virus qui pourraient survenir, Loisirs Enchères ne pouvant garantir une protection absolue du Site.</p>
+            <p>Par ailleurs, Loisirs Enchères SAS ne sera responsable ni des dommages, temporaires ou permanents, causés à votre système informatique, ni des pertes ou dommages éventuels (y compris, notamment, mais sans limitation, la perte de données ou de profits) qui seraient subis par l'Utilisateur suite à :<br /><br />
+                - l'accès ou à la navigation sur le Site,<br />
+                - l'exploitation des informations contenues dans le Site.</p>
+            <p>Le fait de cliquer sur les liens hypertextes insérés sur le Site peut diriger l'Utilisateur vers d'autres sites Internet.</p>
+            <p>Loisirs Enchères SAS n'assume aucune responsabilité relativement d'une part, au bon fonctionnement du lien, d'autre part, au contenu du site Internet vers lequel l'Utilisateur peut être redirigé. Les Utilisateurs choisissant d'accéder aux sites Internet de tiers sont soumis aux conditions d'utilisation de ces sites.</p>
+
+            <h3>16.2 – Au titre des Prestations</h3>
+            <p>Loisirs Enchères SAS s'engage à exécuter ses obligations conformément aux présentes CGPS avec un degré raisonnable de diligence et de compétence.</p>
+            <p>Dans l'exécution de ses obligations, Loisirs Enchères SAS est toujours responsable : (a) en cas de faute lourde ou intentionnelle qui dénote une négligence grossière de sa part ; (b) en cas de fraude ou de toute représentation frauduleuse de son fait ; ou (c) si cela est prévu par des dispositions législatives et/ou règlementaires d'ordre public de droit français.</p>
+            <p>A l'exclusion de ce qui est énoncé ci-dessus, Loisirs Enchères SAS n'est pas responsable des dommages indirects liés à l'exécution de ses obligations.</p>
+            <p>Dans le cadre de ses obligations, Loisirs Enchères SAS apporte un soin particulier au choix des PRESTATAIRES. Cependant, Loisirs Enchères SAS ne saurait garantir l'exhaustivité, la pertinence ou la légalité des PRESTATIONS. Loisirs Enchères SAS n'est pas non plus responsable de la qualité, de la sécurité, de l'utilité pratique ou de tout autre aspect de la PRESTATION.</p>
+            <p>En sa qualité de débiteur des PRESTATIONS, le PRESTATAIRE est en effet seul responsable de fournir la PRESTATION à l'UTILISATEUR ayant remporté l'ENCHERE et de la bonne exécution de cette PRESTATION.</p>
+            <p>Loisirs Enchères SAS proposant les PRESTATIONS au nom et pour le compte des PRESTATAIRES, sa responsabilité ne saurait être retenue vis-à-vis de l'UTILISATEUR ou du PRESTATAIRE, en cas de mauvaise exécution ou d'inexécution des PRESTATIONS, soit du fait de l'UTILISATEUR, soit du fait du PRESTATAIRE.</p>
+            <p>La responsabilité de Loisirs Enchères SAS ne saurait par ailleurs être engagée en cas de dommages directs ou indirects causés à des tiers, imputables à l'UTILISATEUR ou au PRESTATAIRE, ou liés à l'exécution de la PRESTATION.</p>
+            <p>De même, la responsabilité de Loisirs Enchères SAS ne saurait être engagée si, pour un cas de force majeure telle que définie par la jurisprudence, ou indépendant de sa volonté, la PRESTATION devait être modifiée, écourtée, ou annulée.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 17 - PROTECTION DES DONNEES PERSONNELLES</b></h2>
+            <p>Le traitement informatisé des données personnelles de l'Utilisateur réalisé sur le Site a fait l'objet d'une déclaration par Loisirs Enchères SAS auprès de la Commission Nationale de l'Informatique et des Libertés (numéro de la déclaration : 1782317).</p>
+            <p>L'Utilisateur accepte de recevoir de la part de Loisirs Enchères SAS les newsletters, les informations et/ou offres commerciales. Un lien de désabonnement est présent sur toutes les communications www.loisirsencheres.com afin de donner à l'Utilisateur la possibilité de modifier ses abonnements à tout moment.</p>
+            <p>Les informations que l'Utilisateur communique à Loisirs Enchères SAS à l'occasion de sa commande ne sont transmises à aucun tiers en dehors des Prestataires. Ces informations sont considérées par Loisirs Enchères SAS et par les Prestataires comme étant confidentielles. Elles sont utilisées uniquement par les services internes de Loisirs Enchères SAS et les Prestataires, pour le traitement de la commande de l'Utilisateur et pour renforcer et personnaliser la communication et l'offre de services réservés aux Utilisateurs du Site.</p>
+            <p>Conformément aux dispositions de la loi Informatique et Libertés n° 78-17 du 6 janvier 1978, l'Utilisateur dispose d'un droit d'accès, de modification, de rectification et de suppression de ses données à caractère personnel.</p>
+            <p>Ce droit peut être exercé à tout moment par l'Utilisateur qui justifie de son identité envoyant un courriel à l'adresse électronique, info@loisirsencheres.com, ou encore par courrier postal à l'adresse du siège social de Loisirs Enchères SAS.</p>
+            <p>Toutefois les informations identifiées par un astérisque sont indispensables pour le traitement de la commande ou de la demande d'information formulée par l'Utilisateur. Si l'ensemble de ces données n'est pas renseigné de manière complète et exacte, l'Utilisateur s'expose à ce que sa commande ou demande d'information ne puisse être traitée par Loisirs Enchères SAS.</p>
+
+            <h2 class="title-h2-page-quality"><b>ARTICLE 18 - DROIT APPLICABLE</b></h2>
+            <p>Les CGPS, et plus généralement, le contrat que l'Utilisateur conclut avec Loisirs Enchères SAS sont soumis au droit français.</p>
+        </div>
+    </div>
+    <hr />
+    <div id="cgv-b">
+        <h1 class="page-title-h1">CONDITIONS GENERALES DE VENTES – ANNEXE BILLETERIE</h1>
+        <div class="padding-text-mobile">
+            <h2 class="title-h2-page-quality"><b>GENERALITES</b></h2>
+            <p>Loisirs Enchères intervient comme intermédiaire : au nom de ses partenaires ou des Organisateurs/fournisseurs de Billetterie et pour le compte de ces derniers.</p>
+            <p>En conséquence, les présentes conditions générales de vente ne concernent que les prestations de vente de billetterie et pas le spectacle ou l'événement lui-même. Certaines activités proposées, notamment les activités sportives, peuvent aussi comporter des conditions ou un règlement intérieur propre à l'Organisateur ou au site concerné et disponible auprès dudit site concerné et/ou dudit Organisateur.</p>
+
+            <h2 class="title-h2-page-quality"><b>PRIX</b></h2>
+            <p>Les prix des billets de spectacles (valeur faciale) sont indiqués en euros toutes taxes comprises (hors participation aux frais de traitement et d'expédition). Le prix figurant sur le voucher est le prix global payé par le spectateur, avec la décomposition tarifaire de ce dernier comme suit : prix du billet, frais de dossier. </p>
+
+            <h2 class="title-h2-page-quality"><b>LES CONDITIONS D'OBTENTION DES BILLETS</b></h2>
+            <p><b><u>Deux cas possibles :</u></b></p>
+            <ol>
+                <li>
+                    <p>Vous recevez un voucher informatif suite à votre achat. Loisirs Enchères s'engage ensuite à vous envoyer par mail les E-billets émis par le producteur du spectacle quelques jours avant ledit spectacle. Le producteur du spectacle est seul garant du bon fonctionnement du E-billet émis. Vous devrez vous présenter le jour du spectacle avec votre E-billet en format papier afin de le flasher et accéder à la représentation.</p>
+                    <p>Conditions à respecter en cas d'impression :</p>
+                    <p>
+                        <ul>
+                            <li>l'impression du E-billet devra être effectuée sur un feuille blanche au format A4</li>
+                            <li>l'impression du E-billet devra être de qualité afin permettre l'accès au spectacle</li>
+                            <li>chacun des E-billets ne devra être imprimé qu'une seule fois</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <p>Vous recevez une contremarque vous indiquant que le billet sera à retirer, en échange de ladite contremarque, à l'entrée de la salle, dans un délai défini avec le producteur.</p>
+                </li>
+            </ol>
+
+            <h2 class="title-h2-page-quality"><b>UTILISATION</b></h2>
+            <p>Lors du contrôle à l'entrée du lieu de l'événement ou de la représentation, une pièce d'identité, avec photo, en cours de validité pourra être demandée au Client et elle devra correspondre au nom inscrit sur le E-billet si celui-ci est nominatif.</p>
+            <p>En cas de disfonctionnement du E-billet émis par le producteur, vous devrez vous diriger vers ce dernier. Loisirs Enchères, en tant qu'intermédiaire de vente n'est en aucun cas garant de son bon fonctionnement. </p>
+            <p>Cependant, en cas d'impression, vous devez tout mettre en œuvre pour présenter un code lisible et de bonne qualité. Une contremarque correspond à un billet, et ne donnera l'accès au spectacle qu'à la première personne l'ayant présenté le jour de la représentation.</p>
+
+            <h2 class="title-h2-page-quality"><b>ANNULATION & REMBOURSEMENT</b></h2>
+            <p>Absence de droit de rétractation</p>
+            <p>A l'instar de l'ensemble des prestations proposées par Loisirs Enchères, et conformément à l'article L.221-8 du Code de la Consommation, les billets de spectacles ne font pas l'objet d'un droit de rétractation (cf <a href="#art11">Article 11 des Conditions Générales de Vente</a>).</p>
+            <p><b>Un billet de spectacle ne peut être remboursé même en cas de perte ou de vol, ni repris, ni échangé sauf en cas d'annulation d'un spectacle.</b>En cas d'annulation du spectacle, seul le prix du billet (prix du billet + frais de dossier) sera remboursé. Ce remboursement n'interviendra qu'en faveur du titulaire du compte Loisirs Enchères ayant remporté et réglé le billet. Dans tous les cas, aucun frais de quelque nature que ce soit, ne sera remboursé ou dédommagé. En cas de report du spectacle, un remboursement de la totalité du prix du billet (prix du billet + frais de dossier) sera pris en charge par Loisirs Enchères si vous ne pouvez pas vous y rendre à cette date.</p>
+            <p>Les événements se déroulent sous la seule responsabilité de l'organisateur. </p>
+            <p>À l'annonce de l'annulation ou d'une modification de date, d'horaire ou de lieu d'un spectacle pour lequel vous avez réservé des places, vous acceptez que Loisirs Enchères dans la mesure du possible, lorsqu'elle aura elle-même été prévenue par l'organisateur, puisse utiliser les coordonnées que vous avez saisies lors de la réservation pour vous tenir informés de la marche à suivre.</p>
+        </div>
+    </div>
+    <hr />
+    <div id="cgv-c">
+        <h1 class="page-title-h1">CONDITIONS PROPRES AU COURTAGE AUX ENCHERES REALISES A DISTANCE PAR VOIE ELECTRONIQUE POUR LES BIENS NEUFS ET D'OCCASION</h1>
+        <div class="padding-text-mobile">
+            <p>Les présentes conditions particulières s'appliquent à la vente de biens neufs et d'occasions. Ces conditions particulières prévalent sur les conditions générales si les premières sont inconciliables avec les secondes. </p>
+            <h2 class="title-h2-page-quality"><b>Le service de courtage aux enchères réalisées à distance par voie électronique :</b></h2>
+            <p>Le service proposé par Loisirs Enchères SAS pour la vente de biens neufs et d'occasions est celui d'un courtage aux enchères réalisées à distance par voie électronique conformément aux dispositions de l'article L321-3 alinéa 2 du code de commerce. Il ne s'agit donc pas d'un service de ventes aux enchères publiques au sens du code de commerce. </p>
+            <p>En ce sens, Loisirs Enchères SAS agit en qualité d'intermédiaire mettant à la disposition du PRESTATAIRE vendeur, son SITE, pour effectuer des opérations de courtage aux enchères par voie électronique.</p>
+            <h2 class="title-h2-page-quality"><b>La vente des lots</b></h2>
+            <p>La vente n'est pas automatiquement conclue au profit de L'UTILISATEUR acheteur ayant placé l'enchère la plus élevée.  A l'issue du processus d'enchères en ligne, Le PRESTATAIRE vendeur choisit de conclure la vente avec l'UTILISATEUR de son choix, selon l'application de critères, autres que le prix, renseignés sur le profit de l'UTILISATEUR. La vente n'est conclue qu'après validation finale du PRESTATAIRE.</p>
+            <p>Loisirs Enchères SAS n'est pas propriétaire du bien et n'agit pas au nom et pour le compte du PRESTATAIRE vendeur. L'UTILISATEUR reconnait et accepte que le bien appartient au PRESTATAIRE vendeur, aucun contrat de vente n'étant conclu entre Loisirs Enchères SAS et l'UTILISATEUR. Loisirs Enchères SAS remettant à l'UTILISATEUR un VOUCHER à titre de confirmation, une fois la vente validée par le PRESTATAIRE.</p>
+            <h2 class="title-h2-page-quality"><b>La description du lot proposé à la vente</b></h2>
+            <p>Seul le PRESTATAIRE vendeur est responsable de la description du bien proposé. Loisirs Enchères SAS n'intervient pas dans la rédaction de l'annonce mise en ligne. Loisirs Enchères SAS décline ainsi toute responsabilité quant à la description des lots, les informations et les déclarations du PRESTATAIRE vendeur. Le PRESTATAIRE valide l'annonce après sa mise en forme par Loisirs Enchères et avant sa mise en ligne sur le SITE. Le PRESTATAIRE garantit que le lot est conforme à la description qu'il en a faite.</p>
+            <h2 class="title-h2-page-quality"><b>Les obligations du PRESTATAIRE vendeur et le droit de rétractation</b></h2>
+            <p>Le PRESTATAIRE vendeur professionnel garantit à l'UTILISATEUR consommateur le respect des obligations légales prévues par le code de la consommation, notamment en matière d'information, de garantie de conformité et de droit de rétractation.</p>
+            <p>En application des dispositions des articles L221-18 et suivants du code de la consommation, le consommateur dispose d'un délai de quatorze jours pour exercer son droit de rétractation, sans avoir à motiver sa décision. Le délai court à compter de la réception du bien. Le consommateur exerce son droit de rétractation en informant par l'intermédiaire de LOISIRS ENCHERES le PRESTATAIRE de sa décision de se rétracter par l'envoi, avant l'expiration du délai prévu, d'un email à l'adresse :
+                <a href="mailto:info@loisirsencheres.com">info@loisirsencheres.com</a>,
+                ou d'un message depuis la  page de contact : <a href="{{ path('content.page', {'page': 'contact'}) }}">https://www.loisirsencheres.com/content/contact</a>
+                ou de toute autre déclaration exprimant sa volonté claire et non équivoque de se rétracter.
+            </p>
+            <p>Le produit concerné doit être retourné à LOISIRS ENCHERES. Le consommateur s'engage à restituer le bien au PRESTATAIRE dans les quatorze jours suivant la communication de sa décision de se rétracter, en le(s) retournant à l'adresse suivante : </p>
+            <p>LOISIRS ENCHERES - Service des retours,  18 rue de la Porte Dijeaux, 33 000 Bordeaux FRANCE</p>
+            <ul>
+                <li>correctement protégé, dans son emballage d'origine, accompagné de tous accessoires éventuels, notices d'emploi et documentations, étiquettes dans un parfait état de revente (non abîmé, endommagé ni sali)</li>
+                <li>accompagné de la facture de vente de façon à permettre à LOISIRS ENCHERES d'identifier l'UTILISATEUR (n° commande, nom, prénom, adresse)</li>
+                <li>sans que le produit ou service n'ait manifestement fait l'objet d'un usage durable (au-delà de quelques minutes), c'est à dire sous réserve que les produits ne portent pas la marque d'une utilisation prolongée dépassant le temps nécessaire à leur test et soient dans un état permettant leur revente.</li>
+            </ul>
+            <p>Les frais de retour des produits sont à la charge de l'UTILISATEUR.</p>
+            <p>Le transport des produits ainsi retournés s'effectue sous la responsabilité de l'UTILISATEUR.</p>
+            <p>Dans l'hypothèse où le produit, en raison de sa nature (volumineux et/ou lourds ou de haute-valeur), ne peut pas être pris en charge par la Poste, l'UTILISATEUR pourra faire appel au service d'un transporteur de son choix.</p>
+            <p>Un manquement du PRESTATAIRE vendeur professionnel au titre des dispositions du code de la consommation ne pourra engager la responsabilité de Loisirs Enchères SAS. En acceptant les présentes conditions générales et particulières lors de son ENCHERE, L'UTILISATEUR renonce à exercer tout recours contre Loisirs Enchères SAS à ce titre.</p>
+            <h2 class="title-h2-page-quality"><b>Livraison</b></h2>
+            <p>Il appartient à l'UTILISATEUR de vérifier les expéditions à l'arrivée et de faire toutes réserves et réclamations qui apparaîtraient justifiées, voire de refuser le colis, si celui-ci est susceptible d'avoir été ouvert ou s'il porte des traces manifestes de détérioration. Les dites réserves et réclamations doivent être adressées au transporteur sur le bordereau de livraison.</p>
+        </div>
+    </div>
+    <hr />
+    <div id="cpv">
+        <h1 class="page-title-h1">CONDITIONS PARTICULIÈRES DE VENTE (actualisées le 29/06/2018)</h1>
+        <div class="text-center block-separ-bottom">
+            <a href="{{ assetCdn }}/assets/pdf/cpv.pdf" target="_blank" type="button" class="btn btn-default hidden-print">Téléchager le PDF</a>
+        </div>
+        <div>
+            <p>Les présentes conditions particulières de vente font parties intégrantes du contrat de vente. Elles deviennent contractuelles à la
+                signature du contrat par l'ACHETEUR.</p>
+            <h2 class="title-h2-page-quality"><b>Des voyages forfaitaires</b></h2>
+            <p>Les voyages que nous vous proposons sont <b>des voyages forfaitaires</b>. Ils sont assimilés à des produits finis. Il convient donc de
+les acheter comme tel en jugeant si leurs prix sont conformes à vos attentes. Aucune contestation en matière de prix ne sera
+admise après le gain de la VENTE ainsi qu'au retour du voyage.</p>
+
+            <h2 class="title-h2-page-quality"><b>Caractéristiques des voyages forfaitaires</b></h2>
+            <p>Dans la mesure le forfait comprend au minimum un hébergement et un transport ou une activité significative, les prix sont calculés en fonction du nombre de
+nuitées, et non du nombre de journées entières. La durée totale du voyage s'entend : </p>
+            <ul>
+                <li>Du jour du départ à partir de l'heure de convocation à l'aéroport de départ,</li>
+                <li>Au jour du voyage retour jusqu'à l'heure d'arrivée à l'aéroport de retour.</li>
+            </ul>
+            <p>Aussi, nous vous demandons de considérer que le premier jour et le dernier jour sont des jours consacrés au transport et non des
+jours de séjour. Par ailleurs, si vous avez des obligations au retour de votre voyage. Évitez, si possible, de prendre des rendezvous
+le lendemain de votre retour</p>
+            <p>Seules les prestations et services précisés explicitement dans les programmes figurant dans nos offres sont compris dans le prix
+                forfaitaires.</p>
+            <p>Sauf stipulation contraire figurant dans les descriptifs de nos voyages, les prestations et services suivants ne sont pas comprises
+                dans le prix :</p>
+            <ul>
+                <li>Tout service antérieur à l'enregistrement lors du départ, ou postérieur au passage sous douane lors du retour ;</li>
+                <li>Les dépenses d'ordre strictement personnel : pourboires, frais de communication, cautions diverses etc. ;</li>
+                <li>Les frais de délivrance des documents administratifs et sanitaires documents d'identité, visas, vaccinations etc.</li>
+                <li>Les diverses formes d'assurances facultatives assurances ;</li>
+                <li>Les excursions, visites facultatives ainsi que toute prestation non incluse dans le descriptif du voyage ;</li>
+                <li>L'essence, les péages, les frais de parking, les contraventions lors des locations de véhicule sans chauffeur ;</li>
+                <li>Les éventuels excédents de bagage ;</li>
+                <li>Toutes les boissons au cours voyage ou du séjour. (Incluant l'eau potable dans certaine région du monde).</li>
+            </ul>
+
+            <h2 class="title-h2-page-quality"><b>Les cocontractants</b></h2>
+            <p><address><strong>Loisirs Enchères</strong> (le « VENDEUR »)<br />
+                18 rue de la Porte Dijeaux<br />
+                33000 Bordeaux<br /><br />
+                Téléphone : <a href="tel:+33973729192"> 09.73.72.91.92</a><br />
+                Mail : <a href="mailto:info@loisirsencheres.com">info@loisirsencheres.com</a></address></p>
+
+            <h2 class="title-h2-page-quality"><b>L'ACHETEUR</b></h2>
+            <p>L'ACHETEUR reconnaît avoir la capacité de contracter, c'est à dire avoir la majorité légale et ne pas être sous tutelle ou curatelle et
+                qui passe commande ou achète à Loisirs Enchères un forfait touristique présenté dans son site internet :<br />
+                <a href="{{ path('homepage') }}">www.loisirsencheres.com</a>
+            </p>
+
+            <h2 class="title-h2-page-quality"><b>Procédure de vente numérique</b></h2>
+            <h3>Étape N°1</h3>
+            <p>l'ACHETEUR effectue une recherche sur le site www.loisirsencheres.com en indiquant la destination de son choix. Il peut
+aussi consulter librement toutes les offres présentes sur le site sans filtre de destination préalable. Nos offres sont présentées sur
+une base fixe détaillée dans le contenu de cette dernière.</p>
+
+            <h3>Étape N°2 </h3>
+            <p>Nos séjours sont proposés à la vente, au format « enchères ».<br />
+            L'ACHETEUR doit placer une ENCHERE dans le temps imparti et remporter cette dernière en ayant atteint le prix de réserve
+            afin de pouvoir procéder à la réservation du séjour auprès du VENDEUR.<br />
+            Le gagnant de la VENTE est celui qui propose le montant de l'ENCHERE le plus élevé à la fin du temps imparti. Si le prix de réserve est atteint,
+            alors la VENTE est fermement remportée et un email de confirmation récapitulatif confirmant le gain de la VENTE est alors envoyé
+            au gagnant. Sans cet email, le gain de l'offre ne pourrait être avéré. Le gagnant de l'offre retrouve aussi son ENCHERE dans la
+            catégorie mes « mes ENCHERES », puis une fois réglée dans la catégorie « mes achats »</p>
+
+            <h3>Étape N°3</h3>
+            <p>Pour effectuer la pré-réservation, l'ACHETEUR doit dans un premier temps renseigner ses coordonnées ainsi que les informations
+            relatives au(x) passager(s), choisir sa date et aéroport de départ, valider ces informations. A noter qu'en cas de location de voiture,
+            le voyageur 1 sera désigné comme conducteur principal. Puis, Loisirs Enchères affiche le récapitulatif du programme sélectionné,
+            des informations passagers saisies préalablement et la date et aéroport de départ. L'ACHETEUR peut alors modifier les informations
+            saisies au préalable, ajouter une assurance complémentaire et valider sa commande, pour <b>procéder au règlement de cette
+            dernière</b>. En validant par la « procédure du double-clic » la 2ème et avant-dernière étape, <b>l'ACHETEUR donne mandat à Loisirs Enchères d'effectuer l'achat du programme de son choix</b>.</p>
+
+
+
+
+            <h2 class="title-h2-page-quality"><b>Saisie des données personnelles et validation de la réservation</b></h2>
+            <p>Lors de la procédure de réservation consécutive à la VENTE, vous devrez incrémenter diverses informations nécessaires à la
+                bonne réservation du bien enchéri.</p>
+            <p>Il est du devoir de l'ACHETEUR d'être particulièrement vigilant quant à l'exactitude des informations qu'il saisit pour définir sa
+            réservation.</p>
+            <p>Notamment, les noms et prénoms qui doivent être exactement identiques à ceux figurant dans le document d'identité avec lequel
+            sera effectué le voyage. Les dates et lieux de départ et de retour du transport prévu, le nombre de participants, le nombre, la
+            répartition et le type de chambres à réserver, le plan de repas possible vos éventuelles demandes particulières etc.</p>
+            <p>La réservation sera définitivement close au terme du 2e clic de souris.</p>
+            <p>Toute erreur à rectifier sera considérée comme une annulation suivie d'une nouvelle réservation. Ce qui entraînera l'annulation
+            pure et simple des prestations réservées. Ou, le refus d'embarquement par les autorités de contrôle au départ du voyage réservé.</p>
+            <p>Dans tous les cas, aucun remboursement ne pourra être effectué. Notre responsabilité ne pourra être mise en cause de ce fait.</p>
+
+
+
+            <h3>Étape N°4</h3>
+            <p>Loisirs Enchères adresse ensuite un courrier électronique de confirmation de la prise en compte de la pré-réservation à l'ACHETEUR.</p>
+
+            <h3>Étape N°5</h3>
+            <p>Loisirs Enchères procède ensuite à la vérification de bonne fin de la ou des pré-réservations auprès du/des organisateurs pour lesquels l'ACHETEUR lui a donné mandat d'effectuer un achat pour son compte.</p>
+
+
+            <h3>Étape N°6</h3>
+            <p>L'organisateur ou Loisirs Enchères adresse à l'ACHETEUR sous 72h00 ouvrées la confirmation de son séjour. A partir de 14 jours avant le départ, L'organisateur ou Loisirs Enchères adresse à l'ACHETEUR le dossier nécessaire pour effectuer le voyage.</p>
+
+
+            <h2 class="title-h2-page-quality"><b>Achats numériques</b></h2>
+            <p>Compte tenu de la spécificité de notre activité, le montant total de la VENTE remportée par l'ACHETEUR est immédiatement exigible. Il
+                sera réglé par carte bancaire débitée à distance.<br />
+            L'Acheteur a également la possibilité la possibilité de régler son séjour en plusieurs fois via l'option spécifique proposée sur la page de paiement (plus de détails dans nos CGV, article 7.5).</p>
+
+            <h2 class="title-h2-page-quality"><b>Acceptation de communiquer par voie numérique</b></h2>
+            <p>En donnant son adresse de courrier électronique, l'ACHETEUR accepte de facto la communication par voie numérique pour
+                l'ensemble de la transaction avec le VENDEUR.</p>
+            <p>De ce fait, pour des raisons de sécurité, tous nos envois sont transmis sous format PDF. L'ACHETEUR doit impérativement disposer
+                d'une boîte à lettre connectée et veiller à la mise en place sur son ordinateur d'un logiciel spécifique permettant de recevoir ce type de message.</p>
+
+            <h2 class="title-h2-page-quality"><b>Règlements</b></h2>
+            <p>Par cartes bancaires<br />
+                La carte bleue nationale, les cartes VISA qui portent à droite le bandeau à trois couleurs VISA (bleu, blanc, ocre) et la colombe en
+                hologramme, les cartes EuroCard/MasterCard reconnaissables à leur hologramme MC.</p>
+
+            <h2 class="title-h2-page-quality"><b>Absence d'un droit de rétractation</b></h2>
+            <p>Conformément à l'article L.221-28, 12° du Code de la Consommation, le droit de rétractation ne peut être exercé pour des prestations de services d'hébergement, autres que d'hébergement résidentiel, de services de transport de biens, de locations de voitures, de restauration ou d'activités de loisirs qui doivent être fournis à une date ou à une période déterminée.</p>
+
+            <h2 class="title-h2-page-quality"><b>Offre préalable légale</b></h2>
+            <p>Les offres figurant sur le site <a href="{{ path('homepage') }}">www.loisirsencheres.com</a> constituent l'offre préalable faite aux consommateurs.</p>
+            <p>Tous nos prix sont indiqués en euros (€.) La TVA est comprise.<br />Les prix sont fixés par les ENCHERES.</p>
+
+            <h2 class="title-h2-page-quality"><b>Modifications du contrat de vente – avant la signature du contrat de vente</b></h2>
+            <h3>Du fait du VENDEUR : Les prestations et services</h3>
+            <p>Selon les dispositions légales applicables, Loisirs Enchères se réserve le droit de remplacer éventuellement un transporteur aérien
+                par un autre, un hôtel par un établissement de même catégorie, une excursion par une autre.</p>
+            <p>Après la signature du contrat de vente, les prix, horaires, itinéraires mentionnés dans nos programmes peuvent être modifiés que
+                par suite de circonstances indépendantes de notre volonté ou par suite d'événements dus à un cas de force majeure.</p>
+            <h3>Du fait du VENDEUR après la signature du contrat de vente - Les prix</h3>
+            <p>Conformément aux règles légales applicables, le prix de votre voyage peut être modifié jusqu'à 30 jours avant la date de votre
+                départ en fonction des variations suivantes affectant :</p>
+            <p>Le coût du transport dont il sera rappelé qu'il est notamment déterminé par le coût du carburant :</p>
+            <p>La variation du coût du carburant sera répercutée dans nos prix vente, conformément aux modalités de calcul suivantes : <b>La part du transport révisable est fixée à 40% du total du prix de nos forfaits</b></p>
+            <p>La variation des redevances et taxes afférentes aux prestations offertes telles que taxes d'atterrissage, d'embarquement, de
+                débarquement dans les ports et les aéroports qui varient selon la destination. En cas de modification de l'une et/ou l'autre de ces
+                données, la variation sera intégralement répercutée, conformément aux directives des autorités compétentes en ce domaine.
+                La part des devises révisables, lorsqu'une partie des prestations est facturée à Loisirs Enchères en monnaie étrangère et qui peut
+                avoir une incidence sur le prix des voyages. Il est convenu que <b>la part de devises révisables représente 60% du total du prix
+                de nos forfaits</b>.</p>
+            <p>Tout refus de la part des ACHETEURS restant inscrits de s'acquitter de cet ajustement sera considéré comme une annulation de la
+                part du ou des voyageurs concernés. Les frais d'annulations convenus seront perçus en conséquence.</p>
+            <p>Dans les cas où la hausse tarifaire dépasserait 8% du prix total du séjour, l'Acheteur se verra proposer soit l'acceptation de la modification, soit l'annulation sans frais.</p>
+            <p><b>Devise de référence</b> : Dollar U.S converti à 1€ = USD 0,86 (Valeur en date du 1e 20 juin 2018)</p>
+
+
+            <h3>Du fait du vendeur après la signature du contrat de vente et avant départ:  modifications du contrat de vente </h3>
+            <p>Le professionnel pourra modifier unilatéralement un élément du contrat de voyage si cette modification est mineure.<br />
+                Il ne lui sera pas nécessaire d'en demander l'acceptation au client.</p>
+
+            <p>Dans le cadre d'une modification d'un élément essentiel du contrat, l'acheteur aura la possibilité d'accepter ce changement ou d'annuler son séjour.<br />
+                En cas d'annulation, ce dernier sera remboursé sous 14 jours.</p>
+
+            <h3>Circonstances exceptionnelles à destination :</h3>
+            <p>Dans l'éventualité où des circonstances exceptionnelles et inévitables surviennent à proximité immédiate du lieu du séjour et ayant des conséquences importantes sur son déroulement ou sur le transport des passagers vers le lieu de destination, l'Acheteur pourra demander l'annulation et le remboursement intégral du prix du séjour mais ne pourra prétendre à des dommages et intérêts.<br />
+                A noter que l'appréciation de la survenance de ces circonstances reposera sur des éléments objectifs.</p>
+
+            <h3>Du fait du vendeur après la signature du contrat de vente et pendant le séjour:  modifications du contrat de vente :</h3>
+            <p>Loisirs Enchères ou l'organisateur du séjour ont l'obligation de remédier à toute non-conformité intervenant pendant le séjour sans supplément de prix si la qualité des prestations est supérieure, et en prenant en charge le différentiel si la qualité est inférieure, sauf si cela entraine pour ces derniers des coûts disproportionnés. Dans ce cas, il sera d'accordé au voyageur une réduction de prix appropriée.<br />
+                L'indemnisation sera donc en corrélation avec le prix de la prestation non réalisée.<br />
+                Le voyageur n'est en droit de refuser les prestations de substitution qui lui sont proposées que si celles ne sont pas comparables à ce qui avait été prévu au contrat ou si la réduction de prix n'est pas appropriée.<br />
+                Si le professionnel ne remédie pas à la non-conformité, le passager peut y remédier lui-même et demander le remboursement des frais avancés au professionnel.</p>
+
+            <p>En cas de retour rendu impossible du fait de circonstances exceptionnelles, Loisirs Enchères ou l'organisateur à l'obligation de prendre à sa charge 3 nuitées après la date de retour prévu. A noter qu'il n'y a aucune limitation pour femmes enceintes, mineurs non accompagnés ou personnes nécessitant une assistance médicale.</p>
+
+            <h2 class="title-h2-page-quality"><b>Cession du forfait par l'ACHETEUR</b></h2>
+            <p>Le VENDEUR doit impérativement informer l'agent de voyages VENDEUR, de la cession du contrat par courrier recommandé avec avis
+                de réception. Au plus tard sept (7) jours avant la date de départ du voyage – quinze (15) jours pour les croisières.</p>
+            <p>Le VENDEUR doit indiquer l'état civil (Nom – Prénom – âge) et l'adresse complète du/des cessionnaires et des participants du voyage
+                <b>en justifiant que ceux-ci remplissent strictement les mêmes conditions que lui pour effectuer le voyage</b>. Si tel n'était pas le cas, la cession ne pourrait être effectuée.</p>
+
+            <h2 class="title-h2-page-quality"><b>Frais de cession</b></h2>
+            <p>Les coûts consécutifs liés à la cession d'un contrat seront facturés à frais réels à l'Acheteur. Des frais supplémentaires pourront être perçus si l'acheteur tarde à confirmer ou  à communiquer sa position. En effet, les frais sont amenés à évoluer en fonction de la date de la cession avant le départ.</p>
+
+            <h2 class="title-h2-page-quality"><b>Modification du fait de l'ACHETEUR en cours de voyage</b></h2>
+            <p>Toute modification du fait de l'ACHETEUR en cours de voyage implique le règlement de nouvelles prestations modifiées.</p>
+
+            <h2 class="title-h2-page-quality"><b>Annulation du fait de Loisirs Enchères</b></h2>
+            <p>Si nous étions contraints d'annuler votre voyage, vous seriez immédiatement informé, et l'ensemble des sommes versées vous
+                seraient immédiatement restituées.</p>
+            <p>Certains séjours sont soumis à un seuil minimal de participants, si ce seuil n'est pas atteint, le voyage peut être annulé par l'organisateur. Lorsque c'est le cas, cette mention est toujours indiquées dans le descriptif de l'offre.</p>
+            <p>Barème d'annulation :<br />
+                - 21 jours avant la date de départ, pour les voyages dont la durée dépasse 6 jours.
+                - 7 jours avant la date de départ, pour les voyages dont la durée est de 2 à 6 jours.
+                - 48h avant la date de départ, pour les voyages dont la durée est 2 jours.</p>
+            <p>Le Voyageur sera alors remboursé de toutes les sommes qu'il aura pu verser mais ne pourra pas prétendre à une indemnisation.</p>
+
+            <h2 class="title-h2-page-quality"><b>Annulation du fait de l'ACHETEUR</b></h2>
+            <p>Les réservations sont fermes et définitives. Les frais d'annulation à supporter par le client correspondront aux frais réels supportés par Loisirs Enchères.<br />
+            Les assurances souscrites ne sont jamais remboursables.</p>
+
+            <h2 class="title-h2-page-quality"><b>Barème des frais d'annulation totale</b></h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Période d'annulation</th>
+                    <th>Montant de frais d'annulation </th>
+                </tr>
+                <tr>
+                    <td>A partir de la pré-réservation de la réservation : </td>
+                    <td>A frais réel</td>
+                </tr>
+            </table>
+
+            <h2 class="title-h2-page-quality"><b>Information en cas d'annulation du fait de l'ACHETEUR</b></h2>
+            <p>Aucune annulation possible. Les assurances souscrites ne sont jamais remboursables.</p>
+            <h2 class="title-h2-page-quality"><b>Formalités : administratives et sanitaires</b></h2>
+            <p>Elles vous sont communiquées par Loisirs Enchères préalablement à la conclusion de la vente. Elles concernent les nationaux
+                français ainsi que les ressortissants de la communauté européenne et son espace économique.</p>
+            <p>Loisirs Enchères vous conseille vivement de consulter la fiche par pays du ministère français des affaires étrangères relative à votre voyage (pays de destination et pays de transit) sur le site Internet <a href="http://www.diplomatie.gouv.fr/fr/conseils-auxvoyageurs/conseils-par-pays/" target="_blank">http://www.diplomatie.gouv.fr/fr/conseils-auxvoyageurs/conseils-par-pays/</a>
+ou de vous renseigner par téléphone au 01 43 17 86 86 (Cellule de veille du Ministère français des
+affaires étrangères.)</p>
+            <p>Loisirs Enchères attire également votre attention sur le fait que les informations communiquées peuvent évoluer jusqu'à la date de
+votre départ. Il est de ce fait conseillé de consulter régulièrement les sites conseillés. Loisirs Enchères peut être amené, pour
+certaines destinations particulièrement sensibles, à vous faire signer, une attestation, au titre de son obligation d'information. Cette
+demande ne constitue en aucun cas une décharge de responsabilité.</p>
+            <p>Il appartient aux voyageurs de respecter scrupuleusement ces formalités et de s'assurer que les noms et prénoms qui figureront
+sur los documents de voyages (réservations, titres de transport, bons d'échange...) correspondent exactement à ceux qui figurent
+sur les pièces d'identité utilisées pour effectuer le voyage. Les frais de délivrance des documents requis et des formalités
+consulaires ou sanitaires applicables sont toujours à la charge de l'ACHETEUR.</p>
+            <h2 class="title-h2-page-quality"><b>Formalités concernant les enfants non accompagnés</b></h2>
+            <p>A compter du 15 janvier 2017, un mineur non accompagné de ses parents (ou d'une personne détentrice de l'autorisation
+                parentale), ne pourra plus quitter la France sans autorisation.</p>
+            <p>L'autorisation de sortie du territoire prend la forme d'un formulaire à télécharger sur le site <a href="//www.servicepublic.fr/particuliers/vosdroits/F1359" target="_blank">www.servicepublic.fr/particuliers/vosdroits/F1359</a>
+                (Imprimé Cerfa N°15646*01), à remplir et signer.</p>
+            <p>L'enfant qui voyagera à l'étranger sans être accompagné de l'un de ses parents devra présenter les 3 documents suivants :</p>
+            <ul>
+                <li>Sa pièce d'identité du mineur : carte d'identité ou passeport</li>
+                <li>Le formulaire signé par l'un des parents titulaires de l'autorité parentale</li>
+                <li>La photocopie du titre d'identité du parent signataire du formulaire</li>
+            </ul>
+            <p>L'utilisation du passeport seul n'est plus considérée comme étant suffisante.</p>
+            <p>L'autorisation de sortie du territoire sera exigible pour tous les mineurs résidant en France, quelle que soit leur nationalité.<br />
+                Attention, si l'enfant voyage avec un seul de ses parents, certains pays comme l'Algérie, la Bosnie-Herzégovine, le Maroc ou la
+                Suisse peuvent réclamer la preuve que l'autre parent autorise ce voyage.</p>
+        <p>Dans la mesure où les ACHETEURS n'auront pas respecté les informations qui leur auront été communiquées par Loisirs Enchères,
+            ce dernier ne pourra en aucun cas être tenu pour responsable des conséquences aux éventuels manquements :<br />
+            Notamment lorsque l'ACHETEUR est dans l'impossibilité d'embarquer faute de pouvoir présenter les documents requis pour effectuer
+            le voyage ou lorsqu'ils sont périmés.</p>
+            <p>Sanctions et/ou amendes infligées, résultant de l'inobservation de règlement administratifs ou sanitaire, coutumier ou douanier en
+                France ou dans le pays de destination.</p>
+            <p>Aucun remboursement ne pourra être effectué à ce titre.</p>
+
+            <h2 class="title-h2-page-quality"><b>Risques sanitaires</b></h2>
+            <p>Nous vous invitons à consulter régulièrement les informations diffusées par les autorités compétentes sur les risques sanitaires et
+                les préconisations en ce domaine. Principalement sur le site : <a href="http://www.pasteur.fr/ip/easysite/pasteur/fr/sante/centre-medical" target="_blank">www.pasteur.fr/ip/easysite/pasteur/fr/sante/centre-medical</a>
+[Vaccinations internationales, médecine des voyages.] Consultez votre médecin traitant ou un service de maladie tropicale.</p>
+            <h2 class="title-h2-page-quality"><b>Carnet de voyage : </b></h2>
+            <p>Les documents de voyage (convocation, titre de transport, bon d'échange) transmis par Loisirs Enchères doivent être
+obligatoirement imprimés et conservés par l'ACHETEUR. Ce dernier devra toujours être en mesure de présenter ces justificatifs tout
+au long de son voyage ou de son séjour. Aussi bien sur les sites d'embarquement (aéroport, gare, port etc.) que sur les lieux de
+séjour pour son hébergement (hôtel, résidence etc.) ainsi qu'au cours des autres prestations et services réservés en sa faveur
+excursions, animation payante, visites, location de voiture, activités sportives et de loisir etc. Loisirs Enchères ne pourra pas être
+tenue pour responsable des conséquences d'une absence de présentation par l'ACHETEUR des documents de voyage aux
+prestataires concernés.</p>
+            <h2 class="title-h2-page-quality"><b>Convocations aéroport : </b></h2>
+            <p>Sauf mention contraire écrite, les passagers sont convoqués pour des raisons liées à la sécurité du transport aérien <strong>3 (trois)
+                    heures avant l'heure de décollage</strong> de l'avion figurant sur leur titre de transport. L'Heure Limite d'Enregistrement est l'heure limite
+après laquelle les passagers ne pourront plus être embarqués. Elle est variable selon les transporteurs aériens. En cas de nonrespect
+de l'heure limite, les places pourraient être attribuées à d'autres voyageurs, aucun remboursement ne pourrait être
+effectué.</p>
+            <h2 class="title-h2-page-quality"><b>Transport aérien</b></h2>
+            <p>Les horaires et les types de transport mentionnés sont communiqués par les transporteurs au moment de l'édition de l'offre
+préalable. Ils sont de ce fait donnés à titre indicatif et sous réserve de modifications. Les horaires, les éventuelles escales et les
+moyens de transport prévus seront communiqués lors de l'envoi de la convocation et/ou des documents de voyage, mais resteront
+toutefois susceptibles de modifications jusqu'au jour du départ conformément aux dispositions des articles R.211-15 à R.211-18 du
+Code du Tourisme.</p>
+            <p>Les vols directs peuvent être sans escale ou comporter une ou plusieurs escales. Dès lors qu'il s'agit du même vol identifié par un
+même numéro de vol. Y compris pour les vols en code partagé – « code share. »</p>
+            <h2 class="title-h2-page-quality"><b>Taxes afférentes au transport aérien : </b></h2>
+            <p>Le remboursement éventuel des taxes afférentes au transport aérien dont l'exigibilité est dépendante de l'embarquement effectif
+                des passagers, devra se faire l'objet d'une demande expresse de la part de l'ACHETEUR auprès de compagnie aérienne.</p>
+            <h2 class="title-h2-page-quality"><b>Liste noire des compagnies interdites de vol dans le C.E.E.</b></h2>
+            <p>En vertu de l'article 9 du Règlement européen 2111 du 14 décembre 2005, la liste des compagnies aériennes interdites
+                d'exploitation dans la C.E.E. est consultable sur le site <a href="//:ec.europa.eu/transport/air-ban/doc/list_fr.pdf" target="_blank">ec.europa.eu/transport/air-ban/doc/list_fr.pdf</a> La dernière mise à
+jour est en date du Le 16 juin 2016.</p>
+            <h2 class="title-h2-page-quality"><b>Pré et post acheminements</b></h2>
+            <p>Nous n'organisons pas les vols vers et depuis le lieu de départ de nos forfaits. Nous vous conseillons vivement de réserver des
+titres de transport modifiables, voire remboursables, pour vous éviter tout risque de perte financière en cas de retard des vols
+internationaux et nationaux.</p>
+            <h2 class="title-h2-page-quality"><b>Prix du transport aérien</b></h2>
+            <p>Nos prix sont calculés sur la base de tarifs aériens réservés en fonction d'un prix de référence dans une classe de réservation
+spécifique. Il est possible qu'au moment de votre réservation que la classe de référence ne soit plus disponible. Dans ce cas, nous
+vous proposerons, <b>avant la signature du contrat</b>, un prix différent qui impliquera un supplément tarifaire plus ou moins important.</p>
+            <h2 class="title-h2-page-quality"><b>Responsabilité transport aérien</b></h2>
+            <p>Les conséquences des accidents ou incidents pouvant survenir à l'occasion de l'exécution du transport aérien sont régies par les
+dispositions de la Convention de Varsovie ou de Montréal ou par les réglementations locales régissant les transports nationaux du
+pays concerné. La responsabilité de Loisirs Enchères ne peut être supérieure aux plafonds prévus par ces textes.</p>
+            <h2 class="title-h2-page-quality"><b>Condition d'acceptation</b></h2>
+            <h3>Femmes enceintes</h3>
+            <p>Les transporteurs aériens sont en droit de refuser l'embarquement d'une femme enceinte.<br />
+Un certificat médical de bonne santé et sans contre-indication au voyage peut en outre être exigé par certaines compagnies
+aériennes. Il devra être établi par un médecin au maximum 15 jours avant la date du voyage et ce quel que soit la date du début
+de la grossesse. Ce certificat devra préciser dans quel mois se situe la grossesse au moment du voyage et mentionner l'absence
+d'état pathologique.</p>
+            <h3>Animaux</h3>
+            <p>Chaque compagnie a sa propre politique en matière d'acceptation d'animaux vivants
+                En principe, ils sont interdits sur les vols charters. Loisirs Enchères ne saurait garantir la possibilité d'embarquer pour un animal.</p>
+            <h3>Bagages</h3>
+            <p>En cas d'excédent, s'il est autorisé, vous devrez vous acquitter d'un supplément directement auprès de la compagnie à l'aéroport
+au moment de l'enregistrement. La compagnie aérienne n'est responsable à votre égard, pour les bagages que vous lui avez
+confiés, qu'à hauteur des indemnités prévues par les conventions internationales.</p>
+            <p>Nous vous invitons à consulter le site de la Direction de l'Aviation Civile (DGAC) afin de prendre connaissance des mesures de
+restriction relatives sur les liquides contenus dans les bagages en cabine. Chaque compagnie adopte sa propre politique en
+matière d'objets non autorisés dans les bagages enregistrés ou non. Loisirs Enchères ne saurait être tenu pour responsable de la
+confiscation ou de la destruction d'objets jugés dangereux par les compagnies aériennes ou les autorités aéroportuaires ou du non
+embarquement des bagages au moment du départ.</p>
+            <p>Bagages en cabines chaque compagnie a sa propre politique en ce qui concerne l'acceptation des bagages non enregistrés en
+soute. De manière générale, les transporteurs acceptent un seul bagage en cabine dont le total des trois dimensions n'excède pas
+115 cm et d'un poids inférieur à 5 kg. Ce bagage reste sous la responsabilité exclusive de son propriétaire pendant toute la durée
+du transport.</p>
+            <h3>Contenu des bagages cabine </h3>
+            <p>Lors des contrôles de sûreté, vous devez désormais, présenter séparément dans un sac en plastique transparent fermé d'un
+format d'environ 20 cm sur 20 cm, vos flacons et tubes de 100 ml maximum chacun.<br />
+Afin de ne pas ralentir les procédures de sûreté et pour ne pas risquer de vous faire confisquer vos produits avant d'embarquer,
+nous vous remercions d'en lire attentivement les informations détaillées sur le site <a href="//www.dgac.fr" target="_blank">www.dgac.fr</a></p>
+            <p>Pour des raisons de sécurité, tous les appareils électroniques que vous emporterez avec vous dans la cabine de l'avion devront
+être chargés et en état de fonctionner. Tout appareil ne pouvant être mis en marche au moment du départ pourra être confisqué
+par les services de sécurité.</p>
+            <h3>Perte ou détérioration de bagages</h3>
+            <p>En cas de perte de ou de détérioration de vos bagages enregistrés en soute, préalablement à toute réclamation auprès de notre
+service-après-vente, vous devez vous adresser à la compagnie aérienne du vol d'arrivée : - en lui faisant constater la perte ou
+détérioration de vos bagages avant votre sortie de l'aéroport, - puis en lui adressant une déclaration. Vous devez y joindre les
+originaux des pièces suivantes : titre de transport, déclaration de perte, coupon d'enregistrement de bagage. Si vous avez souscrit
+le contrat d'assurance par notre intermédiaire ou non, il vous appartient d'effectuer vous-même la déclaration auprès de l'assureur.</p>
+            <h3>Valeurs et bagages</h3>
+            <p>Nous vous conseillons vivement d'éviter de voyager avec des objets de valeurs qui pourraient attirer la convoitise : montres de
+                prix, bijoux de valeur, etc.</p>
+            <h2 class="title-h2-page-quality"><b>Hébergement – Restauration</b></h2>
+            <h3>Classification de l'établissement hôtelier</h3>
+            <p>Le nombre d'étoiles attribuées à l'établissement hôtelier figurant dans le descriptif correspond à une classification établie en
+référence à des normes locales du pays d'accueil. Elles peuvent donc différer des normes françaises et européennes. Nous nous
+efforçons de vous informer le plus précisément possible sur les conditions de votre hébergement.<br />
+Conformément à notre carnet de voyage, l'hébergement pourra également être prévu en bivouacs, sous tente fournie par Loisirs
+ENCHERES ou son prestataire, dans des lodges, chez l'habitant ou bien parfois à la belle étoile.</p>
+            <h3>Prise de possession et libération des chambres</h3>
+            <p>Il est d'usage de prendre possession de la chambre à partir de 14 heures le jour d'arrivée et de libérer celle-ci avant 12 heures le
+jour du départ. En aucun cas Loisirs Enchères ne pourra déroger à cette règle.<br />
+Toute chambre prise avant 14 heures ou rendue après 12 heures peut être considérée comme une nuit supplémentaire
+susceptible d'être facturée en conséquence.</p>
+            <h2 class="title-h2-page-quality"><b>Les types chambres </b></h2>
+            <p><strong>Chambres individuelles :</strong> Elles disposent d'un lit d'une personne. Elles font l'objet d'un supplément, sont proposées en quantité
+                limitée et sont souvent moins spacieuses, moins confortables, et moins bien situées que les autres chambres.</p>
+            <p>Sur les « circuits accompagnés », l'ACHETEUR s'étant inscrit seul et n'ayant pas opté pour une chambre individuelle sera
+automatiquement facturé du supplément chambre individuelle au moment de l'inscription. Toutefois, si nous trouvons une
+personne susceptible de partager sa chambre, nous déduirons ce supplément au moment du règlement du solde.</p>
+            <p><strong>Chambres doubles :</strong> Elles disposent de deux lits simples ou plus rarement d'un lit double.</p>
+            <p><strong>Chambres triples :</strong> Elles se présentent, dans la plupart des cas, comme une chambre double à laquelle est ajouté un lit d'appoint
+                (attention : ce lit peut être inférieur à la taille standard.)</p>
+            <p><strong>Chambres quadruples :</strong> Elles se présentent, dans la plupart des cas, comme une chambre double à laquelle sont ajoutés deux
+lits d'appoints (attention : ces lits peuvent être inférieurs à la taille standard). Dans le cas de 2 adultes et de 2 enfants, si la
+superficie des chambres ne permet pas de loger plus de trois personnes dans la même chambre, il sera alors demandé 2
+chambres doubles côte à côte ou communicantes (dans la mesure du possible) et le tarif adulte sera alors appliqué (sauf mention
+spéciale.)</p>
+            <h2 class="title-h2-page-quality"><b>La restauration</b></h2>
+            <h3>Les repas sont précisés sur l'offre préalable et/ou la confirmation de réservation et à défaut dans le carnet de voyage</h3>
+            <p>Nous rappelons à l'ACHETEUR que nos obligations légales portent uniquement la fourniture du nombre de repas convenu et non sur
+                l'appréciation de la qualité, voire la quantité ou de la variété des plats servis.</p>
+            <ul>
+                <li><b>Demi-pension</b>. Comprend l'hébergement, les petits déjeuners et dîners ou déjeuners selon le cas, sans les boissons.</li>
+                <li><b>Pension complète</b>. Comprend l'hébergement, les petits déjeuners, déjeuners et dîners, sans les boissons.</li>
+            </ul>
+            <p>Au nombre de nuitées correspondant à la durée prévue du séjour, correspondent un nombre de petit déjeuners, de déjeuners ou de dîners.</p>
+            <p>Dans le cadre de la pension complète ou de la demi-pension, les boissons ne sont pas comprises, sauf exception dûment mentionnée dans le descriptif.</p>
+            <p>- <b>« All inclusive »</b> comprend les repas, les boissons sans alcool. Sauf avis contraire précisé par écrit, cette formule comprend les boissons alcoolisées produites localement.</p>
+            <p>Que ce soit dans le cadre de la pension complète ou de la demi-pension, les boissons ne sont pas comprises, sauf exception dûment mentionnée dans le descriptif.<br />
+                Dans certains pays, l'eau n'est pas forcément potable. L'achat de bouteilles d'eau potable est alors à la charge de l'ACHETEUR.</p>
+            <p>Toutes les consommations supplémentaires non comprises dans la formule sont à régler sur place avant le départ.</p>
+            <h3>Nourriture des bébés et jeunes enfants</h3>
+            <p>Loisirs Enchères invite les parents d'enfants en bas-âge à emporter la nourriture adaptée à leur alimentation. Une participation
+financière peut être demandée par l'hôtelier, par exemple pour chauffer les plats ou les biberons ou fournir des chaises hautes.
+Elle sera à régler sur place avant le départ.</p>
+            <h3>Activités, loisirs</h3>
+            <p>Certaines activités proposées par les hôtels ou établissements de séjours peuvent présenter des risques, notamment pour les
+                jeunes enfants. Il est demandé aux parents de surveiller attentivement leurs enfants.</p>
+            <p>Excursions facultatives non comprises dans nos voyages forfaitaires :</p>
+            <p>Certaines excursions qui peuvent vous être proposées localement peuvent être potentiellement dangereuses pour les néophytes :
+parachute ascensionnels, excursions en 4 X 4 sans chauffeur, promenades à dos de chameau etc. Nous nous demandons de
+choisir vos excursions avec discernement. En fonction de vos capacités, aptitudes et bien sûr de votre condition physique.</p>
+            <p>La responsabilité de Loisirs Enchères ne saurait être engagée pour toute activité souscrite localement par l'ACHETEUR non incluse
+dans notre voyage forfaitaire.</p>
+            <h3>Avertissement</h3>
+            <p>Il est interdit d'acheter les produits illicites : Objets contrefaits, stupéfiants, peaux d'animaux protégés par la convention de
+Washington. En outre, il est également interdit de ramasser ou d'acheter des objets issus de gisements archéologiques, de sites
+historiques ou appartenant au patrimoine du pays visité. Le non-respect de ces interdictions peut conduire à des sanctions pénales
+ou des peines d'emprisonnement, que ce soit en France ou à l'étranger.
+Veuillez consulter le site internet : <a href="http://www.douane.gouv.fr" target="_blank">www.douane.gouv.fr</a>.</p>
+
+            <h2 class="title-h2-page-quality"><b>Conditions particulières concernant les locations de véhicule sans chauffeur</b></h2>
+            <p><b>Les conditions d'utilisation des véhicules de location sans chauffeur figurent les conditions de vente. Elles seront
+                    portées à votre attention au moment de la réservation.</b></p>
+            <h3>Prise en charge du véhicule de location sans chauffeur</h3>
+            <p>Lors de la prise en charge du véhicule de location sans chauffeur, le conducteur principal du véhicule doit toujours être en mesure
+de présenter sa carte bancaire qui doit impérativement être celle utilisée lors du paiement du séjour et nom du voyageur principal
+qui est par défaut le conducteur désigné, le bon d'échange matérialisant la réservation effectuée et son permis de conduire.</p>
+            <p>Nous attirons votre attention sur le fait que le loueur pourra vous demander, à titre de garantie, de prendre une empreinte de votre
+                carte bancaire avant la prise de possession du véhicule.</p>
+            <p>Dans certains cas, une caution financière pourra même être demandée au moment de la prise en charge du véhicule réservé.
+Nous vous conseillons de vérifier que le plafond de dépense autorisé par votre banque vous permettra d'effectuer cette
+transaction.</p>
+            <p>Nous vous conseillons, lors de la prise en charge du véhicule, d'en faire une inspection minutieuse. De noter les plus petites traces
+de chocs sur la carrosserie, la présence et l'usure de la roue de secours. L'absence des certains accessoires (allume-cigare par
+exemple.) Vérifier sur la jauge de carburant si le plein du véhicule a été effectué. Faire porter ces éventuelles anomalies sur le
+contrat de vente par le collaborateur du loueur de voiture.</p>
+            <h3>Frais supplémentaires inhérents aux locations de voiture sans chauffeur</h3>
+            <p>Sauf mention particulière clairement établie, le prix de la location de voiture n'inclut pas les assurances complémentaires, certains
+équipements optionnels, les frais de conducteur additionnel et de jeune conducteur. Le kilométrage supplémentaire au forfait prévu
+lorsque celui-ci est limité.</p>
+            <p>Même lorsqu'une assurance obligatoire est comprise dans le prix de la location de voiture, un montant excédentaire pourra être
+appliqué en cas de vol ou de dommage sur le véhicule de location. Ce montant est variable en fonction des loueurs, du pays de
+location et du type de véhicule louée.</p>
+            <p>L'Utilisateur est seul responsable de sa propre décision de souscrire ou non à une assurance optionnelle. Loisirs Enchères ne
+pourra être tenu responsable de l'existence de frais supplémentaires en cas de dommages et/ou pour la souscription à ces
+assurances optionnelles.</p>
+            <p>Pour les locations de véhicules effectuées dans certains pays et notamment aux États-Unis, certains loueurs peuvent facturer
+                automatiquement un plein d'essence à la restitution du véhicule.</p>
+            <p>De plus, certains loueurs facturent des frais supplémentaires en cas d'utilisation de pneus neige, de galeries de GPS etc.</p>
+            <p>En général, le véhicule loué devra être restitué dans l'agence de location de voiture choisie lors de la commande.</p>
+            <p>Si tel n'était pas le cas, le loueur serait en droit de facturer des frais d'abandon.</p>
+            <p>Les sièges pour enfant sont disponibles sur demande, selon la disponibilité de l'agence de départ.</p>
+            <h3>Age requis pour louer un véhicule sans chauffeur</h3>
+            <p>L'âge requis pour conduite un véhicule de location sans chauffeur est variable selon les pays et/ou les loueurs Il est établi en
+                général entre 21 et 65 ans.</p>
+            <p>Des frais peuvent aussi être appliqués en présence de conducteur âgé de moins de 25 ans.</p>
+            <h3>Permis de conduire requis pour louer un véhicule sans chauffeur</h3>
+            <p>Tous les conducteurs d'un véhicule de location sans chauffeur doivent être en mesure de présenter un permis de conduire valide
+                pour la catégorie de véhicule loué.</p>
+            <p>Sauf avis contraire, le permis de conduire doit être obtenu depuis au moins trois ans.</p>
+            <p>Dans certaines circonstances un permis de conduire international peut être requis pour louer un véhicule sans chauffeur.</p>
+            <h3>Conduire un véhicule de location sans chauffeur loué en France hors du territoire national</h3>
+            <p>Certains loueurs interdisent de sortir un véhicule loué hors du territoire national.</p>
+            <h3>Annulation de la location sans chauffeur réservée</h3>
+            <p>Aucune annulation n'est permise.</p>
+
+            <h2 class="title-h2-page-quality"><b>Conditions concernant la pratique de la plongée sous-marine</b></h2>
+            <p>Loisirs Enchères n'est pas en mesure de vérifier concrètement le niveau de pratique de ses clients.</p>
+            <p>Pour tout séjour incluant une prestation de plongée sous-marine, un brevet de niveau 1 Cmas ou d'Open water est exigé au
+                minimum. Un certificat médical datant de moins d'un an vous sera demandé ainsi qu'une assurance responsabilité civile
+                personnelle.</p>
+            <p>Chaque ACHETEUR réservant par l'intermédiaire de Loisirs ENCHERE une prestation comportant un forfait de plongée sous-marine,
+                reconnaît avoir la compétence technique suffisante pour effectuer ces plongées.</p>
+            <p>Compte tenu du caractère particulier de la plongée sous-marine, nous vous demandons aux ACHETEURS d'être conscients des
+                risques encourus, et de respecter la plus stricte prudence dans sa pratique.</p>
+            <p>Nous vous demandons d'informer Loisirs Enchères de tous les problèmes de santé particuliers, qui sans être rédhibitoire
+pourraient rendre la pratique de cette activité impossible, voire dangereuse. De ce fait, nous vous conseillons de ne jamais
+surestimer vos capacités réelles et de consulter pour connaître votre aptitude au voyage que vous envisagez d'effectuer.</p>
+            <p>Durant la pratique de cette activité, chaque participant est tenu de se conformer aux règles de prudence définies, et de suivre les
+conseils donnés par les professionnels qui encadrent cette activité.</p>
+            <h2 class="title-h2-page-quality"><b>Conditions particulières concernant les croisières </b></h2>
+            <h3>Obligations des passagers</h3>
+            <p>L'ACHETEUR d'une croisière auprès de Loisirs Enchères est tenu d'avoir tout au long de la croisière un comportement ne
+                compromettant pas la sécurité, le calme et la jouissance des autres croisiéristes.</p>
+            <p>Il devra s'engager à respecter les règles de prudence, ainsi que toutes les dispositions de la compagnie de croisière, de
+l'Organisateur ou des réceptifs locaux responsables de l'organisation des excursions lors des escales. Ainsi que les
+réglementations et autres dispositions administratives ou législatives concernant la croisière achetée.</p>
+            <p>Le croisiériste sera tenu responsable de tous les dommages que l'Organisateur pourrait subir du fait du non respect des
+                obligations susvisées. ?</p>
+            <p>En particulier, les dommages causés au navire, à son mobilier ou à ses équipements. Mais également les dommages occasionnés
+à d'autres croisiéristes ou à des tiers. Aux véhicules utilisés lors des excursions ainsi que de toutes les contraventions, amendes et
+frais auxquels Loisirs Enchères pourrait être soumis du fait de la faute du croisiériste par les autorités portuaires, douanières,
+sanitaires ou autres les autres autorités des pays visités lors de la croisière.</p>
+
+            <h3>Excursions effectuées au cours des croisières</h3>
+            <p>Les itinéraires des excursions communiqués peuvent être soumis à variation. Les horaires et les itinéraires des excursions peuvent
+être sujets à modification aussi bien pour des circonstances extérieures (telles que, par exemple, des conditions atmosphériques
+défavorables.)<br />
+En fonction de la nature particulière de certaines excursions, il est possible que certaines ne soient pas accessibles aux personnes
+handicapées. Cette interdiction vous sera précisée à bord par le bureau des excursions.</p>
+            <h3>Les assurances de voyages</h3>
+            <p><b>Elles ne peuvent pas vous être imposées. Mais elles doivent vous être systématiquement proposées avant la conclusion
+                    de la vente.</b><br />
+            Les conditions des assurances souscrites vous seront remises lors de votre inscription. Celles-ci comportent des limitations de
+garanties, des exclusions, des franchises et des obligations en cas de sinistre. Nous vous invitons à lire attentivement ces
+documents.</p>
+            <p>Les garanties proposées par notre partenaire, Présence Assistance</p>
+            <p><b>Assurance rapatriement</b> : assistance et bagages<br />
+                <b>Annulation et bagages</b> : annulation « toutes causes justifiées » et bagages<br />
+                <b>Multirisques</b> : Rapatriement – Annulation, interruption de séjour, perte de bagages, retard de transport, Voyage de remplacement,
+responsabilité civile, individuel accident<br />
+Dont les conditions des garanties comprises vous seront remises lors de la transmission du carnet de voyage.</p>
+            <h3>Réclamations</h3>
+            <p>Toute défaillance constatée par L'ACHETEUR dans le déroulement du voyage doit, dans la mesure du possible, faire l'objet, à
+l'initiative de l'ACHETEUR, d'une constatation sur place auprès de nos guides, représentants ou agents réceptifs locaux. <b>Toute
+    réclamation doit être adressée à Loisirs Enchères par lettre recommandée avec avis de réception</b>, dans le mois suivant le
+    retour du voyage. Le non-respect de ce délai pourra être susceptible d'affecter la qualité du traitement du dossier de réclamation.</p>
+            <p>Seuls les faits objectifs avérés et faisant partie du contrat seront traités.</p>
+            <p>L'organisateur et le détaillant sont responsables de plein droit de la bonne exécution de tous les services de voyage et tenus d'apporter une aide au voyageur en cas de difficulté.</p>
+            <p>Le voyageur est tenu de communiquer toute non-conformité qu'il constaterait durant son séjour.</p>
+            <h3>Recours à la médiation</h3>
+            <p>Tout différend qui viendrait à se produire à propos de la validité, de l'interprétation, de l'exécution ou de la non-exécution, de la
+modification ou de la résiliation du contrat, le consommateur doit impérativement exprimer ses doléances auprès du VENDEUR du
+voyage contesté. A ce titre, en l'absence de suite jugée satisfaisante, par le consommateur ou par le VENDEUR lui-même, la partie la
+plus diligente soumettra l'objet du différend au Médiateur du Tourisme et des Voyages.</p>
+            <p>MTV, Médiation Tourisme Voyage, BP 80 303, 75823 PARIS Cedex 17, <a href="http://www.mtv.travel" target="_blank">www.mtv.travel</a></p>
+            <p>L'Acheteur a également la possibilité de contacter la plateforme de règlement en ligne des litiges : <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.show&lng=FR" target="_blank">https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.show&lng=FR</a></p>
+            <h3>Responsabilité Civile Professionnelle</h3>
+            <p>Loisirs Enchères est souscripteur d'une assurance garantissant les conséquences pécuniaires de sa responsabilité civile
+                professionnelle, contractée auprès de la compagnie Hiscox</p>
+            <h3>Propriété intellectuelle</h3>
+            <p>Tout le contenu des informations communiquées par Loisirs Enchères à ses clients reste sa propriété exclusive.</p>
+            <h3>Photos et illustrations</h3>
+            <p>Loisirs Enchères s'efforce d'illustrer ses offres de voyages avec des photos ou illustrations donnant un aperçu réaliste des
+prestations proposées. Il est toutefois précisé que les photos et illustrations figurant dans les descriptifs des voyages ont
+uniquement pour objet d'indiquer la catégorie ou le degré de standing des prestations concernées.</p>
+            <h3>Preuves</h3>
+            <p>l est expressément convenu que les données conservées par Loisirs Enchères et/ou ses partenaires ont force probante quant aux
+commandes passées. Les données sur support informatique ou numérique conservées par Loisirs Enchères constituent des
+preuves recevables lors de toutes les procédures contentieuses ou autres. Au même titre que tout document par écrit qui serait
+établi, reçu ou conservé par Loisirs Enchères.</p>
+            <h3>Dispositions diverses</h3>
+            <p>Le fait que Loisirs Enchères ne se prévalent pas à un moment donné d'une des dispositions des présentes conditions de vente ne
+pourra être interprété comme valant renonciation à se prévaloir ultérieurement de l'une quelconque desdites dispositions.
+Dans le cas où l'une de ces dispositions des conditions de vente serait déclarée comme étant nulle ou sans effet, cette disposition
+serait réputée comme non écrite, sans que cela n'affecte la validité des autres dispositions, sauf si la disposition déclarée nulle ou
+sans effet était essentielle et déterminante.</p>
+            <h3>Informatique et Liberté</h3>
+            <p>Selon les termes de la loi n° 76-17 dite « <b>loi informatique et liberté</b> » L'ACHETEUR est informé que sa commande fait l'objet d'un
+traitement nominatif informatisé. Ces informations permettent à Loisirs Enchères et ses partenaires, de traiter et d'exécuter la
+commande. Le droit d'accès et de rectification garanti par la loi doit être adressé par écrit à Loisirs Enchères en à l'adresse
+précisée ci-dessus. Le demandeur sera tenu de justifier de son identité.</p>
+            <h3>Responsabilité</h3>
+            <p>Le contenu du contrat de vente validé par les parties est susceptible d'être modifié en cas de circonstances extraordinaires ou de
+tout autre événement relevant de force majeure, ou du fait de voyageurs eux-mêmes. La responsabilité de Loisirs Enchères est
+susceptible d'être exonérée de ce fait.</p>
+            <h3>Garantie financière obligatoire</h3>
+            <p>Elle est apportée par l'A.P.S.T. Elle est destinée à protéger les voyageurs contre une éventuelle défaillance de Loisirs Enchères</p>
+            <h3>Loi applicable</h3>
+            <p>Loisirs Enchères est une société française. Le contrat de vente conclu avec Loisirs Enchères est régi par le droit français.</p>
+            <h3>Tribunal compétent</h3>
+            <p>Tout litige est de la compétence exclusive des tribunaux français compétents.</p>
+
+            <h2 class="title-h2-page-quality"><b>Mentions légales</b></h2>
+            <p><b>Loisirs Enchères</b> | Adresse : 18 rue de la Porte Dijeaux - CS 20025, 33070 Bordeaux cedex | Téléphone : 09 73 72 91 92 | Mail :
+info@loisirsencheres.com | SAS au capital social de 54.736 Euros | R.C.S. Bordeaux 801 270 612 RCS I Numéro d'immatriculation
+agent de voyage délivré par Atout France : IM033150009. Garantie financière fournie par l'APST 15, avenue Carnot 75015 Paris et
+garantie pour sa Responsabilité Civile Professionnelle pas Hiscox. Risques couverts et montants des garanties prévus dans le
+contrat. - Étendue des garanties 8 000 000,00 Euros par sinistre<br />
+L'ACHETEUR s'engage à prendre connaissance des Conditions de Vente (générales et particulières) dans leur intégralité, des
+conditions spécifiques propres à certaines prestations, ainsi que de tous les termes de l'offre préalable avant d'avoir passé sa
+Commande.<br />
+Dès lors, toute demande de réservation entraîne l'entière adhésion de l'ACHETEUR aux Conditions de Vente de Loisirs Enchères.</p>
+        </div>
+    </div>
+    <div id="cgu-historique" class="hidden-print block-separ-bottom block-separ-top">
+        <h2 class="title-h2-page-quality">Historique CGU</h2>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="list-group">
+                    <a href="http://doc.loisirsencheres.com/pdf/cgv/2019-02-26.pdf" target="_blank" title="Ouverture dans un nouvel onglet" class="list-group-item">Version du 26 février 2019 <i class="icon-download"></i></a>
+                    <a href="http://doc.loisirsencheres.com/pdf/cgv/2019-03-07.pdf" target="_blank" title="Ouverture dans un nouvel onglet" class="list-group-item">Version du 7 mars 2019 <i class="icon-download"></i></a>
+                    <a href="http://doc.loisirsencheres.com/pdf/cgv/2019-03-26.pdf" target="_blank" title="Ouverture dans un nouvel onglet" class="list-group-item">Version du 26 mars 2019 <i class="icon-download"></i></a>
+                    <a href="http://doc.loisirsencheres.com/pdf/cgv/2019-05-24.pdf" target="_blank" title="Ouverture dans un nouvel onglet" class="list-group-item">Version du 24 mai 2019 <i class="icon-download"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

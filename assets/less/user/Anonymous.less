@@ -1,0 +1,139 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+
+.socialCgv {
+    margin-top: 1em;
+    color: rgb(91, 91, 91);
+    font-size: 14px;
+    a {
+        .text-grey-fonce;
+        text-decoration: underline;
+    }
+}
+
+/**********************************************************************************************************************/
+/******************************************************* BUTTON *******************************************************/
+/**********************************************************************************************************************/
+.btn--auth__wrapper {
+    display: inline;
+}
+.connectfacebook {
+    margin-bottom: 5px;
+}
+.btn-facebook {
+    padding:10px;
+    color: @white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-repeat: repeat-x;
+    border: none;
+    vertical-align: top;font-size: 14px;
+    > * {display: inline-block;vertical-align: middle}
+    img {margin-right: 22px}
+    &:hover,
+    &:focus,
+    &.disabled,
+    &[disabled] {
+        color: @white;
+        background-color: @blue_dark1;
+    }
+    &:active,
+    &.active {
+        color: @white;
+        background-color: @blue_dark2;
+    }
+}
+.btn-google {
+    border: 1px solid @grey_light;
+    text-transform: none;
+    line-height: 14px;
+    padding: 10px 24px;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    font-size: 14px;
+    > * {display: inline-block;vertical-align: middle}
+    > img {
+        margin-right: 22px;
+    }
+}
+
+/**********************************************************************************************************************/
+/******************************************************* MODALS *******************************************************/
+/**********************************************************************************************************************/
+#registerModal {
+    line-height: normal;
+    .close.visible-xs {margin-bottom: 30px}
+    .btn-facebook {margin-bottom: 18px}
+    .modal-footer p {font-size: 14px}
+    .network {
+        font-size: 14px;
+        a {font-weight: bold}
+        div {display: inline}
+    }
+    .confirmEmail-title {font-size: 18px}
+    .confirmEmail-content {
+        font-size: 14px;color: @light-grey-le;
+    }
+    .resendEmailConfirmation .Form__button {float: none;margin-right: 0;margin-bottom: 15px}
+}
+
+#loginModal {
+    .modal-content {padding: 15px 0}
+    .modal-header, .modal-body {
+        padding: 0 15px;
+    }
+    .close {
+        &.visible-xs {
+            font-size: 14px;opacity: 1;margin-bottom: 30px;
+            small {font-size: 12px;opacity: 0.54}
+        }
+    }
+    .popover {font-size: 12px;max-width: 320px}
+    .icon-faq {color: @black}
+    .socialNetwork {
+        margin-bottom: 20px;
+    }
+    .connectfacebook {
+        margin-top: 0;
+        margin-bottom: 18px;
+    }
+    .checkbox {font-size: 12px;color: rgb(113, 113, 113)}
+    .modal-body {font-size: 14px}
+}
+
+/**********************************************************************************************************************/
+/************************************************* FORM REGISTER ******************************************************/
+/**********************************************************************************************************************/
+.user-register-form__wrapper {
+    background-color: white;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    padding: 24px;
+    max-width: 457px;
+
+    legend, .title {
+        color: black;
+        font-size: 1.125em;
+        font-weight: 600;
+        border-bottom: 0;
+        margin-bottom: 40px;
+    }
+    .cgv {
+        color: #5B5B5B;
+        font-size: 0.75em;
+        a {
+            color: #635b58;
+            text-decoration: underline;
+        }
+    }
+    .newsletterBlock {
+        label {
+            color: #717171;
+            font-size: 0.875em;
+            font-weight: normal
+        }
+        input {
+            margin-right: 10px;
+        }
+    }
+}
+@import "../modules/Form/Register";

@@ -1,0 +1,113 @@
+{% set hideFooter = true %}
+{% set hideBreadcrumb = true %}
+{% set hideNavbar = true %}
+{% set headerHideSearchBar = true %}
+{% set headerHideClaim = true %}
+{% set headerHideRegisterButton = true %}
+{% set headerHideFaq = true %}
+{% set headerLoginButtonTransparent = true %}
+
+{% extends 'layout/html.twig' %}
+
+{% block moremeta %}
+    {% if canonicalPage is defined %}
+        <link rel="canonical" href="{{ canonicalPage }}" />
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if app.request.query.get("gfid") is not null or app.session.get("godfatherId") is not null %}
+    {{ godfather.firstName|capitalize }} vous invite à rejoindre la communauté Loisirs Enchères
+    {% else %}
+    Inscription
+    {% endif %}
+{% endblock %}
+{% if app.request.query.get("gfid") is not null or app.session.get("godfatherId") is not null %}
+    {% block facebook_image %}{{app.request.host}}/assets/img/parrainage/gagnez-jusqu-a-200-euro.png{% endblock %}
+{% endif %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @media (max-width: 991px) {
+            #register header {
+                background-image: url({{ contents.imageMobile }});
+                background-position: top;
+            }
+        }
+        @media (min-width: 992px) and (max-width: 1199px) {
+            #register header {
+                background-image: url({{ contents.image }});
+            }
+        }
+        @media (min-width: 1200px){
+            #register header {
+                background-image: url({{ contents.imageHd }});
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block container %}{% endblock %}
+
+{% block prependContainter %}
+<div id="register"{% if contents.cssClass is defined and contents.cssClass != '' %} class="{{ contents.cssClass }}"{% endif %}>
+    {% include './module/navbar/desktop.twig' %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <h1 class="col-md-push-6 col-md-6 col-sm-push-7 col-sm-5 col-xs-12">
+                    {%- if app.request.query.get("gfid") is not null or app.session.get("godfatherId") is not null -%}
+                    {{ godfather.firstName|capitalize }} vous invite à rejoindre la communauté Loisirs Enchères
+                    {%- else -%}
+                    {{ contents.title }}
+                    {%- endif -%}
+                </h1>
+                <div class="col-sm-7 col-sm-pull-5 col-md-6 col-md-pull-6 col-xs-12 col-xs-push-0">
+                    <user-register-form :nostep="0"></user-register-form>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block main_content %}
+    {% for section in contents.sections %}
+        {% if section.published %}
+            <section{% if section.cssClass is defined and section.cssClass != '' %} class="{{ section.cssClass }}"{% endif %}>
+                {% if section.title is defined and section.title != '' %}
+                <{{ section.titleTag }}>{{ section.title|raw }}</{{ section.titleTag }}>
+                {% endif %}
+                {% include './landingPage/Modules/index.twig' with {
+                    'moduleType': section.moduleType,
+                } %}
+            </section>
+        {% endif %}
+    {% endfor %}
+    <section class="videoBlock">
+        <div class="row">
+            <div class="col-md-5">
+                <h2>On parle de Loisirs Enchères !</h2>
+                <p class="Paragraphe">Vous les avez attendues toute l'année, elles sont enfin là ! Mais avec les vacances, le budget est souvent mis à rude épreuve... Et si, cette année vous faisiez de très bonnes affaires en fixant vous-même le prix de votre voyage ou de vos loisirs ? C'est ce que nous proposons chez Loisirs Enchères ! Les équipes du célèbre magazine Capital de M6 ont mené l'enquête dans nos locaux et chez nos partenaires pour découvrir les coulisses de notre site. Suivez également l'un de nos clients à Marrakech !</p>
+            </div>
+            <div class="col-md-offset-2 col-md-5">
+                <iframe class="videoBlockIframe" src="//player.vimeo.com/video/224930992" width="100%" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+    <div class="block-separ-top block-separ-bottom row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+            <a href="#formulaire" class="btn btn-default center-block">Créer mon compte</a>
+        </div>
+    </div>
+</div>{# END <div id="register"> #}
+<authentication-modal-click-event element=".category, #header .logo, .news img" v-bind:auctions="true"></authentication-modal-click-event>
+{% endblock %}
+
+{% block tracking %}
+    {{ parent() }}
+    <script>
+        (function(){
+            step1Displayed('userRegister');
+        })();
+    </script>
+{% endblock %}

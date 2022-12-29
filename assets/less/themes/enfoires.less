@@ -1,0 +1,258 @@
+@import "../styles/StyleLight";
+@import "../modules/bootstrap/Custom";
+
+@bleu_enfoires: #1d202e;
+
+.background-enfoires {
+    background-color: @bleu_enfoires;
+}
+
+b, strong {font-weight: bold} // bootstrap overload
+body {
+    color: @white;
+    font-family: Arial;
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'din_condensed-bold';
+    src: url('/assets/fonts/din/condensed-bold.woff2') format('woff2'),
+    url('/assets/fonts/din/condensed-bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@import "../modules/Btns/Pink.less";
+
+.background-blanc {
+    p {
+        color: @black;
+    }
+}
+
+.navbar-inverse {
+    background: transparent;
+}
+
+#enteteMobile {
+    .logo img {
+        vertical-align: unset;
+        margin-top: 8.5px;
+    }
+}
+
+h1 {
+    font-family: 'din_condensed-bold';
+    font-size: 28px;
+    font-stretch: condensed;
+    color: #ffffff;
+    @media (min-width: @min-width-sm) {
+        font-size: 33px;
+    }
+    @media (min-width: @min-width-md) {
+        font-size: 31px;
+        margin-top: 70px;
+    }
+    @media (min-width: @min-width-lg) {
+        font-size: 32px;
+    }
+}
+
+.introduction {
+    font-size: 14px;
+    margin-top: 2em;
+    margin-bottom: 4em;
+    @media (min-width: @min-width-sm) {
+        font-size: 15px;
+    }
+    @media (min-width: @min-width-md) {
+        font-size: 20px;
+    }
+}
+
+.confirmation {
+    color: @black;
+}
+
+footer {
+    a.btn {
+        color: @white;
+        text-decoration: underline;
+        font-size: 18px;
+    }
+    ul {
+        @media (min-width: @min-width-sm) {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 61px;
+            margin-bottom: 61px;
+        }
+    }
+    li {
+        @media (min-width: @min-width-sm) {
+            padding: 0 1em;
+        }
+    }
+    p {font-size: 18px}
+}
+
+/**********************************************************************************************************************/
+/******************************************************** FORM ********************************************************/
+/**********************************************************************************************************************/
+@import "../modules/Form/SimpleInputBloc";
+.container-form {
+    position: relative;
+    > picture {
+        position: absolute;
+        right: 0;
+        top: -55px;
+        @media (min-width: @min-width-lg) {
+            right: -28px;
+            top: -62px;
+        }
+    }
+}
+#formulaire {
+    max-width: initial;
+    legend {
+        font-size: 14px;
+        width: 72%;
+        @media (min-width: @min-width-sm) {
+            margin-bottom: 20px;
+        }
+        @media (min-width: @min-width-md) {
+            font-size: 18px;
+        }
+        @media (min-width: @min-width-lg) {
+            width: 71%;
+        }
+    }
+    label {font-size: 12px}
+    input {font-size: 14px}
+}
+
+/**********************************************************************************************************************/
+/*************************************************** ELEM - Cookies ***************************************************/
+/**********************************************************************************************************************/
+@import "../modules/CookieConsent";
+
+/**********************************************************************************************************************/
+/**************************************************** Confirm page ****************************************************/
+/**********************************************************************************************************************/
+.fake-title {
+    font-family: 'din_condensed-bold';
+    font-size: 36px;
+    margin-top: 35px;
+    @media (min-width: @min-width-sm) {
+        margin-top: 0;
+        font-size: 54px;
+    }
+}
+
+.enfoires-confirm {
+    h1 {
+        font-size: 24px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        @media (min-width: @min-width-sm) {
+            font-size: 36px;
+        }
+        @media (min-width: @min-width-md) {
+            font-size: 35px;
+        }
+    }
+}
+
+#wait {
+    position: relative;
+    @media (min-width: @min-width-sm) {
+        text-align: center;
+    }
+    .container {
+        position: absolute;
+        top: 39px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+
+        @media (min-width: @min-width-sm) {
+            top: 6px;
+            max-width: 750px;
+        }
+        @media (min-width: @min-width-md) {
+            top: 11px;
+            max-width: 970px;
+        }
+        @media (min-width: @min-width-lg) {
+            top: 19px;
+            max-width: 1170px;
+        }
+    }
+    h2 {
+        font-family: Arial;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 0.15px;
+        margin-bottom: 16px;
+        margin-top: 0;
+        @media (min-width: @min-width-sm) {
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+        @media (min-width: @min-width-md) {
+            font-size: 25px;
+        }
+        @media (min-width: @min-width-lg) {
+            font-size: 28px;
+        }
+    }
+
+    p {
+        font-size: 16px;
+        @media (min-width: @min-width-md) {
+            font-size: 22px;
+        }
+        @media (min-width: @min-width-lg) {
+            font-size: 28px;
+        }
+        @media (min-width: @min-width-lg) {
+            font-size: 24px;
+        }
+    }
+    .cta {
+        top: initial;
+        bottom: 0;
+        width: 100%;
+        .btn-warning {
+            font-weight: bold;
+        }
+        .btn-link {
+            color: @white;
+            margin-top: 25px;
+            white-space: normal;
+            margin-bottom: 20px;
+            @media (min-width: @min-width-sm) {
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+
+#modals, .modal {
+    color: @grey_fonce;
+}
+/**********************************************************************************************************************/
+/**************************************************** Auctions list ***************************************************/
+/**********************************************************************************************************************/
+#enfoires.template-multiple-tags .planned_alert_row .btn.btn-default:not(.disabled):not([disabled]):active,
+#enfoires.template-multiple-tags .planned_alert_row .btn.btn-default:not(.disabled):not([disabled]):focus,
+#enfoires.template-multiple-tags .planned_alert_row .btn.btn-default:not(.disabled):not([disabled]):hover {
+    color: @pink_enfoires !important;
+    border-color: @pink_enfoires !important;
+    background: @white !important;
+    transform: initial;
+    box-shadow: none;
+}

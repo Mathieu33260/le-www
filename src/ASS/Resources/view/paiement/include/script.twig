@@ -1,0 +1,480 @@
+<script>
+    function add_carte_cadeau_in_resume(){
+        var amount = '';
+        if(window.innerWidth < 992){
+            amount = $('#promocodeMobileCartecadeau').val();
+        }else{
+            amount = $('#promocodeDesktopCartecadeau').val();
+        }
+
+        if($('.resume tr.debit').length){
+            $('.resume tr.debit').remove();
+        }
+
+        if(amount > 0){
+            var html = '';
+            html = '<tr data-type="debit" class="debit text-muted" data-value="'+amount+'"><td class="nopadding-left"><small>Carte cadeau</small></td><td align="right">- '+amount+' &euro;</td><td><i class="icon-close"></i></td></tr>';
+            $('.resume-table').each(function(){
+                if($(this).find('.js-lastDiscounts').length){
+                    $(this).find('.js-lastDiscounts').after(html);
+                }
+                else {
+                    $(this).find('tr').last().before(html);
+                }
+            });
+        }
+        positioning_submit();
+    }
+    function add_code_promo_in_resume(data){
+        var code = '';
+        if(window.innerWidth < 992){
+            code = $('#promocodeMobileCodepromo').val();
+        }else{
+            code = $('#promocodeDesktopCodepromo').val();
+        }
+        if($('.resume tr.'+data.type).length){
+            $('.resume tr.'+data.type).remove();
+        }
+        if(data.amount > 0){
+            var html, discountLimit = '';
+
+            if (data.discountLimit != null && data.discountLimit !== 0) {
+                discountLimit = '<br>('+(data.discountLimit / 100)+' &euro; de réduc. max.)';
+            }
+            if (data.reductionType == 'percent') {
+                html = '<tr data-type="code" class="code text-muted js-percentcoupons" data-value="'+code+'"><td class="nopadding-left"><small>-'+data.amount+'% avec le code «'+code.toUpperCase()+'»'+discountLimit+'</small></td><td align="right">- <span class="amount">'+data.discountedAmount+'</span> &euro;</td><td><i class="icon-close"></i></td></tr>';
+            } else {
+                html = '<tr data-type="code" class="code text-muted" data-value="'+code+'"><td class="nopadding-left"><small>Code promo «'+code.toUpperCase()+'»</small></td><td align="right">- '+data.amount+' &euro;</td><td><i class="icon-close"></i></td></tr>';
+            }
+            $('.resume-table').each(function(){
+                if (data.reductionType == 'percent' && $(this).find('.js-percentDiscounts').length) {
+                    $(this).find('.js-percentDiscounts').after(html);
+                }
+                else if($(this).find('tr.cartecadeau').length){
+                    $(this).find('tr.cartecadeau').before(html);
+                }
+                else if($(this).find('tr.reduc').length){
+                    $(this).find('tr.reduc').before(html);
+                }
+                else {
+                    $(this).find('tr').last().before(html);
+                }
+            });
+        }
+        positioning_submit();
+    }
+    function change_total_commande(amount){
+        amount = amount/100;
+        $('.option-item.active').each(function() {
+            amount = amount+parseInt($(this).data('amount'));
+        });
+
+        $('.total').text(amount);
+
+        nxcbEligibilite();
+    }
+
+    function addAttrRequired(formSelector){
+        $(formSelector).find('*[data-required="required"]').attr('required','required');
+    }
+
+    function removeAttrRequired(formSelector){
+        $(formSelector).find('*[data-required="required"]').removeAttr('required');
+    }
+
+    function desabled_submit(){
+        $('#submitblock').find('.btn').prop('disabled', true);
+    }
+
+    function enabled_submit(){
+        $('#submitblock').find('.btn').prop('disabled', false);
+    }
+
+    function date_is_major(strdate1, strdate2){
+        a_strdate1 = strdate1.split('/');
+        var date1 = new Date();
+        date1.setDate(a_strdate1[0]);
+        date1.setMonth(a_strdate1[1]-1);
+        date1.setYear(a_strdate1[2]);
+        var date2 = new Date();
+        if(strdate2){
+            a_strdate1 = strdate2.split('-');
+            date2.setDate(a_strdate1[3]);
+            date2.setMonth(a_strdate1[2]-1);
+            date2.setYear(a_strdate1[0]);
+        }
+        var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24));
+        var diffYears = Math.ceil(diffDays/365);
+        if (diffYears >= 18) {
+            return true;
+        }
+        return false;
+    }
+
+    function nxcbEligibilite(){
+        $.ajax({
+            method: "GET",
+            data: { type: 'nxcbEligibilite', ajax: "1"{% if useCasino %}, casino: 1{% endif %} },
+            dataType: 'json'
+        }).done(function() {
+            addAttrRequired('#methodnxcb');
+            $('#methods').find('.nxcb').not('#nxcbBlock').removeClass('hide');
+            $('#didyouknownxcb, #methodnxcb').removeClass('hide');
+        }).fail(function() {
+            $('#nxcbBlock_casino3x, #nxcbBlock_casino4x, #didyouknownxcb, #methodnxcb').addClass('hide');
+            $('#methodnxcb').prop('checked', false).addClass('hide');
+            $('#methods').find('.nxcb').addClass('hide');
+            removeAttrRequired('#methodnxcb');
+            $('#methodCb').prop('checked',true).change();
+        });
+    }
+
+    /**
+     * Define the position of submit block
+     * @returns {undefined}
+     */
+    function positioning_submit(){
+        var submitblock = $('#submitblock');
+        var total = 0;
+        var wrapContainer;
+        if($('#le-wrap').length){
+            wrapContainer = $('#le-wrap');
+        }else{
+            wrapContainer = $('.container-app-view');
+        }
+        wrapContainer.find('>*').each(function(){
+            total += $(this).outerHeight(true);
+        });
+        if(!submitblock.hasClass('cta-fixed')){
+            total-= submitblock.outerHeight(true);
+        }
+        if(screen.height < total || window.innerWidth < 768){
+            // Position fix or absolute
+            submitblock.addClass('cta-fixed').removeClass('row');
+            submitblock.find('.row .col-md-6').removeClass('col-md-offset-6');
+        }else{
+            // Position relative
+            submitblock.addClass('row').removeClass('cta-fixed');
+            submitblock.find('.row .col-md-6').addClass('col-md-offset-6');
+        }
+    }
+    positioning_submit();
+    window.onresize = positioning_submit;
+    window.mobilecheck = function() {
+        var check = false;
+        (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+        return check;
+    };
+
+    {% if productType == 'auction' %}
+    // Submit code promo or carte cadeau
+    $(document).on('submit','#promocodeDesktopReduc form, #promocodeMobileReduc form',function(){
+        var form = $(this);
+        var input = form.find('input');
+        var btn = form.find('.btn');
+        var type = form.attr('data-type');
+        var value = input.val();
+
+        btn.find('.glyphicon').addClass('hide');
+        btn.append('<img src="{{assetCdn}}/assets/gfx/loader-small-bleu.gif" alt="#" width="15" />');
+        $(input, btn).prop('disabled',true);
+        $.ajax({
+            method: "POST",
+            data: { type: type, value: value, operation: 'add' },
+            dataType: 'json',
+            async: true
+        }).done(function( msg ) {
+            if(typeof msg.error === 'undefined'){
+                form.find('.text-success').removeClass('hide');
+                form.find('.text-danger').addClass('hide');
+                btn.prop('disabled',true);
+                btn.find('img').remove();
+                btn.find('.glyphicon').removeClass('hide');
+                form.addClass('active');
+
+                if(input.attr('id') === 'promocodeMobileCartecadeau' || input.attr('id') === 'promocodeDesktopCartecadeau' || input.attr('id') === 'cartecadeau'){
+                    add_carte_cadeau_in_resume();
+                    var giftcardLeft = parseInt($('.giftcardLeft').html())-parseInt(value);
+                    $('.giftcardLeft').html(giftcardLeft);
+                }
+                else if($(input).attr('id') === 'promocodeMobileCodepromo' || $(input).attr('id') === 'promocodeDesktopCodepromo' || $(input).attr('id') === 'codepromo'){
+                    add_code_promo_in_resume(msg);
+                }
+
+                if(msg.total == 0){
+                    if($('.paiementmode').length){
+                        $('.paiementmode').addClass('hide');
+                        $('.paiementmode input').prop('required',false);
+                        $('#formain').attr('action',"{{ path('paiement.free', {id: payment.id}) }}?token={{ token }}");
+                    }
+                    $('#promocodeMobileCartecadeau, #promocodeDesktopCartecadeau, #promocodeMobileCodepromo, #promocodeDesktopCodepromo').prop('disabled', true);
+                    $('#promocodeDesktopCodepromo, #promocodeDesktopCartecadeau, #promocodeMobileCartecadeau, #promocodeMobileCodepromo').parents('form').find('.btn').prop('disabled', true);
+                    enabled_submit();
+                }
+                else {
+                    $(input, btn).prop('disabled', true);
+                }
+                change_total_commande(msg.total);
+            }
+            else {
+                form.find('.text-success').addClass('hide');
+                form.find('.text-danger span').html(msg.error);
+                form.find('.text-danger').removeClass('hide');
+                $(input, btn).prop('disabled',false);
+                btn.find('img').remove();
+                btn.find('.glyphicon').removeClass('hide');
+            }
+            return false;
+        }).fail(function( msg ) {
+            if(typeof msg.error !== 'undefined'){
+                form.find('.text-success').addClass('hide');
+                form.find('.text-danger span').html(msg.error);
+                form.find('.text-danger').removeClass('hide');
+                btn.prop('disabled',false);
+                btn.find('img').remove();
+                btn.find('.glyphicon').removeClass('hide');
+            }
+            else {
+                form.find('.text-success').addClass('hide');
+                form.find('.text-danger span').html('Une erreur est survenue');
+                form.find('.text-danger').removeClass('hide');
+                btn.prop('disabled',false);
+                btn.find('img').remove();
+                btn.find('.glyphicon').removeClass('hide');
+            }
+            return false;
+        });
+        return false;
+    });
+
+    $('.morePaymentMeans').on('click', function () {
+        var $this = $(this);
+        if ($this.hasClass('js-more-payment-means')){
+            $this.removeClass('js-more-payment-means')
+            $this.html('Afficher moins de mode de paiement <i class="icon-arrow-up"></i>');
+        } else {
+            $this.addClass('js-more-payment-means')
+            $this.html('Afficher plus de mode de paiement <i class="icon-arrow-down"></i>');
+        }
+    });
+
+    $('[name="method"]').change(function () {
+        var $this = $(this);
+        $('.nxcbFormCasino').empty();
+        $('.panel-default').removeClass('paymentMeanSelected');
+        $this.parents('.panel-default').addClass('paymentMeanSelected');
+        $('.panel-collapse.in').collapse('hide');
+    })
+
+    // Delete an element (carte cadeau ou code promo/coupon)
+    $(document).on('click','.glyphicon-remove, .resume-table .icon-close',function(){
+        var parent = $(this).parents('tr');
+        var type = $(parent).attr('data-type');
+        var element = $('.resume-table').find("tr[data-type='"+type+"']");
+        $(this).after('<img src="{{assetCdn}}/assets/gfx/loader-small-bleu.gif" alt="#" width="16" />');
+        $(this).css('display','none');
+        $.ajax({
+            method: "POST",
+            data: { ajax: "1", value: $(parent).attr('data-value'), operation: 'delete', type: type },
+            dataType: 'json'
+        }).done(function( msg ) {
+            $(element).remove();
+            $("form[data-type='"+type+"'] input").val('');
+            $("form[data-type='"+type+"']").find("input, .btn").removeAttr('disabled');
+            $("form[data-type='"+type+"']").removeClass('active');
+            $("form[data-type='"+type+"']").find('.text-success, .text-danger').addClass('hide');
+            if(msg.total > 0){
+                $('#promocodeDesktopCodepromo, #promocodeMobileCodepromo').parents('.row').find('button').removeAttr('disabled');
+                $('#promocodeDesktopCodepromo, #promocodeMobileCodepromo').removeAttr('disabled');
+                if($('#promocodeDesktopCartecadeau, #promocodeMobileCartecadeau').length){
+                    $('#promocodeDesktopCartecadeau, #promocodeMobileCartecadeau').parents('.row').find('button').removeAttr('disabled');
+                    $('#promocodeDesktopCartecadeau, #promocodeMobileCartecadeau').removeAttr('disabled');
+                }
+                if($('.paiementmode').length){
+                    $('.paiementmode').removeClass('hide');
+                    $('.paiementmode input').each(function(){
+                        if(typeof $(this).data('required') !== 'undefined'){
+                            $('.paiementmode input[name="method"]').prop('required',true);
+                        }
+                    });
+                    $('#formain').attr('action',"{{ path('paiement.page', {id: payment.id}) }}?token={{ token }}");
+                }
+            }
+            if(type === 'debit'){
+                var giftcardLeft = parseInt($('.giftcardLeft').html())+parseInt($(parent).attr('data-value'));
+                $('.giftcardLeft').html(giftcardLeft);
+                amount = $('#promocodeMobileCartecadeau, #promocodeDesktopCartecadeau').attr('max',giftcardLeft);
+            }
+            change_total_commande(msg.total);
+            positioning_submit();
+            return false;
+        }).fail(function() {
+            $(this).find('img').css('display','none');
+            $(this).css('display','inline');
+            return false;
+        });
+        return false;
+    });
+
+    // giftcards Max
+    $('#cartecadeau').keyup(function(){
+        var max = {{ (giftcardsMax/100) }};
+        var val = parseInt($(this).val());
+        if(val > max){
+            $(this).val(max);
+        }
+    });
+    {% endif %}
+
+    $('#formain').on('submit', function(e) {
+        var error = false;
+        if($("form input[name='method']").length){
+            if($("form input[name='method']:checked").length === 0 && parseInt($('.total').text()) > 0){
+                // Required payment method
+                $('#methods').find('.alert-danger').removeClass('hide');
+                e.preventDefault();
+                $('#general-loader').addClass('hide');
+                $(document).scrollTo($('#methods').find('.alert-danger'),300);
+            }else{
+                $('#methods').find('.alert-danger').addClass('hide');
+            }
+            {% if useCasino %}
+            if($("form input[name='method']:checked").val() == 'nxcb'){
+                var type = (intlTelInputUtils.numberType.MOBILE === $("#casino_phone").intlTelInput("getNumberType")) ? 'mobile' : 'fixe';
+                $('#casino_phoneType').val(type);
+            }
+            {% endif %}
+        }
+
+        if($('#nxcbBlock_casino3x').length){
+            if($('#formain').find("input[name='method']:checked").val() === 'nxcb'){
+                $('#nxcbBlock_casino3x').find('input').each(function(){
+                    if($(this).attr('require') && $(this).val() === ''){
+                        error = true;
+                        $(this).parents('.form-group').addClass('has-error')
+                            .append("<span class='help-block col-sm-9'>Ce champ est obligatoire</span>");
+                    }
+                });
+            }
+        } else if($('#nxcbBlock_casino4x').length){
+            if($('#formain').find("input[name='method']:checked").val() === 'nxcb'){
+                $('#nxcbBlock_casino4x').find('input').each(function(){
+                    if($(this).attr('require') && $(this).val() === ''){
+                        error = true;
+                        $(this).parents('.form-group').addClass('has-error')
+                            .append("<span class='help-block col-sm-9'>Ce champ est obligatoire</span>");
+                    }
+                });
+            }
+        }
+
+        if($('#formain').find('.has-error').length || error){
+            e.preventDefault();
+            $('#general-loader').addClass('hide');
+        }
+    });
+
+    function submitblockAbsolute(){
+        if(mobilecheck()){
+            $('#submitblock').css('position','absolute');
+            $('#submitblock').parent().css('position','initial');
+            $('#submitblock').parent().parent().css('position','relative');
+        }
+    }
+    function submitblockRelatif(){
+        if(mobilecheck()){
+            $('#submitblock').removeAttr('style');
+            $('#submitblock').parent().removeAttr('style');
+            $('#submitblock').parent().parent().removeAttr('style');
+        }
+    }
+
+    $("textarea, input[type='text'], input[type='email'], input[type='tel']").focus(function(){
+        submitblockAbsolute();
+    });
+    $("textarea, input[type='text'], input[type='email'], input[type='tel']").blur(function(){
+        submitblockRelatif();
+    });
+
+    $('.js-how-to-work-up').on('click', function () {
+        var $this = $(this);
+        $this.hide();
+        $this.parent().find('.how-to-work').slideDown(function () {
+            $this.parent().find('.js-how-to-work-down').show();
+        });
+
+    })
+    $('.js-how-to-work-down').on('click', function () {
+        var $this = $(this);
+        $this.hide();
+        $this.parent().find('.how-to-work').slideUp(function () {
+            $this.parent().find('.js-how-to-work-up').show();
+        });
+
+    })
+</script>
+<script>
+    if($('.has-error').length){
+        $(document).scrollTo($('.has-error').first(),300);
+    }
+    else if($('.error').length){
+        $(document).scrollTo($('.error').first(),300);
+    }
+</script>
+<script>
+    function loadImg() {
+        var width = getWidth();
+        var img = $('.resume img');
+        var oldImg = img.attr('src');
+        var newImg = img.data('max-width-767-src');
+        if(width >= 1200){
+            newImg = img.data('min-width-1200-src');
+        }else if(width >= 768){
+            newImg = img.data('min-width-768-src');
+        }
+        if(oldImg != newImg){
+            img.attr('src', newImg);
+        }
+        if(img.hasClass('hide')){
+            img.removeClass('hide');
+        }
+        if($('.resume .skeleton').length){
+            $('.resume .skeleton').remove();
+        }
+    }
+    window.onload = loadImg;
+    window.onresize = loadImg;
+
+    ((function ($, window, document) {
+
+        $(function () {
+            getIframe('#cgvModal', '/app/cgu');
+            getIframe('#casinoRgpdModal', 'https://www.banque-casino.fr/mentions-legales');
+        });
+
+        function getIframe (selector, url) {
+            $(selector).on('shown.bs.modal', function () {
+                if($(selector + ' iframe').length === 0) {
+                    var iframe = document.createElement('iframe');
+
+                    setAttributes(iframe, {
+                        'src': url
+                    });
+
+                    $('.modal-body', $(this)).append(iframe);
+                    $('.loader', $(this)).remove();
+                }
+            });
+        }
+
+        function setAttributes (el, attrs) {
+            for (var key in attrs) {
+                if (attrs.hasOwnProperty(key)) {
+                    el.setAttribute(key, attrs[key]);
+                }
+            }
+        }
+
+    }(window.jQuery, window, document)));
+
+</script>

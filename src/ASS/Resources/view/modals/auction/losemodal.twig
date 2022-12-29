@@ -1,0 +1,18 @@
+<div class="modal fade" id="losemodal" tabindex="-1" role="dialog" aria-labelledby="losemodalLabel">
+    <div class="modal-dialog" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="modal-content">
+            <div class="modal-title">L'enchère est terminée</div>
+            <div class="modal-body text-center">
+                <div class="auction-img-name">
+                    <p class="firstname"></p>
+                    <div class="auction-img">
+                        <img src="//img.loisirsencheres.fr/loisirs/image/upload/v1521738635/ressource/product-circle.png" alt="#" />
+                    </div>
+                </div>
+                <p>Malheureusement le prix de réserve n'a pas été atteint, l'enchère n'a donc pas été adjugée.</p>
+                <a href="{{ path('product.auction', {id: product.id})|deeplink }}" class="btn btn-primary" onclick="ga('send', 'event', 'Auction', 'click', 'go next auction', 'losemodal')">JE RETENTE MA CHANCE</a>
+            </div>
+        </div>
+    </div>
+</div>

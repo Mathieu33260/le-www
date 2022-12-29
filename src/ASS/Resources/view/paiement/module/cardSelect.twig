@@ -1,0 +1,376 @@
+<p class="section-title">Sélectionner un mode de paiement</p>
+<div id="methods">
+    {% if error.payment is defined %}
+        <div class="alert alert-danger" role="alert">{{ error.payment }}</div>
+    {% endif %}
+    <div class="alert alert-danger hide" role="alert">Vous devez choisir un mode de paiement.</div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {% if userCards|length > 0 %}
+            {% for userCard in userCards %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <label for="card_{{ userCard.id }}">
+                            <table data-parent="#accordion">
+                                <tr>
+                                    <td rowspan="2">
+                                        <input autocomplete="off" type="radio" name="method" {% if payment.amount > 0 %}required="" {% endif %}data-required="" value="savedCard-{{ userCard.id }}" id="card_{{ userCard.id }}" {% if loop.index == 1 %}checked{% endif %} />
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>
+                                        Carte enregistrée
+                                    </td>
+                                    <td rowspan="2">
+                                        <img src="{{ assetCdn }}/assets/gfx/logopayment/{{ userCard.type }}.png" alt="logo {{ userCard.name }}" align="right" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Expire le {{ userCard.expiredate|date('m/y') }}</td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="cbHeading">
+                <label for="cbMethod">
+                    <table data-toggle="collapse" data-target="#cbCollapse" data-parent="#accordion">
+                        <tr>
+                            <td>
+                                <input type="radio" autocomplete="off" name="method" value="cb" id="cbMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                <i class="icon icon-circle-regular icon-lg"></i>
+                                <i class="icon icon-dot-circle-regular icon-lg"></i>
+                            </td>
+                            <td>Carte bancaire</td>
+                            <td>
+                                <img src="{{ assetCdn }}/assets/gfx/logopayment/mastercard.png" alt="logo mastercard" align="right" />
+                                <img src="{{ assetCdn }}/assets/gfx/logopayment/visa.png" alt="logo visa" align="right" />
+                            </td>
+                        </tr>
+                    </table>
+                </label>
+            </div>
+            <div id="cbCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cbHeading">
+                <div class="panel-body">
+                    <label class="text-muted">
+                        <input autocomplete="off" type="checkbox" name="saveCard" value="1" id="saveCard">
+                        <i class="icon icon-square-regular icon-lg"></i>
+                        <i class="icon icon-check-square-regular icon-lg"></i>
+                        Enregistrer cette carte pour mes futures transactions.
+                    </label>
+                </div>
+            </div>
+        </div>
+        {% if useNxcb.threeTimes and useCasino and (scoringAgreement == true or scoringAgreement is null) %}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="3xcbHeading">
+                    <label for="3xcbMethod">
+                        <table data-toggle="collapse" data-target="#3xcbCollapse" data-parent="#accordion">
+                            <tr>
+                                <td rowspan="2">
+                                    <input type="radio" autocomplete="off" name="method" value="nxcb" id="3xcbMethod" data-nxcb="casino3x" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                    <i class="icon icon-circle-regular icon-lg"></i>
+                                    <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                </td>
+                                <td>Carte bancaire en 3 fois</td>
+                                <td rowspan="2"><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_3xcb.jpg" alt="CB 3x" align="right" /></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Financement sous réserve d'acceptation*</td>
+                            </tr>
+                        </table>
+                    </label>
+                </div>
+                <div id="3xcbCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="3xcbHeading">
+                    <div class="panel-body">
+                        <div id="nxcbBlock_casino3x" class="nxcb text-left">
+                            <div class="casino-info">
+                                <span>Comment ça fonctionne ?</span>
+                                <span class="btn-link right how-to-work-up js-how-to-work-up">En savoir plus...</span>
+                                <div class="how-to-work">
+                                    <table>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Vous renseignez les infos nécessaires à votre demande de financement en ligne.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>2</th>
+                                            <td>Banque Casino analyse votre dossier.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>3</th>
+                                            <td>Si votre dossier est accepté, vous payez votre 1er mensualité.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>4</th>
+                                            <td>Si votre dossier est refusé, vous pouvez choisir un autre moyen de paiement.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <span class="btn btn-link js-how-to-work-down">Ok, j'ai compris</span>
+                            </div>
+                            <div class="casino-schedule row">&nbsp;</div>
+                            <div class="casino-form">
+                                <p class="text-muted">
+                                        Veuillez renseigner les informations suivantes <b>nécessaire au traitement de votre demande de paiement en 3 fois :</b>
+                                </p>
+                                <div id="nxcbForm_casino3x" class="nxcbFormCasino">&nbsp;</div>
+                                <div class="nxcbRGPD">
+                                    <p>
+                                        * Offre soumise à acceptation de la Banque du Groupe Casino, SA au capital de 23 470 000€ - SIREN 434 130 423 RCS Paris - Siège social :  6 avenue de Provence - 75 009 Paris.
+                                        Établissement soumis au contrôle de l’Autorité de Contrôle Prudentiel, 61 rue Taitbout 75436 Paris Cedex 09 et enregistré à l’Orias (www.orias.fr) sous le numéro n°07 028 160,
+                                        et après expiration du délais légal de rétractation de 14 jours. <span data-toggle="modal" data-target="#casinoRgpdModal">Consulter les CGV du CB4X, pour en savoir plus.</span>
+                                        <br><br>
+                                        En cliquant sur "Valider la commande", vous acceptez que vos données soient utilisées aux fins d'évaluation de votre profil emprunteur.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if useNxcb.fourTimes and useCasino and (scoringAgreement == true or scoringAgreement is null) %}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="4xcbHeading">
+                    <label for="4xcbMethod">
+                        <table data-toggle="collapse" data-target="#4xcbCollapse" data-parent="#accordion">
+                            <tr>
+                                <td rowspan="2">
+                                    <input type="radio" autocomplete="off" name="method" value="nxcb" id="4xcbMethod" data-nxcb="casino4x" {% if payment.amount > 0 %}required="" {% endif %}data-required="" value="">
+                                    <i class="icon icon-circle-regular icon-lg"></i>
+                                    <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                </td>
+                                <td>Carte bancaire en 4 fois</td>
+                                <td rowspan="2"><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_4xcb.jpg" alt="CB 4x" align="right" /></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Financement sous réserve d'acceptation*</td>
+                            </tr>
+                        </table>
+                    </label>
+                </div>
+                <div id="4xcbCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="4xcbHeading">
+                    <div class="panel-body">
+                        <div id="nxcbBlock_casino4x" class="nxcb text-left">
+                            <div class="casino-info">
+                                <span>Comment ça fonctionne ?</span>
+                                <span class="btn-link right how-to-work-up js-how-to-work-up">En savoir plus...</span>
+                                <div class="how-to-work">
+                                    <table>
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Vous renseignez les infos nécessaires à votre demande de financement en ligne.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>2</th>
+                                            <td>Banque Casino analyse votre dossier.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>3</th>
+                                            <td>Si votre dossier est accepté, vous payez votre 1er mensualité.</td>
+                                        </tr>
+                                        <tr>
+                                            <th>4</th>
+                                            <td>Si votre dossier est refusé, vous pouvez choisir un autre moyen de paiement.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <span class="btn btn-link js-how-to-work-down">Ok, j'ai compris</span>
+                            </div>
+                            <div class="casino-schedule row">&nbsp;</div>
+                            <div class="casino-form">
+                                <p class="text-muted">
+                                    Veuillez renseigner les informations suivantes <b>nécessaire au traitement de votre demande de paiement en 4 fois :</b>
+                                </p>
+                                <div id="nxcbForm_casino4x" class="nxcbFormCasino">&nbsp;</div>
+                                <div class="nxcbRGPD">
+                                    <p>
+                                        * Offre soumise à acceptation de la Banque du Groupe Casino, SA au capital de 23 470 000€ - SIREN 434 130 423 RCS Paris - Siège social :  6 avenue de Provence - 75 009 Paris.
+                                        Établissement soumis au contrôle de l’Autorité de Contrôle Prudentiel, 61 rue Taitbout 75436 Paris Cedex 09 et enregistré à l’Orias (www.orias.fr) sous le numéro n°07 028 160,
+                                        et après expiration du délais légal de rétractation de 14 jours. <span data-toggle="modal" data-target="#casinoRgpdModal">Consulter les CGV du CB4X, pour en savoir plus.</span>
+                                        <br><br>
+                                        En cliquant sur "Valider la commande", vous acceptez que vos données soient utilisées aux fins d'évaluation de votre profil emprunteur.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <a class="btn morePaymentMeans js-more-payment-means" role="button" data-toggle="collapse" href="#morePaymentMeans" aria-expanded="false" aria-controls="morePaymentMeans">Afficher plus de mode de paiement <i class="icon-arrow-down"></i></a>
+        <div class="collapse" id="morePaymentMeans">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <label for="ebleueMethod">
+                        <table data-parent="#accordion">
+                            <tr>
+                                <td>
+                                    <input autocomplete="off" name="method" value="ecarte" type="radio" id="ebleueMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="" />
+                                    <i class="icon icon-circle-regular icon-lg"></i>
+                                    <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                </td>
+                                <td>e-Carte bleue</td>
+                                <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_ebleue.jpg" alt="e-carte" align="right" /></td>
+                            </tr>
+                        </table>
+                    </label>
+                </div>
+            </div>
+            {% if allowPaypal is defined and allowPaypal %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <label for="paypalMethod">
+                            <table data-parent="#accordion">
+                                <tr>
+                                    <td>
+                                        <input autocomplete="off" name="method" value="paypal" type="radio" id="paypalMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="" />
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>Paypal</td>
+                                    <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_paypal.jpg" alt="logo Paypal" align="right" /></td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+            {% if ancv %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="ancvHeading">
+                        <label for="ancvMethod">
+                            <table data-toggle="collapse" data-target="#ancvCollapse" data-parent="#accordion">
+                                <tr>
+                                    <td>
+                                        <input type="radio" - autocomplete="off" name="method" value="ancv" id="ancvMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>Par chèque ANVC</td>
+                                    <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_ancv.jpg" alt="ANCV" align="right" /></td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                    <div id="ancvCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="ancvHeading">
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                {% if product['category'] == 'TO' %}
+                                    Réglez votre enchère par carte bancaire puis envoyez-nous vos chèques vacances, vous serez ainsi remboursé(e) du montant des chèques vacances reçus.<br /><br />
+                                    Attention, vous ne pouvez pas nous envoyer un montant en chèques vacances supérieur au montant total de votre enchère.<br />
+                                    Vous aurez accès à votre récapitulatif dès la transaction par carte bancaire effectuée.<br /><br />
+                                    Pour envoyer vos chèques, voici les coordonnées de la société :<br />
+                                    À l'adresse : 18 rue de la Porte Dijeaux, 33000 BORDEAUX<br />
+                                    Merci de nous envoyer votre IBAN également afin d'effectuer le remboursement.<br />
+                                    (<em>coordonnées disponibles dans le centre d'aide et le FAQ</em>)<br /><br />
+                                    Merci d'indiquer dans votre courrier votre nom, prénom et l'enchère à rembourser.
+                                {% else %}
+                                    Attention, vous ne pouvez pas nous envoyer un montant en chèques vacances supérieur au montant total de votre enchère.<br />
+                                    Afin de compléter le paiement, vous pouvez nous envoyer un chèque bancaire.<br />
+                                    Vous aurez accès à votre bon de réservation une fois le chèque encaissé.<br /><br />
+                                    Pour envoyer vos chèques, voici les coordonnées de la société :<br />
+                                    À l'adresse : 18 rue de la Porte Dijeaux, 33000 BORDEAUX<br />
+                                    Merci de nous envoyer votre IBAN également afin d'effectuer le remboursement.<br />
+                                    (<em>coordonnées disponibles dans le centre d'aide et le FAQ</em>)<br /><br />
+                                    Merci d'indiquer dans votre courrier votre nom, prénom et l'enchère que vous voulez régler.
+                                {% endif %}
+                                <br /><br /><b>Ce type de paiement nécessite quelques jours de traitement</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if telephone %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="phoneHeading">
+                        <label for="phoneMethod">
+                            <table data-toggle="collapse" data-target="#phoneCollapse" data-parent="#accordion" >
+                                <tr>
+                                    <td>
+                                        <input type="radio" autocomplete="off" name="method" value="tel" id="phoneMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>Par téléphone</td>
+                                    <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_telephone.png" alt="Téléphone" align="right" /></td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                    <div id="phoneCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="phoneHeading">
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                Merci de nous appeler au <a href="tel:0973728973">09 73 72 89 73</a> (ligne ouverte du lundi au vendredi et de 9h30 à 12h30 et de 14h à 18h00 hors jours fériés) en nous indiquant le but de votre appel, vos nom, prénom tels qu'ils apparaissent dans votre compte Loisirs Enchères ainsi que le titre de l'enchère remportée.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if cheque %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="chequeHeading">
+                        <label for="chequeMethod">
+                            <table data-toggle="collapse" data-target="#chequeCollapse" data-parent="#accordion">
+                                <tr>
+                                    <td>
+                                        <input type="radio" autocomplete="off" name="method" value="cheque" id="chequeMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>Par chèque</td>
+                                    <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_cheque.png" alt="Chèque" align="right" /></td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                    <div id="chequeCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="chequeHeading">
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                Merci de nous envoyer votre chèque à LOISIRS ENCHERES SAS, 18 rue de la Porte Dijeaux, 33000 BORDEAUX<br />
+                                Merci de nous indiquer vos nom, prénom tels qu'ils apparaissent dans votre compte Loisirs Enchères ainsi que le titre de l'enchère remportée.<br />
+                                <b>Attention ! Le paiement par chèque peut rallonger le délai de livraison de votre option d'emballage.
+                                <br>
+                                Ce type de paiement nécessite quelques jours de traitement</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if virement %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="transferHeading">
+                        <label for="transferMethod">
+                            <table data-toggle="collapse" data-target="#transferCollapse" data-parent="#accordion">
+                                <tr>
+                                    <td>
+                                        <input type="radio" autocomplete="off" name="method" value="virement" id="transferMethod" {% if payment.amount > 0 %}required="" {% endif %}data-required="">
+                                        <i class="icon icon-circle-regular icon-lg"></i>
+                                        <i class="icon icon-dot-circle-regular icon-lg"></i>
+                                    </td>
+                                    <td>Par virement bancaire</td>
+                                    <td><img src="{{ assetCdn }}/assets/gfx/logopayment/logo_virement.png" alt="Virement" align="right" /></td>
+                                </tr>
+                            </table>
+                        </label>
+                    </div>
+                    <div id="transferCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="transferHeading">
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                Merci de nous envoyer votre virement à LOISIRS ENCHERES SAS, IBAN : FR76 1330 6001 5723 0666 1496 431<br />
+                                Merci de nous indiquer vos nom, prénom tels qu'ils apparaissent dans votre compte Loisirs Enchères ainsi que le titre de l'enchère remportée.<br />
+                                Pour un virement depuis l'étranger, voici notre BIC : AGRIFRPP833.<br />
+                                <b>Attention ! Le paiement par virement peut rallonger le délai de livraison de votre option d'emballage.
+                                <br>
+                                Ce type de paiement nécessite quelques jours de traitement</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

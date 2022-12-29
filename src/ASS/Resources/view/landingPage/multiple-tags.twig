@@ -1,0 +1,108 @@
+{% extends 'layout/html.twig' %}
+{%- block title -%}{{ landingPage['name'] }}{%- endblock -%}
+{% block metaDesc %}{{ landingPage['seo']['meta_description'] }}{% endblock %}
+{% block facebook_description %}{{ landingPage['seo']['facebook_description'] }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build-css/themes/enfoires.css') }}" />
+    {{ parent() }}
+{% endblock %}
+
+{% block background %}hidenavbar{% endblock %}
+{% block container %}container-fluid nopadding template-multiple-tags{% endblock %}
+{% block containerId %}{{ landingPage.alias }}{% endblock %}
+{% block main_content %}
+<div class="text-center">
+    <picture>
+        <source media="(min-width: 768px)" srcset="{{ landingPage['image']['url']|noprotocol|transf('q_70') }}">
+        <source media="(max-width: 767px)" srcset="{{ landingPage['imageMobile']['url']|noprotocol|transf('q_70') }}">
+        <img alt="{{ landingPage['imageAlt'] }}" src="{{ landingPage['imageMobile']['url']|noprotocol|transf('q_70') }}">
+    </picture>
+</div>
+
+<div class="container">
+    <h1 class="text-center">{{ landingPage['name'] }}</h1>
+    {% if landingPage['teaser'] != '' %}
+        <section class="introduction">
+            {{ landingPage['teaser']|raw }}
+        </section>
+    {% endif %}
+    {% for section in landingPage['contents'] %}
+        {# Define nbAuctions for create placeholder #}
+        {% if section['published'] %} {# fix an twig error The "loop.last" variable is not defined when looping with a condition #}
+            {% set colClass = 'col-xs-12 col-s-6 col-md-3' %}
+            {% set tagsName = [] %}
+            {% set nbAuctions = section.module is null or (section.module is not null and section.module.nbAuctions is null) ? 4 : section.module.nbAuctions %}
+
+            {% if section.type == 'module' %}
+                {% if nbAuctions == 2 %}
+                    {% set colClass = 'col-xs-12 col-s-6' %}
+                {% elseif nbAuctions == 3 %}
+                    {% set colClass = 'col-xs-12 col-s-6 col-sm-4' %}
+                {% endif %}
+
+                {% for tag in section.module.tags %}
+                    {% set tagsName = tagsName|merge([tag.name]) %}
+                {% endfor %}
+            {% endif %}
+
+            <section{% if section.cssID != '' %} id="{{ section.cssID }}"{% endif %}{% if section.cssClass != '' %} class="{{ section.cssClass }}"{% endif %}>
+                <h2>{{ section['text']|raw }}</h2>
+                {% if section.module is not null %}
+                <div class="moduleEnchere">
+                    <auction-list
+                            url="/auction/activeauctions"
+                            {% if section.type == 'section' %}
+                                nb-auctions-default="{{ section.nbAuctions }}"
+                            {% elseif section.module.nbAuctions is null %}
+                                nb-auctions-default="unlimited"
+                            {% else %}
+                                nb-auctions-default="{{ nbAuctions }}"
+                            {% endif %}
+                            class-css="{{ colClass }}"
+                            list-name="{{ landingPage['name']|e('html_attr') }} - {{ section['id'] }}"
+                            request-uri="{{ app.request.requesturi }}"
+                            v-bind:is-app="{{ isApp(app.request) | json_encode }}"
+                            auction-type="list"
+                            v-bind:tab-index="{{ loop.index }}"
+                            list-id="auctionList-{{ section['id'] }}"
+                            tag="{{ tagsName|join(',')|e('html_attr') }}"
+                            v-bind:use-no-auction-found-mess="false"
+                            v-bind:use-placeholder="true"
+                            v-bind:use-more-auctions-btn="false"
+                            template-page-type="nosidebar"
+                            :upcoming="{{ section.module.upcoming | json_encode }}"
+                            ea-site="{{ eulerianSite }}"
+                    ></auction-list>
+                    <div class="row auctions_placeholder">
+                        {% if section.module is not null %}
+                            {# With module system #}
+                            {% for auctions in 1..nbAuctions %}
+                                {% if nbAuctions == 3 and loop.last %}
+                                    {% set colClass = 'col-xs-12 col-s-6 col-s-offset-3 col-sm-offset-0 col-sm-4' %}
+                                {% endif %}
+                                {% include './module/auction-placeholder.twig' with {'colClass': colClass, } %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {{ section['html']|raw }}
+                {% if section.module is not null and section.module.href != '' %}
+                    <div class="text-center">
+                        {% if isApp(app.request) %}
+                            {% set link = 'comloisirsencheres://category/' ~ section.module.tags[0].mobileCatId %}
+                        {% else %}
+                            {% set link = section.module.href %}
+                        {% endif %}
+                        <a class="btn {{ section.module.cssLink }}" href="{{ link }}"{% if 'http://' in link or 'https://' in link %} target="_blank"{% endif %}>{{ section.module.text|raw }}</a>
+                    </div>
+                {% endif %}
+            </section>
+            {% if loop.last == false %}
+                <hr class="hr-orange center-block" />
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

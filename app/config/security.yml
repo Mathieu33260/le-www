@@ -1,0 +1,13 @@
+security.firewalls:
+  login:
+    pattern: ^/user/login/$
+  user:
+    pattern: '^.*$'
+    anonymous: true
+    api: true
+    form:
+      login_path: /user/login
+      check_path: /user/login_check
+      use_referer: true
+    logout:
+      logout_path: /user/logout

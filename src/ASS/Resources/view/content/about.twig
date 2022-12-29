@@ -1,0 +1,40 @@
+{% extends 'layout/html.twig' %}
+
+{% block title %}A propos{% endblock %}
+
+{% block main_content %}
+    <h1 class="page-title-h1">A propos de Loisirs Enchères</h1>
+    <div class="padding-text-mobile">
+        <h2 class="title-h2-page-quality"><b>Le principe</b></h2>
+        <p>Loisirs Enchères propose gratuitement à ses utilisateurs des produits et des services de loisirs aux enchères. Notre concept vous permet d’accéder à des bons plans vacances ou détentes tout en expérimentant l’adrénaline et la chance du jeu. Pour cela, il suffit de vous <a href="{{ path('user.register') }}" rel="nofollow">inscrire</a> sur le site, et d’enchérir en espérant remporter l’enchère. Vous ne payez que si vous remportez l’enchère. Qu’attendez-vous pour en profiter ?</p>
+        <p>Contrairement aux autres sites d'enchères au centime, enchérir sur Loisirs Enchères, c’est gratuit ! Une enchère non remportée est considérée comme perdue, vous n’avez rien à débourser. Votre mise ne sera encaissée que si vous avez remporté l’enchère.</p>
+        <p>De plus, afin de garantir la sécurité du site <a href="https://www.loisirsencheres.com/">www.loisirsencheres.com</a>, les transactions financières sont assurées par notre prestataire le crédit agricole. </p>
+
+        <div class="col-sm-12">
+            <img class="img-responsive logo-prest" src="{{assetCdn}}/assets/img/credit-agricole-logo.jpg" alt="Logo Crédit Agricole" width="150" />
+        </div>
+
+        <br />
+        <h2 class="title-h2-page-quality"><b>Qui sommes-nous ?</b></h2>
+        <p>Loisirs enchères est une jeune pousse française créée en 2014, fondée sur un concept qui connaît un succès fulgurant aux Pays-Bas et en Espagne : proposer des produits et des services de loisirs aux enchères à nos utilisateurs. Sans équivalent en France, nous nous sommes dit qu’il était temps d’en faire profiter les français. De ce constat est né Loisirs Enchères !</p>
+        <p>Originaire de Bordeaux, nous nous attachons à faire profiter nos membres des meilleures offres de loisirs disponibles sur la toile. Pour y parvenir, notre équipe s’active pour vous proposer sur son site les offres les plus attractives. Nous nous efforçons de trouver des partenaires de qualité qui sauront rendre vos moments de loisirs et de détentes uniques et agréables.
+            <a href="https://www.loisirsencheres.fr">En savoir plus sur Loisirs Enchères</a>.
+        </p>
+        <p><b>Loisirs Enchères</b><br />
+            18 rue de la Porte Dijeaux<br />
+            33000 Bordeaux France<br />
+            Tél : 09 73 72 91 92<br />
+            Mail : info@loisirsencheres.com<br />
+            Siret : 801 270 612 00048, immatriculé au RCS de Bordeaux<br />
+            Num TVA : FR43801270612<br /></p>
+
+        <br />
+        <h2 class="title-h2-page-quality"><b>Les conditions d’utilisation</b></h2>
+        <p>En qualité de membre de Loisirs Enchères, vous vous engagez à n’avoir qu’un seul profil. Néanmoins, le site Loisirs Enchères accepte que chaque membre d’un même foyer puisse détenir un profil, sous condition d’avoir 18 ans révolus.</p>
+        <p>De plus, vous devez attentivement lire et accepter les <a href="/content/cgu">conditions générales d’utilisation</a> du site Loisirs Enchères.</p>
+
+        <br />
+        <h2 class="title-h2-page-quality"><b>Vous avez des questions ? Nous sommes à votre écoute</b></h2>
+        <p>Si vous avez des suggestions ou des réclamations n’hésitez pas à nous contacter via la <a href="/content/contact">page contact</a>.</p>
+    </div>
+{% endblock %}

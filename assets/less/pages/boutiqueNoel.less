@@ -1,0 +1,326 @@
+@import (reference) "../variables";
+@import (reference) "../mixins";
+
+@cyan_dark: #00414c;
+
+@import "../modules/Btns/Christmas";
+
+/** Fix img reflow **/
+.responsive-container {
+    width: 100%;
+    padding-bottom: 56.25%; /* 9/16 = aspect ratio of image */
+    position: relative;
+    height: 0;
+    background-color: @grey;
+    border-radius: 8px;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 8px;
+    }
+}
+.ratio-1-1{
+    padding-bottom:100%;
+}
+/** END Fix img reflow **/
+
+.breadcrumb {
+    a, a:hover {
+        color: @red_christmas;
+    }
+}
+
+/** BOUTIQUE NOEL **/
+@media (max-width: 767px) {
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+    }
+}
+.container-app-view {
+    padding: 15px;
+}
+.background-christmas {
+    background-repeat: repeat-y;background-position: left top, right top;background-size: auto;
+    @media screen and (min-width: 1200px) {
+        background-image: url(//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1571657404/boutique%20noel/Booutique-noel-fond-deco-2019.jpg), url(//img.loisirsencheres.fr/loisirs/image/upload/q_auto/v1571657404/boutique%20noel/Booutique-noel-fond-deco-2019.jpg);
+        > .container {
+            .background-blanc;
+        }
+    }
+}
+.video {
+    margin-top: 1.5em;
+   a:hover{opacity: 1;}
+}
+h2 {
+    font-family: 'proxima_nova_regular';
+    color: @cyan_dark;
+    margin: 10px 0;
+    font-weight: 600;
+    line-height: 1.4em;
+    font-size: 1.4em;
+    height: 35px;
+    text-align: center;
+    @media only screen and (min-width: @min-width-md) {
+        height: 72px;
+        display: table-cell;
+        vertical-align: bottom;
+        font-size: 36px;
+    }
+}
+.title2 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    @media only screen and (min-width: @min-width-md) {
+        margin-bottom: 27px;
+        margin-top: 27px;
+    }
+    .gift-title {
+        @media only screen and (min-width: @min-width-sm) {
+            text-align: left;
+        }
+    }
+    .fir-title {
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        line-height: 72px;
+    }
+}
+h3{
+    font-family: 'proxima_nova_bold';
+    font-size: 1.17em;
+    font-weight: normal;
+    color: @white;
+    text-shadow: 0px 0px 10.9px rgba(0,0,0,0.9);
+    margin: 0;
+    text-align: center;
+    display: inline;
+    line-height: 1.5;
+    text-transform: uppercase;
+    @media only screen and (min-width: 320px) {
+        font-size: 16px;
+    }
+    @media only screen and (max-width: @max-width-sm) {
+        i {
+            position: relative;
+            right: 17px;
+            top: 4px;
+            float: right;
+        }
+    }
+    @media only screen and (min-width: @min-width-md) {
+        font-size: 24px;
+        position: relative;
+        z-index: 3;
+        display: block;
+        transition: all 0.3s ease;
+        bottom: 0;
+    }
+}
+/*.bannerVideo{
+    color: @white;margin-top: 30px;position: relative;
+    p {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: @white;
+        @media only screen and (max-width: 767px) {
+            left: 2%;
+        }
+        @media only screen and (min-width: 400px) and (max-width: 509px) {
+            font-size: 1.3em;
+        }
+        @media only screen and (min-width: 510px) and (max-width: 767px) {
+            left: 4%;
+            font-size: 1.6em;
+        }
+        @media only screen and (min-width: 768px) {
+            left: 5%;
+            font-size: 2em;
+            text-shadow: 0px 0px 15.3px rgba(0, 0, 0, 0.5);
+        }
+    }
+    span {font-family: 'proxima_nova_regular';}
+}*/
+#register {padding-top: 2em}
+
+h1 {
+    @media only screen and (min-width: 768px) {
+        margin-top: 0;
+    }
+}
+.category-item {
+    position: relative;
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5);
+    .btn-transparent {
+        color: @white;
+    }
+    .icon-flash-right-plein {font-size: 3em;}
+    .icon-flash-right {color: @white;display: inline;font-size: 1.7em;}
+    .content {
+        position: absolute;width: 100%;height: 100%;display: table;
+        div {
+            display: table-cell;
+            vertical-align: bottom;
+        }
+        @media only screen and (min-width: @min-width-md) {
+            button {
+                position: absolute;
+                z-index: 3;
+                opacity: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: all 0.3s ease;
+            }
+            .filtre {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                z-index: 2;
+                opacity: 0;
+                transition: all 0.3s ease;
+                background: rgba(0, 0, 0, 0.4);
+            }
+        }
+    }
+    a {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        top: 0;
+        left: 0;
+        @media only screen and (min-width: 992px) {
+            &:hover {
+                opacity: 1;
+                .content {
+                    button {
+                        opacity: 1;
+                        bottom: 0%;
+                    }
+                    .filtre {
+                        opacity: 1
+                    }
+                    h3 {
+                        bottom: 18px;
+                    }
+                }
+            }
+        }
+    }
+    &.lui, &.famille, &.bien-etre, &.box, &.shopping, &.sport {
+        margin-top: 30px
+    }
+    &.shopping {
+        .content div {
+            width: 100%;
+        }
+    }
+    @media only screen and (min-width: @min-width-sm) {
+        &.lui, &.famille {
+            margin-top: 0
+        }
+    }
+    picture img {
+        @media only screen and (min-width: 992px) {
+            height: auto;
+            width: 100%;
+        }
+    }
+    i {
+        @media only screen and (min-width: 992px) {
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            z-index: 3;
+            position: relative;
+        }
+    }
+}
+
+.ratio-16-9 {
+    padding-bottom: 56.25%; /* 9/16*100 */
+    @media only screen and (min-width: @min-width-md) {
+        &.sport, &.bien-etre {
+            padding-bottom: 40%;
+        }
+    }
+    @media only screen and (min-width: @min-width-md) {
+        &.shopping, &.sport, &.bien-etre, &.box, &.evasion {
+            .content {
+                position: relative;
+                div h3 {
+                    font-size: 28px;
+                    position: absolute;
+                    bottom: 0;
+                    right: 15px;
+                }
+                button {
+                    font-size: 24px;
+                    transform: initial;
+                    left: auto;
+                    right: 0;
+                    i {
+                        top: 4px;
+                    }
+                }
+            }
+            a:hover .content div h3 {
+                bottom: 1.4em;
+            }
+        }
+    }
+    &.evasion {
+        @media only screen and (min-width: @min-width-sm) {
+            padding-bottom: 25%;
+        }
+        @media only screen and (min-width: @min-width-md) {
+            padding-bottom: 21%;
+        }
+        .content {
+            @media only screen and (min-width: @min-width-sm) {
+                position: relative;
+            }
+            div h3 {
+                @media only screen and (min-width: @min-width-sm) {
+                    font-size: 1.4em;
+                    position: absolute;
+                    right: 15px;
+                    width: 35%;
+                }
+                @media only screen and (min-width: @min-width-md) {
+                    width: auto;
+                    bottom: auto;
+                    font-size: 28px;
+                }
+            }
+        }
+        @media only screen and (min-width: @min-width-md) {
+            a:hover .content div h3 {
+                bottom: auto;
+            }
+        }
+    }
+    .content div {
+        vertical-align: middle;
+        h3 {
+            font-size: 1.4em;
+        }
+    }
+}
+
+.giftcard {
+    a:hover {
+        opacity: 1;
+    }
+}
